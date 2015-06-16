@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Inconsolata-Bold.ttf</string>
+		<string>Inconsolata-Regular.ttf</string>
+		<string>Gotham-XLight.ttf</string>
+		<string>Gotham-Light.ttf</string>
+		<string>GothamRounded-Book.otf</string>
+		<string>GothamRounded-Light.otf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

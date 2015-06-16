@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+let listRed =  UIColor(red: 244/255, green: 138/255, blue: 138/255, alpha: 1.0)
+let listBlue = UIColor(red: 117/255, green: 168/255, blue: 240/255, alpha: 1.0)
+let listGreen = UIColor(red: 104/255, green: 182/255, blue: 67/255, alpha: 1.0)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -107,5 +111,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+
+extension UIButton {
+    override public func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        var relativeFrame = self.bounds
+        var hitTestEdgeInsets = UIEdgeInsetsMake(-22, -22, -22, -22)
+        var hitFrame = UIEdgeInsetsInsetRect(relativeFrame, hitTestEdgeInsets)
+        return CGRectContainsPoint(hitFrame, point)
+    }
 }
 
