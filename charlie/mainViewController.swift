@@ -125,9 +125,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-    
-         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         
     }
    
@@ -190,6 +190,16 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "segueFromMainToDetailView") {
+//            let viewController = segue.destinationViewController as! showDetailViewController
+//            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+//            //viewController.transactionIndex = indexPath.row
+//            
+//            
+//        }
+//    }
     
     
     @IBAction func approvedListButtonress(sender: UIButton) {
