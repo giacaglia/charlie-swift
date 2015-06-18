@@ -10,6 +10,8 @@
 		<string>Gotham-Light.ttf</string>
 		<string>GothamRounded-Book.otf</string>
 		<string>GothamRounded-Light.otf</string>
+		<string>Montserrat-Bold.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
