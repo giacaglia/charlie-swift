@@ -7,25 +7,25 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>133A158A-41E7-449B-AA6E-5EB76968BE46</string>
 	<key>IDESourceControlProjectName</key>
-	<string>charlie</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2E1324C2BCAFD8AECF622EDE0575DD3D2CB08A21</key>
 		<string>github.com:bladenet/BladeKit-iOS.git</string>
 		<key>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</key>
-		<string>https://github.com/bladenet/charlie-swift.git</string>
+		<string>github.com:bladenet/charlie-swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>charlie.xcodeproj</string>
+	<string>charlie.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2E1324C2BCAFD8AECF622EDE0575DD3D2CB08A21</key>
-		<string>../..frameworks/BladeKit-iOS</string>
+		<string>../..frameworks/BladeKit-iOS/</string>
 		<key>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/bladenet/charlie-swift.git</string>
+	<string>github.com:bladenet/charlie-swift.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
