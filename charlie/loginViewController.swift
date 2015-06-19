@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 let realm = Realm()
-var cService = charlieService()
+
 
 
 

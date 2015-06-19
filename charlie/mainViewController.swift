@@ -51,9 +51,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let approvedSelectedButtonImage = UIImage(named: "Checkmark-selelected")
 
 
-    let menuButtonBlueImage = UIImage(named: "Menu-unselelected_blue.png")
-    let menuButtonGreenImage = UIImage(named: "Menu-unselelected_green.png")
-    let menuButtonRedImage = UIImage(named: "Menu-unselelected_red.png")
+    let menuButtonBlueImage = UIImage(named: "btn-menu-blue.png")
+    let menuButtonGreenImage = UIImage(named: "btn-menu-green.png")
+    let menuButtonRedImage = UIImage(named: "btn-menu-red.png")
 
     let cardButtonBlueImage = UIImage(named: "Credit Card-unselelected_blue.png")
     let cardButtonGreenImage = UIImage(named: "Credit Card-unselelected_green.png")
@@ -73,6 +73,22 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
      
        
+        let users = realm.objects(User)
+        if users.count  == 0
+        {
+            // Create a Person object
+            let user = User()
+            user.email = "test@charlie.com"
+            user.pin = "0000"
+            user.password = "password"
+            realm.write {
+                realm.add(user, update: true)
+            }
+            
+        }
+
+        
+        
         if accounts.count  == 0
         {
             addAccountButton.hidden = false
@@ -293,8 +309,6 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
         
-
-        
         
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedButtonImage, forState: .Normal)
@@ -312,7 +326,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        cService.addAccount("jcaralis", password: "50Nich0ls", bank: "bofa")
+        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
             {
                 (response) in
                 self.transactionsTable.reloadData()
@@ -350,7 +364,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     alert.title = "Saved"
                     alert.message = "Yahoo!"
                     alert.addButtonWithTitle("Ok")
-                    alert.show()
+                   // alert.show()
                     self.addAccountButton.hidden = true
                     self.transactionsTable.reloadData()
                     self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
