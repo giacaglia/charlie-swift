@@ -11,6 +11,7 @@ import BladeKit
 import CoreData
 import RealmSwift
 
+var transactionItems = realm.objects(Transaction).filter("status = 0")
 
 
 class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -61,7 +62,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     
-    var transactionItems = realm.objects(Transaction).filter("status = 0")
+    
     
     let users = realm.objects(User)
     let accounts = realm.objects(Account)
@@ -89,9 +90,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = tableView.indexPathForCell(cell)
             realm.beginWrite()
                 if self.inboxListButton.tag == 1
-                { self.transactionItems[indexPath!.row].status = 1 }//approved
+                { transactionItems[indexPath!.row].status = 1 }//approved
                 else if self.flagListButton.tag == 1
-                { self.transactionItems[indexPath!.row].status = 1 } //approved
+                { transactionItems[indexPath!.row].status = 1 } //approved
             realm.commitWrite()
             tableView.removeCell(cell, duration: 0.3, completion: nil)
             self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
@@ -102,9 +103,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = tableView.indexPathForCell(cell)
             realm.beginWrite()
                 if self.inboxListButton.tag == 1
-                { self.transactionItems[indexPath!.row].status = 2 }//approved
+                { transactionItems[indexPath!.row].status = 2 }//approved
                 else if self.approvedListButton.tag == 1
-                { self.transactionItems[indexPath!.row].status = 2 } //flagged
+                { transactionItems[indexPath!.row].status = 2 } //flagged
             realm.commitWrite()
             tableView.removeCell(cell, duration: 0.3, completion: nil)
             self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
@@ -191,22 +192,22 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-//        if (segue.identifier == "segueFromMainToDetailView") {
-//            let viewController = segue.destinationViewController as! showDetailViewController
-//            let indexPath = self.transactionsTable.indexPathForSelectedRow()
-//            //viewController.transactionIndex = indexPath.row
-//            
-//            
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "segueFromMainToDetailView") {
+            let viewController = segue.destinationViewController as! showTransactionViewController
+            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            viewController.transactionIndex = indexPath!.row
+            
+            
+        }
+    }
     
     
     @IBAction func approvedListButtonress(sender: UIButton) {
         
         transactionItems = realm.objects(Transaction).filter("status = 1")
         transactionsTable.reloadData()
-        transactionsTable.separatorColor = listGreen
+
         
         inboxListButton.tag = 0
         inboxListButton.setImage(inboxUnSelectedButtonImage, forState: .Normal)
@@ -242,7 +243,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         transactionItems = realm.objects(Transaction).filter("status = 0")
         transactionsTable.reloadData()
-        transactionsTable.separatorColor = listBlue
+      
         
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
@@ -276,7 +277,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         transactionItems = realm.objects(Transaction).filter("status = 2")
         transactionsTable.reloadData()
-        transactionsTable.separatorColor = listRed
+    
         
         inboxListButton.tag = 0
         inboxListButton.setImage(inboxUnSelectedButtonImage, forState: .Normal)
@@ -303,6 +304,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         
     }
+    
+    
+   
   
     @IBAction func addCard(sender: UIButton) {
         

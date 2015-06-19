@@ -391,10 +391,10 @@
             </objects>
             <point key="canvasLocation" x="340" y="1991"/>
         </scene>
-        <!--Show Detail View Controller-->
+        <!--Show Transaction View Controller-->
         <scene sceneID="evQ-qU-ZGx">
             <objects>
-                <viewController id="Rxg-kj-fnh" customClass="showDetailViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Rxg-kj-fnh" customClass="showTransactionViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CUi-gB-ZvV"/>
                         <viewControllerLayoutGuide type="bottom" id="7cX-2z-z71"/>
@@ -417,11 +417,11 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pressCloseViewButton:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="35y-eI-PoG"/>
+                                    <action selector="closeButtonPress:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="dSM-Ql-fqb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Did you spend $38.29 at Blue Dragon Yesterday?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
-                                <rect key="frame" x="26" y="142" width="548" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you spend $38.29 at Blue Dragon Yesterday?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
+                                <rect key="frame" x="26" y="156" width="548" height="20"/>
                                 <fontDescription key="fontDescription" name="GothamLight" family="Gotham Light" pointSize="22"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -429,14 +429,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4L-Kr-7BG" userLabel="dateView">
                                 <rect key="frame" x="0.0" y="283" width="200" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
-                                        <rect key="frame" x="75" y="32" width="51" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
+                                        <rect key="frame" x="77" y="40" width="47.5" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOc-nj-OZt" userLabel="dateLabel">
-                                        <rect key="frame" x="80" y="8" width="40" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOc-nj-OZt" userLabel="dateLabel">
+                                        <rect key="frame" x="83" y="20" width="33" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="42" id="ew0-qp-Tdp"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="hOo-K5-XjV"/>
@@ -457,15 +457,15 @@
                                     <constraint firstAttribute="centerX" secondItem="FOc-nj-OZt" secondAttribute="centerX" id="nFy-eC-ssa"/>
                                     <constraint firstAttribute="centerX" secondItem="3Lg-fc-14x" secondAttribute="centerX" id="qpi-Ox-2pG"/>
                                     <constraint firstAttribute="height" constant="80" id="sRQ-Zr-6th"/>
-                                    <constraint firstItem="FOc-nj-OZt" firstAttribute="top" secondItem="O4L-Kr-7BG" secondAttribute="top" constant="8" id="taK-Jb-snP"/>
-                                    <constraint firstItem="3Lg-fc-14x" firstAttribute="top" secondItem="FOc-nj-OZt" secondAttribute="bottom" constant="4" id="y4Z-T8-jLX"/>
+                                    <constraint firstItem="FOc-nj-OZt" firstAttribute="top" secondItem="O4L-Kr-7BG" secondAttribute="top" constant="20" id="taK-Jb-snP"/>
+                                    <constraint firstItem="3Lg-fc-14x" firstAttribute="top" secondItem="FOc-nj-OZt" secondAttribute="bottom" constant="2" id="y4Z-T8-jLX"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFC-bA-zK2" userLabel="idView">
                                 <rect key="frame" x="200" y="283" width="200" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rXX-C3-OlL" userLabel="idLabel">
-                                        <rect key="frame" x="93" y="8" width="16" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rXX-C3-OlL" userLabel="idLabel">
+                                        <rect key="frame" x="93" y="20" width="13.5" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="0Nq-oQ-k0o"/>
                                             <constraint firstAttribute="height" constant="21" id="Glp-6K-Usr"/>
@@ -480,19 +480,19 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1231241241sss23" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-ZG-5Tl" userLabel="idDetail">
-                                        <rect key="frame" x="46" y="32" width="109" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1231241241sss23" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-ZG-5Tl" userLabel="idDetail">
+                                        <rect key="frame" x="50" y="40" width="100" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="rXX-C3-OlL" firstAttribute="top" secondItem="mFC-bA-zK2" secondAttribute="top" constant="8" id="PHC-n7-o8z"/>
+                                    <constraint firstItem="rXX-C3-OlL" firstAttribute="top" secondItem="mFC-bA-zK2" secondAttribute="top" constant="20" id="PHC-n7-o8z"/>
                                     <constraint firstAttribute="width" constant="150" id="YsT-pr-hDH"/>
-                                    <constraint firstAttribute="centerX" secondItem="rXX-C3-OlL" secondAttribute="centerX" constant="-1" id="bDf-gz-58h"/>
-                                    <constraint firstItem="xsI-ZG-5Tl" firstAttribute="top" secondItem="rXX-C3-OlL" secondAttribute="bottom" constant="4" id="pnU-QZ-UAc"/>
+                                    <constraint firstAttribute="centerX" secondItem="rXX-C3-OlL" secondAttribute="centerX" id="bDf-gz-58h"/>
+                                    <constraint firstItem="xsI-ZG-5Tl" firstAttribute="top" secondItem="rXX-C3-OlL" secondAttribute="bottom" constant="2" id="pnU-QZ-UAc"/>
                                     <constraint firstAttribute="height" constant="80" id="rvr-zs-T9t"/>
                                     <constraint firstAttribute="centerX" secondItem="xsI-ZG-5Tl" secondAttribute="centerX" id="ysG-wV-LEO"/>
                                 </constraints>
@@ -505,14 +505,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWU-LM-S64" userLabel="cardView">
                                 <rect key="frame" x="400" y="283" width="200" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4892" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obX-YD-6IA" userLabel="cardDetail">
-                                        <rect key="frame" x="82" y="32" width="36" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4892" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obX-YD-6IA" userLabel="cardDetail">
+                                        <rect key="frame" x="84" y="40" width="31.5" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWS-GY-8gG" userLabel="cardLabel">
-                                        <rect key="frame" x="78" y="8" width="45" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWS-GY-8gG" userLabel="cardLabel">
+                                        <rect key="frame" x="82" y="20" width="36" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="6P0-9A-P7V"/>
                                             <constraint firstAttribute="width" constant="51" id="ZVI-TX-Dxt"/>
@@ -531,9 +531,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="34N-87-NU7"/>
-                                    <constraint firstItem="QWS-GY-8gG" firstAttribute="top" secondItem="HWU-LM-S64" secondAttribute="top" constant="8" id="605-a5-60Q"/>
+                                    <constraint firstItem="QWS-GY-8gG" firstAttribute="top" secondItem="HWU-LM-S64" secondAttribute="top" constant="20" id="605-a5-60Q"/>
                                     <constraint firstAttribute="centerX" secondItem="QWS-GY-8gG" secondAttribute="centerX" id="90F-jj-nHK"/>
-                                    <constraint firstItem="obX-YD-6IA" firstAttribute="top" secondItem="QWS-GY-8gG" secondAttribute="bottom" constant="4" id="Ndo-7x-IUd"/>
+                                    <constraint firstItem="obX-YD-6IA" firstAttribute="top" secondItem="QWS-GY-8gG" secondAttribute="bottom" constant="2" id="Ndo-7x-IUd"/>
                                     <constraint firstAttribute="centerX" secondItem="obX-YD-6IA" secondAttribute="centerX" id="PDZ-x6-taY"/>
                                     <constraint firstAttribute="width" constant="150" id="bmI-xQ-ybW"/>
                                 </constraints>
@@ -553,16 +553,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fru-ID-P4h" userLabel="accountView">
                                 <rect key="frame" x="0.0" y="365" width="300" height="100"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ACCOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnP-lb-FNT">
-                                        <rect key="frame" x="111" y="16" width="79" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnP-lb-FNT">
+                                        <rect key="frame" x="118" y="20" width="65" height="18"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Bank of America Debit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K4m-Po-fpa">
-                                        <rect key="frame" x="20" y="40" width="260" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank of America Debit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K4m-Po-fpa">
+                                        <rect key="frame" x="20" y="40" width="260" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -570,12 +570,12 @@
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="K4m-Po-fpa" secondAttribute="centerX" id="GCN-Fi-k48"/>
                                     <constraint firstAttribute="height" constant="100" id="HWI-zQ-SA2"/>
-                                    <constraint firstItem="OnP-lb-FNT" firstAttribute="top" secondItem="fru-ID-P4h" secondAttribute="top" constant="16" id="OKV-AZ-nh5"/>
+                                    <constraint firstItem="OnP-lb-FNT" firstAttribute="top" secondItem="fru-ID-P4h" secondAttribute="top" constant="20" id="OKV-AZ-nh5"/>
                                     <constraint firstAttribute="width" constant="300" id="T3n-t9-Lwh"/>
                                     <constraint firstItem="K4m-Po-fpa" firstAttribute="leading" secondItem="fru-ID-P4h" secondAttribute="leading" constant="20" id="Yj0-jc-eQN"/>
                                     <constraint firstAttribute="centerX" secondItem="OnP-lb-FNT" secondAttribute="centerX" id="cAg-RA-spa"/>
                                     <constraint firstAttribute="trailing" secondItem="K4m-Po-fpa" secondAttribute="trailing" constant="20" id="fpT-Rs-n7I"/>
-                                    <constraint firstItem="K4m-Po-fpa" firstAttribute="top" secondItem="OnP-lb-FNT" secondAttribute="bottom" constant="4" id="hdZ-WI-Qa7"/>
+                                    <constraint firstItem="K4m-Po-fpa" firstAttribute="top" secondItem="OnP-lb-FNT" secondAttribute="bottom" constant="2" id="hdZ-WI-Qa7"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -586,24 +586,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2I2-mU-906" userLabel="addressView">
                                 <rect key="frame" x="300" y="365" width="300" height="100"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ADDRESS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47W-wS-t9B">
-                                        <rect key="frame" x="112" y="16" width="76" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADDRESS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47W-wS-t9B">
+                                        <rect key="frame" x="120" y="20" width="59" height="18"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="255 Summer St" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tke-ux-yNr">
-                                        <rect key="frame" x="20" y="42" width="260" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255 Summer St" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tke-ux-yNr">
+                                        <rect key="frame" x="20" y="40" width="260" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="47W-wS-t9B" firstAttribute="top" secondItem="2I2-mU-906" secondAttribute="top" constant="16" id="G8B-pL-6Ln"/>
+                                    <constraint firstItem="47W-wS-t9B" firstAttribute="top" secondItem="2I2-mU-906" secondAttribute="top" constant="20" id="G8B-pL-6Ln"/>
                                     <constraint firstAttribute="centerX" secondItem="47W-wS-t9B" secondAttribute="centerX" id="GzI-tR-dzs"/>
-                                    <constraint firstItem="tke-ux-yNr" firstAttribute="top" secondItem="47W-wS-t9B" secondAttribute="bottom" constant="4" id="LuP-Um-A0f"/>
+                                    <constraint firstItem="tke-ux-yNr" firstAttribute="top" secondItem="47W-wS-t9B" secondAttribute="bottom" constant="2" id="LuP-Um-A0f"/>
                                     <constraint firstAttribute="trailing" secondItem="tke-ux-yNr" secondAttribute="trailing" constant="20" id="Tx6-rZ-d22"/>
                                     <constraint firstAttribute="centerX" secondItem="tke-ux-yNr" secondAttribute="centerX" id="Uls-Kx-5C5"/>
                                     <constraint firstAttribute="width" constant="300" id="oOM-xc-OTs"/>
@@ -725,13 +725,12 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="accountLabel" destination="K4m-Po-fpa" id="Q7M-W6-ZKq"/>
-                        <outlet property="addressLabel" destination="tke-ux-yNr" id="wfv-75-V8J"/>
-                        <outlet property="cardLabel" destination="obX-YD-6IA" id="E8e-UI-3KV"/>
-                        <outlet property="dateLabel" destination="3Lg-fc-14x" id="av9-yX-Rg8"/>
-                        <outlet property="descriptionLabel" destination="HhE-Tx-QpR" id="U0i-Ju-xZg"/>
-                        <outlet property="idLabel" destination="xsI-ZG-5Tl" id="Nsx-Xa-ZSI"/>
-                        <outlet property="mapView" destination="0Wu-fy-D9f" id="y95-Zx-zbm"/>
+                        <outlet property="accountNameLabel" destination="K4m-Po-fpa" id="1L8-xW-ccS"/>
+                        <outlet property="addressLabel" destination="tke-ux-yNr" id="hee-LZ-8e1"/>
+                        <outlet property="dateLabel" destination="3Lg-fc-14x" id="EcC-iL-TCn"/>
+                        <outlet property="descriptionLabel" destination="HhE-Tx-QpR" id="6Lo-sk-Zju"/>
+                        <outlet property="lastFourLabel" destination="obX-YD-6IA" id="OJU-R1-DCK"/>
+                        <outlet property="mapView" destination="0Wu-fy-D9f" id="6fB-2W-5aY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C1-NQ-pQe" userLabel="First Responder" sceneMemberID="firstResponder"/>
