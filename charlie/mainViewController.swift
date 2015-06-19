@@ -33,11 +33,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var menuButton: UIButton!
     
     @IBOutlet weak var cardButton: UIButton!
-    
-    let greenColor = UIColor(red: 85.0/255, green: 213.0/255, blue: 80.0/255, alpha: 1)
-    let redColor = UIColor(red: 213.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
-    let yellowColor = UIColor(red: 236.0/255, green: 223.0/255, blue: 60.0/255, alpha: 1)
-    let brownColor = UIColor(red: 182.0/255, green: 127.0/255, blue: 78.0/255, alpha: 1)
+ 
     let checkImage = UIImage(named: "Checkmark-unselelected_small")
     let flagImage = UIImage(named: "Flag-unselelected_small")
     
@@ -55,9 +51,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let menuButtonGreenImage = UIImage(named: "btn-menu-green.png")
     let menuButtonRedImage = UIImage(named: "btn-menu-red.png")
 
-    let cardButtonBlueImage = UIImage(named: "Credit Card-unselelected_blue.png")
-    let cardButtonGreenImage = UIImage(named: "Credit Card-unselelected_green.png")
-    let cardButtonRedImage = UIImage(named: "Credit Card-unselelected_red.png")
+    let cardButtonBlueImage = UIImage(named: "btn-card-blue.png")
+    let cardButtonGreenImage = UIImage(named: "btn-card-green.png")
+    let cardButtonRedImage = UIImage(named: "btn-card-red.png")
     
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
@@ -104,31 +100,43 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
-            realm.beginWrite()
-                if self.inboxListButton.tag == 1
-                { transactionItems[indexPath!.row].status = 1 }//approved
-                else if self.flagListButton.tag == 1
-                { transactionItems[indexPath!.row].status = 1 } //approved
-            realm.commitWrite()
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-            self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
+            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
+            {
+                realm.beginWrite()
+                transactionItems[indexPath!.row].status = 1 //approved
+                realm.commitWrite()
+                tableView.removeCell(cell, duration: 0.3, completion: nil)
+                let transactionSum = self.sumTransactionsCount()
+                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+            }
+            else
+            { tableView.reloadData() }
+        
         }
        
         
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
-            realm.beginWrite()
-                if self.inboxListButton.tag == 1
-                { transactionItems[indexPath!.row].status = 2 }//approved
-                else if self.approvedListButton.tag == 1
-                { transactionItems[indexPath!.row].status = 2 } //flagged
-            realm.commitWrite()
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-            self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
-
+            if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1
+            {
+                realm.beginWrite()
+                transactionItems[indexPath!.row].status = 2 //approved
+                realm.commitWrite()
+                tableView.removeCell(cell, duration: 0.3, completion: nil)
+                let transactionSum = self.sumTransactionsCount()
+                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+            }
+            else
+            { tableView.reloadData() }
         }
         
-        
+        topView.backgroundColor = listBlue
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
@@ -265,7 +273,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = listBlue
         dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "to check"
+        moneyCountSubHeadLabel.text = "to aprrove"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
@@ -367,7 +375,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                    // alert.show()
                     self.addAccountButton.hidden = true
                     self.transactionsTable.reloadData()
-                    self.moneyCountLabel.text = "$\(String(stringInterpolationSegment: self.sumTransactionsCount()))"
+                    let transactionSum = self.sumTransactionsCount()
+                    let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                    let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                     self.transactionsTable.hidden = false
                     
                     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -138,24 +138,24 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="116"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWc-mr-8Dg">
-                                        <rect key="frame" x="18" y="30" width="44" height="44"/>
+                                        <rect key="frame" x="18" y="30" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="LwA-0a-4Ss"/>
-                                            <constraint firstAttribute="width" constant="44" id="cet-UV-sRZ"/>
+                                            <constraint firstAttribute="height" constant="30" id="LwA-0a-4Ss"/>
+                                            <constraint firstAttribute="width" constant="30" id="cet-UV-sRZ"/>
                                         </constraints>
                                         <state key="normal" image="btn-menu-blue">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-av-QVM">
-                                        <rect key="frame" x="552" y="30" width="30" height="25"/>
+                                        <rect key="frame" x="552" y="30" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="JTU-oy-ZcX"/>
+                                            <constraint firstAttribute="height" constant="30" id="JTU-oy-ZcX"/>
                                             <constraint firstAttribute="width" constant="30" id="jEg-uS-IWz"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="lwq-6c-K7P"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="sve-Hw-DGc"/>
                                         </constraints>
-                                        <state key="normal" image="Credit Card-unselelected_blue">
+                                        <state key="normal" image="btn-card-blue">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="default">
@@ -166,19 +166,19 @@
                                         </variation>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to check" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8h5-bW-v9x">
-                                        <rect key="frame" x="266" y="78" width="68" height="18"/>
+                                        <rect key="frame" x="266" y="74" width="68" height="18"/>
                                         <fontDescription key="fontDescription" name="Inconsolata-Regular" family="Inconsolata" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
-                                        <rect key="frame" x="254" y="50" width="94" height="29"/>
-                                        <fontDescription key="fontDescription" name="GothamLight" family="Gotham Light" pointSize="44"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
+                                        <rect key="frame" x="249" y="42" width="102" height="32"/>
+                                        <fontDescription key="fontDescription" name="GothamLight" family="Gotham Light" pointSize="35"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.51372549019607838" green="0.71764705882352942" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.43529411764705883" green="0.64313725490196072" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="116" id="6jn-iw-Hbe"/>
                                     <constraint firstAttribute="centerX" secondItem="iLy-Fy-hpO" secondAttribute="centerX" id="AFa-mF-S2v"/>
@@ -211,8 +211,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="459" y="34" width="133" height="21.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
+                                                    <rect key="frame" x="459" y="34" width="133" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="133" id="V9d-2M-3lF"/>
                                                     </constraints>
@@ -429,8 +429,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4L-Kr-7BG" userLabel="dateView">
                                 <rect key="frame" x="0.0" y="283" width="200" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
-                                        <rect key="frame" x="77" y="40" width="47.5" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
+                                        <rect key="frame" x="77" y="40" width="48" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -465,7 +465,7 @@
                                 <rect key="frame" x="200" y="283" width="200" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rXX-C3-OlL" userLabel="idLabel">
-                                        <rect key="frame" x="93" y="20" width="13.5" height="18"/>
+                                        <rect key="frame" x="93" y="20" width="14" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="0Nq-oQ-k0o"/>
                                             <constraint firstAttribute="height" constant="21" id="Glp-6K-Usr"/>
@@ -506,7 +506,7 @@
                                 <rect key="frame" x="400" y="283" width="200" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4892" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obX-YD-6IA" userLabel="cardDetail">
-                                        <rect key="frame" x="84" y="40" width="31.5" height="16"/>
+                                        <rect key="frame" x="84" y="40" width="32" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -740,9 +740,9 @@
     </scenes>
     <resources>
         <image name="Checkmark-unselelected" width="78" height="72"/>
-        <image name="Credit Card-unselelected_blue" width="92" height="64"/>
         <image name="Flag-unselelected" width="100" height="100"/>
         <image name="Inbox-selelected" width="92" height="70"/>
-        <image name="btn-menu-blue" width="14" height="16"/>
+        <image name="btn-card-blue" width="32" height="24"/>
+        <image name="btn-menu-blue" width="30" height="30"/>
     </resources>
 </document>
