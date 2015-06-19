@@ -20,7 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2E1324C2BCAFD8AECF622EDE0575DD3D2CB08A21</key>
-		<string>../..frameworks/BladeKit-iOS/</string>
+		<string>../..frameworks/BladeKit-iOS</string>
 		<key>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</key>
 		<string>../..</string>
 	</dict>
