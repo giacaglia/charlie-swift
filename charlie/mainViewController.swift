@@ -58,10 +58,12 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     
-    
+
     
     let users = realm.objects(User)
     let accounts = realm.objects(Account)
+    
+    //this is a test
     
     
    
