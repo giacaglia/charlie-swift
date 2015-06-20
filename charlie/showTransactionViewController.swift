@@ -13,14 +13,25 @@ class showTransactionViewController: UIViewController {
 
     var transactionIndex:Int = 0
     
+    @IBOutlet weak var merchantLabel: UILabel!
    
+       
+   
+
+    @IBOutlet weak var accountNumberLabel: UILabel!
+   
+    
+    
+    @IBOutlet weak var accountNameLabel: UILabel!
+    
+    
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
     @IBOutlet weak var lastFourLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
    
-    @IBOutlet weak var accountNameLabel: UILabel!
+
     
     @IBOutlet weak var addressLabel: UILabel!
     
@@ -36,10 +47,17 @@ class showTransactionViewController: UIViewController {
         super.viewDidLoad()
         
 
+        let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
+    
+        accountNumberLabel.text = account[0].meta.number
+        accountNameLabel.text = account[0].meta.name
+        
+        
         descriptionLabel.text = transactionItems[transactionIndex].name
         dateLabel.text = transactionItems[transactionIndex].date
         addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city), \(transactionItems[transactionIndex].meta.location.state), \(transactionItems[transactionIndex].meta.location.zip)"
         
+        merchantLabel.text = transactionItems[transactionIndex].name
         
         var lat = transactionItems[transactionIndex].meta.location.coordinates.lat
         var lon = transactionItems[transactionIndex].meta.location.coordinates.lon

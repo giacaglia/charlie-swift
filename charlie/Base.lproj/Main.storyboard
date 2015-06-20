@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -410,7 +410,7 @@
                                 <rect key="frame" x="0.0" y="385" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCOUNT NUMBER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hke-jc-fb2">
-                                        <rect key="frame" x="20" y="15" width="123" height="18"/>
+                                        <rect key="frame" x="20" y="15" width="122.5" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="59" id="HO8-Wl-FW5"/>
                                             <constraint firstAttribute="height" constant="18" id="eoz-TP-o8f"/>
@@ -420,15 +420,23 @@
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="eoz-TP-o8f"/>
                                                 <exclude reference="HO8-Wl-FW5"/>
+                                                <exclude reference="eoz-TP-o8f"/>
                                             </mask>
                                         </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255 Summer St" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6f1-Yh-8cO">
+                                        <rect key="frame" x="488" y="13" width="91.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                        <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="6f1-Yh-8cO" secondAttribute="trailing" constant="20" id="1KX-oK-vgj"/>
                                     <constraint firstItem="hke-jc-fb2" firstAttribute="top" secondItem="iLY-jN-twa" secondAttribute="top" constant="15" id="b7Q-Gg-Mi7"/>
+                                    <constraint firstAttribute="centerY" secondItem="6f1-Yh-8cO" secondAttribute="centerY" id="jx6-AW-8gs"/>
                                     <constraint firstAttribute="height" constant="45" id="pt2-WV-BhG"/>
                                     <constraint firstItem="hke-jc-fb2" firstAttribute="leading" secondItem="iLY-jN-twa" secondAttribute="leading" constant="20" id="xsd-Fi-mmk"/>
                                 </constraints>
@@ -452,19 +460,27 @@
                                             </mask>
                                         </variation>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255 Summer St" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8D-Y9-Nfi">
+                                        <rect key="frame" x="488.5" y="14" width="91.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                        <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="DcO-RX-QLd"/>
                                     <constraint firstItem="7MJ-TE-4dn" firstAttribute="leading" secondItem="Hka-Kj-XX4" secondAttribute="leading" constant="20" id="I6z-52-cBi"/>
+                                    <constraint firstAttribute="centerY" secondItem="P8D-Y9-Nfi" secondAttribute="centerY" id="X85-12-iva"/>
                                     <constraint firstItem="7MJ-TE-4dn" firstAttribute="top" secondItem="Hka-Kj-XX4" secondAttribute="top" constant="15" id="gjR-UG-XFj"/>
+                                    <constraint firstAttribute="trailing" secondItem="P8D-Y9-Nfi" secondAttribute="trailing" constant="20" id="x3P-Er-ixq"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJD-AZ-NdV" userLabel="Merchant">
                                 <rect key="frame" x="0.0" y="430" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MERCHANT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSB-xk-fsd">
-                                        <rect key="frame" x="20" y="15" width="73" height="18"/>
+                                        <rect key="frame" x="20" y="15" width="72.5" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="59" id="WxY-z8-7CQ"/>
                                             <constraint firstAttribute="height" constant="18" id="pVB-LQ-jG9"/>
@@ -474,17 +490,25 @@
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="pVB-LQ-jG9"/>
                                                 <exclude reference="WxY-z8-7CQ"/>
+                                                <exclude reference="pVB-LQ-jG9"/>
                                             </mask>
                                         </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255 Summer St" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2q-Z8-WuK">
+                                        <rect key="frame" x="488" y="13" width="91.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                        <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="z2q-Z8-WuK" secondAttribute="trailing" constant="20" id="8fv-wM-rPW"/>
                                     <constraint firstAttribute="height" constant="45" id="QOZ-rT-Gtm"/>
                                     <constraint firstItem="xSB-xk-fsd" firstAttribute="leading" secondItem="DJD-AZ-NdV" secondAttribute="leading" constant="20" id="p3p-vF-Ucx"/>
                                     <constraint firstItem="xSB-xk-fsd" firstAttribute="top" secondItem="DJD-AZ-NdV" secondAttribute="top" constant="15" id="p7W-j0-6Dw"/>
+                                    <constraint firstAttribute="centerY" secondItem="z2q-Z8-WuK" secondAttribute="centerY" id="tcV-Tx-u4R"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2I2-mU-906" userLabel="addressView">
@@ -507,7 +531,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255 Summer St" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tke-ux-yNr">
-                                        <rect key="frame" x="488" y="8" width="92" height="18"/>
+                                        <rect key="frame" x="488" y="8" width="91.5" height="18"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                         <color key="textColor" red="0.50588235294117645" green="0.50588235294117645" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -515,12 +539,20 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="tke-ux-yNr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2I2-mU-906" secondAttribute="top" constant="8" id="49r-LV-XmT"/>
                                     <constraint firstItem="47W-wS-t9B" firstAttribute="top" secondItem="2I2-mU-906" secondAttribute="top" constant="15" id="AKf-MU-K9x"/>
                                     <constraint firstAttribute="height" constant="45" id="JHi-Zk-tqx"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tke-ux-yNr" secondAttribute="trailing" constant="20" id="Wfw-Ia-2eX"/>
                                     <constraint firstItem="47W-wS-t9B" firstAttribute="leading" secondItem="2I2-mU-906" secondAttribute="leading" constant="20" id="cVG-fR-8h5"/>
                                     <constraint firstItem="tke-ux-yNr" firstAttribute="top" secondItem="2I2-mU-906" secondAttribute="top" constant="8" id="oP3-LE-Idr"/>
                                     <constraint firstAttribute="trailing" secondItem="tke-ux-yNr" secondAttribute="trailing" constant="20" id="uY9-go-fs4"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="49r-LV-XmT"/>
+                                        <exclude reference="Wfw-Ia-2eX"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0Wu-fy-D9f">
                                 <rect key="frame" x="0.0" y="520" width="600" height="80"/>
@@ -679,10 +711,13 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="accountNameLabel" destination="P8D-Y9-Nfi" id="mxN-8W-uVM"/>
+                        <outlet property="accountNumberLabel" destination="6f1-Yh-8cO" id="uAe-Jg-4ZX"/>
                         <outlet property="addressLabel" destination="tke-ux-yNr" id="hee-LZ-8e1"/>
                         <outlet property="dateLabel" destination="3Lg-fc-14x" id="EcC-iL-TCn"/>
                         <outlet property="descriptionLabel" destination="HhE-Tx-QpR" id="6Lo-sk-Zju"/>
                         <outlet property="mapView" destination="0Wu-fy-D9f" id="6fB-2W-5aY"/>
+                        <outlet property="merchantLabel" destination="z2q-Z8-WuK" id="c5y-zb-TCG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C1-NQ-pQe" userLabel="First Responder" sceneMemberID="firstResponder"/>
