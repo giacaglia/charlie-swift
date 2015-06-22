@@ -6,4 +6,21 @@
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class cardTableViewCell: UITableViewCell {
+    
+    
+    
+    
+  
+    
+    @IBOutlet weak var cardView: UIView!
+    
+    @IBOutlet weak var cardName: UILabel!
+    
+    @IBOutlet weak var cardBalance: UILabel!
+    
+    
+    @IBOutlet weak var cardAccountNumber: UILabel!
+}
