@@ -247,7 +247,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         dividerView.backgroundColor = listGreen
         topView.backgroundColor = listGreen
     
-        moneyCountSubHeadLabel.text = "Approved"
+        moneyCountSubHeadLabel.text = "cleared"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
@@ -275,7 +275,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = listBlue
         dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "to aprrove"
+        moneyCountSubHeadLabel.text = "to clear"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
@@ -312,7 +312,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = listRed
         dividerView.backgroundColor = listRed
-        moneyCountSubHeadLabel.text = "Flagged"
+        moneyCountSubHeadLabel.text = "to resolve"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
