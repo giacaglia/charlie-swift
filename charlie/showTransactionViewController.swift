@@ -55,7 +55,7 @@ class showTransactionViewController: UIViewController {
         
         descriptionLabel.text = transactionItems[transactionIndex].name
         dateLabel.text = transactionItems[transactionIndex].date
-        addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city), \(transactionItems[transactionIndex].meta.location.state), \(transactionItems[transactionIndex].meta.location.zip)"
+        addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
         
         merchantLabel.text = transactionItems[transactionIndex].name
         

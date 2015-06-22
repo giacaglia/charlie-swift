@@ -38,7 +38,7 @@ class Account: Object {
 class Meta: Object {
     dynamic var location = Location()
     dynamic var name = ""
-    dynamic var limit = 0
+    //dynamic var limit = 0
     dynamic var number = ""
 }
 
