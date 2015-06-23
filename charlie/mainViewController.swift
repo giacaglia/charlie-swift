@@ -11,7 +11,7 @@ import BladeKit
 import CoreData
 import RealmSwift
 
-var transactionItems = realm.objects(Transaction).filter("status = 0")
+var transactionItems = realm.objects(Transaction).filter("status = 0").sorted("amount", ascending: false)
 
 
 class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -260,6 +260,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 }
                 
+                transactionItems = realm.objects(Transaction).filter("status = 0").sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
                 
                 
