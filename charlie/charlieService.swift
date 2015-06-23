@@ -29,6 +29,45 @@ init(){
 }
 
     
+    func updateAccount(access_token:String, callback: NSDictionary->())
+    {
+        let parameters = [
+            "client_id": client_id,
+            "secret": client_secret,
+            "access_token": access_token
+        ]
+        
+        
+        srConnectGet.httpMethod = .Post
+        srConnectGet.parameters = parameters
+        
+        ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
+            httpStatusCode = response.rawResponse!.statusCode
+            if httpStatusCode == 201 //needs mfa
+            {
+                println(JSON(response.results()))
+            }
+                
+            else //can process data
+            {
+                println(JSON(response.results()))
+            }
+            
+            
+            
+            callback(response.results() as! NSDictionary)
+            
+            
+        })
+        
+        
+        
+        
+        
+        
+        
+    }
+    
     func addAccount(username:String, password:String, bank:String, callback: NSDictionary->())
     {
 

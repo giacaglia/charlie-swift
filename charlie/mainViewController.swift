@@ -94,7 +94,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
             
         else
-        {addAccountButton.hidden = true}
+        {
+            addAccountButton.hidden = true
+            
+            
+        }
         
         
         inboxListButton.tag = 1 //set inbox to default
@@ -226,6 +230,46 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             
         }
+    }
+    
+    
+    
+    @IBAction func refreshAccounts(sender: UIButton) {
+        
+        
+       let access_token = users[0].access_token
+        cService.updateAccount(access_token)
+            {
+              (response) in
+                
+                let accounts = response["accounts"] as! [NSDictionary]
+                realm.write {
+                    // Save one Venue object (and dependents) for each element of the array
+                    for account in accounts {
+                        realm.create(Account.self, value: account, update: true)
+                        println("saved accounts")
+                    }
+                }
+                
+                let transactions = response["transactions"] as! [NSDictionary]
+                realm.write {
+                    // Save one Venue object (and dependents) for each element of the array
+                    for transaction in transactions {
+                        realm.create(Transaction.self, value: transaction, update: true)
+                        println("saved transactions")
+                    }
+                }
+                
+                self.transactionsTable.reloadData()
+                
+                
+            }
+
+        
+        
+        
+        
+        
     }
     
     
