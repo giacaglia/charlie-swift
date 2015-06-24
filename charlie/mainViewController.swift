@@ -33,6 +33,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var menuButton: UIButton!
     
     @IBOutlet weak var cardButton: UIButton!
+    
+    
+    var currentTransactionSwipeID = ""
  
     let checkImage = UIImage(named: "Checkmark-unselelected_small")
     let flagImage = UIImage(named: "Flag-unselelected_small")
@@ -63,14 +66,28 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let users = realm.objects(User)
     let accounts = realm.objects(Account)
     
+    
+    var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
+    
     //this is a test
     
     
+    
+
    
     override func viewDidLoad() {
         super.viewDidLoad()
      
-       
+        
+        
+        
+        DynamicView.backgroundColor=UIColor.blackColor()
+        DynamicView.alpha = 0.5
+        self.view.addSubview(DynamicView)
+        DynamicView.hidden = true
+
+        
+        
         let users = realm.objects(User)
         if users.count  == 0
         {
@@ -85,7 +102,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
 
-        
+        println(realm.path)
         
         if accounts.count  == 0
         {
@@ -108,14 +125,19 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
             {
+                self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+                
                 realm.beginWrite()
                 transactionItems[indexPath!.row].status = 1 //approved
                 realm.commitWrite()
+                
                 tableView.removeCell(cell, duration: 0.3, completion: nil)
                 let transactionSum = self.sumTransactionsCount()
                 let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+                self.performSegueWithIdentifier("showTypePicker", sender: self)
                 
             }
             else
@@ -137,6 +159,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                 
+                
             }
             else
             { tableView.reloadData() }
@@ -149,6 +172,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
         
     }
+    
+  
+    
+
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -204,7 +231,6 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
 
         
-        println(transactionSum)
         return transactionSum
         
         
@@ -225,9 +251,21 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "segueFromMainToDetailView") {
             let viewController = segue.destinationViewController as! showTransactionViewController
+    
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionIndex = indexPath!.row
             
+            
+        }
+        else if (segue.identifier == "showTypePicker") {
+            
+            
+            DynamicView.hidden = false
+         
+            let viewController = segue.destinationViewController as! showTypePickerViewController
+            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            viewController.transactionID = currentTransactionSwipeID
+            viewController.mainVC = self
             
         }
     }
@@ -259,6 +297,15 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         println("saved transactions")
                     }
                 }
+                
+                
+                //run through transactions and see if they can be preliminarly categorized
+                
+                
+                
+                
+                
+                
                 
                 transactionItems = realm.objects(Transaction).filter("status = 0").sorted("date", ascending: false)
                 self.transactionsTable.reloadData()

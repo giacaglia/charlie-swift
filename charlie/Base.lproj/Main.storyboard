@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Gotham-Light.ttf">
@@ -95,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MsK-cp-sCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="395" y="1170"/>
+            <point key="canvasLocation" x="397" y="1211"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="V8V-am-BHm">
@@ -201,7 +202,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Mej-ss-JQX"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -379,6 +380,7 @@
                         <outlet property="topView" destination="yXV-7C-aiq" id="XyY-46-RX1"/>
                         <outlet property="transactionsTable" destination="JmO-hm-sg5" id="Ccw-2S-17q"/>
                         <segue destination="Rxg-kj-fnh" kind="showDetail" identifier="segueFromMainToDetailView" id="DF7-7D-dxJ"/>
+                        <segue destination="071-ho-sdj" kind="presentation" identifier="showTypePicker" modalPresentationStyle="overCurrentContext" id="tRI-2L-w6f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PXk-t0-xo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -554,6 +556,100 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXt-bo-h5s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1688" y="1991"/>
+        </scene>
+        <!--Show Type Picker View Controller-->
+        <scene sceneID="bVf-Ah-jTS">
+            <objects>
+                <viewController id="071-ho-sdj" customClass="showTypePickerViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jtk-pT-4kA"/>
+                        <viewControllerLayoutGuide type="bottom" id="fA0-fH-Taq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TfQ-cn-ilv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m4G-Un-bvl" userLabel="pickerView">
+                                <rect key="frame" x="60" y="60" width="480" height="480"/>
+                                <subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-8P-FYg">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="120"/>
+                                        <state key="normal" title="Income">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="n46-rk-VYY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxT-FG-hXr">
+                                        <rect key="frame" x="0.0" y="367" width="480" height="120"/>
+                                        <state key="normal" title="Bills">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="uJd-Ff-NTV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qn5-gF-0Wl">
+                                        <rect key="frame" x="0.0" y="120" width="480" height="120"/>
+                                        <state key="normal" title="Savings">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="LHA-OB-pu2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
+                                        <rect key="frame" x="0.0" y="248" width="480" height="119"/>
+                                        <state key="normal" title="Spendable">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="sPM-IS-PeU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="qn5-gF-0Wl" firstAttribute="height" secondItem="mMZ-8P-FYg" secondAttribute="height" id="3i7-10-IEU"/>
+                                    <constraint firstItem="TWR-Tq-jXU" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="4Cs-FR-BAz"/>
+                                    <constraint firstAttribute="trailing" secondItem="qxT-FG-hXr" secondAttribute="trailing" id="8U0-km-abr"/>
+                                    <constraint firstAttribute="height" secondItem="mMZ-8P-FYg" secondAttribute="height" multiplier="10:2.5" constant="1" id="CFW-8R-Zbc"/>
+                                    <constraint firstAttribute="trailing" secondItem="mMZ-8P-FYg" secondAttribute="trailing" id="DKC-DP-Gt2"/>
+                                    <constraint firstItem="TWR-Tq-jXU" firstAttribute="top" secondItem="qn5-gF-0Wl" secondAttribute="bottom" constant="8" id="c23-h2-2Qt"/>
+                                    <constraint firstAttribute="trailing" secondItem="qn5-gF-0Wl" secondAttribute="trailing" id="cPa-M6-p1M"/>
+                                    <constraint firstItem="TWR-Tq-jXU" firstAttribute="height" secondItem="qn5-gF-0Wl" secondAttribute="height" id="dzb-ML-crT"/>
+                                    <constraint firstItem="qxT-FG-hXr" firstAttribute="height" secondItem="TWR-Tq-jXU" secondAttribute="height" id="ewI-Bn-WVl"/>
+                                    <constraint firstItem="qn5-gF-0Wl" firstAttribute="top" secondItem="mMZ-8P-FYg" secondAttribute="bottom" id="gso-tt-v93"/>
+                                    <constraint firstItem="qxT-FG-hXr" firstAttribute="top" secondItem="TWR-Tq-jXU" secondAttribute="bottom" id="hyw-7E-M8b"/>
+                                    <constraint firstItem="qxT-FG-hXr" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="oLU-qw-SgV"/>
+                                    <constraint firstItem="mMZ-8P-FYg" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="rUr-x4-jf9"/>
+                                    <constraint firstItem="mMZ-8P-FYg" firstAttribute="top" secondItem="m4G-Un-bvl" secondAttribute="top" id="s6j-4b-Pra"/>
+                                    <constraint firstAttribute="height" secondItem="qn5-gF-0Wl" secondAttribute="height" multiplier="10:2.5" id="tFC-Ks-6CO"/>
+                                    <constraint firstAttribute="trailing" secondItem="TWR-Tq-jXU" secondAttribute="trailing" id="xBl-Mm-MnN"/>
+                                    <constraint firstItem="qn5-gF-0Wl" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="yli-qf-Acn"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="tFC-Ks-6CO"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="m4G-Un-bvl" secondAttribute="centerX" id="bde-YZ-51l"/>
+                            <constraint firstAttribute="height" secondItem="m4G-Un-bvl" secondAttribute="height" multiplier="10:8" id="nVZ-XE-Ldh"/>
+                            <constraint firstAttribute="width" secondItem="m4G-Un-bvl" secondAttribute="width" multiplier="10:8" id="rcq-dy-m2o"/>
+                            <constraint firstAttribute="centerY" secondItem="m4G-Un-bvl" secondAttribute="centerY" id="wRC-bI-hsW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pickerView" destination="m4G-Un-bvl" id="fpg-7Q-XYB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="neP-8f-cEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="100" y="2740"/>
         </scene>
         <!--Show Transaction View Controller-->
         <scene sceneID="evQ-qU-ZGx">
@@ -892,7 +988,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C1-NQ-pQe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="424" y="2754"/>
+            <point key="canvasLocation" x="720" y="2740"/>
         </scene>
     </scenes>
     <resources>

@@ -59,6 +59,7 @@ class Transaction: Object {
     dynamic var name = ""
     dynamic var status = 0
     dynamic var meta = Meta()
+    dynamic var ctype = 0
     
     
     override static func primaryKey() -> String? {
@@ -67,6 +68,9 @@ class Transaction: Object {
     }
     
 }
+
+
+
 
 class Location: Object {
     dynamic var coordinates = Coordinates()

@@ -39,6 +39,7 @@
 		09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7531B21F0AD005A40DA /* LaunchScreen.xib */; };
 		09C2A7611B21F0AD005A40DA /* charlieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A7601B21F0AD005A40DA /* charlieTests.swift */; };
 		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
+		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		09C2A75F1B21F0AD005A40DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C2A7601B21F0AD005A40DA /* charlieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = charlieTests.swift; sourceTree = "<group>"; };
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
+		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */,
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
+				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = UFDBYP5MQ8;
 					};
 					09C2A7591B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -460,6 +464,7 @@
 				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
+				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
 				090BD3451B25089300F26E78 /* mainViewController.swift in Sources */,
 				091620281B2DA2330004C781 /* SBGestureTableViewCellSideView.swift in Sources */,
@@ -610,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
@@ -628,6 +634,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
