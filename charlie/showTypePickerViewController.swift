@@ -12,36 +12,58 @@ class showTypePickerViewController: UIViewController {
     
     
     
+    var transactionID:String = ""
+    var mainVC:mainViewController!
+    var transactionToUpdate  = realm.objects(Transaction)
+    
     @IBOutlet weak var pickerView: UIView!
+    @IBOutlet weak var transactionNameLabel: UILabel!
     
-      var transactionID:String = ""
-      var mainVC:mainViewController!
-    
-    
+   
     override func viewDidLoad() {
       super.viewDidLoad()
         
-      pickerView.layer.cornerRadius = 20
+    transactionToUpdate  = realm.objects(Transaction).filter("_id = '\(transactionID)'")
+    transactionNameLabel.text = transactionToUpdate[0].name
         
     }
     
     
     @IBAction func spendableButtonPress(sender: UIButton) {
- 
-    
-    let transactionToUpdate  = realm.objects(Transaction).filter("_id = '\(transactionID)'")
-        
-    realm.beginWrite()
-        transactionToUpdate[0].ctype = Int(sender.tag)
-    realm.commitWrite()
-        
-        
-    dismissViewControllerAnimated(true, completion: nil)
-    mainVC.DynamicView.hidden = true
-    
-    }
-   
-    
 
+       
+        realm.beginWrite()
+            transactionToUpdate[0].ctype = Int(sender.tag)
+        realm.commitWrite()
+        dismissViewControllerAnimated(true, completion: nil)
+        mainVC.blurEffectView.hidden = true
+        
+        
+        //check to see if others with same name exist
+        
+       var sameTransactions = realm.objects(Transaction).filter("name = '\(transactionToUpdate[0].name)'")
+        
+       if sameTransactions.count > 0
+        {
+        
+          for trans in sameTransactions
+            {
+                realm.beginWrite()
+                    trans.ctype = Int(sender.tag)
+                realm.commitWrite()
+            }
+            
+            //requery to update mainview table with changes and re-load 
+            transactionItems = realm.objects(Transaction).filter("status = 0").sorted("amount", ascending: false)
+            mainVC.transactionsTable.reloadData()
+       
+        }
+        
+        
+       println(sameTransactions.count)
+        
+        
+        
+    }
 
 }

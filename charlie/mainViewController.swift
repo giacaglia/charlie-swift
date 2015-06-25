@@ -71,20 +71,43 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //this is a test
     
-    
-    
 
-   
+    var blurEffect:UIBlurEffect!
+    var blurEffectView:UIVisualEffectView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         
         
+
         
-        DynamicView.backgroundColor=UIColor.blackColor()
-        DynamicView.alpha = 0.5
-        self.view.addSubview(DynamicView)
-        DynamicView.hidden = true
+            blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        
+            blurEffectView = UIVisualEffectView(effect: blurEffect)
+ 
+        
+        
+            blurEffectView.frame = view.bounds //view is self.view in a UIViewController
+            view.addSubview(blurEffectView)
+            //if you have more UIViews on screen, use insertSubview:belowSubview: to place it underneath the lowest view
+            
+            //add auto layout constraints so that the blur fills the screen upon rotating device
+            blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0))
+            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0))
+            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0))
+            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0))
+        
+        
+          blurEffectView.hidden = true
+        
+    
+        
+//        DynamicView.backgroundColor=UIColor.darkGrayColor()
+//        DynamicView.alpha = 0.9
+//        self.view.addSubview(DynamicView)
+        //DynamicView.hidden = true
 
         
         
@@ -122,22 +145,41 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
+          
             let indexPath = tableView.indexPathForCell(cell)
+          
+            tableView.removeCell(cell, duration: 0.3, completion: nil)
+            let transactionSum = self.sumTransactionsCount()
+            let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+            let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+            self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+            
+
             if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
             {
                 self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
                 
+                
+                
+                if self.inboxListButton.tag == 1 && transactionItems[indexPath!.row].ctype == 0//only show reward or picker if in inbox
+                {
+                    //                    var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                    //                    if rowCount == 1
+                    //                    {
+                    //                        println("show reward window")
+                    //                    }
+                    self.performSegueWithIdentifier("showTypePicker", sender: self)
+                }
+                
+                
                 realm.beginWrite()
                 transactionItems[indexPath!.row].status = 1 //approved
                 realm.commitWrite()
+               
                 
-                tableView.removeCell(cell, duration: 0.3, completion: nil)
-                let transactionSum = self.sumTransactionsCount()
-                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
-                let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                 
-                self.performSegueWithIdentifier("showTypePicker", sender: self)
+                
+                
                 
             }
             else
@@ -158,6 +200,16 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+                
+                var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                
+                
+                if rowCount == 1
+                {
+                    println("show reward window")
+                }
+                
                 
                 
             }
@@ -184,6 +236,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        println(indexPath.row)
+        println(transactionItems[indexPath.row].ctype)
+        println(transactionItems[indexPath.row].name)
         
         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         
@@ -260,7 +316,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         else if (segue.identifier == "showTypePicker") {
             
             
-            DynamicView.hidden = false
+           blurEffectView.hidden = false
          
             let viewController = segue.destinationViewController as! showTypePickerViewController
             let indexPath = self.transactionsTable.indexPathForSelectedRow()

@@ -13,6 +13,9 @@
         <mutableArray key="Gotham-XLight.ttf">
             <string>GothamExtraLight</string>
         </mutableArray>
+        <mutableArray key="GothamRounded-Book.otf">
+            <string>GothamRounded-Book</string>
+        </mutableArray>
         <mutableArray key="GothamRounded-Light.otf">
             <string>GothamRounded-Light</string>
             <string>GothamRounded-Light</string>
@@ -569,12 +572,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rs4-gf-bXm" userLabel="Name">
+                                <rect key="frame" x="60" y="45" width="480" height="105"/>
+                                <fontDescription key="fontDescription" name="GothamRounded-Book" family="Gotham Rounded" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m4G-Un-bvl" userLabel="pickerView">
-                                <rect key="frame" x="60" y="60" width="480" height="480"/>
+                                <rect key="frame" x="16" y="170" width="568" height="370"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-8P-FYg">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="74"/>
                                         <state key="normal" title="Income">
+                                            <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -582,8 +592,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxT-FG-hXr">
-                                        <rect key="frame" x="0.0" y="367" width="480" height="120"/>
+                                        <rect key="frame" x="0.0" y="229" width="568" height="74"/>
                                         <state key="normal" title="Bills">
+                                            <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -591,8 +602,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qn5-gF-0Wl">
-                                        <rect key="frame" x="0.0" y="120" width="480" height="120"/>
+                                        <rect key="frame" x="0.0" y="74" width="568" height="74"/>
                                         <state key="normal" title="Savings">
+                                            <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -600,51 +612,64 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
-                                        <rect key="frame" x="0.0" y="248" width="480" height="119"/>
+                                        <rect key="frame" x="0.0" y="156" width="568" height="73"/>
                                         <state key="normal" title="Spendable">
+                                            <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="sPM-IS-PeU"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EsE-iy-ov4">
+                                        <rect key="frame" x="0.0" y="303" width="568" height="74"/>
+                                        <state key="normal" title="Don't Count">
+                                            <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="hGR-bv-1sM"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="qn5-gF-0Wl" firstAttribute="height" secondItem="mMZ-8P-FYg" secondAttribute="height" id="3i7-10-IEU"/>
                                     <constraint firstItem="TWR-Tq-jXU" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="4Cs-FR-BAz"/>
                                     <constraint firstAttribute="trailing" secondItem="qxT-FG-hXr" secondAttribute="trailing" id="8U0-km-abr"/>
-                                    <constraint firstAttribute="height" secondItem="mMZ-8P-FYg" secondAttribute="height" multiplier="10:2.5" constant="1" id="CFW-8R-Zbc"/>
+                                    <constraint firstAttribute="height" secondItem="mMZ-8P-FYg" secondAttribute="height" multiplier="10:2" constant="1" id="CFW-8R-Zbc"/>
                                     <constraint firstAttribute="trailing" secondItem="mMZ-8P-FYg" secondAttribute="trailing" id="DKC-DP-Gt2"/>
+                                    <constraint firstItem="EsE-iy-ov4" firstAttribute="top" secondItem="qxT-FG-hXr" secondAttribute="bottom" id="VOs-wk-Bhq"/>
                                     <constraint firstItem="TWR-Tq-jXU" firstAttribute="top" secondItem="qn5-gF-0Wl" secondAttribute="bottom" constant="8" id="c23-h2-2Qt"/>
                                     <constraint firstAttribute="trailing" secondItem="qn5-gF-0Wl" secondAttribute="trailing" id="cPa-M6-p1M"/>
+                                    <constraint firstItem="qxT-FG-hXr" firstAttribute="height" secondItem="EsE-iy-ov4" secondAttribute="height" id="cdJ-vN-ZyP"/>
                                     <constraint firstItem="TWR-Tq-jXU" firstAttribute="height" secondItem="qn5-gF-0Wl" secondAttribute="height" id="dzb-ML-crT"/>
                                     <constraint firstItem="qxT-FG-hXr" firstAttribute="height" secondItem="TWR-Tq-jXU" secondAttribute="height" id="ewI-Bn-WVl"/>
                                     <constraint firstItem="qn5-gF-0Wl" firstAttribute="top" secondItem="mMZ-8P-FYg" secondAttribute="bottom" id="gso-tt-v93"/>
                                     <constraint firstItem="qxT-FG-hXr" firstAttribute="top" secondItem="TWR-Tq-jXU" secondAttribute="bottom" id="hyw-7E-M8b"/>
+                                    <constraint firstAttribute="trailing" secondItem="EsE-iy-ov4" secondAttribute="trailing" id="nSf-Qv-WZw"/>
+                                    <constraint firstItem="EsE-iy-ov4" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="nZP-aE-TxQ"/>
                                     <constraint firstItem="qxT-FG-hXr" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="oLU-qw-SgV"/>
                                     <constraint firstItem="mMZ-8P-FYg" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="rUr-x4-jf9"/>
                                     <constraint firstItem="mMZ-8P-FYg" firstAttribute="top" secondItem="m4G-Un-bvl" secondAttribute="top" id="s6j-4b-Pra"/>
-                                    <constraint firstAttribute="height" secondItem="qn5-gF-0Wl" secondAttribute="height" multiplier="10:2.5" id="tFC-Ks-6CO"/>
                                     <constraint firstAttribute="trailing" secondItem="TWR-Tq-jXU" secondAttribute="trailing" id="xBl-Mm-MnN"/>
                                     <constraint firstItem="qn5-gF-0Wl" firstAttribute="leading" secondItem="m4G-Un-bvl" secondAttribute="leading" id="yli-qf-Acn"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="tFC-Ks-6CO"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="m4G-Un-bvl" secondAttribute="centerX" id="bde-YZ-51l"/>
-                            <constraint firstAttribute="height" secondItem="m4G-Un-bvl" secondAttribute="height" multiplier="10:8" id="nVZ-XE-Ldh"/>
-                            <constraint firstAttribute="width" secondItem="m4G-Un-bvl" secondAttribute="width" multiplier="10:8" id="rcq-dy-m2o"/>
-                            <constraint firstAttribute="centerY" secondItem="m4G-Un-bvl" secondAttribute="centerY" id="wRC-bI-hsW"/>
+                            <constraint firstAttribute="width" secondItem="Rs4-gf-bXm" secondAttribute="width" multiplier="10:8" id="9LM-g9-pSx"/>
+                            <constraint firstItem="m4G-Un-bvl" firstAttribute="top" secondItem="Jtk-pT-4kA" secondAttribute="bottom" constant="150" id="BPi-yC-imj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="m4G-Un-bvl" secondAttribute="trailing" id="I0n-9a-MvW"/>
+                            <constraint firstItem="m4G-Un-bvl" firstAttribute="leading" secondItem="TfQ-cn-ilv" secondAttribute="leadingMargin" id="Mt8-GG-myh"/>
+                            <constraint firstAttribute="centerX" secondItem="Rs4-gf-bXm" secondAttribute="centerX" id="dBo-Fe-fwa"/>
+                            <constraint firstItem="fA0-fH-Taq" firstAttribute="top" secondItem="m4G-Un-bvl" secondAttribute="bottom" constant="60" id="epI-IM-rBt"/>
+                            <constraint firstItem="Rs4-gf-bXm" firstAttribute="top" secondItem="Jtk-pT-4kA" secondAttribute="bottom" constant="25" id="kvW-3k-syV"/>
+                            <constraint firstItem="m4G-Un-bvl" firstAttribute="top" secondItem="Rs4-gf-bXm" secondAttribute="bottom" constant="20" id="yjR-tR-k1s"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="pickerView" destination="m4G-Un-bvl" id="fpg-7Q-XYB"/>
+                        <outlet property="transactionNameLabel" destination="Rs4-gf-bXm" id="ZYZ-Ay-muH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="neP-8f-cEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
