@@ -74,7 +74,7 @@ class showTypePickerViewController: UIViewController {
             {
                 realm.beginWrite()
                     trans.ctype = Int(sender.tag)
-                if sameTransactions.count > 10
+                if sameTransactions.count > 1
                 {
 
                     trans.status = 1

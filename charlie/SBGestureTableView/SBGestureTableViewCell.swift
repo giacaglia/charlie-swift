@@ -72,17 +72,12 @@ class SBGestureTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
     
     
     @IBOutlet weak var nameCellLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var amountCellLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var dateCellLabel: UILabel!
    
+    @IBOutlet weak var categoryImageView: UIImageView!
     
-    @IBOutlet weak var bankCellLabel: UILabel!
+  
     
     func setup() {
         panGestureRecognizer.addTarget(self, action: "slideCell:")

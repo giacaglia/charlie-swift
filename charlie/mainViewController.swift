@@ -12,8 +12,9 @@ import CoreData
 import RealmSwift
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.MonthCalendarUnit, value: -2, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.MonthCalendarUnit, value: -1, toDate: NSDate(), options: nil)!
 let status = 0
+//let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
 let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
@@ -88,7 +89,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
 
     
-        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds //view is self.view in a UIViewController
         view.addSubview(blurEffectView)
@@ -251,7 +252,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.amountCellLabel.text = formatCurrency(transactionItems[indexPath.row].amount)
         
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. Browse online to get a format that fits your needs.
+        dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
         var dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
         cell.dateCellLabel.text = dateString
         //cell.selectionStyle = .None
@@ -261,29 +262,29 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
          if transactionItems[indexPath.row].ctype ==  1
          {
-            cell.bankCellLabel.text  = "Income"
+            cell.categoryImageView.image = UIImage(contentsOfFile: "Money Bag-50")
          }
          else if transactionItems[indexPath.row].ctype ==  2
          {
-            cell.bankCellLabel.text  = "Spendable"
-            
+             cell.categoryImageView.image = UIImage(named:"Expensive 2-50")
+           
         }
          else if transactionItems[indexPath.row].ctype ==  3
          {
-            cell.bankCellLabel.text  = "Bills"
+            cell.categoryImageView.image = UIImage(named:"Bill-50")
             
             }
          else if transactionItems[indexPath.row].ctype ==  4
          {
-             cell.bankCellLabel.text  = "Savings"
+            cell.categoryImageView.image = UIImage(named:"Money Box-50")
          }
          else if transactionItems[indexPath.row].ctype ==  5
          {
-             cell.bankCellLabel.text  = "Don't Count"
+            cell.categoryImageView.image = UIImage(named:"Money Transfer-50")
         }
          else if transactionItems[indexPath.row].ctype ==  0
          {
-            cell.bankCellLabel.text  = ""
+            cell.categoryImageView.image = nil
         }
         
 
