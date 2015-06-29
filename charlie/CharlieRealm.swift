@@ -8,6 +8,7 @@
 
 
 import RealmSwift
+import Foundation
 
 class User: Object {
     dynamic var email = ""
@@ -55,7 +56,7 @@ class Transaction: Object {
     dynamic var amount:Double  = 0.0
     dynamic var pending = true
     dynamic var category_id = ""
-    dynamic var date = ""
+    dynamic var date =  NSDate()
     dynamic var name = ""
     dynamic var status = 0
     dynamic var meta = Meta()

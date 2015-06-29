@@ -11,7 +11,11 @@ import BladeKit
 import CoreData
 import RealmSwift
 
-var transactionItems = realm.objects(Transaction).filter("status = 0").sorted("amount", ascending: false)
+
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.MonthCalendarUnit, value: -2, toDate: NSDate(), options: nil)!
+let status = 0
+let inboxPredicate = NSPredicate(format: "status = %i", status)
+var transactionItems = realm.objects(Transaction)
 
 
 class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -36,6 +40,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     var currentTransactionSwipeID = ""
+    var currentTransactionCell:SBGestureTableViewCell!
  
     let checkImage = UIImage(named: "Checkmark-unselelected_small")
     let flagImage = UIImage(named: "Flag-unselelected_small")
@@ -79,37 +84,23 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
 
-        
-            blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        
-            blurEffectView = UIVisualEffectView(effect: blurEffect)
- 
-        
-        
-            blurEffectView.frame = view.bounds //view is self.view in a UIViewController
-            view.addSubview(blurEffectView)
-            //if you have more UIViews on screen, use insertSubview:belowSubview: to place it underneath the lowest view
-            
-            //add auto layout constraints so that the blur fills the screen upon rotating device
-            blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0))
-            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0))
-            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0))
-            view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0))
-        
-        
-          blurEffectView.hidden = true
-        
     
-        
-//        DynamicView.backgroundColor=UIColor.darkGrayColor()
-//        DynamicView.alpha = 0.9
-//        self.view.addSubview(DynamicView)
-        //DynamicView.hidden = true
+        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds //view is self.view in a UIViewController
+        view.addSubview(blurEffectView)
 
+        //add auto layout constraints so that the blur fills the screen upon rotating device
+        blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0))
         
+        blurEffectView.hidden = true
         
         let users = realm.objects(User)
         if users.count  == 0
@@ -137,53 +128,63 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         {
             addAccountButton.hidden = true
             
-            
+            if transactionItems.count == 0
+            {
+                println("SHOW REWARD")
+                
+                var  transactionItemsReward = realm.objects(Transaction).filter("status = 1")
+                
+                var incomeSum:Double = 0.0
+                var spendableSum:Double = 0.0
+                var billsSum:Double = 0.0
+                
+                    
+                for transaction in transactionItemsReward
+                 {
+                    if transaction.ctype == 1
+                    {incomeSum +=  transaction.amount}
+                    if transaction.ctype == 2
+                    {spendableSum +=  transaction.amount}
+                    if transaction.ctype == 3
+                    {billsSum +=  transaction.amount}
+                }
+                
+                println("INCOME \(incomeSum)")
+                println("SPENDABLE \(spendableSum)")
+                println("BILLS \(billsSum)")
+
+            }
         }
         
         
         inboxListButton.tag = 1 //set inbox to default
-    
-        
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-          
-            let indexPath = tableView.indexPathForCell(cell)
-          
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-            let transactionSum = self.sumTransactionsCount()
-            let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
-            let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-            self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-            
-
-            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
+        let indexPath = tableView.indexPathForCell(cell)
+        if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
+        {
+            self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+            self.currentTransactionCell = cell
+            if self.inboxListButton.tag == 1 && transactionItems[indexPath!.row].ctype == 0
+                //only show reward or picker if in inbox
             {
-                self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
-                
-                
-                
-                if self.inboxListButton.tag == 1 && transactionItems[indexPath!.row].ctype == 0//only show reward or picker if in inbox
-                {
-                    //                    var rowCount = Int(tableView.numberOfRowsInSection(0).value)
-                    //                    if rowCount == 1
-                    //                    {
-                    //                        println("show reward window")
-                    //                    }
-                    self.performSegueWithIdentifier("showTypePicker", sender: self)
-                }
-                
-                
-                realm.beginWrite()
-                transactionItems[indexPath!.row].status = 1 //approved
-                realm.commitWrite()
-               
-                
-                
-                
-                
-                
+                self.performSegueWithIdentifier("showTypePicker", sender: self)
             }
-            else
-            { tableView.reloadData() }
+            else //already has a category just save and don't show list
+            {
+                realm.beginWrite()
+                    transactionItems[indexPath!.row].status = 1
+                realm.commitWrite()
+                
+                tableView.removeCell(cell, duration: 0.3, completion: nil)
+                
+                let transactionSum = self.sumTransactionsCount()
+                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+            }
+        }
+        else
+        { tableView.reloadData() }
         
         }
        
@@ -209,13 +210,12 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 {
                     println("show reward window")
                 }
-                
-                
-                
             }
             else
             { tableView.reloadData() }
         }
+        
+        
         
         topView.backgroundColor = listBlue
         let transactionSum = sumTransactionsCount()
@@ -225,11 +225,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-  
-    
 
-    
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactionItems.count
     }
@@ -240,7 +236,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         println(indexPath.row)
         println(transactionItems[indexPath.row].ctype)
         println(transactionItems[indexPath.row].name)
-        
+         blurEffectView.hidden = false  
+
         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         
     }
@@ -252,9 +249,46 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         cell.nameCellLabel.text = transactionItems[indexPath.row].name
         cell.amountCellLabel.text = formatCurrency(transactionItems[indexPath.row].amount)
-        cell.dateCellLabel.text = transactionItems[indexPath.row].date
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. Browse online to get a format that fits your needs.
+        var dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+        cell.dateCellLabel.text = dateString
         //cell.selectionStyle = .None
        
+        
+        
+            
+         if transactionItems[indexPath.row].ctype ==  1
+         {
+            cell.bankCellLabel.text  = "Income"
+         }
+         else if transactionItems[indexPath.row].ctype ==  2
+         {
+            cell.bankCellLabel.text  = "Spendable"
+            
+        }
+         else if transactionItems[indexPath.row].ctype ==  3
+         {
+            cell.bankCellLabel.text  = "Bills"
+            
+            }
+         else if transactionItems[indexPath.row].ctype ==  4
+         {
+             cell.bankCellLabel.text  = "Savings"
+         }
+         else if transactionItems[indexPath.row].ctype ==  5
+         {
+             cell.bankCellLabel.text  = "Don't Count"
+        }
+         else if transactionItems[indexPath.row].ctype ==  0
+         {
+            cell.bankCellLabel.text  = ""
+        }
+        
+
+            
+        
         
         if inboxListButton.tag == 1
         {cell.amountCellLabel.textColor = listBlue}
@@ -307,7 +341,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "segueFromMainToDetailView") {
             let viewController = segue.destinationViewController as! showTransactionViewController
-    
+            viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionIndex = indexPath!.row
             
@@ -319,13 +353,43 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
            blurEffectView.hidden = false
          
             let viewController = segue.destinationViewController as! showTypePickerViewController
-            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            //let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionID = currentTransactionSwipeID
+            viewController.transactionCell = currentTransactionCell
             viewController.mainVC = self
+
             
         }
     }
     
+    
+    
+    func convertDate(date:String) -> NSDate
+    {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    
+    func cleanName(name:String) -> String{
+        
+        var stringlength = count(name)
+        
+        var ierror: NSError?
+        var regex:NSRegularExpression = NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
+        
+        var regex2:NSRegularExpression = NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
+        
+        var modString = regex.stringByReplacingMatchesInString(name, options: nil, range: NSMakeRange(0, stringlength), withTemplate: "")
+        
+        var stringlength2 = count(modString)
+        
+        var modString2 = regex2.stringByReplacingMatchesInString(modString, options: nil, range: NSMakeRange(0, stringlength2), withTemplate: "")
+        
+        return modString2
+        
+    }
     
     
     @IBAction func refreshAccounts(sender: UIButton) {
@@ -349,6 +413,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 realm.write {
                     // Save one Venue object (and dependents) for each element of the array
                     for transaction in transactions {
+                        
+                        
+                        //convert string to date before insert
+                        var dictDate = transaction.valueForKey("date") as? String
+                        var modifiedDate = self.convertDate(dictDate!)
+                        transaction.setValue(modifiedDate, forKey: "date")
+                        
+                        
                         realm.create(Transaction.self, value: transaction, update: true)
                         println("saved transactions")
                     }
@@ -363,7 +435,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 
                 
-                transactionItems = realm.objects(Transaction).filter("status = 0").sorted("date", ascending: false)
+                transactionItems = realm.objects(Transaction).filter(inboxPredicate)
                 self.transactionsTable.reloadData()
                 
                 
@@ -415,7 +487,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
         
-        transactionItems = realm.objects(Transaction).filter("status = 0")
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate)
         transactionsTable.reloadData()
       
         
@@ -496,11 +568,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 else
                 {
                     println("NO MFA - save access token")
-                    
                     realm.beginWrite()
                     self.users[0].access_token = response.objectForKey("access_token") as! String
                     realm.commitWrite()
-                    
                     let accounts = response["accounts"] as! [NSDictionary]
                     realm.write {
                         // Save one Venue object (and dependents) for each element of the array
@@ -510,26 +580,31 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         }
                     }
                     
-                    let transactions = response["transactions"] as! [NSDictionary]
+                    var transactions = response["transactions"] as! [NSDictionary]
                     realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for transaction in transactions {
-                            realm.create(Transaction.self, value: transaction, update: true)
                             println("saved")
+                            //clean up name
+                            var dictName = transaction.valueForKey("name") as? String
+                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                            //convert string to date before insert
+                            var dictDate = transaction.valueForKey("date") as? String
+                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                            realm.create(Transaction.self, value: transaction, update: true)
+                            
                         }
                     }
-                    let alert = UIAlertView()
-                    alert.title = "Saved"
-                    alert.message = "Yahoo!"
-                    alert.addButtonWithTitle("Ok")
-                   // alert.show()
+                    
                     self.addAccountButton.hidden = true
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                     self.transactionsTable.reloadData()
                     let transactionSum = self.sumTransactionsCount()
                     let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
                     let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                     self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                     self.transactionsTable.hidden = false
+                    
                     
                     
                 }

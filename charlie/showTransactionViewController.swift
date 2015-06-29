@@ -12,27 +12,15 @@ import MapKit
 class showTransactionViewController: UIViewController {
 
     var transactionIndex:Int = 0
+    var mainVC:mainViewController!
+    
     
     @IBOutlet weak var merchantLabel: UILabel!
-   
-       
-   
-
     @IBOutlet weak var accountNumberLabel: UILabel!
-   
-    
-    
     @IBOutlet weak var accountNameLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var descriptionLabel: UILabel!
-    
     @IBOutlet weak var lastFourLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-   
-
-    
     @IBOutlet weak var addressLabel: UILabel!
     
     let regionRadius: CLLocationDistance = 1000
@@ -54,7 +42,15 @@ class showTransactionViewController: UIViewController {
         
         
         descriptionLabel.text = transactionItems[transactionIndex].name
-        dateLabel.text = transactionItems[transactionIndex].date
+        
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. Browse online to get a format that fits your needs.
+        var dateString = dateFormatter.stringFromDate(transactionItems[transactionIndex].date)
+        dateLabel.text = dateString
+
+       
+        
         addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
         
         merchantLabel.text = transactionItems[transactionIndex].name
@@ -85,6 +81,7 @@ class showTransactionViewController: UIViewController {
     
     @IBAction func closeButtonPress(sender: AnyObject) {
         
+        mainVC.blurEffectView.hidden = true
         dismissViewControllerAnimated(true, completion: nil)
         
     }
