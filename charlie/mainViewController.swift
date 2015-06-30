@@ -89,7 +89,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
 
     
-        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds //view is self.view in a UIViewController
         view.addSubview(blurEffectView)
