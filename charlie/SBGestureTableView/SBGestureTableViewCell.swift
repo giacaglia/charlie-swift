@@ -75,7 +75,7 @@ class SBGestureTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
     @IBOutlet weak var amountCellLabel: UILabel!
     @IBOutlet weak var dateCellLabel: UILabel!
    
-    @IBOutlet weak var categoryImageView: UIImageView!
+
     
   
     

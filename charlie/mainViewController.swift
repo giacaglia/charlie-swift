@@ -12,10 +12,12 @@ import CoreData
 import RealmSwift
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.MonthCalendarUnit, value: -1, toDate: NSDate(), options: nil)!
+//let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
+
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -14, toDate: NSDate(), options: nil)!
 let status = 0
-//let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
-let inboxPredicate = NSPredicate(format: "status = %i", status)
+let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
+//let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
 
@@ -166,30 +168,48 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
             self.currentTransactionCell = cell
             if self.inboxListButton.tag == 1 && transactionItems[indexPath!.row].ctype == 0
-                //only show reward or picker if in inbox
-            {
-                self.performSegueWithIdentifier("showTypePicker", sender: self)
-            }
-            else //already has a category just save and don't show list
             {
                 realm.beginWrite()
                     transactionItems[indexPath!.row].status = 1
                 realm.commitWrite()
                 
-                tableView.removeCell(cell, duration: 0.3, completion: nil)
+               
+
+                let predicate = NSPredicate(format: "name = %@", transactionItems[indexPath!.row].name )
+                var sameTransactions = realm.objects(Transaction).filter(predicate)
+                if sameTransactions.count > 10
+                {
+                    for trans in sameTransactions
+                    {
+                        realm.beginWrite()
+                        trans.status = 1
+                        realm.commitWrite()
+                    }
+                    
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+                    self.transactionsTable.reloadData()
+                }
+                else
+                {
+                    tableView.removeCell(cell, duration: 0.3, completion: nil)
+                }
                 
                 let transactionSum = self.sumTransactionsCount()
                 let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-            }
+    
         }
         else
         { tableView.reloadData() }
         
         }
-       
+            
+            
+            
+            
         
+        }
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1
@@ -259,35 +279,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
        
         
         
-            
-         if transactionItems[indexPath.row].ctype ==  1
-         {
-            cell.categoryImageView.image = UIImage(contentsOfFile: "Money Bag-50")
-         }
-         else if transactionItems[indexPath.row].ctype ==  2
-         {
-             cell.categoryImageView.image = UIImage(named:"Expensive 2-50")
-           
-        }
-         else if transactionItems[indexPath.row].ctype ==  3
-         {
-            cell.categoryImageView.image = UIImage(named:"Bill-50")
-            
-            }
-         else if transactionItems[indexPath.row].ctype ==  4
-         {
-            cell.categoryImageView.image = UIImage(named:"Money Box-50")
-         }
-         else if transactionItems[indexPath.row].ctype ==  5
-         {
-            cell.categoryImageView.image = UIImage(named:"Money Transfer-50")
-        }
-         else if transactionItems[indexPath.row].ctype ==  0
-         {
-            cell.categoryImageView.image = nil
-        }
         
-
             
         
         
@@ -557,7 +549,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
+        cService.addAccount("jcaralis", password: "50Nich0ls", bank: "bofa")
             {
                 (response) in
                 self.transactionsTable.reloadData()
