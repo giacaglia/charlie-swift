@@ -23,6 +23,9 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    
     let regionRadius: CLLocationDistance = 1000
    
     
@@ -49,7 +52,7 @@ class showTransactionViewController: UIViewController {
         var dateString = dateFormatter.stringFromDate(transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 
-       
+       categoryLabel.text = transactionItems[transactionIndex].categories.categories
         
         addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
         

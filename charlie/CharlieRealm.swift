@@ -56,7 +56,7 @@ class Transaction: Object {
     dynamic var _account = ""
     dynamic var amount:Double  = 0.0
     dynamic var pending = true
-    dynamic var categoryArray = ""
+    dynamic var categories = Category()
     dynamic var date =  NSDate()
     dynamic var name = ""
     dynamic var status = 0

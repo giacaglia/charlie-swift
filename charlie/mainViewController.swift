@@ -16,8 +16,8 @@ import RealmSwift
 
 let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
 let status = 0
-let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
-//let inboxPredicate = NSPredicate(format: "status = %i", status)
+//let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
+let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
 
@@ -86,6 +86,36 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+      //download categories if don't exist
+      let cats = realm.objects(Category)
+      if cats.count == 0
+      {
+        
+        cService.getCategories()
+            {
+                
+                (responses) in
+                
+                for response in responses
+                {
+                    
+                    var cat = Category()
+                    var id:String = response["id"] as! String
+                    var type:String = response["type"] as! String
+                    cat.id = id
+                    cat.type = type
+                    let categories = ",".join(response["hierarchy"] as! Array)
+                    cat.categories = categories
+                    realm.write {
+                        realm.add(cat, update: true)
+                    }
+              }
+            }
+        }
+        
+        
         
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
@@ -198,6 +228,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+                
     
         }
         else
@@ -238,7 +270,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        topView.backgroundColor = listBlue
+        topView.backgroundColor = UIColor.whiteColor()
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
@@ -270,6 +302,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         cell.nameCellLabel.text = transactionItems[indexPath.row].name
         cell.amountCellLabel.text = formatCurrency(transactionItems[indexPath.row].amount)
+      
+        
         
 
         
@@ -462,12 +496,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         dividerView.backgroundColor = listGreen
         topView.backgroundColor = listGreen
     
-        moneyCountSubHeadLabel.text = "cleared"
+        moneyCountSubHeadLabel.text = "Worth it!"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+        moneyCountLabel.textColor = UIColor.whiteColor()
+        moneyCountSubHeadLabel.textColor = UIColor.whiteColor()
         
 
 
@@ -488,15 +524,17 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
-        topView.backgroundColor = listBlue
+        topView.backgroundColor = UIColor.whiteColor()
         dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "to clear"
+        moneyCountSubHeadLabel.text = "Worth it?"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        
+        moneyCountLabel.textColor = listBlue
+        moneyCountSubHeadLabel.textColor = listBlue
+
 
         
         flagListButton.tag = 0
@@ -527,12 +565,15 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = listRed
         dividerView.backgroundColor = listRed
-        moneyCountSubHeadLabel.text = "to resolve"
+        moneyCountSubHeadLabel.text = "Not Worth it!"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+        moneyCountLabel.textColor = UIColor.whiteColor()
+        moneyCountSubHeadLabel.textColor = UIColor.whiteColor()
+
         
         
         approvedListButton.tag = 0
@@ -551,7 +592,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        cService.addAccount("jcaralis", password: "50Nich0ls", bank: "bofa")
+        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
             {
                 (response) in
                 self.transactionsTable.reloadData()
@@ -576,23 +617,36 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                     
                     var transactions = response["transactions"] as! [NSDictionary]
-                    realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for transaction in transactions {
                             println("saved")
                            
+                            realm.write {
                             
                             //clean up name
                             var dictName = transaction.valueForKey("name") as? String
                             transaction.setValue(self.cleanName(dictName!), forKey: "name")
                             
-                           
+                            println(dictName)
                             
                             //convert string to date before insert
                             var dictDate = transaction.valueForKey("date") as? String
                             transaction.setValue(self.convertDate(dictDate!), forKey: "date")
                             
-                            realm.create(Transaction.self, value: transaction, update: true)
+                            
+                            //add category
+                            if let category_id = transaction.valueForKey("category_id") as? String
+                            {
+                                let predicate = NSPredicate(format: "id = %@", category_id)
+                                var categoryToAdd = realm.objects(Category).filter(predicate)
+                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                newTrans.categories = categoryToAdd[0]
+                            }
+                             else
+                            {
+                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                
+                            }
                             
                         }
                     }
@@ -614,41 +668,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    @IBAction func addCats(sender: UIButton) {
-        
-        cService.getCategories()
-            {
-                
-                (responses) in
-                
-                for response in responses
-                {
-                   
-                    var cat = Category()
-                    var id:String = response["id"] as! String
-                    var type:String = response["type"] as! String
-                    cat.id = id
-                    cat.type = type
-                    let categories = ",".join(response["hierarchy"] as! Array)
-                    cat.categories = categories
-                  
-                    
-                    realm.write {
-                        realm.add(cat, update: true)
-                    }
-                    
-                    
-                    
-                }
-                
-                
-                
-        }
-        
-        
-    }
-    
-    
+       
     
     func MFA(response:NSDictionary, callback: NSDictionary->())
     {
