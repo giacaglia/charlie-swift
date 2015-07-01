@@ -17,6 +17,7 @@ var client_secret = "56c550d30f65794124f7a6b5e180bd"
 var httpStatusCode:Int = 0
 
 var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
+var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
 var srConnectStep = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/step"))
 var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
 var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
@@ -65,6 +66,32 @@ init(){
         
         
         
+        
+    }
+    
+    
+    func getCategories(callback: NSArray->())
+    {
+       
+        srCategory.httpMethod = .Get
+        ServerClient.performRequest(srCategory, completion: { (response) -> Void in
+            httpStatusCode = response.rawResponse!.statusCode
+            if httpStatusCode == 201 //needs mfa
+            {
+               // println(JSON(response.results()))
+            }
+                
+            else //can process data
+            {
+                //println(JSON(response.results()))
+            }
+            
+            
+            
+            callback(response.results() as! NSArray)
+            
+            
+        })
         
     }
     

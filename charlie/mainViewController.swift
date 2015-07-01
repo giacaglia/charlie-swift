@@ -14,7 +14,7 @@ import RealmSwift
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -14, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
 let status = 0
 let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
 //let inboxPredicate = NSPredicate(format: "status = %i", status)
@@ -270,6 +270,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         cell.nameCellLabel.text = transactionItems[indexPath.row].name
         cell.amountCellLabel.text = formatCurrency(transactionItems[indexPath.row].amount)
+        
+
         
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
@@ -578,12 +580,18 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         // Save one Venue object (and dependents) for each element of the array
                         for transaction in transactions {
                             println("saved")
+                           
+                            
                             //clean up name
                             var dictName = transaction.valueForKey("name") as? String
                             transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                            
+                           
+                            
                             //convert string to date before insert
                             var dictDate = transaction.valueForKey("date") as? String
                             transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                            
                             realm.create(Transaction.self, value: transaction, update: true)
                             
                         }
@@ -604,6 +612,43 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
         }
     }
+    
+    
+    @IBAction func addCats(sender: UIButton) {
+        
+        cService.getCategories()
+            {
+                
+                (responses) in
+                
+                for response in responses
+                {
+                   
+                    var cat = Category()
+                    var id:String = response["id"] as! String
+                    var type:String = response["type"] as! String
+                    cat.id = id
+                    cat.type = type
+                    let categories = ",".join(response["hierarchy"] as! Array)
+                    cat.categories = categories
+                  
+                    
+                    realm.write {
+                        realm.add(cat, update: true)
+                    }
+                    
+                    
+                    
+                }
+                
+                
+                
+        }
+        
+        
+    }
+    
+    
     
     func MFA(response:NSDictionary, callback: NSDictionary->())
     {

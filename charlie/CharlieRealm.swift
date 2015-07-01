@@ -50,12 +50,13 @@ class Balance: Object {
 
 
 
+
 class Transaction: Object {
     dynamic var _id = ""
     dynamic var _account = ""
     dynamic var amount:Double  = 0.0
     dynamic var pending = true
-    dynamic var category_id = ""
+    dynamic var categoryArray = ""
     dynamic var date =  NSDate()
     dynamic var name = ""
     dynamic var status = 0
@@ -72,6 +73,17 @@ class Transaction: Object {
 
 
 
+class Category: Object {
+    
+    dynamic var id = ""
+    dynamic var type = ""
+    dynamic var categories = ""
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+}
 
 class Location: Object {
     dynamic var coordinates = Coordinates()
