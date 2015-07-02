@@ -16,6 +16,8 @@ var client_id = "556e4fd33b5cadf40371c32c"
 var client_secret = "56c550d30f65794124f7a6b5e180bd"
 var httpStatusCode:Int = 0
 
+
+var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
 var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
 var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
 var srConnectStep = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/step"))
@@ -29,6 +31,45 @@ init(){
     
 }
 
+    
+    func getAccessToken(public_token:String, callback: NSDictionary->())
+    
+    {
+        
+        let parameters = [
+            "client_id": client_id,
+            "secret": client_secret,
+            "public_token": public_token
+        ]
+        
+        
+        srGetToken.httpMethod = .Post
+        srGetToken.parameters = parameters
+        
+        ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
+            httpStatusCode = response.rawResponse!.statusCode
+            if httpStatusCode == 201 //needs mfa
+            {
+                println(JSON(response.results()))
+            }
+                
+            else //can process data
+            {
+                println(JSON(response.results()))
+            }
+            
+            
+            
+            callback(response.results() as! NSDictionary)
+            
+            
+        })
+        
+        
+        
+        
+        
+    }
     
     func updateAccount(access_token:String, callback: NSDictionary->())
     {

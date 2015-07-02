@@ -422,9 +422,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func addAccountWeb(sender: UIButton) {
+//        
+//        let localfilePath = NSBundle.mainBundle().URLForResource("plaid", withExtension: "html");
+//        let req = NSURLRequest(URL: localfilePath!);
         
-        let localfilePath = NSBundle.mainBundle().URLForResource("plaid", withExtension: "html");
-        let req = NSURLRequest(URL: localfilePath!);
+        var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
+        filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
+        
         var webView: WKWebView?
         var contentController = WKUserContentController();
 
@@ -449,10 +454,97 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
 
+    func pathForBuggyWKWebView(filePath: String?) -> String? {
+        let fileMgr = NSFileManager.defaultManager()
+        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+        var error: NSErrorPointer = nil
+        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil, error: error) {
+            println("Couldn't create www subdirectory. \(error)")
+            return nil
+        }
+        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+        if !fileMgr.fileExistsAtPath(dstPath) {
+            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
+                println("Couldn't copy file to /tmp/www. \(error)")
+                return nil
+            }
+        }
+        return dstPath
+    }
+
+    
     
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         if(message.name == "callbackHandler") {
             println("JavaScript is sending a message \(message.body)")
+            
+            //get access_token
+            
+            var public_token = message.body as! String
+            println("PUBLIC \(public_token)")
+            
+            cService.getAccessToken(public_token)
+                {
+                    (response) in
+                    var access_token = response["access_token"] as! String
+                    realm.beginWrite()
+                    self.users[0].access_token = access_token
+                    realm.commitWrite()
+                    
+                    
+                    cService.updateAccount(access_token)
+                        {
+                            (response) in
+                            
+                            let accounts = response["accounts"] as! [NSDictionary]
+                            realm.write {
+                                // Save one Venue object (and dependents) for each element of the array
+                                for account in accounts {
+                                    realm.create(Account.self, value: account, update: true)
+                                    println("saved accounts")
+                                }
+                            }
+                            
+                            let transactions = response["transactions"] as! [NSDictionary]
+                            realm.write {
+                                // Save one Venue object (and dependents) for each element of the array
+                                for transaction in transactions {
+                                    
+                                    
+                                    //convert string to date before insert
+                                    var dictDate = transaction.valueForKey("date") as? String
+                                    var modifiedDate = self.convertDate(dictDate!)
+                                    transaction.setValue(modifiedDate, forKey: "date")
+                                    
+                                    
+                                    realm.create(Transaction.self, value: transaction, update: true)
+                                    println("saved transactions")
+                                }
+                            }
+                            
+                            
+                            //run through transactions and see if they can be preliminarly categorized
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+                            self.transactionsTable.reloadData()
+                            
+
+                            
+                            
+                    }
+                    
+                    
+                    
+                    
+                    
+                }
+            
         }
     }
 
@@ -634,8 +726,36 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func addCard(sender: UIButton) {
         
         
+     
+        var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
+        filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
         
-        cService.addAccount("plaid_te", password: "plaid_good", bank: "wells")
+        var webView: WKWebView?
+        var contentController = WKUserContentController();
+        
+        contentController.addScriptMessageHandler(
+            self,
+            name: "callbackHandler"
+        )
+        
+        var config = WKWebViewConfiguration()
+        config.userContentController = contentController
+        
+        webView = WKWebView(
+            frame: self.view.bounds,
+            configuration: config
+        )
+        self.view = webView!
+        
+        webView?.sizeToFit()
+        webView!.loadRequest(req)
+        
+        
+        
+        
+        /*
+        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
             {
                 (response) in
                 self.transactionsTable.reloadData()
@@ -708,6 +828,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 
         }
+        */
+        
+        
+        
     }
     
     
