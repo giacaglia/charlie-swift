@@ -10,6 +10,7 @@ import UIKit
 import BladeKit
 import CoreData
 import RealmSwift
+import WebKit
 
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
@@ -21,7 +22,7 @@ let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
 
-class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, WKScriptMessageHandler {
     
     @IBOutlet weak var transactionsTable: SBGestureTableView!
     @IBOutlet weak var topView: UIView!
@@ -420,6 +421,48 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    @IBAction func addAccountWeb(sender: UIButton) {
+        
+        let localfilePath = NSBundle.mainBundle().URLForResource("plaid", withExtension: "html");
+        let req = NSURLRequest(URL: localfilePath!);
+        var webView: WKWebView?
+        var contentController = WKUserContentController();
+
+        contentController.addScriptMessageHandler(
+            self,
+            name: "callbackHandler"
+        )
+        
+        var config = WKWebViewConfiguration()
+        config.userContentController = contentController
+        
+        webView = WKWebView(
+            frame: self.view.bounds,
+            configuration: config
+        )
+        self.view = webView!
+    
+        webView?.sizeToFit()
+        webView!.loadRequest(req)
+        
+        
+    }
+    
+
+    
+    func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+        if(message.name == "callbackHandler") {
+            println("JavaScript is sending a message \(message.body)")
+        }
+    }
+
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        let href = webView.stringByEvaluatingJavaScriptFromString("window.location.href")
+        println("window.location.href  = \(href)")
+        
+    }
+    
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
@@ -592,7 +635,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
+        cService.addAccount("plaid_te", password: "plaid_good", bank: "wells")
             {
                 (response) in
                 self.transactionsTable.reloadData()

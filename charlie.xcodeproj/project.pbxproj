@@ -29,6 +29,7 @@
 		09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D411B38B42F006E126B /* showCardsViewController.swift */; };
 		09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D441B38B43F006E126B /* cardTableViewCell.swift */; };
 		095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0954475F1B268DBC005816F5 /* CharlieRealm.swift */; };
+		0974544F1B44CF5F0004B8EC /* plaid.html in Resources */ = {isa = PBXBuildFile; fileRef = 0974544E1B44CF5F0004B8EC /* plaid.html */; };
 		099ACE4C1B32685C0044A068 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 099ACE491B3268390044A068 /* Montserrat-Bold.ttf */; };
 		099ACE4D1B32685C0044A068 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 099ACE4B1B3268520044A068 /* Montserrat-Regular.ttf */; };
 		099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */; };
@@ -116,6 +117,7 @@
 		09435D411B38B42F006E126B /* showCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showCardsViewController.swift; path = ../showCardsViewController.swift; sourceTree = "<group>"; };
 		09435D441B38B43F006E126B /* cardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cardTableViewCell.swift; sourceTree = "<group>"; };
 		0954475F1B268DBC005816F5 /* CharlieRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharlieRealm.swift; sourceTree = "<group>"; };
+		0974544E1B44CF5F0004B8EC /* plaid.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = plaid.html; sourceTree = "<group>"; };
 		099ACE491B3268390044A068 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		099ACE4B1B3268520044A068 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTransactionViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		09C2A7441B21F0AD005A40DA /* charlie */ = {
 			isa = PBXGroup;
 			children = (
+				0974544E1B44CF5F0004B8EC /* plaid.html */,
 				0916204C1B2F28740004C781 /* Fonts */,
 				0954475F1B268DBC005816F5 /* CharlieRealm.swift */,
 				09C2A7471B21F0AD005A40DA /* AppDelegate.swift */,
@@ -418,6 +421,7 @@
 				099ACE4C1B32685C0044A068 /* Montserrat-Bold.ttf in Resources */,
 				099ACE4D1B32685C0044A068 /* Montserrat-Regular.ttf in Resources */,
 				091620541B2F3B410004C781 /* Gotham-Light.ttf in Resources */,
+				0974544F1B44CF5F0004B8EC /* plaid.html in Resources */,
 				091620521B2F2E380004C781 /* Gotham-XLight.ttf in Resources */,
 				091620501B2F28E10004C781 /* Inconsolata-Regular.ttf in Resources */,
 				091620581B2F8B650004C781 /* GothamRounded-Light.otf in Resources */,

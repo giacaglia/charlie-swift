@@ -1,0 +1,28 @@
+<html>
+    <meta name="viewport" content="width=device-width">
+    <head>
+    </head>
+    <body>
+        <script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
+        <script type="text/javascript">
+            var publicKey = "f704cba1008df4ca69b468758a3f71";
+            var options = {
+                env: "tartan",
+                clientName: "Charlie",
+                key: publicKey,
+                product: "connect",
+                onLoad: function() {
+                    linkHandler.open();
+                },
+                onSuccess: function(public_token) {
+                    window.location.href = "my-app:success:" + public_token;
+                    webkit.messageHandlers.callbackHandler.postMessage(public_token);
+                },
+                onExit: function() {
+                    window.location.href = "my-app:exit";
+                }
+            }
+        var linkHandler = Plaid.create(options);
+            </script>
+    </body>
+</html>
