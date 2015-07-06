@@ -20,7 +20,7 @@ class showTypePickerViewController: UIViewController {
     @IBOutlet weak var pickerView: UIView!
     @IBOutlet weak var transactionNameLabel: UILabel!
     
-    
+    var cHelp = cHelper()
    
     override func viewDidLoad() {
       super.viewDidLoad()
@@ -50,7 +50,7 @@ class showTypePickerViewController: UIViewController {
         realm.commitWrite()
         
         let transactionSum = mainVC.sumTransactionsCount()
-        let transactionSumCurrecnyFormat = mainVC.formatCurrency(transactionSum)
+        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = mainVC.stripCents(transactionSumCurrecnyFormat)
         mainVC.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
 

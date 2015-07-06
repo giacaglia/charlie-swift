@@ -20,6 +20,7 @@
                 },
                 onExit: function() {
                     window.location.href = "my-app:exit";
+                    webkit.messageHandlers.callbackHandler.postMessage("exit")
                 }
             }
         var linkHandler = Plaid.create(options);

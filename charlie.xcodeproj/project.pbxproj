@@ -28,6 +28,8 @@
 		091620581B2F8B650004C781 /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091620561B2F8B5A0004C781 /* GothamRounded-Light.otf */; };
 		09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D411B38B42F006E126B /* showCardsViewController.swift */; };
 		09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D441B38B43F006E126B /* cardTableViewCell.swift */; };
+		095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414AE1B45E91D00682172 /* addAccountViewController.swift */; };
+		095414B11B46A68300682172 /* cHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414B01B46A68300682172 /* cHelper.swift */; };
 		095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0954475F1B268DBC005816F5 /* CharlieRealm.swift */; };
 		0974544F1B44CF5F0004B8EC /* plaid.html in Resources */ = {isa = PBXBuildFile; fileRef = 0974544E1B44CF5F0004B8EC /* plaid.html */; };
 		099ACE4C1B32685C0044A068 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 099ACE491B3268390044A068 /* Montserrat-Bold.ttf */; };
@@ -116,6 +118,8 @@
 		091620561B2F8B5A0004C781 /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Light.otf"; sourceTree = "<group>"; };
 		09435D411B38B42F006E126B /* showCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showCardsViewController.swift; path = ../showCardsViewController.swift; sourceTree = "<group>"; };
 		09435D441B38B43F006E126B /* cardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cardTableViewCell.swift; sourceTree = "<group>"; };
+		095414AE1B45E91D00682172 /* addAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addAccountViewController.swift; sourceTree = "<group>"; };
+		095414B01B46A68300682172 /* cHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cHelper.swift; sourceTree = "<group>"; };
 		0954475F1B268DBC005816F5 /* CharlieRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharlieRealm.swift; sourceTree = "<group>"; };
 		0974544E1B44CF5F0004B8EC /* plaid.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = plaid.html; sourceTree = "<group>"; };
 		099ACE491B3268390044A068 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
 				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
+				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 		095447631B289C3C005816F5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				095414B01B46A68300682172 /* cHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -467,6 +473,7 @@
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
 				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
+				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
@@ -477,6 +484,7 @@
 				095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */,
 				090BD35E1B25D2F600F26E78 /* SwiftyJSON.swift in Sources */,
 				091620271B2DA2330004C781 /* SBGestureTableViewCellAction.swift in Sources */,
+				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
 				09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

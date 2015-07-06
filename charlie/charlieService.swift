@@ -83,6 +83,8 @@ init(){
         srConnectGet.httpMethod = .Post
         srConnectGet.parameters = parameters
         
+        
+        
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
             httpStatusCode = response.rawResponse!.statusCode
             if httpStatusCode == 201 //needs mfa

@@ -10,9 +10,9 @@ import UIKit
 
 import CoreData
 
-let listRed =  UIColor(red: 247/255, green: 136/255, blue: 136/255, alpha: 1.0)
+let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
 let listBlue = UIColor(red: 131/255, green: 183/255, blue: 244/255, alpha: 1.0)
-let listGreen = UIColor(red: 104/255, green: 201/255, blue: 78/255, alpha: 1.0)
+let listGreen = UIColor(red: 243/255, green: 204/255, blue: 29/255, alpha: 1.0)
 
 var cService = charlieService()
 

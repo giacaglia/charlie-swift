@@ -8,17 +8,16 @@
 
 import UIKit
 import BladeKit
-import CoreData
 import RealmSwift
 import WebKit
 
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -30x  , toDate: NSDate(), options: nil)!
 let status = 0
-//let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
-let inboxPredicate = NSPredicate(format: "status = %i", status)
+let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
+//let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
 
@@ -32,8 +31,21 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var dividerView: UIView!
     
+   
+    @IBOutlet weak var moneyActionAmountLabel: UILabel!
+    
+    @IBOutlet weak var moneyActionDetailLabel: UILabel!
+    
+    
+    
+    
     @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubHeadLabel: UILabel!
+    
+    
+    @IBOutlet weak var moneySeperator: UIView!
+   
+    @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
     
     @IBOutlet weak var addAccountButton: UIButton!
     
@@ -43,20 +55,22 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var cardButton: UIButton!
     
     
+    var cHelp = cHelper()
+    
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewCell!
  
-    let checkImage = UIImage(named: "Checkmark-unselelected_small")
-    let flagImage = UIImage(named: "Flag-unselelected_small")
+    let checkImage = UIImage(named: "Wink-50")
+    let flagImage = UIImage(named: "Sad-50")
     
-    let inboxUnSelectedButtonImage = UIImage(named: "Inbox-unselelected")
-    let inboxSelectedButtonImage = UIImage(named: "Inbox-selelected")
+    let inboxUnSelectedButtonImage = UIImage(named: "Neutral-Gray-50")
+    let inboxSelectedButtonImage = UIImage(named: "Neutral-50-Blue")
 
-    let flagUnSelectedButtonImage = UIImage(named: "Flag-unselelected")
-    let flagSelectedButtonImage = UIImage(named: "Flag-selelected")
+    let flagUnSelectedButtonImage = UIImage(named: "Sad-50-Gray")
+    let flagSelectedButtonImage = UIImage(named: "Sad-50-Red")
 
-    let approvedUnSelectedButtonImage = UIImage(named: "Checkmark-unselelected")
-    let approvedSelectedButtonImage = UIImage(named: "Checkmark-selelected")
+    let approvedUnSelectedButtonImage = UIImage(named: "Wink-Gray-50")
+    let approvedSelectedButtonImage = UIImage(named: "Wink-Yellow-50")
 
 
     let menuButtonBlueImage = UIImage(named: "btn-menu-blue.png")
@@ -226,7 +240,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 
                 let transactionSum = self.sumTransactionsCount()
-                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                 
@@ -252,7 +266,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 realm.commitWrite()
                 tableView.removeCell(cell, duration: 0.3, completion: nil)
                 let transactionSum = self.sumTransactionsCount()
-                let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
+                let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                 self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                 
@@ -273,15 +287,48 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         topView.backgroundColor = UIColor.whiteColor()
         let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
+        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
         
     }
     
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        if accounts.count > 0 && transactionItems.count > 0
+        {
+           println("normal all is loaded")
+        }
+        else if accounts.count > 0 && transactionItems.count == 0
+        {
+                     println("account but no transactions")
+        }
+        else if accounts.count == 0
+        {
+            println("First Time in or has never added an account")
+        }
+        
+        
+        transactionsTable.reloadData()
+    }
+    
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if transactionItems.count > 0
+        {
+            transactionsTable.hidden = false
+            addAccountButton.hidden = true
+            let transactionSum = sumTransactionsCount()
+            let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+            let finalFormat = stripCents(transactionSumCurrecnyFormat)
+            moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+            
+            
+        }
         return transactionItems.count
+        
     }
     
     
@@ -302,7 +349,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
         cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         cell.nameCellLabel.text = transactionItems[indexPath.row].name
-        cell.amountCellLabel.text = formatCurrency(transactionItems[indexPath.row].amount)
+        cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
       
         
         
@@ -357,15 +404,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
     }
     
-    func formatCurrency(currency: Double) -> String
-    {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
-        formatter.locale = NSLocale(localeIdentifier: "en_US")
-        var numberFromField = currency
-        return formatter.stringFromNumber(numberFromField)!
-    }
-    
+        
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -394,40 +433,12 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-    func convertDate(date:String) -> NSDate
-    {
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.dateFromString(date)!
-    }
-    
-    
-    func cleanName(name:String) -> String{
-        
-        var stringlength = count(name)
-        
-        var ierror: NSError?
-        var regex:NSRegularExpression = NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
-        
-        var regex2:NSRegularExpression = NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
-        
-        var modString = regex.stringByReplacingMatchesInString(name, options: nil, range: NSMakeRange(0, stringlength), withTemplate: "")
-        
-        var stringlength2 = count(modString)
-        
-        var modString2 = regex2.stringByReplacingMatchesInString(modString, options: nil, range: NSMakeRange(0, stringlength2), withTemplate: "")
-        
-        return modString2
-        
-    }
+   
     
     @IBAction func addAccountWeb(sender: UIButton) {
-//        
-//        let localfilePath = NSBundle.mainBundle().URLForResource("plaid", withExtension: "html");
-//        let req = NSURLRequest(URL: localfilePath!);
         
         var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-        filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+        filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
         let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
         
         var webView: WKWebView?
@@ -445,7 +456,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             frame: self.view.bounds,
             configuration: config
         )
-        self.view = webView!
+        
+         self.view.addSubview(webView!)
+
     
         webView?.sizeToFit()
         webView!.loadRequest(req)
@@ -454,23 +467,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
 
-    func pathForBuggyWKWebView(filePath: String?) -> String? {
-        let fileMgr = NSFileManager.defaultManager()
-        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-        var error: NSErrorPointer = nil
-        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil, error: error) {
-            println("Couldn't create www subdirectory. \(error)")
-            return nil
-        }
-        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-        if !fileMgr.fileExistsAtPath(dstPath) {
-            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
-                println("Couldn't copy file to /tmp/www. \(error)")
-                return nil
-            }
-        }
-        return dstPath
-    }
+   
 
     
     
@@ -481,7 +478,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //get access_token
             
             var public_token = message.body as! String
-            println("PUBLIC \(public_token)")
+            
+            if public_token == "exit"
+            {
+              println("Exit")
+            
+            }
+            else
+            {
             
             cService.getAccessToken(public_token)
                 {
@@ -513,7 +517,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                     
                                     //convert string to date before insert
                                     var dictDate = transaction.valueForKey("date") as? String
-                                    var modifiedDate = self.convertDate(dictDate!)
+                                    var modifiedDate =  self.cHelp.convertDate(dictDate!)
                                     transaction.setValue(modifiedDate, forKey: "date")
                                     
                                     
@@ -545,6 +549,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                 }
             
+            }
         }
     }
 
@@ -558,7 +563,9 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
-        
+      
+      if accounts.count > 0
+      {
        let access_token = users[0].access_token
         cService.updateAccount(access_token)
             {
@@ -581,7 +588,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         
                         //convert string to date before insert
                         var dictDate = transaction.valueForKey("date") as? String
-                        var modifiedDate = self.convertDate(dictDate!)
+                        var modifiedDate = self.cHelp.convertDate(dictDate!)
                         transaction.setValue(modifiedDate, forKey: "date")
                         
                         
@@ -605,7 +612,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
             }
 
-        
+        }
         
         
         
@@ -634,13 +641,23 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyCountSubHeadLabel.text = "Worth it!"
         
         let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
+        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
-        moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        moneyCountLabel.textColor = UIColor.whiteColor()
-        moneyCountSubHeadLabel.textColor = UIColor.whiteColor()
+       
         
+        
+        moneyCountLabel.hidden = true
+        moneyCountSubHeadLabel.hidden = true
+        moneyCountSubSubHeadLabel.hidden = true
+        moneySeperator.hidden =  true
+        
+        moneyActionAmountLabel.hidden = false
+        moneyActionDetailLabel.hidden = false
+        
+        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
+        moneyActionDetailLabel.text = "money well spent"
 
+        
 
         menuButton.setImage(menuButtonGreenImage, forState: .Normal)
         cardButton.setImage(cardButtonGreenImage, forState: .Normal)
@@ -653,23 +670,30 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
         
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
       
+        
+        moneyCountLabel.hidden = false
+        moneyCountSubHeadLabel.hidden = false
+        moneyCountSubSubHeadLabel.hidden = false
+        moneySeperator.hidden =  false
+        
+        moneyActionAmountLabel.hidden = true
+        moneyActionDetailLabel.hidden = true
+
         
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = UIColor.whiteColor()
         dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "Worth it?"
+        moneyCountSubHeadLabel.text = "Was it"
         
         let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
+        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        moneyCountLabel.textColor = listBlue
-        moneyCountSubHeadLabel.textColor = listBlue
-
+        
 
         
         flagListButton.tag = 0
@@ -703,12 +727,19 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyCountSubHeadLabel.text = "Not Worth it!"
         
         let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = formatCurrency(transactionSum)
+        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
-        moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        moneyCountLabel.textColor = UIColor.whiteColor()
-        moneyCountSubHeadLabel.textColor = UIColor.whiteColor()
+        moneyCountLabel.hidden = true
+        moneyCountSubHeadLabel.hidden = true
+        moneyCountSubSubHeadLabel.hidden = true
+        moneySeperator.hidden =  true
+        
+        moneyActionAmountLabel.hidden = false
+        moneyActionDetailLabel.hidden = false
 
+        
+        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
+        moneyActionDetailLabel.text = "could've spent better"
         
         
         approvedListButton.tag = 0
@@ -728,7 +759,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
      
         var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-        filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+        filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
         let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
         
         var webView: WKWebView?
