@@ -136,23 +136,41 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 }
                                 self.dismissViewControllerAnimated(true, completion: nil)
          
-                                let transactions = response["transactions"] as! [NSDictionary]
-                                realm.write {
-                                    // Save one Venue object (and dependents) for each element of the array
-                                    for transaction in transactions {
+                                
+                                var transactions = response["transactions"] as! [NSDictionary]
+                                // Save one Venue object (and dependents) for each element of the array
+                                for transaction in transactions {
+                                    println("saved")
+                                    
+                                    realm.write {
                                         
+                                        //clean up name
+                                        var dictName = transaction.valueForKey("name") as? String
+                                        transaction.setValue(self.cHelp.cleanName(dictName!), forKey: "name")
+                                        
+                                        println(dictName)
                                         
                                         //convert string to date before insert
                                         var dictDate = transaction.valueForKey("date") as? String
-                                        var modifiedDate = self.cHelp.convertDate(dictDate!)
-                                        transaction.setValue(modifiedDate, forKey: "date")
+                                        transaction.setValue(self.cHelp.convertDate(dictDate!), forKey: "date")
                                         
                                         
-                                        realm.create(Transaction.self, value: transaction, update: true)
-                                        println("saved transactions")
+                                        //add category
+                                        if let category_id = transaction.valueForKey("category_id") as? String
+                                        {
+                                            let predicate = NSPredicate(format: "id = %@", category_id)
+                                            var categoryToAdd = realm.objects(Category).filter(predicate)
+                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                            newTrans.categories = categoryToAdd[0]
+                                        }
+                                        else
+                                        {
+                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                            
+                                        }
+                                        
                                     }
                                 }
-                                
                                 
                                 //run through transactions and see if they can be preliminarly categorized
                                 

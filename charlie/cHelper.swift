@@ -9,6 +9,97 @@
 import Foundation
 
 class cHelper {
+    
+    
+    
+    
+    
+    func addUpdateResetAccount(type:Int, access_token:String)
+    {
+        
+        
+       
+            let access_token = access_token
+            cService.updateAccount(access_token)
+                {
+                    (response) in
+                    
+                    let accounts = response["accounts"] as! [NSDictionary]
+                    realm.write {
+                        // Save one Venue object (and dependents) for each element of the array
+                        for account in accounts {
+                            realm.create(Account.self, value: account, update: true)
+                            println("saved accounts")
+                        }
+                    }
+                    
+                    
+                    var transactions = response["transactions"] as! [NSDictionary]
+                    // Save one Venue object (and dependents) for each element of the array
+                    for transaction in transactions {
+                        println("saved")
+                        
+                        realm.write {
+                            
+                            //clean up name
+                            var dictName = transaction.valueForKey("name") as? String
+                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                            
+                            println(dictName)
+                            
+                            //convert string to date before insert
+                            var dictDate = transaction.valueForKey("date") as? String
+                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                            
+                            
+                            //add category
+                            if let category_id = transaction.valueForKey("category_id") as? String
+                            {
+                                let predicate = NSPredicate(format: "id = %@", category_id)
+                                var categoryToAdd = realm.objects(Category).filter(predicate)
+                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                newTrans.categories = categoryToAdd[0]
+                                if category_id == "21008000" || category_id == "21007001"
+                                {
+                                    newTrans.status = 99
+                                }
+                                else
+                                {
+                                    if type == 99
+                                    {
+                                        newTrans.status = 0
+                                    }
+                                    
+                                }
+                                
+                                
+                            }
+                            else
+                            {
+                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                if type == 99
+                                {
+                                    newTrans.status = 0
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                    
+                    
+                    
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+                    
+                    
+                    
+            }
+            
+    
+        
+        
+        
+    }
 
 func formatCurrency(currency: Double) -> String
 {

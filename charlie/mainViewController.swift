@@ -14,9 +14,21 @@ import WebKit
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -30x  , toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -14, toDate: NSDate(), options: nil)!
 let status = 0
-let inboxPredicate = NSPredicate(format: "status = %i AND date > %@", status, date)
+
+
+//let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
+//let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
+//let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
+
+
+let inboxPredicate = NSPredicate(format: "status = 0")
+let approvedPredicate = NSPredicate(format: "status = 1")
+let flaggedPredicate = NSPredicate(format: "status = 2")
+
+
+
 //let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction)
 
@@ -32,6 +44,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var dividerView: UIView!
     
    
+    @IBOutlet weak var listNavBar: UIView!
+    
     @IBOutlet weak var moneyActionAmountLabel: UILabel!
     
     @IBOutlet weak var moneyActionDetailLabel: UILabel!
@@ -63,14 +77,23 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let checkImage = UIImage(named: "Wink-50")
     let flagImage = UIImage(named: "Sad-50")
     
-    let inboxUnSelectedButtonImage = UIImage(named: "Neutral-Gray-50")
-    let inboxSelectedButtonImage = UIImage(named: "Neutral-50-Blue")
+    let inboxUnSelectedSadButtonImage = UIImage(named: "neutral_off_red")
+    let inboxUnSelectedHappyButtonImage = UIImage(named: "neutral_off_green")
+    
+    
+    let inboxSelectedButtonImage = UIImage(named: "neutral_on")
 
-    let flagUnSelectedButtonImage = UIImage(named: "Sad-50-Gray")
-    let flagSelectedButtonImage = UIImage(named: "Sad-50-Red")
+    let flagUnSelectedHappyButtonImage = UIImage(named: "sad_off_green")
+    let flagUnSelectedInboxButtonImage = UIImage(named: "sad_off_blue")
+    
+    
+    let flagSelectedButtonImage = UIImage(named: "sad_on")
 
-    let approvedUnSelectedButtonImage = UIImage(named: "Wink-Gray-50")
-    let approvedSelectedButtonImage = UIImage(named: "Wink-Yellow-50")
+    let approvedUnSelectedInboxButtonImage = UIImage(named: "happy_off_blue")
+    let approvedUnSelectedSadButtonImage = UIImage(named: "happy_off_red")
+    
+    
+    let approvedSelectedButtonImage = UIImage(named: "happy_on")
 
 
     let menuButtonBlueImage = UIImage(named: "btn-menu-blue.png")
@@ -206,63 +229,45 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         inboxListButton.tag = 1 //set inbox to default
+        
+        
+        
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
         let indexPath = tableView.indexPathForCell(cell)
-        if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
-        {
-            self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
-            self.currentTransactionCell = cell
-            if self.inboxListButton.tag == 1 && transactionItems[indexPath!.row].ctype == 0
+            let name = transactionItems[indexPath!.row].name
+            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
             {
-                realm.beginWrite()
-                    transactionItems[indexPath!.row].status = 1
-                realm.commitWrite()
-                
+                self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+                self.currentTransactionCell = cell
                
-
-                let predicate = NSPredicate(format: "name = %@", transactionItems[indexPath!.row].name )
-                var sameTransactions = realm.objects(Transaction).filter(predicate)
-                if sameTransactions.count > 10
-                {
-                    for trans in sameTransactions
-                    {
-                        realm.beginWrite()
-                        trans.status = 1
-                        realm.commitWrite()
-                    }
-                    
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-                    self.transactionsTable.reloadData()
-                }
-                else
-                {
-                    tableView.removeCell(cell, duration: 0.3, completion: nil)
-                }
-                
-                let transactionSum = self.sumTransactionsCount()
-                let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
-                let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-                
-                
+                    realm.beginWrite()
+                        transactionItems[indexPath!.row].status = 1
+                        tableView.removeCell(cell, duration: 0.3, completion: nil)
+                    realm.commitWrite()
     
-        }
-        else
-        { tableView.reloadData() }
+                let transactionSum = self.sumTransactionsCount()
+                    let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+                    let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+        
+            }
+            else //swiping not acted on
+            {
+                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+            
+            }
         
         }
-            
-            
-            
-            
         
-        }
+        
+        
+        
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1
             {
                 realm.beginWrite()
-                transactionItems[indexPath!.row].status = 2 //approved
+                transactionItems[indexPath!.row].status = 2
                 realm.commitWrite()
                 tableView.removeCell(cell, duration: 0.3, completion: nil)
                 let transactionSum = self.sumTransactionsCount()
@@ -280,7 +285,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
             else
-            { tableView.reloadData() }
+            {
+            
+                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+               
+            }
         }
         
         
@@ -495,60 +504,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.users[0].access_token = access_token
                     realm.commitWrite()
                     
-                    
-                    cService.updateAccount(access_token)
-                        {
-                            (response) in
-                            
-                            let accounts = response["accounts"] as! [NSDictionary]
-                            realm.write {
-                                // Save one Venue object (and dependents) for each element of the array
-                                for account in accounts {
-                                    realm.create(Account.self, value: account, update: true)
-                                    println("saved accounts")
-                                }
-                            }
-                            
-                            let transactions = response["transactions"] as! [NSDictionary]
-                            realm.write {
-                                // Save one Venue object (and dependents) for each element of the array
-                                for transaction in transactions {
-                                    
-                                    
-                                    //convert string to date before insert
-                                    var dictDate = transaction.valueForKey("date") as? String
-                                    var modifiedDate =  self.cHelp.convertDate(dictDate!)
-                                    transaction.setValue(modifiedDate, forKey: "date")
-                                    
-                                    
-                                    realm.create(Transaction.self, value: transaction, update: true)
-                                    println("saved transactions")
-                                }
-                            }
-                            
-                            
-                            //run through transactions and see if they can be preliminarly categorized
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-                            self.transactionsTable.reloadData()
-                            
-
-                            
-                            
+                    if self.accounts.count > 0
+                    {
+                        let access_token = self.users[0].access_token
+                        self.cHelp.addUpdateResetAccount(1, access_token: access_token)
+                        self.transactionsTable.reloadData()
                     }
-                    
-                    
-                    
-                    
-                    
+  
                 }
-            
             }
         }
     }
@@ -565,56 +528,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
       
       if accounts.count > 0
-      {
-       let access_token = users[0].access_token
-        cService.updateAccount(access_token)
-            {
-              (response) in
-                
-                let accounts = response["accounts"] as! [NSDictionary]
-                realm.write {
-                    // Save one Venue object (and dependents) for each element of the array
-                    for account in accounts {
-                        realm.create(Account.self, value: account, update: true)
-                        println("saved accounts")
-                    }
-                }
-                
-                let transactions = response["transactions"] as! [NSDictionary]
-                realm.write {
-                    // Save one Venue object (and dependents) for each element of the array
-                    for transaction in transactions {
-                        
-                        
-                        //convert string to date before insert
-                        var dictDate = transaction.valueForKey("date") as? String
-                        var modifiedDate = self.cHelp.convertDate(dictDate!)
-                        transaction.setValue(modifiedDate, forKey: "date")
-                        
-                        
-                        realm.create(Transaction.self, value: transaction, update: true)
-                        println("saved transactions")
-                    }
-                }
-                
-                
-                //run through transactions and see if they can be preliminarly categorized
-                
-                
-                
-                
-                
-                
-                
-                transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-                self.transactionsTable.reloadData()
-                
-                
-            }
-
+        {
+            let access_token = users[0].access_token
+            cHelp.addUpdateResetAccount(1, access_token: access_token)
+            self.transactionsTable.reloadData()
         }
-        
-        
         
         
     }
@@ -622,21 +540,23 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func approvedListButtonress(sender: UIButton) {
         
-        transactionItems = realm.objects(Transaction).filter("status = 1")
+        
+        transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
 
+         listNavBar.backgroundColor = listGreen
         
         inboxListButton.tag = 0
-        inboxListButton.setImage(inboxUnSelectedButtonImage, forState: .Normal)
+        inboxListButton.setImage(inboxUnSelectedHappyButtonImage, forState: .Normal)
         
         flagListButton.tag = 0
-        flagListButton.setImage(flagUnSelectedButtonImage, forState: .Normal)
+        flagListButton.setImage(flagUnSelectedHappyButtonImage, forState: .Normal)
         
         
         approvedListButton.tag = 1
         approvedListButton.setImage(approvedSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listGreen
-        topView.backgroundColor = listGreen
+        topView.backgroundColor = UIColor.whiteColor()
     
         moneyCountSubHeadLabel.text = "Worth it!"
         
@@ -645,6 +565,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
        
         
+        moneyActionAmountLabel.textColor = listGreen
+        moneyActionDetailLabel.textColor = listGreen
         
         moneyCountLabel.hidden = true
         moneyCountSubHeadLabel.hidden = true
@@ -659,8 +581,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         
 
-        menuButton.setImage(menuButtonGreenImage, forState: .Normal)
-        cardButton.setImage(cardButtonGreenImage, forState: .Normal)
+        //menuButton.setImage(menuButtonGreenImage, forState: .Normal)
+        //cardButton.setImage(cardButtonGreenImage, forState: .Normal)
 
     
         
@@ -673,6 +595,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
       
+        
+        listNavBar.backgroundColor = listBlue
         
         moneyCountLabel.hidden = false
         moneyCountSubHeadLabel.hidden = false
@@ -697,14 +621,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         
         flagListButton.tag = 0
-        flagListButton.setImage(flagUnSelectedButtonImage, forState: .Normal)
+        flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
         
         
         approvedListButton.tag = 0
-        approvedListButton.setImage(approvedUnSelectedButtonImage, forState: .Normal)
+        approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
         
-        menuButton.setImage(menuButtonBlueImage, forState: .Normal)
-        cardButton.setImage(cardButtonBlueImage, forState: .Normal)
+       // menuButton.setImage(menuButtonBlueImage, forState: .Normal)
+       // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
         
         
         
@@ -713,16 +637,18 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func flagListButtonPress(sender: UIButton) {
 
-        transactionItems = realm.objects(Transaction).filter("status = 2")
+        transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
+        
+         listNavBar.backgroundColor = listRed
     
         
         inboxListButton.tag = 0
-        inboxListButton.setImage(inboxUnSelectedButtonImage, forState: .Normal)
+        inboxListButton.setImage(inboxUnSelectedSadButtonImage, forState: .Normal)
         
         flagListButton.tag = 1
         flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
-        topView.backgroundColor = listRed
+        topView.backgroundColor = UIColor.whiteColor()
         dividerView.backgroundColor = listRed
         moneyCountSubHeadLabel.text = "Not Worth it!"
         
@@ -741,218 +667,32 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "could've spent better"
         
+        moneyActionAmountLabel.textColor = listRed
+        moneyActionDetailLabel.textColor = listRed
         
         approvedListButton.tag = 0
-        approvedListButton.setImage(approvedUnSelectedButtonImage, forState: .Normal)
+        approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        menuButton.setImage(menuButtonRedImage, forState: .Normal)
-        cardButton.setImage(cardButtonRedImage, forState: .Normal)
+       // menuButton.setImage(menuButtonRedImage, forState: .Normal)
+       // cardButton.setImage(cardButtonRedImage, forState: .Normal)
 
         
     }
-    
     
    
-  
-    @IBAction func addCard(sender: UIButton) {
+    
+    @IBAction func resetButtonPressed(sender: AnyObject) {
         
-        
-     
-        var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-        filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
-        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
-        
-        var webView: WKWebView?
-        var contentController = WKUserContentController();
-        
-        contentController.addScriptMessageHandler(
-            self,
-            name: "callbackHandler"
-        )
-        
-        var config = WKWebViewConfiguration()
-        config.userContentController = contentController
-        
-        webView = WKWebView(
-            frame: self.view.bounds,
-            configuration: config
-        )
-        self.view = webView!
-        
-        webView?.sizeToFit()
-        webView!.loadRequest(req)
-        
-        
-        
-        
-        /*
-        cService.addAccount("plaid_test", password: "plaid_good", bank: "wells")
-            {
-                (response) in
-                self.transactionsTable.reloadData()
-                if response.objectForKey("mfa") != nil
-                {
-                    //need to use MFA
-                    println("NEED MFA")
-                }
-                else
-                {
-                    println("NO MFA - save access token")
-                    realm.beginWrite()
-                    self.users[0].access_token = response.objectForKey("access_token") as! String
-                    realm.commitWrite()
-                    let accounts = response["accounts"] as! [NSDictionary]
-                    realm.write {
-                        // Save one Venue object (and dependents) for each element of the array
-                        for account in accounts {
-                            realm.create(Account.self, value: account, update: true)
-                            println("saved")
-                        }
-                    }
-                    
-                    var transactions = response["transactions"] as! [NSDictionary]
-                        // Save one Venue object (and dependents) for each element of the array
-                        for transaction in transactions {
-                            println("saved")
-                           
-                            realm.write {
-                            
-                            //clean up name
-                            var dictName = transaction.valueForKey("name") as? String
-                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
-                            
-                            println(dictName)
-                            
-                            //convert string to date before insert
-                            var dictDate = transaction.valueForKey("date") as? String
-                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
-                            
-                            
-                            //add category
-                            if let category_id = transaction.valueForKey("category_id") as? String
-                            {
-                                let predicate = NSPredicate(format: "id = %@", category_id)
-                                var categoryToAdd = realm.objects(Category).filter(predicate)
-                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                newTrans.categories = categoryToAdd[0]
-                            }
-                             else
-                            {
-                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                
-                            }
-                            
-                        }
-                    }
-                    
-                    self.addAccountButton.hidden = true
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    self.transactionsTable.reloadData()
-                    let transactionSum = self.sumTransactionsCount()
-                    let transactionSumCurrecnyFormat = self.formatCurrency(transactionSum)
-                    let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-                    self.transactionsTable.hidden = false
-                    
-                    
-                    
-                }
-                
+        if accounts.count > 0
+        {
+            let access_token = users[0].access_token
+            cHelp.addUpdateResetAccount(99, access_token: access_token)
+            self.transactionsTable.reloadData()
         }
-        */
-        
-        
-        
+  
     }
-    
-    
-       
-    
-    func MFA(response:NSDictionary, callback: NSDictionary->())
-    {
-        
-        let access_token = response.objectForKey("access_token") as! String
-        let question = "Test question"
-        
-        //1. Create the alert controller.
-        var alert = UIAlertController(title: "Security Question", message: "You say tomato", preferredStyle: .Alert)
-        
-        //2. Add the text field. You can configure it however you need.
-        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-            textField.text = ""
-            
-            
-        })
-        
-        //3. Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            let textField = alert.textFields![0] as! UITextField
-            
-            
-            cService.submitMFA(access_token, mfa_response: textField.text)
-                {
-                    
-                    (responseMFA) in
-                    
-                    
-                    if responseMFA.objectForKey("accounts") != nil
-                    {
-                        println("Yahoooo")
-                        let accounts = response["accounts"] as! [NSDictionary]
-                        realm.write {
-                            // Save one Venue object (and dependents) for each element of the array
-                            for account in accounts {
-                                realm.create(Account.self, value: account, update: true)
-                                println("saved")
-                            }
-                        }
-                        
-                        let transactions = response["transactions"] as! [NSDictionary]
-                        realm.write {
-                            // Save one Venue object (and dependents) for each element of the array
-                            for transaction in transactions {
-                                realm.create(Transaction.self, value: transaction, update: true)
-                                println("saved")
-                            }
-                        }
-                        
-                    }
-                    
-                    
-                    callback(responseMFA as NSDictionary)
-                    
-                    
-            }
-            
-            
-            println("Text field: \(textField.text)")
-        }))
-        
-        
-        // 4. Present the alert.
-        self.presentViewController(alert, animated: true, completion: nil)
-        
-        
-        
-        
-    }
-    
-    
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 
 
