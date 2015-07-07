@@ -73,16 +73,19 @@ init(){
     
     func updateAccount(access_token:String, callback: NSDictionary->())
     {
+        
         let parameters = [
             "client_id": client_id,
             "secret": client_secret,
             "access_token": access_token
+           
         ]
         
         
         srConnectGet.httpMethod = .Post
         srConnectGet.parameters = parameters
         
+        println(parameters)
         
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
@@ -138,125 +141,10 @@ init(){
         
     }
     
-    func addAccount(username:String, password:String, bank:String, callback: NSDictionary->())
-    {
-
-    let parameters = [
-        "client_id": client_id,
-        "secret": client_secret,
-        "username": username,
-        "password": password,
-        "type": bank
-    ]
-    
-    srConnect.httpMethod = .Post
-    srConnect.parameters = parameters
-    
-    ServerClient.performRequest(srConnect, completion: { (response) -> Void in
-        httpStatusCode = response.rawResponse!.statusCode
-        if httpStatusCode == 201 //needs mfa
-        {
-            println(JSON(response.results()))
-        }
-            
-        else //can process data
-        {
-            println(JSON(response.results()))
-        }
-        
-       
-        
-        callback(response.results() as! NSDictionary)
-        
-        
-    })
-        
-    
-        
-    
-}
+   
     
     
     
-    
-    func submitMFA(access_token:String, mfa_response:String,  callback: NSDictionary->())
-    {
-        let parameters = [
-            "client_id": client_id,
-            "secret": client_secret,
-            "mfa": mfa_response,
-            "access_token": access_token
-        ]
-        
-        srConnectStep.httpMethod = .Post
-        srConnectStep.parameters = parameters
-        
-        
-       ServerClient.performRequest(srConnectStep, completion: { (response) -> Void in
-            httpStatusCode = response.rawResponse!.statusCode
-            
-            
-            println("MFA Submit Response - \(httpStatusCode)")
-            println(JSON(response.results()))
-            
-            callback(response.results() as! NSDictionary)
-
-            
-            
-        })
-        
-       
-        
-    }
-    
-    
-    func getTransactions(access_token:String, callback: NSDictionary->())
-    {
-        
-        let parameters = [
-            "client_id": client_id,
-            "secret": client_secret,
-            "acess_token": access_token
-        ]
-        
-        srConnect.httpMethod = .Post
-        srConnect.parameters = parameters
-        
-        ServerClient.performRequest(srConnect, completion: { (response) -> Void in
-            httpStatusCode = response.rawResponse!.statusCode
-            if httpStatusCode == 200 //no mfa
-            {
-                
-                println(JSON(response.results()))
-                
-            }
-                
-            else if httpStatusCode == 201//mfa
-            {
-                
-                let mfa:NSDictionary = response.genericResults as! NSDictionary
-                if (mfa.objectForKey("mfa") != nil)
-                {
-                    println("MFAAAAA")
-                }
-                else
-                {
-                    println("MFA but not key???")
-                }
-                
-                
-            }
-            
-            
-            callback(response.results() as! NSDictionary)
-            
-            
-        })
-        
-        
-    }
-    
-   // let mfa:NSDictionary = response.genericResults as! NSDictionary
     
     
 }

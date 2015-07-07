@@ -14,13 +14,19 @@ class cHelper {
     
     
     
-    func addUpdateResetAccount(type:Int, access_token:String)
+    func addUpdateResetAccount(type:Int, access_token:String, callback: Int->())
     {
         
         
        
-            let access_token = access_token
-            cService.updateAccount(access_token)
+    let access_token = access_token
+        
+        
+      let users = realm.objects(User)
+        
+       for user in users
+       {
+            cService.updateAccount(user.access_token)
                 {
                     (response) in
                     
@@ -29,7 +35,7 @@ class cHelper {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
                             realm.create(Account.self, value: account, update: true)
-                            println("saved accounts")
+                            //println("saved accounts")
                         }
                     }
                     
@@ -37,7 +43,7 @@ class cHelper {
                     var transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
                     for transaction in transactions {
-                        println("saved")
+                       // println("saved")
                         
                         realm.write {
                             
@@ -45,7 +51,7 @@ class cHelper {
                             var dictName = transaction.valueForKey("name") as? String
                             transaction.setValue(self.cleanName(dictName!), forKey: "name")
                             
-                            println(dictName)
+                            //println(dictName)
                             
                             //convert string to date before insert
                             var dictDate = transaction.valueForKey("date") as? String
@@ -90,12 +96,12 @@ class cHelper {
                     
                     
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-                    
+                    callback(transactions.count)
                     
                     
             }
             
-    
+        }
         
         
         

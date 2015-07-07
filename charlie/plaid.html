@@ -13,15 +13,16 @@
                 product: "connect",
                 onLoad: function() {
                     linkHandler.open();
+                     webkit.messageHandlers.callbackHandler.postMessage("loaded")
                 },
                 onSuccess: function(public_token) {
-                    window.location.href = "my-app:success:" + public_token;
+                   
                     webkit.messageHandlers.callbackHandler.postMessage(public_token);
                 },
                 onExit: function() {
-                    window.location.href = "my-app:exit";
                     webkit.messageHandlers.callbackHandler.postMessage("exit")
                 }
+                
             }
         var linkHandler = Plaid.create(options);
             </script>

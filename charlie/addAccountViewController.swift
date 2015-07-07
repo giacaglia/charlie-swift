@@ -22,12 +22,22 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
 
 
    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(false)
+        spinner.startAnimating()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 
-
+        
 
         var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
         filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
@@ -66,8 +76,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         self.webViewView.addSubview(webView!)
         
         
+       
+        
         webView?.sizeToFit()
         webView!.loadRequest(req)
+        
+        
 
         
          
@@ -106,11 +120,18 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
             {
                 println("Exit")
                 dismissViewControllerAnimated(true, completion: nil)
+                spinner.stopAnimating()
+                
+            }
+            else if public_token == "loaded"
+            {
+               println("finished loading")
+               spinner.stopAnimating()
                 
             }
             else
             {
-                
+                spinner.startAnimating()
                 cService.getAccessToken(public_token)
                     {
                         (response) in
@@ -119,7 +140,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         self.users[0].access_token = access_token
                         realm.commitWrite()
                         
-//                        
+                        
                         cService.updateAccount(access_token)
                             {
                                 (response) in
@@ -137,40 +158,40 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 self.dismissViewControllerAnimated(true, completion: nil)
          
                                 
-                                var transactions = response["transactions"] as! [NSDictionary]
-                                // Save one Venue object (and dependents) for each element of the array
-                                for transaction in transactions {
-                                    println("saved")
-                                    
-                                    realm.write {
-                                        
-                                        //clean up name
-                                        var dictName = transaction.valueForKey("name") as? String
-                                        transaction.setValue(self.cHelp.cleanName(dictName!), forKey: "name")
-                                        
-                                        println(dictName)
-                                        
-                                        //convert string to date before insert
-                                        var dictDate = transaction.valueForKey("date") as? String
-                                        transaction.setValue(self.cHelp.convertDate(dictDate!), forKey: "date")
-                                        
-                                        
-                                        //add category
-                                        if let category_id = transaction.valueForKey("category_id") as? String
-                                        {
-                                            let predicate = NSPredicate(format: "id = %@", category_id)
-                                            var categoryToAdd = realm.objects(Category).filter(predicate)
-                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                            newTrans.categories = categoryToAdd[0]
-                                        }
-                                        else
-                                        {
-                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                            
-                                        }
-                                        
-                                    }
-                                }
+//                                var transactions = response["transactions"] as! [NSDictionary]
+//                                // Save one Venue object (and dependents) for each element of the array
+//                                for transaction in transactions {
+//                                    println("saved")
+//                                    
+//                                    realm.write {
+//                                        
+//                                        //clean up name
+//                                        var dictName = transaction.valueForKey("name") as? String
+//                                        transaction.setValue(self.cHelp.cleanName(dictName!), forKey: "name")
+//                                        
+//                                        println(dictName)
+//                                        
+//                                        //convert string to date before insert
+//                                        var dictDate = transaction.valueForKey("date") as? String
+//                                        transaction.setValue(self.cHelp.convertDate(dictDate!), forKey: "date")
+//                                        
+//                                        
+//                                        //add category
+//                                        if let category_id = transaction.valueForKey("category_id") as? String
+//                                        {
+//                                            let predicate = NSPredicate(format: "id = %@", category_id)
+//                                            var categoryToAdd = realm.objects(Category).filter(predicate)
+//                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+//                                            newTrans.categories = categoryToAdd[0]
+//                                        }
+//                                        else
+//                                        {
+//                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+//                                            
+//                                        }
+//                                        
+//                                    }
+//                                }
                                 
                                 //run through transactions and see if they can be preliminarly categorized
                                 
@@ -178,6 +199,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 
                                 
                                 println(transactionItems.count)
+                                self.spinner.stopAnimating()
                                 
                                self.dismissViewControllerAnimated(true, completion: nil)
                         }

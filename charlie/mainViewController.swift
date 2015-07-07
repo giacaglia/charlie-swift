@@ -14,7 +14,7 @@ import WebKit
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -14, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -10, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -33,7 +33,9 @@ let flaggedPredicate = NSPredicate(format: "status = 2")
 var transactionItems = realm.objects(Transaction)
 
 
-class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, WKScriptMessageHandler {
+class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     @IBOutlet weak var transactionsTable: SBGestureTableView!
     @IBOutlet weak var topView: UIView!
@@ -44,6 +46,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var dividerView: UIView!
     
    
+    @IBOutlet weak var topSeperator: UIView!
     @IBOutlet weak var listNavBar: UIView!
     
     @IBOutlet weak var moneyActionAmountLabel: UILabel!
@@ -52,6 +55,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
+    @IBOutlet weak var rewardView: UIView!
     
     @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubHeadLabel: UILabel!
@@ -112,6 +116,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let users = realm.objects(User)
     let accounts = realm.objects(Account)
     
+    var timer = NSTimer()
+    
+    var timerCount:Int = 0
+    
     
     var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
     
@@ -122,9 +130,47 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var blurEffectView:UIVisualEffectView!
     
     
+   
+    func showReward()
+    {
+        
+        
+        println("SHOW REWARD")
+        
+        rewardView.hidden = false
+        transactionsTable.hidden = true
+        
+        var  transactionItemsReward = realm.objects(Transaction).filter("status = 1")
+        
+        var incomeSum:Double = 0.0
+        var spendableSum:Double = 0.0
+        var billsSum:Double = 0.0
+        
+        
+        for transaction in transactionItemsReward
+        {
+            if transaction.ctype == 1
+            {incomeSum +=  transaction.amount}
+            if transaction.ctype == 2
+            {spendableSum +=  transaction.amount}
+            if transaction.ctype == 3
+            {billsSum +=  transaction.amount}
+        }
+        
+        println("INCOME \(incomeSum)")
+        println("SPENDABLE \(spendableSum)")
+        println("BILLS \(billsSum)")
+
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+      rewardView.hidden = true
+      transactionsTable.hidden = false
         
       //download categories if don't exist
       let cats = realm.objects(Category)
@@ -201,29 +247,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             if transactionItems.count == 0
             {
-                println("SHOW REWARD")
-                
-                var  transactionItemsReward = realm.objects(Transaction).filter("status = 1")
-                
-                var incomeSum:Double = 0.0
-                var spendableSum:Double = 0.0
-                var billsSum:Double = 0.0
-                
-                    
-                for transaction in transactionItemsReward
-                 {
-                    if transaction.ctype == 1
-                    {incomeSum +=  transaction.amount}
-                    if transaction.ctype == 2
-                    {spendableSum +=  transaction.amount}
-                    if transaction.ctype == 3
-                    {billsSum +=  transaction.amount}
-                }
-                
-                println("INCOME \(incomeSum)")
-                println("SPENDABLE \(spendableSum)")
-                println("BILLS \(billsSum)")
-
+                showReward()
             }
         }
         
@@ -249,6 +273,17 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                     let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                     self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+                var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                
+                
+                if rowCount == 1
+                {
+                    println("show reward window")
+                    self.showReward()
+                }
+                
+                
         
             }
             else //swiping not acted on
@@ -282,6 +317,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if rowCount == 1
                 {
                     println("show reward window")
+                    self.showReward()
                 }
             }
             else
@@ -304,6 +340,28 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
+    func updateTrans() -> Void
+    {
+        println("looking for records")
+        cHelp.addUpdateResetAccount(1, access_token: "dadasdasd")
+            {
+                
+                (response) in
+                println("added records")
+            
+                
+                if response > 0
+                {
+                    self.timer.invalidate()
+                    self.transactionsTable.reloadData()
+                }
+                
+        }
+    
+        
+        
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         if accounts.count > 0 && transactionItems.count > 0
@@ -312,7 +370,12 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         else if accounts.count > 0 && transactionItems.count == 0
         {
-                     println("account but no transactions")
+            println("account but no transactions")
+            timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
+   
+            
+            
+            
         }
         else if accounts.count == 0
         {
@@ -443,85 +506,14 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
    
-    
-    @IBAction func addAccountWeb(sender: UIButton) {
-        
-        var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-        filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
-        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
-        
-        var webView: WKWebView?
-        var contentController = WKUserContentController();
-
-        contentController.addScriptMessageHandler(
-            self,
-            name: "callbackHandler"
-        )
-        
-        var config = WKWebViewConfiguration()
-        config.userContentController = contentController
-        
-        webView = WKWebView(
-            frame: self.view.bounds,
-            configuration: config
-        )
-        
-         self.view.addSubview(webView!)
-
-    
-        webView?.sizeToFit()
-        webView!.loadRequest(req)
-        
-        
-    }
-    
+   
 
    
 
     
     
-    func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-        if(message.name == "callbackHandler") {
-            println("JavaScript is sending a message \(message.body)")
-            
-            //get access_token
-            
-            var public_token = message.body as! String
-            
-            if public_token == "exit"
-            {
-              println("Exit")
-            
-            }
-            else
-            {
-            
-            cService.getAccessToken(public_token)
-                {
-                    (response) in
-                    var access_token = response["access_token"] as! String
-                    realm.beginWrite()
-                    self.users[0].access_token = access_token
-                    realm.commitWrite()
-                    
-                    if self.accounts.count > 0
-                    {
-                        let access_token = self.users[0].access_token
-                        self.cHelp.addUpdateResetAccount(1, access_token: access_token)
-                        self.transactionsTable.reloadData()
-                    }
-  
-                }
-            }
-        }
-    }
+   
 
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        let href = webView.stringByEvaluatingJavaScriptFromString("window.location.href")
-        println("window.location.href  = \(href)")
-        
-    }
     
     
     @IBAction func refreshAccounts(sender: UIButton) {
@@ -530,8 +522,15 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       if accounts.count > 0
         {
             let access_token = users[0].access_token
-            cHelp.addUpdateResetAccount(1, access_token: access_token)
-            self.transactionsTable.reloadData()
+            spinner.startAnimating()
+            cHelp.addUpdateResetAccount(99, access_token: access_token)
+                {
+                    (response) in
+                    self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+                }
+            
+
         }
         
         
@@ -564,6 +563,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
        
+        
+        topSeperator.backgroundColor = listGreen
         
         moneyActionAmountLabel.textColor = listGreen
         moneyActionDetailLabel.textColor = listGreen
@@ -619,6 +620,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
         
 
+        topSeperator.backgroundColor = listBlue
         
         flagListButton.tag = 0
         flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
@@ -663,6 +665,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
 
+        topSeperator.backgroundColor = listRed
         
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "could've spent better"
@@ -686,8 +689,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if accounts.count > 0
         {
             let access_token = users[0].access_token
-            cHelp.addUpdateResetAccount(99, access_token: access_token)
-            self.transactionsTable.reloadData()
+            cHelp.addUpdateResetAccount(99, access_token: access_token) {
+                (response) in
+                self.transactionsTable.reloadData()
+            }
+
         }
   
     }
