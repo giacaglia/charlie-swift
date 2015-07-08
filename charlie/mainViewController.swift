@@ -27,7 +27,7 @@ let inboxPredicate = NSPredicate(format: "status = 0")
 let approvedPredicate = NSPredicate(format: "status = 1")
 let flaggedPredicate = NSPredicate(format: "status = 2")
 
-
+//change to have commit
 
 //let inboxPredicate = NSPredicate(format: "status = %i", status)
 var transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
