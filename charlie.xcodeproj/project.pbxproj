@@ -43,6 +43,7 @@
 		09C2A7611B21F0AD005A40DA /* charlieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A7601B21F0AD005A40DA /* charlieTests.swift */; };
 		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
 		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
+		45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		09C2A7601B21F0AD005A40DA /* charlieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = charlieTests.swift; sourceTree = "<group>"; };
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
+		45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialCardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
 				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
+				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -369,7 +372,7 @@
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = UFDBYP5MQ8;
+						DevelopmentTeam = 8W2TUFV97F;
 					};
 					09C2A7591B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -483,6 +486,7 @@
 				09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */,
 				095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */,
 				090BD35E1B25D2F600F26E78 /* SwiftyJSON.swift in Sources */,
+				45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */,
 				091620271B2DA2330004C781 /* SBGestureTableViewCellAction.swift in Sources */,
 				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
 				09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */,

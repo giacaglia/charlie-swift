@@ -18,14 +18,14 @@ let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value
 let status = 0
 
 
-let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
-let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
-let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
+//let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
+//let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
+//let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
 
 
-//let inboxPredicate = NSPredicate(format: "status = 0")
-//let approvedPredicate = NSPredicate(format: "status = 1")
-//let flaggedPredicate = NSPredicate(format: "status = 2")
+let inboxPredicate = NSPredicate(format: "status = 0")
+let approvedPredicate = NSPredicate(format: "status = 1")
+let flaggedPredicate = NSPredicate(format: "status = 2")
 
 
 
@@ -33,7 +33,7 @@ let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
 var transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
 var allTransactionItems = realm.objects(Transaction)
 
-class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -136,6 +136,10 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
    
+    
+    
+    
+    
     func hideReward()
     {
         rewardView.hidden = true
@@ -143,9 +147,17 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    
+    
+    
+    
+    
+    
+    
     func showReward()
     {
         
+    
         
         println("SHOW REWARD")
         
@@ -390,7 +402,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        if accounts.count > 0 && transactionItems.count > 0
+        if accounts.count > 0 && allTransactionItems.count > 0
         {
            println("normal all is loaded")
         }
@@ -398,6 +410,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         {
             println("account but no transactions")
             timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
+            performSegueWithIdentifier("showTutorial", sender: self)
    
             
             
@@ -534,6 +547,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    
 
+    @IBAction func showTutorial(sender: UIButton) {
+        
+          performSegueWithIdentifier("showTutorial", sender: self)
+        
+    }
    
 
     
