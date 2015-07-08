@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -15,8 +15,11 @@
         <mutableArray key="Montserrat-Bold.ttf">
             <string>Montserrat-Bold</string>
             <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
         </mutableArray>
         <mutableArray key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
@@ -211,32 +214,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
-                                <rect key="frame" x="0.0" y="150" width="600" height="386"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sad_on" translatesAutoresizingMaskIntoConstraints="NO" id="8Kg-IU-O7D">
-                                        <rect key="frame" x="102" y="59" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="OPv-Ke-qHd"/>
-                                            <constraint firstAttribute="width" constant="50" id="WAI-7b-Cd4"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="happy_on" translatesAutoresizingMaskIntoConstraints="NO" id="LVf-VJ-Uui">
-                                        <rect key="frame" x="470" y="59" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="hbY-Z6-K7H"/>
-                                            <constraint firstAttribute="height" constant="50" id="tGg-dJ-wEu"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="59" id="2o2-kh-SCP"/>
-                                    <constraint firstAttribute="trailing" secondItem="LVf-VJ-Uui" secondAttribute="trailing" constant="80" id="Fvt-bA-V6Q"/>
-                                    <constraint firstItem="LVf-VJ-Uui" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="59" id="q7b-ti-2Mt"/>
-                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="102" id="v5c-ot-cGN"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-hm-sg5" customClass="SBGestureTableView" customModule="charlie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="150" width="600" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -263,7 +240,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="512" y="27" width="70" height="21"/>
+                                                    <rect key="frame" x="512" y="27" width="70" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="3mS-5n-vnb"/>
                                                         <constraint firstAttribute="width" constant="38" id="FiU-sn-dQT"/>
@@ -394,7 +371,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
-                                        <rect key="frame" x="280" y="124" width="41" height="20"/>
+                                        <rect key="frame" x="280" y="124" width="41" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -407,7 +384,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfC-by-Gp1" userLabel="small seperator">
-                                        <rect key="frame" x="225" y="117" width="150" height="1"/>
+                                        <rect key="frame" x="225" y="25" width="150" height="1"/>
                                         <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Pm2-DV-4aZ"/>
@@ -430,8 +407,8 @@
                                             <action selector="resetButtonPressed:" destination="HbA-5y-1yC" eventType="touchUpInside" id="TTI-qv-QwE"/>
                                         </connections>
                                     </button>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIj-Dx-ITS" userLabel="MoneyActionDetail">
-                                        <rect key="frame" x="277" y="119" width="44" height="20"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIj-Dx-ITS" userLabel="MoneyActionDetail">
+                                        <rect key="frame" x="281" y="119" width="35.5" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -490,6 +467,86 @@
                                 <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
+                                <rect key="frame" x="0.0" y="150" width="600" height="386"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="result_sad" translatesAutoresizingMaskIntoConstraints="NO" id="8Kg-IU-O7D">
+                                        <rect key="frame" x="180" y="143" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="OPv-Ke-qHd"/>
+                                            <constraint firstAttribute="width" constant="100" id="WAI-7b-Cd4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="result_happy" translatesAutoresizingMaskIntoConstraints="NO" id="LVf-VJ-Uui">
+                                        <rect key="frame" x="320" y="143" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="hbY-Z6-K7H"/>
+                                            <constraint firstAttribute="height" constant="100" id="tGg-dJ-wEu"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ko4-8H-3PG" userLabel="sad_percentage">
+                                        <rect key="frame" x="197" y="251" width="66" height="29.5"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="24"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzM-mE-JAo" userLabel="happy_percentage">
+                                        <rect key="frame" x="337" y="251" width="66" height="29.5"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="24"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your spending so far in June" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl3-rN-eTc">
+                                        <rect key="frame" x="30" y="61" width="540" height="29.5"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="59" id="2o2-kh-SCP"/>
+                                    <constraint firstAttribute="centerY" secondItem="8Kg-IU-O7D" secondAttribute="centerY" id="7yo-N7-Ukz"/>
+                                    <constraint firstItem="Ko4-8H-3PG" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="102" id="8s1-yA-skn"/>
+                                    <constraint firstAttribute="centerX" secondItem="HzM-mE-JAo" secondAttribute="centerX" constant="-70" id="9vt-lN-8dP"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ko4-8H-3PG" secondAttribute="centerX" constant="70" id="Faz-dh-ddq"/>
+                                    <constraint firstAttribute="trailing" secondItem="LVf-VJ-Uui" secondAttribute="trailing" constant="80" id="Fvt-bA-V6Q"/>
+                                    <constraint firstItem="Ko4-8H-3PG" firstAttribute="top" secondItem="8Kg-IU-O7D" secondAttribute="bottom" constant="8" id="N8a-E9-s5E"/>
+                                    <constraint firstAttribute="trailing" secondItem="HzM-mE-JAo" secondAttribute="trailing" constant="80" id="RZw-fw-FWk"/>
+                                    <constraint firstItem="HzM-mE-JAo" firstAttribute="top" secondItem="LVf-VJ-Uui" secondAttribute="bottom" constant="19" id="T0t-zg-Mux"/>
+                                    <constraint firstAttribute="centerX" secondItem="LVf-VJ-Uui" secondAttribute="centerX" constant="-70" id="UlW-k8-P8J"/>
+                                    <constraint firstItem="HzM-mE-JAo" firstAttribute="top" secondItem="LVf-VJ-Uui" secondAttribute="bottom" constant="8" id="WZE-6C-rIm"/>
+                                    <constraint firstItem="Ko4-8H-3PG" firstAttribute="top" secondItem="8Kg-IU-O7D" secondAttribute="bottom" constant="20" id="YLr-iF-g06"/>
+                                    <constraint firstAttribute="centerX" secondItem="kl3-rN-eTc" secondAttribute="centerX" id="gUb-rD-kOZ"/>
+                                    <constraint firstAttribute="centerX" secondItem="8Kg-IU-O7D" secondAttribute="centerX" constant="70" id="ghj-Rz-iMb"/>
+                                    <constraint firstItem="LVf-VJ-Uui" firstAttribute="width" secondItem="HzM-mE-JAo" secondAttribute="width" id="gu2-Kl-Ihf"/>
+                                    <constraint firstAttribute="trailing" secondItem="kl3-rN-eTc" secondAttribute="trailing" constant="30" id="hPc-gV-hLQ"/>
+                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="153" id="kOE-yR-Kxu"/>
+                                    <constraint firstItem="Ko4-8H-3PG" firstAttribute="width" secondItem="8Kg-IU-O7D" secondAttribute="width" id="oR4-UZ-Jb0"/>
+                                    <constraint firstAttribute="centerY" secondItem="LVf-VJ-Uui" secondAttribute="centerY" id="puF-P7-qwx"/>
+                                    <constraint firstItem="LVf-VJ-Uui" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="59" id="q7b-ti-2Mt"/>
+                                    <constraint firstItem="kl3-rN-eTc" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="30" id="qCP-bZ-Nne"/>
+                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="top" secondItem="kl3-rN-eTc" secondAttribute="bottom" constant="52" id="tvn-co-9ph"/>
+                                    <constraint firstItem="8Kg-IU-O7D" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="102" id="v5c-ot-cGN"/>
+                                    <constraint firstAttribute="trailing" secondItem="LVf-VJ-Uui" secondAttribute="trailing" constant="186" id="xVt-08-hLg"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2o2-kh-SCP"/>
+                                        <exclude reference="kOE-yR-Kxu"/>
+                                        <exclude reference="v5c-ot-cGN"/>
+                                        <exclude reference="8s1-yA-skn"/>
+                                        <exclude reference="YLr-iF-g06"/>
+                                        <exclude reference="oR4-UZ-Jb0"/>
+                                        <exclude reference="Fvt-bA-V6Q"/>
+                                        <exclude reference="gu2-Kl-Ihf"/>
+                                        <exclude reference="q7b-ti-2Mt"/>
+                                        <exclude reference="xVt-08-hLg"/>
+                                        <exclude reference="RZw-fw-FWk"/>
+                                        <exclude reference="T0t-zg-Mux"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -528,6 +585,7 @@
                         <outlet property="cardButton" destination="JLJ-av-QVM" id="p21-ah-YzQ"/>
                         <outlet property="dividerView" destination="J2c-VM-doh" id="S2M-7c-HMU"/>
                         <outlet property="flagListButton" destination="oOe-bS-V5E" id="eMe-pe-9hj"/>
+                        <outlet property="happyRewardPercentage" destination="HzM-mE-JAo" id="WUD-O3-NjC"/>
                         <outlet property="inboxListButton" destination="97i-Pg-dNr" id="vz2-1z-nqH"/>
                         <outlet property="listNavBar" destination="0Eh-dx-Cok" id="l2D-Ht-6IC"/>
                         <outlet property="menuButton" destination="cWc-mr-8Dg" id="h42-Nn-Q5U"/>
@@ -538,6 +596,7 @@
                         <outlet property="moneyCountSubSubHeadLabel" destination="Nuq-Ra-l3O" id="2Aj-Gi-4h0"/>
                         <outlet property="moneySeperator" destination="PfC-by-Gp1" id="uhE-Dj-iLJ"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
+                        <outlet property="sadRewardPercentage" destination="Ko4-8H-3PG" id="Ymv-LY-MiZ"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
                         <outlet property="topSeperator" destination="Pb2-Pp-Iuo" id="1BK-VM-ITC"/>
                         <outlet property="topView" destination="yXV-7C-aiq" id="XyY-46-RX1"/>
@@ -592,7 +651,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xB0-96-BGw">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xB0-96-BGw">
                                 <rect key="frame" x="0.0" y="163" width="600" height="437"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -833,7 +892,7 @@
                                             <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="LHA-OB-pu2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
                                         <rect key="frame" x="0.0" y="156" width="568" height="73"/>
                                         <state key="normal" title="Spendable">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1273,11 +1332,11 @@
         <image name="Wink-Yellow-50" width="50" height="50"/>
         <image name="card" width="32" height="24"/>
         <image name="happy_off_blue" width="36" height="36"/>
-        <image name="happy_on" width="36" height="36"/>
         <image name="menu" width="27" height="30"/>
         <image name="neutral_on" width="36" height="37"/>
+        <image name="result_happy" width="98" height="98"/>
+        <image name="result_sad" width="98" height="99"/>
         <image name="sad_off_blue" width="36" height="36"/>
-        <image name="sad_on" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="swt-fH-1dv"/>

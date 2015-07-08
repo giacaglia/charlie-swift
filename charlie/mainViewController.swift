@@ -18,20 +18,20 @@ let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value
 let status = 0
 
 
-//let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
-//let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
-//let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
+let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
+let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
+let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
 
 
-let inboxPredicate = NSPredicate(format: "status = 0")
-let approvedPredicate = NSPredicate(format: "status = 1")
-let flaggedPredicate = NSPredicate(format: "status = 2")
+//let inboxPredicate = NSPredicate(format: "status = 0")
+//let approvedPredicate = NSPredicate(format: "status = 1")
+//let flaggedPredicate = NSPredicate(format: "status = 2")
 
 
 
 //let inboxPredicate = NSPredicate(format: "status = %i", status)
-var transactionItems = realm.objects(Transaction)
-
+var transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+var allTransactionItems = realm.objects(Transaction)
 
 class mainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -44,6 +44,11 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var flagListButton: UIButton!
     
     @IBOutlet weak var dividerView: UIView!
+    
+    
+    @IBOutlet weak var sadRewardPercentage: UILabel!
+    
+    @IBOutlet weak var happyRewardPercentage: UILabel!
     
    
     @IBOutlet weak var topSeperator: UIView!
@@ -131,6 +136,13 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
    
+    func hideReward()
+    {
+        rewardView.hidden = true
+        transactionsTable.hidden = false
+        
+    }
+    
     func showReward()
     {
         
@@ -140,26 +152,38 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         rewardView.hidden = false
         transactionsTable.hidden = true
         
-        var  transactionItemsReward = realm.objects(Transaction).filter("status = 1")
+        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
+        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
+        
+        let totaltransaction = transactionsHappy.count + transactionsSad.count
+        
+        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
+        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
+        
+        println("HAPPY = \(happyPercentage)")
+        println("SAD = \(sadPercentage)")
+        
+        happyRewardPercentage.text = "\(Int(happyPercentage))%"
+        sadRewardPercentage.text = "\(Int(sadPercentage))%"
         
         var incomeSum:Double = 0.0
         var spendableSum:Double = 0.0
         var billsSum:Double = 0.0
         
         
-        for transaction in transactionItemsReward
-        {
-            if transaction.ctype == 1
-            {incomeSum +=  transaction.amount}
-            if transaction.ctype == 2
-            {spendableSum +=  transaction.amount}
-            if transaction.ctype == 3
-            {billsSum +=  transaction.amount}
-        }
-        
-        println("INCOME \(incomeSum)")
-        println("SPENDABLE \(spendableSum)")
-        println("BILLS \(billsSum)")
+//        for transaction in transactionItemsReward
+//        {
+//            if transaction.ctype == 1
+//            {incomeSum +=  transaction.amount}
+//            if transaction.ctype == 2
+//            {spendableSum +=  transaction.amount}
+//            if transaction.ctype == 3
+//            {billsSum +=  transaction.amount}
+//        }
+//        
+//        println("INCOME \(incomeSum)")
+//        println("SPENDABLE \(spendableSum)")
+//        println("BILLS \(billsSum)")
 
         
     }
@@ -171,6 +195,8 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
       rewardView.hidden = true
       transactionsTable.hidden = false
+        
+     inboxListButton.tag =  1
         
       //download categories if don't exist
       let cats = realm.objects(Category)
@@ -245,7 +271,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         {
             addAccountButton.hidden = true
             
-            if transactionItems.count == 0
+            if transactionItems.count == 0 && inboxListButton.tag ==  1
             {
                 showReward()
             }
@@ -348,7 +374,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 (response) in
                 println("added records")
-            
+                println(response)
                 
                 if response > 0
                 {
@@ -368,7 +394,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         {
            println("normal all is loaded")
         }
-        else if accounts.count > 0 && transactionItems.count == 0
+        else if accounts.count > 0 && allTransactionItems.count == 0
         {
             println("account but no transactions")
             timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
@@ -539,6 +565,7 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func approvedListButtonress(sender: UIButton) {
         
+        hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
@@ -594,51 +621,62 @@ class mainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func inboxListButtonPress(sender: UIButton) {
         
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        transactionsTable.reloadData()
-      
         
-        listNavBar.backgroundColor = listBlue
+        if transactionItems.count == 0
+        {
+            showReward()
+        }
         
-        moneyCountLabel.hidden = false
-        moneyCountSubHeadLabel.hidden = false
-        moneyCountSubSubHeadLabel.hidden = false
-        moneySeperator.hidden =  false
-        
-        moneyActionAmountLabel.hidden = true
-        moneyActionDetailLabel.hidden = true
+            
+           
+            transactionsTable.reloadData()
+          
+            
+            listNavBar.backgroundColor = listBlue
+            
+            moneyCountLabel.hidden = false
+            moneyCountSubHeadLabel.hidden = false
+            moneyCountSubSubHeadLabel.hidden = false
+            moneySeperator.hidden =  false
+            
+            moneyActionAmountLabel.hidden = true
+            moneyActionDetailLabel.hidden = true
 
-        
-        inboxListButton.tag = 1
-        inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
-        topView.backgroundColor = UIColor.whiteColor()
-        dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "Was it"
-        
-        let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-        let finalFormat = stripCents(transactionSumCurrecnyFormat)
-        moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        
+            
+            inboxListButton.tag = 1
+            inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
+            topView.backgroundColor = UIColor.whiteColor()
+            dividerView.backgroundColor = listBlue
+            moneyCountSubHeadLabel.text = "Was it"
+            
+            let transactionSum = sumTransactionsCount()
+            let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+            let finalFormat = stripCents(transactionSumCurrecnyFormat)
+            moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+            
 
-        topSeperator.backgroundColor = listBlue
+            topSeperator.backgroundColor = listBlue
+            
+            flagListButton.tag = 0
+            flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
+            
+            
+            approvedListButton.tag = 0
+            approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
+            
+           // menuButton.setImage(menuButtonBlueImage, forState: .Normal)
+           // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
         
-        flagListButton.tag = 0
-        flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
-        
-        
-        approvedListButton.tag = 0
-        approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
-        
-       // menuButton.setImage(menuButtonBlueImage, forState: .Normal)
-       // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
-        
-        
+    
         
     }
     
     
     @IBAction func flagListButtonPress(sender: UIButton) {
 
+        
+        hideReward()
+        
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         transactionsTable.reloadData()
         
