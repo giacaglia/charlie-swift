@@ -16,14 +16,24 @@ let listGreen = UIColor(red: 153/255, green: 219/255, blue: 103/255, alpha: 1.0)
 
 var cService = charlieService()
 
+var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
+
 @UIApplicationMain
+
+
+
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        var cHelp = cHelper()
+       
+        filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+
         return true
     }
 

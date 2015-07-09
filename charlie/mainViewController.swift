@@ -46,7 +46,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var dividerView: UIView!
     
     
-    @IBOutlet weak var sadRewardPercentage: UILabel!
+  
+    @IBOutlet weak var happyImage: UIImageView!
     
     @IBOutlet weak var happyRewardPercentage: UILabel!
     
@@ -83,8 +84,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewCell!
  
-    let checkImage = UIImage(named: "Wink-50")
-    let flagImage = UIImage(named: "Sad-50")
+    let checkImage = UIImage(named: "happy_on")
+    let flagImage = UIImage(named: "sad_on")
     
     let inboxUnSelectedSadButtonImage = UIImage(named: "neutral_off_red")
     let inboxUnSelectedHappyButtonImage = UIImage(named: "neutral_off_green")
@@ -163,6 +164,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         rewardView.hidden = false
         transactionsTable.hidden = true
+        moneyCountLabel.hidden = true
         
         var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
         var  transactionsSad = realm.objects(Transaction).filter("status = 2")
@@ -175,8 +177,18 @@ class mainViewController: UIViewController, UITableViewDataSource {
         println("HAPPY = \(happyPercentage)")
         println("SAD = \(sadPercentage)")
         
-        happyRewardPercentage.text = "\(Int(happyPercentage))%"
-        sadRewardPercentage.text = "\(Int(sadPercentage))%"
+        if happyPercentage > 65
+        {
+            happyImage.image = UIImage(named: "result_happy")
+            happyRewardPercentage.text = "\(Int(happyPercentage))%"
+        }
+        else
+        {
+            happyImage.image = UIImage(named: "result_sad")
+            happyRewardPercentage.text = "\(Int(happyPercentage))%"
+        }
+        
+        
         
         var incomeSum:Double = 0.0
         var spendableSum:Double = 0.0
@@ -567,7 +579,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             let access_token = users[0].access_token
             spinner.startAnimating()
-            cHelp.addUpdateResetAccount(99, access_token: access_token)
+            cHelp.addUpdateResetAccount(1, access_token: access_token)
                 {
                     (response) in
                     self.transactionsTable.reloadData()
@@ -639,13 +651,20 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBAction func inboxListButtonPress(sender: UIButton) {
         
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+       
         
-        if transactionItems.count == 0
+        if transactionItems.count == 0 && allTransactionItems.count > 0
         {
             showReward()
         }
-        
+        else{
+            if accounts.count  == 0 && allTransactionItems.count == 0
+            {
+                addAccountButton.hidden = false
+                transactionsTable.hidden = true
+            }
             
+        }
            
             transactionsTable.reloadData()
           
@@ -686,6 +705,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
            // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
         
     
+        
+
         
     }
     

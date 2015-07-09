@@ -26,8 +26,6 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         pageImages =
             [
                 UIImage(named: "tutorial_1.png")!,
-                UIImage(named: "tutorial_2.png")!,
-                UIImage(named: "tutorial_3.png")!,
                 UIImage(named: "tutorial_4.png")!,
                 UIImage(named: "tutorial_5.png")!,
                 UIImage(named: "tutorial_6.png")!
