@@ -17,9 +17,10 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
 
     let users = realm.objects(User)
     
+    
+    var timer = NSTimer()
     var cHelp = cHelper()
     @IBOutlet weak var webViewView: UIView!
-
 
    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -39,8 +40,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
 
         
 
-//        var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-//        filePath = pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+
         let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
         
         var webView: WKWebView?
@@ -202,6 +202,13 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 self.spinner.stopAnimating()
                                 
                                self.dismissViewControllerAnimated(true, completion: nil)
+                                
+                              
+
+                                
+                                
+                                
+                                
                         }
                         
                         
@@ -215,6 +222,10 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     }
     
    
+   
+    
+
+    
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
         

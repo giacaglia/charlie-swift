@@ -23,17 +23,30 @@ let status = 0
 //let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
 
 
-let inboxPredicate = NSPredicate(format: "status = 0")
-let approvedPredicate = NSPredicate(format: "status = 1")
-let flaggedPredicate = NSPredicate(format: "status = 2")
+//let inboxPredicate = NSPredicate(format: "status = 0")
+//let approvedPredicate = NSPredicate(format: "status = 1")
+//let flaggedPredicate = NSPredicate(format: "status = 2")
+
+
+var inboxPredicate = NSPredicate()
+var approvedPredicate = NSPredicate()
+var flaggedPredicate = NSPredicate()
+
+
 
 //change to have commit
 
-//let inboxPredicate = NSPredicate(format: "status = %i", status)
-var transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+
+
+
+var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction)
 
+
+
 class mainViewController: UIViewController, UITableViewDataSource {
+    
+    @IBOutlet weak var toastView: UIView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -138,89 +151,82 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
    
     
-    
-    
-    
-    func hideReward()
-    {
-        rewardView.hidden = true
-        transactionsTable.hidden = false
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         
+        if accounts.count > 0 && allTransactionItems.count > 0
+        {
+            println("normal all is loaded")
+            
+            
+        }
+      
+        //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
+        else if accounts.count > 0 && allTransactionItems.count == 0
+        {
+            
+            if timerCount == 0 //first time after adding account so show tutorial
+            {
+                println("account but no transactions")
+                timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
+                performSegueWithIdentifier("showTutorial", sender: self)
+                timerCount = 1
+                spinner.startAnimating()
+                toastView.hidden = false
+                //show toast
+            }
+            else
+            {
+                println("Still waiting")
+                //they finished tutorial and account has still not loaded - something until data is loaded
+                
+            
+                
+            }
+            
+        }
+        else if accounts.count == 0
+        {
+            println("First Time in or has never added an account")
+        }
+        
+        transactionsTable.reloadData()
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    func showReward()
-    {
-        
-    
-        
-        println("SHOW REWARD")
-        
-        rewardView.hidden = false
-        transactionsTable.hidden = true
-        moneyCountLabel.hidden = true
-        
-        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
-        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
-        
-        let totaltransaction = transactionsHappy.count + transactionsSad.count
-        
-        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
-        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
-        
-        println("HAPPY = \(happyPercentage)")
-        println("SAD = \(sadPercentage)")
-        
-        if happyPercentage > 65
-        {
-            happyImage.image = UIImage(named: "result_happy")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
-        }
-        else
-        {
-            happyImage.image = UIImage(named: "result_sad")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
-        }
-        
-        
-        
-        var incomeSum:Double = 0.0
-        var spendableSum:Double = 0.0
-        var billsSum:Double = 0.0
-        
-        
-//        for transaction in transactionItemsReward
-//        {
-//            if transaction.ctype == 1
-//            {incomeSum +=  transaction.amount}
-//            if transaction.ctype == 2
-//            {spendableSum +=  transaction.amount}
-//            if transaction.ctype == 3
-//            {billsSum +=  transaction.amount}
-//        }
-//        
-//        println("INCOME \(incomeSum)")
-//        println("SPENDABLE \(spendableSum)")
-//        println("BILLS \(billsSum)")
 
-        
-    }
     
+    
+    
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //we have accounts so set the predicate based on whether the account is fake or real
+        if accounts.count > 0
+        {
+            setPredicates(true)
+           
+        }
+        //we don't have accounts but set the predicated anyway so user can navigate through screens
+        else
+        {
+           
+            setPredicates(false)
+            
+        }
+        
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+      
+        
         
         
       rewardView.hidden = true
       transactionsTable.hidden = false
         
      inboxListButton.tag =  1
+       
+        
+        
         
       //download categories if don't exist
       let cats = realm.objects(Category)
@@ -249,9 +255,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
             }
         }
         
+      
         
-        
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+      //  transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
 
     
@@ -295,7 +301,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             addAccountButton.hidden = true
             
-            if transactionItems.count == 0 && inboxListButton.tag ==  1
+            if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
             {
                 showReward()
             }
@@ -390,6 +396,123 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    func showReward()
+    {
+        
+        
+        
+        println("SHOW REWARD")
+        
+        rewardView.hidden = false
+        transactionsTable.hidden = true
+        moneyCountLabel.hidden = true
+        
+        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
+        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
+        
+        let totaltransaction = transactionsHappy.count + transactionsSad.count
+        
+        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
+        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
+        
+        println("HAPPY = \(happyPercentage)")
+        println("SAD = \(sadPercentage)")
+        
+        if happyPercentage > 65
+        {
+            happyImage.image = UIImage(named: "result_happy")
+            happyRewardPercentage.text = "\(Int(happyPercentage))%"
+        }
+        else
+        {
+            happyImage.image = UIImage(named: "result_sad")
+            happyRewardPercentage.text = "\(Int(happyPercentage))%"
+        }
+        
+        
+        
+        var incomeSum:Double = 0.0
+        var spendableSum:Double = 0.0
+        var billsSum:Double = 0.0
+        
+        
+        //        for transaction in transactionItemsReward
+        //        {
+        //            if transaction.ctype == 1
+        //            {incomeSum +=  transaction.amount}
+        //            if transaction.ctype == 2
+        //            {spendableSum +=  transaction.amount}
+        //            if transaction.ctype == 3
+        //            {billsSum +=  transaction.amount}
+        //        }
+        //
+        //        println("INCOME \(incomeSum)")
+        //        println("SPENDABLE \(spendableSum)")
+        //        println("BILLS \(billsSum)")
+        
+        
+    }
+    
+    
+    
+    
+    
+    func setPredicates(hasAccounts:Bool)
+    {
+        
+        if hasAccounts
+        {
+            
+            if accounts[0].institution_type == "fake_institution"
+            {
+                inboxPredicate = NSPredicate(format: "status = 0")
+                approvedPredicate = NSPredicate(format: "status = 1")
+                flaggedPredicate = NSPredicate(format: "status = 2")
+            }
+            else
+            {
+                
+                
+                inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
+                approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
+                flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
+                
+            }
+            
+        }
+        else
+        {
+            
+            inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
+            approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
+            flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
+            
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    func hideReward()
+    {
+        rewardView.hidden = true
+        transactionsTable.hidden = false
+        
+    }
+    
+    
     func updateTrans() -> Void
     {
         println("looking for records")
@@ -403,7 +526,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 if response > 0
                 {
                     self.timer.invalidate()
+                    self.setPredicates(true)
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                    allTransactionItems = realm.objects(Transaction)
                     self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+                    self.toastView.hidden = true
+                    
                 }
                 
         }
@@ -412,30 +541,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        if accounts.count > 0 && allTransactionItems.count > 0
-        {
-           println("normal all is loaded")
-        }
-        else if accounts.count > 0 && allTransactionItems.count == 0
-        {
-            println("account but no transactions")
-            timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
-            performSegueWithIdentifier("showTutorial", sender: self)
-   
-            
-            
-            
-        }
-        else if accounts.count == 0
-        {
-            println("First Time in or has never added an account")
-        }
-        
-        
-        transactionsTable.reloadData()
-    }
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

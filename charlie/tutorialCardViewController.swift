@@ -49,6 +49,13 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         loadVisiblePages()
         
         //scrollViewDidScroll(scrollView)
+        
+        
+        
+        
+        
+        
+        
     }
     
     

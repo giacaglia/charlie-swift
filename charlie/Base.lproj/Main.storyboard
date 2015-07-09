@@ -455,7 +455,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfC-by-Gp1" userLabel="small seperator">
-                                        <rect key="frame" x="225" y="53" width="150" height="1"/>
+                                        <rect key="frame" x="225" y="-9" width="150" height="1"/>
                                         <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Pm2-DV-4aZ"/>
@@ -545,10 +545,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
-                                <rect key="frame" x="282" y="282" width="37" height="37"/>
-                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
                                 <rect key="frame" x="0.0" y="150" width="600" height="386"/>
                                 <subviews>
@@ -609,6 +605,18 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o08-Ym-LQO" userLabel="toast">
+                                <rect key="frame" x="200" y="325" width="200" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="ec6-pI-G8g"/>
+                                    <constraint firstAttribute="width" constant="200" id="oAP-QO-0Jw"/>
+                                </constraints>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -619,6 +627,7 @@
                             <constraint firstItem="QP3-Bt-gR0" firstAttribute="height" secondItem="JmO-hm-sg5" secondAttribute="height" id="J7x-rl-KHs"/>
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="bottom" id="LbX-6A-PFj"/>
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
+                            <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
                             <constraint firstItem="yXV-7C-aiq" firstAttribute="top" secondItem="yyi-Gr-U2e" secondAttribute="top" id="VCz-bC-c72"/>
                             <constraint firstAttribute="trailing" secondItem="JmO-hm-sg5" secondAttribute="trailing" id="Vtc-Ma-J9k"/>
                             <constraint firstItem="QP3-Bt-gR0" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" constant="-273" id="bWh-Wx-fLJ"/>
@@ -631,6 +640,7 @@
                             <constraint firstItem="pbA-n2-qga" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="k46-C6-3Vn"/>
                             <constraint firstAttribute="trailing" secondItem="0Eh-dx-Cok" secondAttribute="trailing" id="lN8-0k-bFI"/>
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="m6o-hz-eDZ"/>
+                            <constraint firstAttribute="centerX" secondItem="o08-Ym-LQO" secondAttribute="centerX" id="rvG-mz-nVS"/>
                             <constraint firstAttribute="trailing" secondItem="pbA-n2-qga" secondAttribute="trailing" id="vp2-S2-QWe"/>
                             <constraint firstItem="yXV-7C-aiq" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="yhL-k9-fcQ"/>
                         </constraints>
@@ -660,6 +670,7 @@
                         <outlet property="moneySeperator" destination="PfC-by-Gp1" id="uhE-Dj-iLJ"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
+                        <outlet property="toastView" destination="o08-Ym-LQO" id="aEc-yW-LS3"/>
                         <outlet property="topSeperator" destination="Pb2-Pp-Iuo" id="1BK-VM-ITC"/>
                         <outlet property="topView" destination="yXV-7C-aiq" id="XyY-46-RX1"/>
                         <outlet property="transactionsTable" destination="JmO-hm-sg5" id="Ccw-2S-17q"/>
