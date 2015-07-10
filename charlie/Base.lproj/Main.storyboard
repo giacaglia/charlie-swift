@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -311,7 +311,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="512" y="27" width="70" height="21"/>
+                                                    <rect key="frame" x="512" y="27" width="70" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="3mS-5n-vnb"/>
                                                         <constraint firstAttribute="width" constant="38" id="FiU-sn-dQT"/>
@@ -398,9 +398,6 @@
                                         <state key="normal" image="menu">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="refreshAccounts:" destination="HbA-5y-1yC" eventType="touchUpInside" id="NOh-u2-GDj"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-av-QVM">
                                         <rect key="frame" x="548" y="58" width="43" height="35"/>
@@ -442,7 +439,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
-                                        <rect key="frame" x="279" y="124" width="42" height="20"/>
+                                        <rect key="frame" x="279" y="124" width="42" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -455,7 +452,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfC-by-Gp1" userLabel="small seperator">
-                                        <rect key="frame" x="225" y="-9" width="150" height="1"/>
+                                        <rect key="frame" x="225" y="19" width="150" height="1"/>
                                         <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Pm2-DV-4aZ"/>
@@ -468,7 +465,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcl-zn-eR5">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcl-zn-eR5">
                                         <rect key="frame" x="12" y="119" width="40" height="30"/>
                                         <state key="normal" title="Reset">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -479,12 +476,12 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIj-Dx-ITS" userLabel="MoneyActionDetail">
-                                        <rect key="frame" x="280" y="119" width="38" height="20"/>
+                                        <rect key="frame" x="280" y="119" width="37.5" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Akl-bx-gA3">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Akl-bx-gA3">
                                         <rect key="frame" x="9" y="8" width="46" height="30"/>
                                         <state key="normal" title="Button">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -556,19 +553,19 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl3-rN-eTc">
-                                        <rect key="frame" x="30" y="61" width="540" height="30"/>
+                                        <rect key="frame" x="30" y="61" width="540" height="29.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Research show that spending money on experiences makes us happier!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APn-0C-mll">
-                                        <rect key="frame" x="20" y="331" width="560" height="20"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="14"/>
+                                        <rect key="frame" x="20" y="329" width="560" height="22"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="16"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzM-mE-JAo" userLabel="happy_percentage">
-                                        <rect key="frame" x="267" y="225" width="66" height="30"/>
+                                        <rect key="frame" x="267" y="225" width="66" height="29.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="24"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -607,11 +604,35 @@
                             </view>
                             <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o08-Ym-LQO" userLabel="toast">
                                 <rect key="frame" x="200" y="325" width="200" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie is downloading your transactions. This might take a couple of minutes." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
+                                        <rect key="frame" x="10" y="8.5" width="180" height="81.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="10" id="6Sq-Z9-9P0"/>
+                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Bro-BX-kzz"/>
+                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="-199.5" id="NY1-vl-9Vo"/>
+                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="-199.5" id="Rqu-1t-IXS"/>
+                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="Yql-57-3gu"/>
+                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Z5b-RU-9Jw"/>
+                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="10" id="e0P-a5-AbI"/>
+                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="e11-HC-1KS"/>
                                     <constraint firstAttribute="height" constant="100" id="ec6-pI-G8g"/>
                                     <constraint firstAttribute="width" constant="200" id="oAP-QO-0Jw"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Bro-BX-kzz"/>
+                                        <exclude reference="NY1-vl-9Vo"/>
+                                        <exclude reference="Rqu-1t-IXS"/>
+                                        <exclude reference="Yql-57-3gu"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
                                 <rect key="frame" x="282" y="282" width="37" height="37"/>
@@ -668,6 +689,7 @@
                         <outlet property="moneyCountSubHeadLabel" destination="8h5-bW-v9x" id="9yg-oQ-Wy5"/>
                         <outlet property="moneyCountSubSubHeadLabel" destination="Nuq-Ra-l3O" id="2Aj-Gi-4h0"/>
                         <outlet property="moneySeperator" destination="PfC-by-Gp1" id="uhE-Dj-iLJ"/>
+                        <outlet property="rewardMessage" destination="APn-0C-mll" id="Et2-OF-l9H"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
                         <outlet property="toastView" destination="o08-Ym-LQO" id="aEc-yW-LS3"/>
@@ -950,7 +972,7 @@
                                             <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="LHA-OB-pu2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
                                         <rect key="frame" x="0.0" y="156" width="568" height="73"/>
                                         <state key="normal" title="Spendable">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

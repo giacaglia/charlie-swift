@@ -14,18 +14,8 @@ import WebKit
 
 //let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -10, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -15, toDate: NSDate(), options: nil)!
 let status = 0
-
-
-//let inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", date)
-//let approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", date)
-//let flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", date)
-
-
-//let inboxPredicate = NSPredicate(format: "status = 0")
-//let approvedPredicate = NSPredicate(format: "status = 1")
-//let flaggedPredicate = NSPredicate(format: "status = 2")
 
 
 var inboxPredicate = NSPredicate()
@@ -59,6 +49,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var dividerView: UIView!
     
     
+    @IBOutlet weak var rewardMessage: UILabel!
   
     @IBOutlet weak var happyImage: UIImageView!
     
@@ -158,6 +149,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             println("normal all is loaded")
             
+
+            
             
         }
       
@@ -199,6 +192,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
  
     
     override func viewDidLoad() {
+      
+        
         super.viewDidLoad()
         
         //we have accounts so set the predicate based on whether the account is fake or real
@@ -333,7 +328,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                 
                 
-                if rowCount == 1
+                if rowCount == 1 && self.inboxListButton.tag == 1
                 {
                     println("show reward window")
                     self.showReward()
@@ -370,7 +365,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                 
                 
-                if rowCount == 1
+                if rowCount == 1 && self.inboxListButton.tag == 1
                 {
                     println("show reward window")
                     self.showReward()
@@ -406,10 +401,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func showReward()
     {
         
-        
-        
-        println("SHOW REWARD")
-        
         rewardView.hidden = false
         transactionsTable.hidden = true
         moneyCountLabel.hidden = true
@@ -429,11 +420,14 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             happyImage.image = UIImage(named: "result_happy")
             happyRewardPercentage.text = "\(Int(happyPercentage))%"
+            rewardMessage.text = "Experience + Friends = Happiness!"
+
         }
         else
         {
             happyImage.image = UIImage(named: "result_sad")
             happyRewardPercentage.text = "\(Int(happyPercentage))%"
+            rewardMessage.text = "Research shows that spending money on experiences makes us happier!"           
         }
         
         
