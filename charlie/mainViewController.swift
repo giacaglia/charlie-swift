@@ -409,6 +409,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         rewardView.hidden = false
         transactionsTable.hidden = true
+        accountAddView.hidden = true    
         moneyCountLabel.hidden = true
         
         var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
