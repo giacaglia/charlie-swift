@@ -157,7 +157,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 }
                                 self.dismissViewControllerAnimated(true, completion: nil)
          
-                                
+//                                
 //                                var transactions = response["transactions"] as! [NSDictionary]
 //                                // Save one Venue object (and dependents) for each element of the array
 //                                for transaction in transactions {

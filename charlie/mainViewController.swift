@@ -49,6 +49,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var dividerView: UIView!
     
     
+    @IBOutlet weak var accountAddView: UIView!
+    
     @IBOutlet weak var rewardMessage: UILabel!
   
     @IBOutlet weak var happyImage: UIImageView!
@@ -166,6 +168,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 timerCount = 1
                 spinner.startAnimating()
                 toastView.hidden = false
+                accountAddView.hidden = true
                 //show toast
             }
             else
@@ -288,6 +291,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         if accounts.count  == 0
         {
+           
+            accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
         }
@@ -295,6 +300,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         else
         {
             addAccountButton.hidden = true
+            accountAddView.hidden = true
             
             if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
             {
@@ -542,6 +548,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             transactionsTable.hidden = false
             addAccountButton.hidden = true
+            accountAddView.hidden = true
             let transactionSum = sumTransactionsCount()
             let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
             let finalFormat = stripCents(transactionSumCurrecnyFormat)
@@ -760,6 +767,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             if accounts.count  == 0 && allTransactionItems.count == 0
             {
                 addAccountButton.hidden = false
+                accountAddView.hidden = false
                 transactionsTable.hidden = true
             }
             
