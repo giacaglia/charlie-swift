@@ -141,7 +141,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         realm.commitWrite()
                         
                         
-                        cService.updateAccount(access_token)
+                        cService.updateAccount(access_token, dayLength: 30)
                             {
                                 (response) in
                                 

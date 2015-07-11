@@ -286,6 +286,9 @@
                                         <state key="normal" image="menu">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="refreshAccounts:" destination="HbA-5y-1yC" eventType="touchUpInside" id="Q7J-LM-C3c"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-av-QVM">
                                         <rect key="frame" x="548" y="58" width="43" height="35"/>

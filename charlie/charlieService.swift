@@ -70,15 +70,22 @@ init(){
         
     }
     
-    func updateAccount(access_token:String, callback: NSDictionary->())
+    func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->())
     {
+        
+        let options = [
+            "pending": true,
+            "gte": "\(dayLength) days ago"
+        ]
         
         let parameters = [
             "client_id": client_id,
             "secret": client_secret,
-            "access_token": access_token
-           
+            "access_token": access_token,
+            "options": options
         ]
+        
+      
         
         
         srConnectGet.httpMethod = .Post

@@ -14,19 +14,14 @@ class cHelper {
     
     
     
-    func addUpdateResetAccount(type:Int, access_token:String, callback: Int->())
+    func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->())
     {
-        
-        
-       
-    let access_token = access_token
-        
         
       let users = realm.objects(User)
         
        for user in users
        {
-            cService.updateAccount(user.access_token)
+        cService.updateAccount(user.access_token, dayLength: dayLength)
                 {
                     (response) in
                     
@@ -67,11 +62,11 @@ class cHelper {
                                 newTrans.categories = categoryToAdd[0]
                                 if category_id == "21008000" || category_id == "21007001"
                                 {
-                                    newTrans.status = 99
+                                    newTrans.status = 86 //sets status to ignore from totals
                                 }
                                 else
                                 {
-                                    if type == 99
+                                    if type == 99 //if type passed to this function is 99 then user wants to reset the data
                                     {
                                         newTrans.status = 0
                                     }
@@ -92,8 +87,6 @@ class cHelper {
                             
                         }
                     }
-                    
-                    
                     
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate)
                     callback(transactions.count)
