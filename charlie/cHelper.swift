@@ -88,7 +88,7 @@ class cHelper {
                         }
                     }
                     
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                     callback(transactions.count)
                     
                     

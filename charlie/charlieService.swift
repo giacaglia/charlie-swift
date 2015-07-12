@@ -73,25 +73,48 @@ init(){
     func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->())
     {
         
-        let options = [
-            "pending": true,
-            "gte": "\(dayLength) days ago"
-        ]
+        if dayLength > 0
+        {
         
-        let parameters = [
-            "client_id": client_id,
-            "secret": client_secret,
-            "access_token": access_token,
-            "options": options
-        ]
+            var options = [
+                "pending": true,
+                "gte": "\(dayLength) days ago"
+            ]
+       
+            var parameters = [
+                "client_id": client_id,
+                "secret": client_secret,
+                "access_token": access_token,
+                "options": options
+            ]
         
+            srConnectGet.parameters = parameters
+        
+        }
+        else
+        {
+            
+            var options = [
+                "pending": true
+            ]
+            
+            var parameters = [
+                "client_id": client_id,
+                "secret": client_secret,
+                "access_token": access_token,
+                "options": options
+            ]
+
+            
+            srConnectGet.parameters = parameters as! [String : AnyObject]
+        }
       
         
         
         srConnectGet.httpMethod = .Post
-        srConnectGet.parameters = parameters
+       
         
-        println(parameters)
+       
         
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in

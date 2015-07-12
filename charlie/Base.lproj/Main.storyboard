@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HbA-5y-1yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -433,10 +433,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
-                                <rect key="frame" x="282" y="282" width="37" height="37"/>
-                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-hm-sg5" customClass="SBGestureTableView" customModule="charlie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="150" width="600" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -689,6 +685,10 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -696,10 +696,7 @@
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" constant="20" id="9Do-gl-VNn"/>
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="bottom" id="9kX-6w-6N0"/>
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="DzT-WG-1C6"/>
-                            <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="Ssu-hU-syf" secondAttribute="bottom" constant="200" id="HS8-Lj-wQw"/>
-                            <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="Ssu-hU-syf" secondAttribute="trailing" constant="20" id="JZY-qk-nk2"/>
                             <constraint firstAttribute="trailing" secondItem="Ssu-hU-syf" secondAttribute="trailing" constant="20" id="KR4-W5-jHn"/>
-                            <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="Ssu-hU-syf" secondAttribute="trailing" constant="20" id="L3l-lP-dOg"/>
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
                             <constraint firstItem="yXV-7C-aiq" firstAttribute="top" secondItem="yyi-Gr-U2e" secondAttribute="top" id="VCz-bC-c72"/>
@@ -708,7 +705,6 @@
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="cOI-9j-Uot"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" id="cPP-4C-dPR"/>
                             <constraint firstAttribute="centerX" secondItem="huO-nz-BFN" secondAttribute="centerX" id="dSh-Io-tu1"/>
-                            <constraint firstAttribute="centerY" secondItem="Ssu-hU-syf" secondAttribute="centerY" id="gVo-wZ-G8W"/>
                             <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="0Eh-dx-Cok" secondAttribute="bottom" id="guX-Lu-HoI"/>
                             <constraint firstAttribute="trailing" secondItem="0Eh-dx-Cok" secondAttribute="trailing" id="lN8-0k-bFI"/>
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="m6o-hz-eDZ"/>
@@ -718,17 +714,7 @@
                             <constraint firstItem="QP3-Bt-gR0" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" id="uBE-uX-3FA"/>
                             <constraint firstAttribute="trailing" secondItem="QP3-Bt-gR0" secondAttribute="trailing" id="v2K-hz-dRU"/>
                             <constraint firstItem="yXV-7C-aiq" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="yhL-k9-fcQ"/>
-                            <constraint firstAttribute="centerX" secondItem="Ssu-hU-syf" secondAttribute="centerX" id="zEe-NV-IzN"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="HS8-Lj-wQw"/>
-                                <exclude reference="JZY-qk-nk2"/>
-                                <exclude reference="L3l-lP-dOg"/>
-                                <exclude reference="gVo-wZ-G8W"/>
-                                <exclude reference="zEe-NV-IzN"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="accountAddView" destination="Ssu-hU-syf" id="I2j-Nc-7zS"/>
@@ -1031,7 +1017,7 @@
                                             <action selector="spendableButtonPress:" destination="071-ho-sdj" eventType="touchUpInside" id="LHA-OB-pu2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWR-Tq-jXU">
                                         <rect key="frame" x="0.0" y="156" width="568" height="73"/>
                                         <state key="normal" title="Spendable">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

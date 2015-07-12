@@ -12,7 +12,6 @@ import RealmSwift
 import WebKit
 
 
-//let date = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.CalendarUnitWeek, value: -1, toDate: NSDate(), options: nil)!
 
 let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -15, toDate: NSDate(), options: nil)!
 let status = 0
@@ -23,12 +22,6 @@ var approvedPredicate = NSPredicate()
 var flaggedPredicate = NSPredicate()
 
 
-
-//change to have commit
-
-
-
-
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction)
 
@@ -37,51 +30,44 @@ var allTransactionItems = realm.objects(Transaction)
 class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var toastView: UIView!
-    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     @IBOutlet weak var transactionsTable: SBGestureTableView!
-    @IBOutlet weak var topView: UIView!
+
+
+    
+    
+    @IBOutlet weak var listNavBar: UIView!
     @IBOutlet weak var approvedListButton: UIButton!
     @IBOutlet weak var inboxListButton: UIButton!
     @IBOutlet weak var flagListButton: UIButton!
     
     @IBOutlet weak var dividerView: UIView!
     
+
     
     @IBOutlet weak var accountAddView: UIView!
     
+
+    @IBOutlet weak var rewardView: UIView!
+
     @IBOutlet weak var rewardMessage: UILabel!
-  
     @IBOutlet weak var happyImage: UIImageView!
-    
     @IBOutlet weak var happyRewardPercentage: UILabel!
     
-   
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topSeperator: UIView!
-    @IBOutlet weak var listNavBar: UIView!
-    
     @IBOutlet weak var moneyActionAmountLabel: UILabel!
-    
     @IBOutlet weak var moneyActionDetailLabel: UILabel!
-    
-    
-    
-    @IBOutlet weak var rewardView: UIView!
-    
     @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubHeadLabel: UILabel!
-    
-    
     @IBOutlet weak var moneySeperator: UIView!
-   
     @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
-    
+   
     @IBOutlet weak var addAccountButton: UIButton!
     
     
     @IBOutlet weak var menuButton: UIButton!
-    
     @IBOutlet weak var cardButton: UIButton!
     
     
@@ -98,17 +84,11 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     let inboxSelectedButtonImage = UIImage(named: "neutral_on")
-
     let flagUnSelectedHappyButtonImage = UIImage(named: "sad_off_green")
     let flagUnSelectedInboxButtonImage = UIImage(named: "sad_off_blue")
-    
-    
     let flagSelectedButtonImage = UIImage(named: "sad_on")
-
     let approvedUnSelectedInboxButtonImage = UIImage(named: "happy_off_blue")
     let approvedUnSelectedSadButtonImage = UIImage(named: "happy_off_red")
-    
-    
     let approvedSelectedButtonImage = UIImage(named: "happy_on")
 
 
@@ -159,7 +139,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
         else if accounts.count > 0 && allTransactionItems.count == 0
         {
-            
             if timerCount == 0 //first time after adding account so show tutorial
             {
                 println("account but no transactions")
@@ -175,11 +154,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             {
                 println("Still waiting")
                 //they finished tutorial and account has still not loaded - something until data is loaded
-                
-            
-                
             }
-            
         }
         else if accounts.count == 0
         {
@@ -188,11 +163,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         transactionsTable.reloadData()
     }
-
-    
-    
-    
- 
+  
     
     override func viewDidLoad() {
       
@@ -203,35 +174,24 @@ class mainViewController: UIViewController, UITableViewDataSource {
         if accounts.count > 0
         {
             setPredicates(true)
-           
         }
         //we don't have accounts but set the predicated anyway so user can navigate through screens
         else
         {
-           
             setPredicates(false)
-            
         }
-        
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-      
         
+        rewardView.hidden = true
+        transactionsTable.hidden = false
+        inboxListButton.tag =  1
+
+        //download categories if don't exist
+        let cats = realm.objects(Category)
+        if cats.count == 0
+        {
         
-        
-      rewardView.hidden = true
-      transactionsTable.hidden = false
-        
-     inboxListButton.tag =  1
-       
-        
-        
-        
-      //download categories if don't exist
-      let cats = realm.objects(Category)
-      if cats.count == 0
-      {
-        
-        cService.getCategories()
+            cService.getCategories()
             {
                 
                 (responses) in
@@ -254,11 +214,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         
       
-        
-      //  transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        
 
-    
+        //used for transaction type picker
         blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds //view is self.view in a UIViewController
@@ -517,7 +474,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func updateTrans() -> Void
     {
         println("looking for records")
-        cHelp.addUpdateResetAccount(1, access_token: "dadasdasd")
+        cHelp.addUpdateResetAccount(1, dayLength: 0)
             {
                 
                 (response) in
@@ -686,9 +643,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             let access_token = users[0].access_token
             spinner.startAnimating()
-            cHelp.addUpdateResetAccount(1, access_token: access_token)
+            cHelp.addUpdateResetAccount(1, dayLength: 7)
                 {
                     (response) in
+                    
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
                 }
@@ -874,7 +832,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         if accounts.count > 0
         {
             let access_token = users[0].access_token
-            cHelp.addUpdateResetAccount(99, access_token: access_token) {
+            cHelp.addUpdateResetAccount(99, dayLength: 7) {
                 (response) in
                 self.transactionsTable.reloadData()
             }
