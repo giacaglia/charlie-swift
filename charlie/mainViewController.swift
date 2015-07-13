@@ -13,7 +13,7 @@ import WebKit
 
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -15, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -30, toDate: NSDate(), options: nil)!
 let status = 0
 
 
