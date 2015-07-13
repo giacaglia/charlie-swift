@@ -56,7 +56,7 @@ class showTransactionViewController: UIViewController {
         
         addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
         
-        merchantLabel.text = transactionItems[transactionIndex].name
+    
         
         var lat = transactionItems[transactionIndex].meta.location.coordinates.lat
         var lon = transactionItems[transactionIndex].meta.location.coordinates.lon
@@ -65,7 +65,17 @@ class showTransactionViewController: UIViewController {
         {
             mapView.hidden = false
             let initialLocation = CLLocation(latitude: lat, longitude: lon)
+            
+            let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            
             centerMapOnLocation(initialLocation)
+            var anotation = MKPointAnnotation()
+            anotation.coordinate = location
+
+            mapView.addAnnotation(anotation)
+            
+            
+            
         }
         else
         {

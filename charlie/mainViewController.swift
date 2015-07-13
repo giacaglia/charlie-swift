@@ -61,7 +61,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var moneyActionDetailLabel: UILabel!
     @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubHeadLabel: UILabel!
-    @IBOutlet weak var moneySeperator: UIView!
     @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
    
     @IBOutlet weak var addAccountButton: UIButton!
@@ -259,6 +258,19 @@ class mainViewController: UIViewController, UITableViewDataSource {
             addAccountButton.hidden = true
             accountAddView.hidden = true
             
+             //refresh accounts
+            println("REFRESH ACCOUNTS")
+            let access_token = users[0].access_token
+            spinner.startAnimating()
+            cHelp.addUpdateResetAccount(1, dayLength: 7)
+                {
+                    (response) in
+                    
+                    self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+            }
+            
+            
             if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
             {
                 showReward()
@@ -354,13 +366,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     
-    
-    
-    
-    
-    
-    
-    
     func showReward()
     {
         
@@ -389,7 +394,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         else
         {
-            happyImage.image = UIImage(named: "result_sad")
+            happyImage.image = UIImage(named: "result_happy")
             happyRewardPercentage.text = "\(Int(happyPercentage))%"
             rewardMessage.text = "Research shows that spending money on experiences makes us happier!"           
         }
@@ -694,7 +699,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         moneyCountLabel.hidden = true
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
-        moneySeperator.hidden =  true
+       
         
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
@@ -740,7 +745,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             moneyCountLabel.hidden = false
             moneyCountSubHeadLabel.hidden = false
             moneyCountSubSubHeadLabel.hidden = false
-            moneySeperator.hidden =  false
+           
             
             moneyActionAmountLabel.hidden = true
             moneyActionDetailLabel.hidden = true
@@ -803,7 +808,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         moneyCountLabel.hidden = true
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
-        moneySeperator.hidden =  true
+       
         
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
