@@ -262,7 +262,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
             spinner.startAnimating()
-            cHelp.addUpdateResetAccount(1, dayLength: 7)
+            cHelp.addUpdateResetAccount(1, dayLength: 30)
                 {
                     (response) in
                     
