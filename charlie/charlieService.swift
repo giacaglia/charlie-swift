@@ -88,6 +88,8 @@ init(){
                 "options": options
             ]
         
+            println(parameters)
+
             srConnectGet.parameters = parameters
         
         }
@@ -104,6 +106,7 @@ init(){
                 "access_token": access_token,
                 "options": options
             ]
+            println(parameters)
 
             
             srConnectGet.parameters = parameters as! [String : AnyObject]
@@ -114,7 +117,6 @@ init(){
         srConnectGet.httpMethod = .Post
        
         
-       
         
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in

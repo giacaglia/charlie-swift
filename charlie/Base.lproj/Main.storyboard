@@ -617,56 +617,58 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
                                 <rect key="frame" x="0.0" y="150" width="600" height="386"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="result_happy" translatesAutoresizingMaskIntoConstraints="NO" id="LVf-VJ-Uui">
-                                        <rect key="frame" x="250" y="117" width="100" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="hbY-Z6-K7H"/>
-                                            <constraint firstAttribute="height" constant="100" id="tGg-dJ-wEu"/>
-                                        </constraints>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl3-rN-eTc">
-                                        <rect key="frame" x="30" y="61" width="540" height="30"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
+                                        <rect key="frame" x="30" y="10" width="540" height="22"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Research show that spending money on experiences makes us happier!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APn-0C-mll">
-                                        <rect key="frame" x="20" y="329" width="560" height="22"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="16"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzM-mE-JAo" userLabel="happy_percentage">
-                                        <rect key="frame" x="267" y="225" width="66" height="30"/>
+                                        <rect key="frame" x="267" y="130" width="66" height="30"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="24"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="result_happy" translatesAutoresizingMaskIntoConstraints="NO" id="LVf-VJ-Uui">
+                                        <rect key="frame" x="263" y="47" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="hbY-Z6-K7H"/>
+                                            <constraint firstAttribute="height" constant="75" id="tGg-dJ-wEu"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMy-Vo-NdC" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="10" y="174" width="580" height="187"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="jMy-Vo-NdC" firstAttribute="top" secondItem="HzM-mE-JAo" secondAttribute="bottom" constant="14" id="7aY-oh-Xrg"/>
                                     <constraint firstAttribute="centerX" secondItem="HzM-mE-JAo" secondAttribute="centerX" id="9vt-lN-8dP"/>
                                     <constraint firstAttribute="trailing" secondItem="LVf-VJ-Uui" secondAttribute="trailing" constant="80" id="Fvt-bA-V6Q"/>
-                                    <constraint firstItem="kl3-rN-eTc" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="61" id="Pq4-4Y-QBA"/>
+                                    <constraint firstItem="kl3-rN-eTc" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="10" id="Pq4-4Y-QBA"/>
                                     <constraint firstAttribute="trailing" secondItem="HzM-mE-JAo" secondAttribute="trailing" constant="80" id="RZw-fw-FWk"/>
                                     <constraint firstItem="HzM-mE-JAo" firstAttribute="top" secondItem="LVf-VJ-Uui" secondAttribute="bottom" constant="19" id="T0t-zg-Mux"/>
                                     <constraint firstAttribute="centerX" secondItem="LVf-VJ-Uui" secondAttribute="centerX" id="UlW-k8-P8J"/>
                                     <constraint firstItem="HzM-mE-JAo" firstAttribute="top" secondItem="LVf-VJ-Uui" secondAttribute="bottom" constant="8" id="WZE-6C-rIm"/>
-                                    <constraint firstAttribute="trailing" secondItem="APn-0C-mll" secondAttribute="trailing" constant="20" id="dG4-eb-1m8"/>
                                     <constraint firstAttribute="centerX" secondItem="kl3-rN-eTc" secondAttribute="centerX" id="gUb-rD-kOZ"/>
                                     <constraint firstItem="LVf-VJ-Uui" firstAttribute="width" secondItem="HzM-mE-JAo" secondAttribute="width" id="gu2-Kl-Ihf"/>
+                                    <constraint firstItem="jMy-Vo-NdC" firstAttribute="leading" secondItem="HzM-mE-JAo" secondAttribute="trailing" constant="-273" id="h8F-rs-XDC"/>
                                     <constraint firstAttribute="trailing" secondItem="kl3-rN-eTc" secondAttribute="trailing" constant="30" id="hPc-gV-hLQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="APn-0C-mll" secondAttribute="bottom" constant="35" id="jza-k4-kkf"/>
                                     <constraint firstAttribute="centerY" secondItem="LVf-VJ-Uui" secondAttribute="centerY" constant="26" id="puF-P7-qwx"/>
-                                    <constraint firstItem="APn-0C-mll" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="20" id="pue-aB-qRv"/>
                                     <constraint firstItem="LVf-VJ-Uui" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="top" constant="59" id="q7b-ti-2Mt"/>
                                     <constraint firstItem="kl3-rN-eTc" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="30" id="qCP-bZ-Nne"/>
+                                    <constraint firstItem="jMy-Vo-NdC" firstAttribute="leading" secondItem="QP3-Bt-gR0" secondAttribute="leading" constant="10" id="s3X-BB-ahk"/>
+                                    <constraint firstAttribute="trailing" secondItem="jMy-Vo-NdC" secondAttribute="trailing" constant="10" id="ts3-7o-ByW"/>
+                                    <constraint firstItem="LVf-VJ-Uui" firstAttribute="top" secondItem="kl3-rN-eTc" secondAttribute="bottom" constant="15" id="xPd-IF-Evy"/>
                                     <constraint firstAttribute="trailing" secondItem="LVf-VJ-Uui" secondAttribute="trailing" constant="186" id="xVt-08-hLg"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="h8F-rs-XDC"/>
                                         <exclude reference="Fvt-bA-V6Q"/>
                                         <exclude reference="gu2-Kl-Ihf"/>
+                                        <exclude reference="puF-P7-qwx"/>
                                         <exclude reference="q7b-ti-2Mt"/>
                                         <exclude reference="xVt-08-hLg"/>
                                         <exclude reference="RZw-fw-FWk"/>
@@ -687,6 +689,7 @@
                             <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="DzT-WG-1C6"/>
                             <constraint firstAttribute="trailing" secondItem="Ssu-hU-syf" secondAttribute="trailing" constant="20" id="KR4-W5-jHn"/>
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
+                            <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="jMy-Vo-NdC" secondAttribute="bottom" constant="25" id="MZb-tX-RNd"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
                             <constraint firstItem="yXV-7C-aiq" firstAttribute="top" secondItem="yyi-Gr-U2e" secondAttribute="top" id="VCz-bC-c72"/>
                             <constraint firstAttribute="trailing" secondItem="JmO-hm-sg5" secondAttribute="trailing" id="Vtc-Ma-J9k"/>
@@ -710,6 +713,7 @@
                         <outlet property="addAccountButton" destination="pbA-n2-qga" id="U1c-Gd-u1U"/>
                         <outlet property="approvedListButton" destination="SOY-FD-uRG" id="j71-Zi-pwt"/>
                         <outlet property="cardButton" destination="JLJ-av-QVM" id="p21-ah-YzQ"/>
+                        <outlet property="chartView" destination="jMy-Vo-NdC" id="kD1-y7-jkF"/>
                         <outlet property="dividerView" destination="J2c-VM-doh" id="S2M-7c-HMU"/>
                         <outlet property="flagListButton" destination="oOe-bS-V5E" id="eMe-pe-9hj"/>
                         <outlet property="happyImage" destination="LVf-VJ-Uui" id="7fS-T8-Cmg"/>
@@ -722,7 +726,6 @@
                         <outlet property="moneyCountLabel" destination="iLy-Fy-hpO" id="76M-bp-H7c"/>
                         <outlet property="moneyCountSubHeadLabel" destination="8h5-bW-v9x" id="9yg-oQ-Wy5"/>
                         <outlet property="moneyCountSubSubHeadLabel" destination="Nuq-Ra-l3O" id="2Aj-Gi-4h0"/>
-                        <outlet property="rewardMessage" destination="APn-0C-mll" id="Et2-OF-l9H"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
                         <outlet property="toastView" destination="o08-Ym-LQO" id="aEc-yW-LS3"/>

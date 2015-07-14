@@ -10,6 +10,7 @@ import UIKit
 import BladeKit
 import RealmSwift
 import WebKit
+import Charts
 
 
 
@@ -35,6 +36,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var transactionsTable: SBGestureTableView!
 
 
+    @IBOutlet weak var chartView: LineChartView?
+    var months: [String]!
     
     
     @IBOutlet weak var listNavBar: UIView!
@@ -51,7 +54,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var rewardView: UIView!
 
-    @IBOutlet weak var rewardMessage: UILabel!
+  
     @IBOutlet weak var happyImage: UIImageView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
     
@@ -121,7 +124,37 @@ class mainViewController: UIViewController, UITableViewDataSource {
     var blurEffectView:UIVisualEffectView!
     
     
-   
+    func setChart(dataPoints: [String], values: [Double]) {
+        chartView!.noDataText = "You need to provide data for the chart."
+        
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        
+        
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
+        
+        lineChartDataSet.drawFilledEnabled = true
+        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.drawCirclesEnabled = false
+        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+        chartView!.gridBackgroundColor = UIColor.whiteColor()
+        chartView!.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        chartView!.rightAxis.drawGridLinesEnabled = false
+        chartView!.leftAxis.drawGridLinesEnabled = false
+        chartView!.leftAxis.enabled = false
+        chartView!.rightAxis.enabled = false
+        chartView!.xAxis.enabled = false
+        chartView!.legend.enabled = false
+        chartView!.descriptionText = ""
+        chartView!.data = lineChartData
+        chartView!.maxVisibleValueCount = 3
+        
+        
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -165,6 +198,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
   
     
     override func viewDidLoad() {
+        
+        
       
         
         super.viewDidLoad()
@@ -369,6 +404,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func showReward()
     {
         
+        
+        months = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        let unitsSold = [70.0, 65.0, 75, 80.0, 85.0, 84.0]
+        
+        setChart(months, values: unitsSold)
+        
         rewardView.hidden = false
         transactionsTable.hidden = true
         accountAddView.hidden = true    
@@ -389,14 +430,14 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             happyImage.image = UIImage(named: "result_happy")
             happyRewardPercentage.text = "\(Int(happyPercentage))%"
-            rewardMessage.text = "Experience + Friends = Happiness!"
+           
 
         }
         else
         {
             happyImage.image = UIImage(named: "result_happy")
             happyRewardPercentage.text = "\(Int(happyPercentage))%"
-            rewardMessage.text = "Research shows that spending money on experiences makes us happier!"           
+           
         }
         
         
