@@ -142,15 +142,22 @@ class mainViewController: UIViewController, UITableViewDataSource {
         lineChartDataSet.drawCirclesEnabled = false
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         chartView!.gridBackgroundColor = UIColor.whiteColor()
-        chartView!.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         chartView!.rightAxis.drawGridLinesEnabled = false
         chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.leftAxis.enabled = false
+        
+        //chartView!.leftAxis.enabled = false
+        chartView!.leftAxis.axisLineWidth = 10
+        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
         chartView!.rightAxis.enabled = false
-        chartView!.xAxis.enabled = false
+    
+        
+        chartView!.xAxis.labelPosition = .Bottom
         chartView!.legend.enabled = false
         chartView!.descriptionText = ""
         chartView!.data = lineChartData
+        
         chartView!.maxVisibleValueCount = 3
         
         
@@ -400,20 +407,50 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     
+    func firstDayOfWeek(date: NSDate) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        var dateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitWeekOfMonth, fromDate: date)
+        dateComponents.weekday = 1
+        return calendar.dateFromComponents(dateComponents)!
+    }
+    
     
     func showReward()
     {
         
         
         months = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let unitsSold = [70.0, 65.0, 75, 80.0, 85.0, 84.0]
+        let unitsSold = [70.0, 65.0, 75.0, 80.0, 85.0, 84.0]
         
         setChart(months, values: unitsSold)
+        
+        
+        
+        //let chartPredicate = NSPredicate(format: "date between %@, ", date, date2)
+        //let chartItems = realm.objects(Transaction).filter(chartPredicate).sorted("date", ascending: false)
+        
+        
+        
+
+        
+        let components: NSDateComponents = NSDateComponents()
+        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit);
+        let first: NSDate = firstDayOfWeek(NSDate())
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        
+        
+        
+        println("First = \(first) and last \(expirationDate)")
+
+        
+        
+        
         
         rewardView.hidden = false
         transactionsTable.hidden = true
         accountAddView.hidden = true    
         moneyCountLabel.hidden = true
+        
         
         var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
         var  transactionsSad = realm.objects(Transaction).filter("status = 2")
