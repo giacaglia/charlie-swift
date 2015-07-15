@@ -131,6 +131,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         for i in 0..<dataPoints.count {
             let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+          
             dataEntries.append(dataEntry)
         }
         
@@ -138,13 +139,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
         let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
         
         lineChartDataSet.drawFilledEnabled = true
-        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.fillColor = UIColor.lightGrayColor()
+        lineChartDataSet.drawValuesEnabled = false
         lineChartDataSet.drawCirclesEnabled = false
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         chartView!.gridBackgroundColor = UIColor.whiteColor()
         chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         chartView!.rightAxis.drawGridLinesEnabled = false
         chartView!.leftAxis.drawGridLinesEnabled = false
+        chartView!.leftAxis.startAtZeroEnabled = false
+        chartView!.rightAxis.startAtZeroEnabled = false
+        chartView!.pinchZoomEnabled = false
         
         //chartView!.leftAxis.enabled = false
         chartView!.leftAxis.axisLineWidth = 10
@@ -153,12 +158,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
         chartView!.rightAxis.enabled = false
     
         
-        chartView!.xAxis.labelPosition = .Bottom
+        //chartView!.xAxis.labelPosition = .Bottom
+        chartView!.xAxis.enabled = false
         chartView!.legend.enabled = false
         chartView!.descriptionText = ""
         chartView!.data = lineChartData
-        
-        chartView!.maxVisibleValueCount = 3
+        //chartView!.maxVisibleValueCount = 3
         
         
     }
@@ -304,14 +309,18 @@ class mainViewController: UIViewController, UITableViewDataSource {
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
             spinner.startAnimating()
+           
+         
+                //All stuff here
+            
             cHelp.addUpdateResetAccount(1, dayLength: 30)
                 {
                     (response) in
                     
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-            }
-            
+                }
+           
             
             if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
             {
@@ -415,67 +424,100 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     
+    
+    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> Double
+    {
+        
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -(weeksFrom * 7), toDate: NSDate(), options: nil)!
+        
+        let components: NSDateComponents = NSDateComponents()
+        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit)
+
+        let first: NSDate = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        
+        //println("DATES: \(first), \(expirationDate)")
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        //let happySum = chartItems.sum("amount") as Int
+        
+        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
+        
+        println("First = \(first) and last \(expirationDate)")
+        println("Happy % \(chartHappyWeek1Percentage)")
+        return chartHappyWeek1Percentage
+
+        
+        
+    }
+    
+    
     func showReward()
     {
         
         
-        months = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let unitsSold = [70.0, 65.0, 75.0, 80.0, 85.0, 84.0]
+        months = [String()]
+        
+        var unitsSold = [Double()]
+        
+        
+        //println(getHappyPercentage(NSDate(), weeksFrom: 1))
+        
+        
+        //get happyPercentages for last x weeks
+        var i = 4
+        var week = 1
+        while i > -1
+        {
+            
+         let happyPer = getHappyPercentage(NSDate(), weeksFrom: i)
+            
+        if happyPer >= 0
+        {
+            unitsSold.append(Double(happyPer * 100))
+            months.append("Week \(week)")
+            
+            if i == 0
+            {
+                let happyPercentage = round(happyPer * 100)
+                
+                happyRewardPercentage.text = "\(happyPercentage)"
+            }
+           
+           
+        }
+            i -= 1
+            week += 1
+            
+        }
         
         setChart(months, values: unitsSold)
         
-        
-        
-        //let chartPredicate = NSPredicate(format: "date between %@, ", date, date2)
-        //let chartItems = realm.objects(Transaction).filter(chartPredicate).sorted("date", ascending: false)
-        
-        
-        
-
-        
-        let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit);
-        let first: NSDate = firstDayOfWeek(NSDate())
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
-        
-        
-        
-        println("First = \(first) and last \(expirationDate)")
-
-        
-        
-        
-        
+       
         rewardView.hidden = false
         transactionsTable.hidden = true
         accountAddView.hidden = true    
         moneyCountLabel.hidden = true
         
         
-        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
-        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
+//        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
+//        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
+//        
+//        let totaltransaction = transactionsHappy.count + transactionsSad.count
+//        
+//        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
+//        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
         
-        let totaltransaction = transactionsHappy.count + transactionsSad.count
+//        println("HAPPY = \(happyPercentage)")
+//        println("SAD = \(sadPercentage)")
         
-        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
-        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
-        
-        println("HAPPY = \(happyPercentage)")
-        println("SAD = \(sadPercentage)")
-        
-        if happyPercentage > 65
-        {
+       
             happyImage.image = UIImage(named: "result_happy")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
+           // happyRewardPercentage.text = "\(Int(happyPercentage))%"
            
 
-        }
-        else
-        {
-            happyImage.image = UIImage(named: "result_happy")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
-           
-        }
         
         
         

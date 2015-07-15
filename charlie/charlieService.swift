@@ -88,7 +88,7 @@ init(){
                 "options": options
             ]
         
-            println(parameters)
+           // println(parameters)
 
             srConnectGet.parameters = parameters
         
@@ -106,7 +106,7 @@ init(){
                 "access_token": access_token,
                 "options": options
             ]
-            println(parameters)
+           // println(parameters)
 
             
             srConnectGet.parameters = parameters as! [String : AnyObject]
@@ -123,12 +123,12 @@ init(){
             httpStatusCode = response.rawResponse!.statusCode
             if httpStatusCode == 201 //needs mfa
             {
-                println(JSON(response.results()))
+             //   println(JSON(response.results()))
             }
                 
             else //can process data
             {
-                println(JSON(response.results()))
+                //println(JSON(response.results()))
             }
             
             
