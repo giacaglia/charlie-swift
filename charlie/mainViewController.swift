@@ -30,6 +30,10 @@ var allTransactionItems = realm.objects(Transaction)
 
 class mainViewController: UIViewController, UITableViewDataSource {
     
+  
+    @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
+    
+    
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -461,6 +465,22 @@ class mainViewController: UIViewController, UITableViewDataSource {
         months = [String()]
         
         var unitsSold = [Double()]
+        
+        
+        var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")
+        var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
+        
+        
+        if happyScoreViewed == "0"
+        {
+            userSelectedHappyScoreLabel.hidden = false
+            userSelectedHappyScoreLabel.text = userSelectedHappyScore
+            
+        }
+        else
+        {
+            userSelectedHappyScoreLabel.hidden = true
+        }
         
         
         //println(getHappyPercentage(NSDate(), weeksFrom: 1))

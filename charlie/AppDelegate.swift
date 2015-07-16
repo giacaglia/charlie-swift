@@ -18,7 +18,10 @@ var cService = charlieService()
 
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
+let defaults = NSUserDefaults.standardUserDefaults()
+
 @UIApplicationMain
+
 
 
 
@@ -27,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+
+    
+    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
