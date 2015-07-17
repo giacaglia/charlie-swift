@@ -17,4 +17,4 @@ sed 's/net.blade.charlieTests/net.blade.charlieEnterprise/' charlieTests/Info.pl
 # now rewrite the project file to reference the Blade enterprise certificate
 
 echo "Rewriting provisioning profile to Enterprise Distribution"
-sed 's/PROVISIONING_PROFILE.*=.*".*";/PROVISIONING_PROFILE = "b3858d95-61ba-47c6-88ed-a30319058ad6";/' charlie.xcodeproj/project.pbxproj > charlie.xcodeproj/project.pbxproj.tmp && mv charlie.xcodeproj/project.pbxproj.tmp charlie.xcodeproj/project.pbxproj
+sed 's/PROVISIONING_PROFILE.*=.*".*";/PROVISIONING_PROFILE = "d38c98b9-a594-4ebc-87bd-00d48c07eb41";/' charlie.xcodeproj/project.pbxproj > charlie.xcodeproj/project.pbxproj.tmp && mv charlie.xcodeproj/project.pbxproj.tmp charlie.xcodeproj/project.pbxproj
