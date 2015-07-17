@@ -17,6 +17,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
 
     let users = realm.objects(User)
     
+    var keyStore = NSUbiquitousKeyValueStore()
+   
+    
     
     var timer = NSTimer()
     var cHelp = cHelper()
@@ -136,6 +139,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     {
                         (response) in
                         var access_token = response["access_token"] as! String
+                        
+                         self.keyStore.setString(access_token, forKey: "access_token")
+                         self.keyStore.synchronize()
+                        
+                        //let storedString = keyStore.stringForKey("MyString")
+                        
                         realm.beginWrite()
                         self.users[0].access_token = access_token
                         realm.commitWrite()

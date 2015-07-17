@@ -8,15 +8,45 @@
 
 import UIKit
 
+
+
 class tutorialViewController: UIViewController {
 
-   
+    var keyStore = NSUbiquitousKeyValueStore()
 
     @IBOutlet weak var slider: UISlider!
 
     @IBOutlet weak var sliderAmount: UILabel!
     
-       
+
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        if keyStore.stringForKey("access_token") != nil
+        {
+         
+            //recover user
+            println("Need to recover user")
+            
+            
+        }
+        else
+        {
+            println("no user so show onbouarding")
+            
+        }
+            
+            
+            
+    }
+    
+    
+    
+    
+    
     
     @IBAction func sliderChangedValue(sender: UISlider) {
         

@@ -22,6 +22,8 @@ var inboxPredicate = NSPredicate()
 var approvedPredicate = NSPredicate()
 var flaggedPredicate = NSPredicate()
 
+var keyStore = NSUbiquitousKeyValueStore()
+
 
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction)
@@ -215,70 +217,45 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         
-        
-      
-        
         super.viewDidLoad()
         
-        //we have accounts so set the predicate based on whether the account is fake or real
-        if accounts.count > 0
-        {
-            setPredicates(true)
-        }
-        //we don't have accounts but set the predicated anyway so user can navigate through screens
-        else
-        {
-            setPredicates(false)
-        }
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+         println(realm.path)
+        
         
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
+        
 
+        
         //download categories if don't exist
         let cats = realm.objects(Category)
         if cats.count == 0
         {
-        
+            
             cService.getCategories()
-            {
-                
-                (responses) in
-                
-                for response in responses
                 {
                     
-                    var cat = Category()
-                    var id:String = response["id"] as! String
-                    var type:String = response["type"] as! String
-                    cat.id = id
-                    cat.type = type
-                    let categories = ",".join(response["hierarchy"] as! Array)
-                    cat.categories = categories
-                    realm.write {
-                        realm.add(cat, update: true)
+                    (responses) in
+                    
+                    for response in responses
+                    {
+                        
+                        var cat = Category()
+                        var id:String = response["id"] as! String
+                        var type:String = response["type"] as! String
+                        cat.id = id
+                        cat.type = type
+                        let categories = ",".join(response["hierarchy"] as! Array)
+                        cat.categories = categories
+                        realm.write {
+                            realm.add(cat, update: true)
+                        }
                     }
-              }
             }
         }
         
-      
-
-        //used for transaction type picker
-        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds //view is self.view in a UIViewController
-        view.addSubview(blurEffectView)
-
-        //add auto layout constraints so that the blur fills the screen upon rotating device
-        blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0))
         
-        blurEffectView.hidden = true
         
         let users = realm.objects(User)
         if users.count  == 0
@@ -294,18 +271,78 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
         }
 
-        println(realm.path)
-        
-        if accounts.count  == 0
+        var access_token = ""
+        if keyStore.stringForKey("access_token") != nil
         {
-           
+            access_token = keyStore.stringForKey("access_token")!
+            realm.beginWrite()
+            self.users[0].access_token = access_token
+            realm.commitWrite()
+            
+        }
+    
+        println("ACCESS TOKEN = \(access_token)")
+            
+        
+//        //we have accounts so set the predicate based on whether the account is fake or real
+//        if accounts.count > 0
+//        {
+//            setPredicates(true)
+//        }
+//        //we don't have accounts but set the predicated anyway so user can navigate through screens
+//        else
+//        {
+//            setPredicates(false)
+//        }
+//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+//        
+        
+        
+        if accounts.count  == 0  && access_token == "" //show add user
+        {
+            setPredicates(false)
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
+             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         }
+        else if accounts.count  == 0  && access_token != ""
+        {
             
+            println("Need to restore")
+            addAccountButton.hidden = true
+            accountAddView.hidden = true
+            setPredicates(false)
+
+            
+            spinner.startAnimating()
+            
+            
+            //All stuff here
+            
+            cHelp.addUpdateResetAccount(1, dayLength: 30)
+                {
+                    (response) in
+                    
+                    self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+                    
+                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+                    {
+                        self.showReward()
+                    }
+                    
+                    
+            }
+
+        }
         else
         {
+            
+            setPredicates(true)
+            
+            
+            transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             addAccountButton.hidden = true
             accountAddView.hidden = true
             
@@ -315,7 +352,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             spinner.startAnimating()
            
          
-                //All stuff here
+            //All stuff here
             
             cHelp.addUpdateResetAccount(1, dayLength: 30)
                 {
@@ -323,13 +360,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
+                    
+                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+                    {
+                        self.showReward()
+                    }
+                    
+                    
                 }
            
             
-            if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
-            {
-                showReward()
-            }
+            
         }
         
         
