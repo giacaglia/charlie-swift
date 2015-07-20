@@ -77,7 +77,7 @@ init(){
         {
         
             var options = [
-                "pending": true,
+                "pending": false,
                 "gte": "\(dayLength) days ago"
             ]
        
@@ -88,6 +88,8 @@ init(){
                 "options": options
             ]
         
+           // println(parameters)
+
             srConnectGet.parameters = parameters
         
         }
@@ -95,7 +97,7 @@ init(){
         {
             
             var options = [
-                "pending": true
+                "pending": false
             ]
             
             var parameters = [
@@ -104,6 +106,7 @@ init(){
                 "access_token": access_token,
                 "options": options
             ]
+           // println(parameters)
 
             
             srConnectGet.parameters = parameters as! [String : AnyObject]
@@ -114,19 +117,20 @@ init(){
         srConnectGet.httpMethod = .Post
        
         
-       
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            //All stuff here
+
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
             httpStatusCode = response.rawResponse!.statusCode
             if httpStatusCode == 201 //needs mfa
             {
-                println(JSON(response.results()))
+             //   println(JSON(response.results()))
             }
                 
             else //can process data
             {
-                println(JSON(response.results()))
+                //println(JSON(response.results()))
             }
             
             
@@ -136,7 +140,7 @@ init(){
             
         })
         
-        
+    })
         
         
         

@@ -34,7 +34,7 @@ class showTypePickerViewController: UIViewController {
         
          mainVC.transactionsTable.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
-        mainVC.blurEffectView.hidden = true
+        
 
         
     }
@@ -57,7 +57,7 @@ class showTypePickerViewController: UIViewController {
         
         
         dismissViewControllerAnimated(true, completion: nil)
-        mainVC.blurEffectView.hidden = true
+       
         
         
         //check to see if others with same name exist

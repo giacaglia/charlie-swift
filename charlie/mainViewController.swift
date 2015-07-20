@@ -10,16 +10,20 @@ import UIKit
 import BladeKit
 import RealmSwift
 import WebKit
+import Charts
 
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -30, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -42, toDate: NSDate(), options: nil)!
 let status = 0
 
 
 var inboxPredicate = NSPredicate()
 var approvedPredicate = NSPredicate()
 var flaggedPredicate = NSPredicate()
+
+var keyStore = NSUbiquitousKeyValueStore()
+
 
 
 var transactionItems = realm.objects(Transaction)
@@ -29,12 +33,19 @@ var allTransactionItems = realm.objects(Transaction)
 
 class mainViewController: UIViewController, UITableViewDataSource {
     
+  
+    @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
+    
+    
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     @IBOutlet weak var transactionsTable: SBGestureTableView!
 
 
+    @IBOutlet weak var happyDateRange: UILabel!
+    @IBOutlet weak var chartView: LineChartView?
+    var months: [String]!
     
     
     @IBOutlet weak var listNavBar: UIView!
@@ -51,7 +62,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var rewardView: UIView!
 
-    @IBOutlet weak var rewardMessage: UILabel!
+  
     @IBOutlet weak var happyImage: UIImageView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
     
@@ -117,11 +128,71 @@ class mainViewController: UIViewController, UITableViewDataSource {
     //this is a test
     
 
-    var blurEffect:UIBlurEffect!
-    var blurEffectView:UIVisualEffectView!
-    
-    
    
+    
+    
+    func setChart(dataPoints: [String], values: [Double]) {
+        chartView!.noDataText = "You need to provide data for the chart."
+        
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+          
+            dataEntries.append(dataEntry)
+        }
+        
+        
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
+        
+        lineChartDataSet.drawFilledEnabled = true
+        lineChartDataSet.fillColor = UIColor.lightGrayColor()
+        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.drawCirclesEnabled = true
+        
+        lineChartDataSet.drawCubicEnabled = true
+
+        
+        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+        chartView!.gridBackgroundColor = UIColor.whiteColor()
+        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        chartView!.rightAxis.drawGridLinesEnabled = false
+        chartView!.leftAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        
+        
+        
+        
+        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
+        chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
+
+        chartView!.leftAxis.labelCount = 4
+        
+            
+        chartView!.pinchZoomEnabled = true
+        
+      
+        
+        //chartView!.leftAxis.enabled = false
+        
+        chartView!.leftAxis.axisLineWidth = 10
+        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
+        chartView!.rightAxis.enabled = false
+    
+
+        
+        chartView!.xAxis.labelPosition = .Bottom
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        chartView!.xAxis.enabled = true
+        chartView!.legend.enabled = false
+        chartView!.descriptionText = ""
+        chartView!.data = lineChartData
+        
+        chartView!.maxVisibleValueCount = 3
+    
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -165,69 +236,46 @@ class mainViewController: UIViewController, UITableViewDataSource {
   
     
     override func viewDidLoad() {
-      
         
         super.viewDidLoad()
         
-        //we have accounts so set the predicate based on whether the account is fake or real
-        if accounts.count > 0
-        {
-            setPredicates(true)
-        }
-        //we don't have accounts but set the predicated anyway so user can navigate through screens
-        else
-        {
-            setPredicates(false)
-        }
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+         println(realm.path)
+        
         
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
+        
 
+        
         //download categories if don't exist
         let cats = realm.objects(Category)
         if cats.count == 0
         {
-        
+            
             cService.getCategories()
-            {
-                
-                (responses) in
-                
-                for response in responses
                 {
                     
-                    var cat = Category()
-                    var id:String = response["id"] as! String
-                    var type:String = response["type"] as! String
-                    cat.id = id
-                    cat.type = type
-                    let categories = ",".join(response["hierarchy"] as! Array)
-                    cat.categories = categories
-                    realm.write {
-                        realm.add(cat, update: true)
+                    (responses) in
+                    
+                    for response in responses
+                    {
+                        
+                        var cat = Category()
+                        var id:String = response["id"] as! String
+                        var type:String = response["type"] as! String
+                        cat.id = id
+                        cat.type = type
+                        let categories = ",".join(response["hierarchy"] as! Array)
+                        cat.categories = categories
+                        realm.write {
+                            realm.add(cat, update: true)
+                        }
                     }
-              }
             }
         }
         
-      
-
-        //used for transaction type picker
-        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds //view is self.view in a UIViewController
-        view.addSubview(blurEffectView)
-
-        //add auto layout constraints so that the blur fills the screen upon rotating device
-        blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0))
         
-        blurEffectView.hidden = true
         
         let users = realm.objects(User)
         if users.count  == 0
@@ -243,38 +291,106 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
         }
 
-        println(realm.path)
-        
-        if accounts.count  == 0
+        var access_token = ""
+        if keyStore.stringForKey("access_token") != nil
         {
-           
+            access_token = keyStore.stringForKey("access_token")!
+            realm.beginWrite()
+            self.users[0].access_token = access_token
+            realm.commitWrite()
+            
+        }
+    
+        println("ACCESS TOKEN = \(access_token)")
+            
+        
+//        //we have accounts so set the predicate based on whether the account is fake or real
+//        if accounts.count > 0
+//        {
+//            setPredicates(true)
+//        }
+//        //we don't have accounts but set the predicated anyway so user can navigate through screens
+//        else
+//        {
+//            setPredicates(false)
+//        }
+//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+//        
+        
+        
+        if accounts.count  == 0  //&& access_token == "" //show add user
+        {
+            setPredicates(false)
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
+             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         }
-            
+//        else if accounts.count  == 0  && access_token != ""
+//        {
+//            
+//            println("Need to restore")
+//            addAccountButton.hidden = true
+//            accountAddView.hidden = true
+//            setPredicates(false)
+//
+//            
+//            spinner.startAnimating()
+//            
+//            
+//            //All stuff here
+//            
+//            cHelp.addUpdateResetAccount(1, dayLength: 30)
+//                {
+//                    (response) in
+//                    
+//                    self.transactionsTable.reloadData()
+//                    self.spinner.stopAnimating()
+//                    
+//                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+//                    {
+//                        self.showReward()
+//                    }
+//                    
+//                    
+//            }
+//
+//        }
         else
         {
+            
+            setPredicates(true)
+            
+            
+            transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             addAccountButton.hidden = true
             accountAddView.hidden = true
             
              //refresh accounts
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
-            spinner.startAnimating()
-            cHelp.addUpdateResetAccount(1, dayLength: 30)
-                {
-                    (response) in
-                    
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-            }
+            //spinner.startAnimating()
+           
+         
+            //All stuff here
             
+//            cHelp.addUpdateResetAccount(1, dayLength: 30)
+//                {
+//                    (response) in
+//                    
+//                    self.transactionsTable.reloadData()
+//                    self.spinner.stopAnimating()
+//                    
+                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+                    {
+                        self.showReward()
+                    }
+//
+//                    
+//                }
+           
+           
             
-            if transactionItems.count == 0 && inboxListButton.tag ==  1 && allTransactionItems.count > 0
-            {
-                showReward()
-            }
         }
         
         
@@ -365,39 +481,141 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     
+    func firstDayOfWeek(date: NSDate) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        var dateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitWeekOfMonth, fromDate: date)
+        dateComponents.weekday = 1
+        return calendar.dateFromComponents(dateComponents)!
+    }
+    
+    
+    
+    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate)
+    {
+        
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -(weeksFrom * 7), toDate: date, options: nil)!
+        
+        let components: NSDateComponents = NSDateComponents()
+        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit)
+
+        let first: NSDate = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        
+        //println("DATES: \(first), \(expirationDate)")
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        //let happySum = chartItems.sum("amount") as Int
+        
+        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
+        
+        println("First = \(first) and last \(expirationDate)")
+        println("Happy % \(chartHappyWeek1Percentage)")
+        return (chartHappyWeek1Percentage, first, expirationDate!)
+
+        
+        
+    }
+    
     
     func showReward()
     {
         
+        happyRewardPercentage.textColor = listGreen
+        
+        months = [String()]
+        
+        var unitsSold = [Double()]
+        
+        
+        var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")
+        var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
+        
+        
+       let  lastTransaction = allTransactionItems[0].date as NSDate
+        
+        
+        
+        
+        
+//        if happyScoreViewed == "0"
+//        {
+//            userSelectedHappyScoreLabel.hidden = false
+//            userSelectedHappyScoreLabel.text = userSelectedHappyScore
+//            
+//        }
+//        else
+//        {
+//            userSelectedHappyScoreLabel.hidden = true
+//        }
+//        
+        
+        //println(getHappyPercentage(NSDate(), weeksFrom: 1))
+        
+        
+        //get happyPercentages for last x weeks
+        var i = 4
+        var week = 1
+        while i > -1
+        {
+            
+            
+          
+            
+         let (happyPer, beginDate, endDate) = getHappyPercentage(lastTransaction, weeksFrom: i)
+            
+            let dateFormatter = NSDateFormatter()
+            //the "M/d/yy, H:mm" is put together from the Symbol Table
+            dateFormatter.dateFormat = "M/d"
+            let beginDateFormatted = dateFormatter.stringFromDate(beginDate)
+            let endDateFormatted = dateFormatter.stringFromDate(endDate)
+            
+        if happyPer >= 0
+        {
+            unitsSold.append(Double(happyPer * 100))
+            months.append("\(endDateFormatted )")
+            
+            if i == 0
+            {
+                let happyPercentage = Int(happyPer * 100)
+                
+                happyRewardPercentage.text = "\(happyPercentage)%"
+                happyDateRange.text = "Week of \(beginDateFormatted)"
+            }
+           
+           
+        }
+            i -= 1
+            week += 1
+            
+        }
+        
+        setChart(months, values: unitsSold)
+        
+       
         rewardView.hidden = false
         transactionsTable.hidden = true
         accountAddView.hidden = true    
         moneyCountLabel.hidden = true
         
-        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
-        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
         
-        let totaltransaction = transactionsHappy.count + transactionsSad.count
+//        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
+//        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
+//        
+//        let totaltransaction = transactionsHappy.count + transactionsSad.count
+//        
+//        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
+//        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
         
-        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
-        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
+//        println("HAPPY = \(happyPercentage)")
+//        println("SAD = \(sadPercentage)")
         
-        println("HAPPY = \(happyPercentage)")
-        println("SAD = \(sadPercentage)")
-        
-        if happyPercentage > 65
-        {
+       
             happyImage.image = UIImage(named: "result_happy")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
-            rewardMessage.text = "Experience + Friends = Happiness!"
+           // happyRewardPercentage.text = "\(Int(happyPercentage))%"
+           
 
-        }
-        else
-        {
-            happyImage.image = UIImage(named: "result_happy")
-            happyRewardPercentage.text = "\(Int(happyPercentage))%"
-            rewardMessage.text = "Research shows that spending money on experiences makes us happier!"           
-        }
         
         
         
@@ -479,13 +697,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func updateTrans() -> Void
     {
         println("looking for records")
+        
+        
         cHelp.addUpdateResetAccount(1, dayLength: 0)
             {
                 
                 (response) in
                 println("added records")
                 println(response)
-                
+               
                 if response > 0
                 {
                     self.timer.invalidate()
@@ -526,16 +746,22 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        
+        
         println(indexPath.row)
         println(transactionItems[indexPath.row].ctype)
         println(transactionItems[indexPath.row].name)
-         blurEffectView.hidden = false  
+        
 
         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         
     }
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+        
         let size = CGSizeMake(30, 30)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
@@ -611,7 +837,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         else if (segue.identifier == "showTypePicker") {
             
             
-           blurEffectView.hidden = false
+          
          
             let viewController = segue.destinationViewController as! showTypePickerViewController
             //let indexPath = self.transactionsTable.indexPathForSelectedRow()
@@ -630,7 +856,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
     @IBAction func showTutorial(sender: UIButton) {
         
-          performSegueWithIdentifier("showTutorial", sender: self)
+         // performSegueWithIdentifier("showTutorial", sender: self)
+        
+        //remove icloud 
+        
+//
+        keyStore.setString("", forKey: "access_token")
+        keyStore.setString("", forKey: "email")
+        keyStore.setString("", forKey: "password")
+        keyStore.synchronize()
         
     }
    
@@ -643,7 +877,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
-      
+     
       if accounts.count > 0
         {
             let access_token = users[0].access_token
@@ -651,6 +885,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             cHelp.addUpdateResetAccount(1, dayLength: 7)
                 {
                     (response) in
+                    
                     
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()

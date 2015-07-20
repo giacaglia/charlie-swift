@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 import CoreData
 
 let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
@@ -18,7 +17,10 @@ var cService = charlieService()
 
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
+let defaults = NSUserDefaults.standardUserDefaults()
+
 @UIApplicationMain
+
 
 
 
@@ -27,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+
+    
+    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
