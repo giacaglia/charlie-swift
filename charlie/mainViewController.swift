@@ -403,29 +403,76 @@ class mainViewController: UIViewController, UITableViewDataSource {
             let name = transactionItems[indexPath!.row].name
             if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
             {
-                self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
-                self.currentTransactionCell = cell
-               
-                    realm.beginWrite()
+                
+                
+                if defaults.stringForKey("firstSwipeRight") == nil
+                {
+                    var refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                       
+                        
+                        self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+                        self.currentTransactionCell = cell
+                        
+                        realm.beginWrite()
                         transactionItems[indexPath!.row].status = 1
                         tableView.removeCell(cell, duration: 0.3, completion: nil)
-                    realm.commitWrite()
-    
-                let transactionSum = self.sumTransactionsCount()
-                    let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
-                    let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-                
-                var rowCount = Int(tableView.numberOfRowsInSection(0).value)
-                
-                
-                if rowCount == 1 && self.inboxListButton.tag == 1
-                {
-                    println("show reward window")
-                    self.showReward()
+                        realm.commitWrite()
+                        
+                        let transactionSum = self.sumTransactionsCount()
+                        let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+                        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                        self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                        
+                        var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                        
+                        
+                        if rowCount == 1 && self.inboxListButton.tag == 1
+                        {
+                            println("show reward window")
+                            self.showReward()
+                        }
+                        
+                        defaults.setObject("yes", forKey: "firstSwipeRight")
+                         defaults.synchronize()
+                        
+                    }))
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                        tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+
+                    }))
+                    
+                    self.presentViewController(refreshAlert, animated: true, completion: nil)
+                 
+                    
                 }
+                else
+                    {
+                        self.currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+                        self.currentTransactionCell = cell
+                       
+                            realm.beginWrite()
+                                transactionItems[indexPath!.row].status = 1
+                                tableView.removeCell(cell, duration: 0.3, completion: nil)
+                            realm.commitWrite()
+            
+                        let transactionSum = self.sumTransactionsCount()
+                            let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+                            let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                            self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                        
+                        var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                        
+                        
+                        if rowCount == 1 && self.inboxListButton.tag == 1
+                        {
+                            println("show reward window")
+                            self.showReward()
+                        }
                 
-                
+                    }
         
             }
             else //swiping not acted on
@@ -443,6 +490,52 @@ class mainViewController: UIViewController, UITableViewDataSource {
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1
             {
+                
+                if defaults.stringForKey("firstSwipeLeft") == nil
+                {
+
+               
+                    var refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+
+                
+                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                    
+                    realm.beginWrite()
+                    transactionItems[indexPath!.row].status = 2
+                    realm.commitWrite()
+                    tableView.removeCell(cell, duration: 0.3, completion: nil)
+                    let transactionSum = self.sumTransactionsCount()
+                    let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+                    let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                    
+                    
+                    var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+                    
+                    
+                    if rowCount == 1 && self.inboxListButton.tag == 1
+                    {
+                        println("show reward window")
+                        self.showReward()
+                    }
+                    
+                     defaults.setObject("yes", forKey: "firstSwipeLeft")
+                     defaults.synchronize()
+
+                
+                }))
+                
+                refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                    tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+
+                }))
+                
+                self.presentViewController(refreshAlert, animated: true, completion: nil)
+                }
+                else
+                {
+                
                 realm.beginWrite()
                 transactionItems[indexPath!.row].status = 2
                 realm.commitWrite()
@@ -460,6 +553,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 {
                     println("show reward window")
                     self.showReward()
+                }
                 }
             }
             else
