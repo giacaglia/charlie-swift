@@ -760,7 +760,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+        
         
         let size = CGSizeMake(30, 30)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
