@@ -34,6 +34,10 @@ var allTransactionItems = realm.objects(Transaction)
 class mainViewController: UIViewController, UITableViewDataSource {
     
   
+    @IBOutlet weak var revealTitle: UILabel!
+    
+    @IBOutlet weak var revealView: UIView!
+    
     @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
     
     
@@ -55,6 +59,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var dividerView: UIView!
     
+
 
     
     @IBOutlet weak var accountAddView: UIView!
@@ -369,25 +374,29 @@ class mainViewController: UIViewController, UITableViewDataSource {
              //refresh accounts
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
-            //spinner.startAnimating()
+            
+            
+            let  lastTransaction = allTransactionItems[0].date as NSDate
+
+            
+            
+            spinner.startAnimating()
            
          
             //All stuff here
             
-//            cHelp.addUpdateResetAccount(1, dayLength: 30)
-//                {
-//                    (response) in
-//                    
-//                    self.transactionsTable.reloadData()
-//                    self.spinner.stopAnimating()
-//                    
+           cHelp.addUpdateResetAccount(1, dayLength: 7)
+               {
+                   (response) in
+                
+                   self.transactionsTable.reloadData()
+                   self.spinner.stopAnimating()                   
                     if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
                     {
                         self.showReward()
                     }
-//
-//                    
-//                }
+
+        }
            
            
             
@@ -623,27 +632,34 @@ class mainViewController: UIViewController, UITableViewDataSource {
         var unitsSold = [Double()]
         
         
-        var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")
+        var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
         var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         
         
        let  lastTransaction = allTransactionItems[0].date as NSDate
         
         
+             rewardView.layer.cornerRadius = 100
+             revealTitle.text = "You guessed \(userSelectedHappyScore)%"
+             
+             rewardView.addSubview(revealView)
+        
+            
         
         
         
-//        if happyScoreViewed == "0"
-//        {
-//            userSelectedHappyScoreLabel.hidden = false
-//            userSelectedHappyScoreLabel.text = userSelectedHappyScore
-//            
-//        }
-//        else
-//        {
-//            userSelectedHappyScoreLabel.hidden = true
-//        }
-//        
+        
+        if happyScoreViewed == "0"
+        {
+
+
+            
+        }
+        else
+        {
+
+        }
+        
         
         //println(getHappyPercentage(NSDate(), weeksFrom: 1))
         
