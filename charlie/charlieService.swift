@@ -77,7 +77,7 @@ init(){
         {
         
             var options = [
-                "pending": true,
+                "pending": false,
                 "gte": "\(dayLength) days ago"
             ]
        
@@ -97,7 +97,7 @@ init(){
         {
             
             var options = [
-                "pending": true
+                "pending": false
             ]
             
             var parameters = [
@@ -117,7 +117,9 @@ init(){
         srConnectGet.httpMethod = .Post
        
         
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            //All stuff here
+
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
             httpStatusCode = response.rawResponse!.statusCode
@@ -138,7 +140,7 @@ init(){
             
         })
         
-        
+    })
         
         
         

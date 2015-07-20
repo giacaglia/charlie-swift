@@ -8,6 +8,8 @@
 
 import Foundation
 
+import RealmSwift
+
 class cHelper {
     
     
@@ -21,10 +23,15 @@ class cHelper {
         
        for user in users
        {
-        cService.updateAccount(user.access_token, dayLength: dayLength)
+        
+        let user_access_token = user.access_token
+        cService.updateAccount(user_access_token, dayLength: dayLength)
                 {
                     (response) in
-                    
+                
+               
+   
+                
                     let accounts = response["accounts"] as! [NSDictionary]
                     realm.write {
                         // Save one Venue object (and dependents) for each element of the array
@@ -53,6 +60,11 @@ class cHelper {
                             transaction.setValue(self.convertDate(dictDate!), forKey: "date")
                             
                             
+                            //check for deposits and remove
+                            var dictAmount = transaction.valueForKey("amount") as? Double
+                            
+                            
+                            
                             //add category
                             if let category_id = transaction.valueForKey("category_id") as? String
                             {
@@ -60,7 +72,7 @@ class cHelper {
                                 var categoryToAdd = realm.objects(Category).filter(predicate)
                                 var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
                                 newTrans.categories = categoryToAdd[0]
-                                if category_id == "21008000" || category_id == "21007001"
+                                if (category_id == "21008000" || category_id == "21007001" || dictAmount < 0)
                                 {
                                     newTrans.status = 86 //sets status to ignore from totals
                                 }
@@ -88,10 +100,12 @@ class cHelper {
                         }
                     }
                     
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    callback(transactions.count)
+                    let transactions_count = transactions.count
+                    //transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                
                     
-                    
+                    callback(transactions_count)
+               
             }
             
         }

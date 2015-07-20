@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043B721B5AB16200B49A7E /* welcomeViewController.swift */; };
 		090BD3451B25089300F26E78 /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BD3441B25089300F26E78 /* mainViewController.swift */; };
 		090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; };
 		090BD3561B250D2D00F26E78 /* BladeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -119,6 +120,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09043B721B5AB16200B49A7E /* welcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = welcomeViewController.swift; sourceTree = "<group>"; };
 		090BD3441B25089300F26E78 /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BladeKit.xcodeproj; path = "BladeKit-iOS/BladeKit.xcodeproj"; sourceTree = "<group>"; };
 		090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
 				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
+				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
+				09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */,
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
 				090BD3451B25089300F26E78 /* mainViewController.swift in Sources */,
 				091620281B2DA2330004C781 /* SBGestureTableViewCellSideView.swift in Sources */,

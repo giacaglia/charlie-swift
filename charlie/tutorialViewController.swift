@@ -7,38 +7,52 @@
 //
 
 import UIKit
-
+import RealmSwift
 
 
 class tutorialViewController: UIViewController {
 
     var keyStore = NSUbiquitousKeyValueStore()
 
-    @IBOutlet weak var slider: UISlider!
+    let users = realm.objects(User)
+    var cHelp = cHelper()
+    
+    
 
+    @IBOutlet weak var slider: UISlider!
+   
     @IBOutlet weak var sliderAmount: UILabel!
     
 
+    @IBOutlet weak var nextButton: UIButton!
+
+    let blueThumb = UIImage(named: "happy_off_blue")
+    let redThumb = UIImage(named: "happy_off_red")
+    let greenThumb = UIImage(named: "neutral_off_green")
+    
+    override func viewDidAppear(animated: Bool) {
+        //if no users and we have icloud access token we should restore user
+       
+        
+       
+            
+        
+
+    }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        if keyStore.stringForKey("access_token") != nil
-        {
-         
-            //recover user
-            println("Need to recover user")
-            
-            
-        }
-        else
-        {
-            println("no user so show onbouarding")
-            
-        }
-            
+        
+        
+        sliderAmount.textColor = listBlue
+        nextButton.backgroundColor = listBlue
+        nextButton.layer.cornerRadius = 10
+        
+        slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
             
             
     }
@@ -52,6 +66,24 @@ class tutorialViewController: UIViewController {
         
         var selectedValue = Int(sender.value)
         
+        if selectedValue >= 0 && selectedValue < 5
+        {
+            sliderAmount.textColor = listRed
+            slider.setThumbImage(redThumb, forState: UIControlState.Normal)
+
+        }
+        else if selectedValue > 4 && selectedValue < 8
+        {
+            sliderAmount.textColor = listBlue
+             slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
+        }
+        else
+        {
+            sliderAmount.textColor = listGreen
+            slider.setThumbImage(greenThumb, forState: UIControlState.Normal)
+        }
+        
+        
         sliderAmount.text = String(stringInterpolationSegment: selectedValue)
         
         
@@ -61,8 +93,10 @@ class tutorialViewController: UIViewController {
     @IBAction func startButtonPress(sender: UIButton) {
         
         
-          defaults.setObject(sliderAmount.text, forKey: "userSelectedHappyScore")
-          defaults.setObject("0", forKey: "happyScoreViewed")
+        defaults.setObject(sliderAmount.text, forKey: "userSelectedHappyScore")
+        defaults.setObject("0", forKey: "happyScoreViewed")
+        performSegueWithIdentifier("toMainfromTutorial", sender: self)
+
         
         
     }

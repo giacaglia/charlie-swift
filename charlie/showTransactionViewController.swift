@@ -94,7 +94,7 @@ class showTransactionViewController: UIViewController {
     
     @IBAction func closeButtonPress(sender: AnyObject) {
         
-        mainVC.blurEffectView.hidden = true
+       
         dismissViewControllerAnimated(true, completion: nil)
         
     }

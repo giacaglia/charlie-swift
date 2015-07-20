@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-let realm = Realm()
+var realm = Realm()
 
 
 

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 import CoreData
 
 let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)

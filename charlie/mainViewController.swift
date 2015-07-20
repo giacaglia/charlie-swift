@@ -14,7 +14,7 @@ import Charts
 
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -30, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -42, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -23,6 +23,7 @@ var approvedPredicate = NSPredicate()
 var flaggedPredicate = NSPredicate()
 
 var keyStore = NSUbiquitousKeyValueStore()
+
 
 
 var transactionItems = realm.objects(Transaction)
@@ -42,6 +43,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var transactionsTable: SBGestureTableView!
 
 
+    @IBOutlet weak var happyDateRange: UILabel!
     @IBOutlet weak var chartView: LineChartView?
     var months: [String]!
     
@@ -126,8 +128,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     //this is a test
     
 
-    var blurEffect:UIBlurEffect!
-    var blurEffectView:UIVisualEffectView!
+   
     
     
     func setChart(dataPoints: [String], values: [Double]) {
@@ -146,32 +147,51 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         lineChartDataSet.drawFilledEnabled = true
         lineChartDataSet.fillColor = UIColor.lightGrayColor()
-        lineChartDataSet.drawValuesEnabled = false
-        lineChartDataSet.drawCirclesEnabled = false
+        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.drawCirclesEnabled = true
+        
+        lineChartDataSet.drawCubicEnabled = true
+
+        
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         chartView!.gridBackgroundColor = UIColor.whiteColor()
         chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         chartView!.rightAxis.drawGridLinesEnabled = false
         chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.leftAxis.startAtZeroEnabled = false
-        chartView!.rightAxis.startAtZeroEnabled = false
-        chartView!.pinchZoomEnabled = false
+        chartView!.xAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        
+        
+        
+        
+        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
+        chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
+
+        chartView!.leftAxis.labelCount = 4
+        
+            
+        chartView!.pinchZoomEnabled = true
+        
+      
         
         //chartView!.leftAxis.enabled = false
+        
         chartView!.leftAxis.axisLineWidth = 10
         chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
         chartView!.rightAxis.enabled = false
     
+
         
-        //chartView!.xAxis.labelPosition = .Bottom
-        chartView!.xAxis.enabled = false
+        chartView!.xAxis.labelPosition = .Bottom
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        chartView!.xAxis.enabled = true
         chartView!.legend.enabled = false
         chartView!.descriptionText = ""
         chartView!.data = lineChartData
-        //chartView!.maxVisibleValueCount = 3
         
-        
+        chartView!.maxVisibleValueCount = 3
+    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -298,7 +318,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
 //        
         
         
-        if accounts.count  == 0  && access_token == "" //show add user
+        if accounts.count  == 0  //&& access_token == "" //show add user
         {
             setPredicates(false)
             accountAddView.hidden = false
@@ -306,36 +326,36 @@ class mainViewController: UIViewController, UITableViewDataSource {
             transactionsTable.hidden = true
              transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         }
-        else if accounts.count  == 0  && access_token != ""
-        {
-            
-            println("Need to restore")
-            addAccountButton.hidden = true
-            accountAddView.hidden = true
-            setPredicates(false)
-
-            
-            spinner.startAnimating()
-            
-            
-            //All stuff here
-            
-            cHelp.addUpdateResetAccount(1, dayLength: 30)
-                {
-                    (response) in
-                    
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-                    
-                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-                    {
-                        self.showReward()
-                    }
-                    
-                    
-            }
-
-        }
+//        else if accounts.count  == 0  && access_token != ""
+//        {
+//            
+//            println("Need to restore")
+//            addAccountButton.hidden = true
+//            accountAddView.hidden = true
+//            setPredicates(false)
+//
+//            
+//            spinner.startAnimating()
+//            
+//            
+//            //All stuff here
+//            
+//            cHelp.addUpdateResetAccount(1, dayLength: 30)
+//                {
+//                    (response) in
+//                    
+//                    self.transactionsTable.reloadData()
+//                    self.spinner.stopAnimating()
+//                    
+//                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+//                    {
+//                        self.showReward()
+//                    }
+//                    
+//                    
+//            }
+//
+//        }
         else
         {
             
@@ -349,27 +369,27 @@ class mainViewController: UIViewController, UITableViewDataSource {
              //refresh accounts
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
-            spinner.startAnimating()
+            //spinner.startAnimating()
            
          
             //All stuff here
             
-            cHelp.addUpdateResetAccount(1, dayLength: 30)
-                {
-                    (response) in
-                    
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-                    
+//            cHelp.addUpdateResetAccount(1, dayLength: 30)
+//                {
+//                    (response) in
+//                    
+//                    self.transactionsTable.reloadData()
+//                    self.spinner.stopAnimating()
+//                    
                     if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
                     {
                         self.showReward()
                     }
-                    
-                    
-                }
+//
+//                    
+//                }
            
-            
+           
             
         }
         
@@ -470,10 +490,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     
-    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> Double
+    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate)
     {
         
-        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -(weeksFrom * 7), toDate: NSDate(), options: nil)!
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -(weeksFrom * 7), toDate: date, options: nil)!
         
         let components: NSDateComponents = NSDateComponents()
         components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit)
@@ -492,7 +512,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         println("First = \(first) and last \(expirationDate)")
         println("Happy % \(chartHappyWeek1Percentage)")
-        return chartHappyWeek1Percentage
+        return (chartHappyWeek1Percentage, first, expirationDate!)
 
         
         
@@ -502,6 +522,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func showReward()
     {
         
+        happyRewardPercentage.textColor = listGreen
         
         months = [String()]
         
@@ -512,17 +533,23 @@ class mainViewController: UIViewController, UITableViewDataSource {
         var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         
         
-        if happyScoreViewed == "0"
-        {
-            userSelectedHappyScoreLabel.hidden = false
-            userSelectedHappyScoreLabel.text = userSelectedHappyScore
-            
-        }
-        else
-        {
-            userSelectedHappyScoreLabel.hidden = true
-        }
+       let  lastTransaction = allTransactionItems[0].date as NSDate
         
+        
+        
+        
+        
+//        if happyScoreViewed == "0"
+//        {
+//            userSelectedHappyScoreLabel.hidden = false
+//            userSelectedHappyScoreLabel.text = userSelectedHappyScore
+//            
+//        }
+//        else
+//        {
+//            userSelectedHappyScoreLabel.hidden = true
+//        }
+//        
         
         //println(getHappyPercentage(NSDate(), weeksFrom: 1))
         
@@ -533,18 +560,28 @@ class mainViewController: UIViewController, UITableViewDataSource {
         while i > -1
         {
             
-         let happyPer = getHappyPercentage(NSDate(), weeksFrom: i)
+            
+          
+            
+         let (happyPer, beginDate, endDate) = getHappyPercentage(lastTransaction, weeksFrom: i)
+            
+            let dateFormatter = NSDateFormatter()
+            //the "M/d/yy, H:mm" is put together from the Symbol Table
+            dateFormatter.dateFormat = "M/d"
+            let beginDateFormatted = dateFormatter.stringFromDate(beginDate)
+            let endDateFormatted = dateFormatter.stringFromDate(endDate)
             
         if happyPer >= 0
         {
             unitsSold.append(Double(happyPer * 100))
-            months.append("Week \(week)")
+            months.append("\(endDateFormatted )")
             
             if i == 0
             {
-                let happyPercentage = round(happyPer * 100)
+                let happyPercentage = Int(happyPer * 100)
                 
-                happyRewardPercentage.text = "\(happyPercentage)"
+                happyRewardPercentage.text = "\(happyPercentage)%"
+                happyDateRange.text = "Week of \(beginDateFormatted)"
             }
            
            
@@ -660,13 +697,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func updateTrans() -> Void
     {
         println("looking for records")
+        
+        
         cHelp.addUpdateResetAccount(1, dayLength: 0)
             {
                 
                 (response) in
                 println("added records")
                 println(response)
-                
+               
                 if response > 0
                 {
                     self.timer.invalidate()
@@ -707,16 +746,22 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        
+        
         println(indexPath.row)
         println(transactionItems[indexPath.row].ctype)
         println(transactionItems[indexPath.row].name)
-         blurEffectView.hidden = false  
+        
 
         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         
     }
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+        
         let size = CGSizeMake(30, 30)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
@@ -792,7 +837,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         else if (segue.identifier == "showTypePicker") {
             
             
-           blurEffectView.hidden = false
+          
          
             let viewController = segue.destinationViewController as! showTypePickerViewController
             //let indexPath = self.transactionsTable.indexPathForSelectedRow()
@@ -811,7 +856,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
     @IBAction func showTutorial(sender: UIButton) {
         
-          performSegueWithIdentifier("showTutorial", sender: self)
+         // performSegueWithIdentifier("showTutorial", sender: self)
+        
+        //remove icloud 
+        
+//
+        keyStore.setString("", forKey: "access_token")
+        keyStore.setString("", forKey: "email")
+        keyStore.setString("", forKey: "password")
+        keyStore.synchronize()
         
     }
    
@@ -824,7 +877,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
-      
+     
       if accounts.count > 0
         {
             let access_token = users[0].access_token
@@ -832,6 +885,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             cHelp.addUpdateResetAccount(1, dayLength: 7)
                 {
                     (response) in
+                    
                     
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
