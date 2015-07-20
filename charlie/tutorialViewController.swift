@@ -26,9 +26,9 @@ class tutorialViewController: UIViewController {
 
     @IBOutlet weak var nextButton: UIButton!
 
-    let blueThumb = UIImage(named: "happy_off_blue")
-    let redThumb = UIImage(named: "happy_off_red")
-    let greenThumb = UIImage(named: "neutral_off_green")
+    let blueThumb = UIImage(named: "slider_neutral")
+    let redThumb = UIImage(named: "slider_sad")
+    let greenThumb = UIImage(named: "slider_happy")
     
     override func viewDidAppear(animated: Bool) {
         //if no users and we have icloud access token we should restore user
