@@ -619,8 +619,16 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     
+    
     func showReward()
     {
+        
+        
+        performSegueWithIdentifier("showReveal", sender: self)
+        
+      
+
+        
         
         happyRewardPercentage.textColor = listGreen
         
@@ -635,9 +643,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
        let  lastTransaction = allTransactionItems[0].date as NSDate
         
-        
-        
-            
         
         
         
@@ -740,7 +745,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         //        println("INCOME \(incomeSum)")
         //        println("SPENDABLE \(spendableSum)")
         //        println("BILLS \(billsSum)")
-        
+    
         
     }
     
@@ -950,6 +955,14 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
             
         }
+        else if (segue.identifier == "showReveal")
+        {
+           var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
+            
+            let viewController = segue.destinationViewController as! revealViewController
+            viewController.revealPercentage = "\(userSelectedHappyScore)%"
+        }
+ 
     }
     
     

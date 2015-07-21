@@ -48,6 +48,7 @@
 		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
 		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
 		45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */; };
+		45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2101B5E7E660005B234 /* revealViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
 		45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialCardViewController.swift; sourceTree = "<group>"; };
+		45E0F2101B5E7E660005B234 /* revealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revealViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
 				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
 				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
+				45E0F2101B5E7E660005B234 /* revealViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				091620261B2DA2330004C781 /* SBGestureTableViewCell.swift in Sources */,
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
 				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
+				45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
