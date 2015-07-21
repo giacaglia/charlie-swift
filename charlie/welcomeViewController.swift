@@ -43,10 +43,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         ]
         
         pageTitles =
-            [  "Page 1",
-                "Page 2",
-                "Page 3",
-                "Page 4"
+            [  "Spend money on what makes you happy",
+                "Sometimes we spend money on things that bring us joy",
+                "...and sometimes we spend on things that don't",
+                "Charlie shows you the difference and helps shift your spending so you can keep smiling :)"
         ]
         
         
@@ -181,38 +181,101 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         if let pageView = pageViews[page] {
             // Do nothing. The view is already loaded.
         } else {
-            
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
             
+            // 3
+          
             let newPageView = UIView()
             newPageView.backgroundColor = colors[page]
             newPageView.frame = frame
             
+           
+            if page == 0
+            {
+                //tutorial title
+                var welcomeFrame = CGRectMake(0, 0, 300, 50)
+                welcomeFrame.origin.x = (self.view.frame.size.width / 2) - 150
+                welcomeFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
+                var welcome = UILabel(frame: welcomeFrame)
+                welcome.numberOfLines = 0
+                welcome.font = UIFont (name: "Montserrat-Bold", size: 24)
+                welcome.textColor =  UIColor.blackColor()
+                welcome.textAlignment = .Center
+                welcome.textAlignment = NSTextAlignment.Center
+                welcome.text = "Welcome to Charlie"
+                newPageView.addSubview(welcome)
+            }
+
             
-            var imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
+            //tutorial title
+            var titleFrame = CGRectMake(0, 0, 280, 150)
+            titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
+            titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
+            var title = UILabel(frame: titleFrame)
+            title.numberOfLines = 0
+            title.font = UIFont (name: "Montserrat-Regular", size: 20)
+            if page == 0
+            {
+                title.textColor =  UIColor.lightGrayColor()
+            }
+            else
+            {
+                title.textColor =  UIColor.whiteColor()
+            }
+            
+            title.textAlignment = .Center
+            title.textAlignment = NSTextAlignment.Center
+            title.text = pageTitles[page]
+            newPageView.addSubview(title)
+            
+            
+            //tutorial image
+            var imageViewFrame = CGRectMake(0, 0, 250, 250)
+            imageViewFrame.origin.x = (self.view.frame.size.width / 2) - 125
+            imageViewFrame.origin.y = (self.view.frame.size.height) - (self.view.frame.size.height * 0.55)
+            var imageView = UIImageView(frame: imageViewFrame)
             imageView.image =   pageImages[page]
-            imageView.layer.cornerRadius = 100
+            imageView.layer.cornerRadius = 125
             imageView.clipsToBounds = true
-            //imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
             newPageView.addSubview(imageView)
+
             
             
-            var label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-            label.center = CGPointMake(160, 284)
-            label.textAlignment = NSTextAlignment.Center
-            label.text = pageTitles[page]
             
-            newPageView.addSubview(label)
+            
+            //loginbutton
+            if page == 3
+            {
+                var loginButtonFrame = CGRectMake(0, 0, 300, 50)
+                loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
+                loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
+                var loginButton = UIButton(frame: loginButtonFrame)
+                loginButton.setTitle("Login", forState: .Normal)
+                loginButton.addTarget(self, action: "loginButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+                newPageView.addSubview(loginButton)
+            }
+            
+            
+            
             
             
             scrollView.addSubview(newPageView)
-            
+            // 4
             pageViews[page] = newPageView
         }
-    }
     
+
+    }
+
+    
+    func loginButtonAction(sender:UIButton!)
+    {
+        println("Button tapped")
+        performSegueWithIdentifier("toRegistration", sender: self)
+        
+    }
     
     func purgePage(page: Int) {
         if page < 0 || page >= pageImages.count {
