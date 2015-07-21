@@ -66,13 +66,13 @@ class tutorialViewController: UIViewController {
         
         var selectedValue = Int(sender.value)
         
-        if selectedValue >= 0 && selectedValue < 5
+        if selectedValue >= 0 && selectedValue < 40
         {
             sliderAmount.textColor = listRed
             slider.setThumbImage(redThumb, forState: UIControlState.Normal)
 
         }
-        else if selectedValue > 4 && selectedValue < 8
+        else if selectedValue > 40 && selectedValue < 80
         {
             sliderAmount.textColor = listBlue
              slider.setThumbImage(blueThumb, forState: UIControlState.Normal)

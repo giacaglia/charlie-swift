@@ -34,10 +34,7 @@ var allTransactionItems = realm.objects(Transaction)
 class mainViewController: UIViewController, UITableViewDataSource {
     
   
-    @IBOutlet weak var revealTitle: UILabel!
-    
-    @IBOutlet weak var revealView: UIView!
-    
+       
     @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
     
     
@@ -639,10 +636,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
        let  lastTransaction = allTransactionItems[0].date as NSDate
         
         
-             rewardView.layer.cornerRadius = 100
-             revealTitle.text = "You guessed \(userSelectedHappyScore)%"
-             
-             rewardView.addSubview(revealView)
         
             
         
@@ -1175,7 +1168,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
     }
     
-   
+
     
     @IBAction func resetButtonPressed(sender: AnyObject) {
         
