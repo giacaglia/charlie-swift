@@ -14,7 +14,7 @@ import Charts
 
 
 
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -42, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -624,37 +624,25 @@ class mainViewController: UIViewController, UITableViewDataSource {
     {
         
         
-        performSegueWithIdentifier("showReveal", sender: self)
-        
-      
-
         
         
         happyRewardPercentage.textColor = listGreen
-        
         months = [String()]
         
         var unitsSold = [Double()]
+        let userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")
         
-        
-        var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
         var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         
         
        let  lastTransaction = allTransactionItems[0].date as NSDate
         
         
-        
-        
-        
         if happyScoreViewed == "0"
         {
-
-
-            
-        }
-        else
-        {
+            performSegueWithIdentifier("showReveal", sender: self)
+            defaults.setValue("1", forKey: "happyScoreViewed")
+            defaults.synchronize()
 
         }
         
@@ -960,7 +948,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
            var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
             
             let viewController = segue.destinationViewController as! revealViewController
-            viewController.revealPercentage = "\(userSelectedHappyScore)%"
+            viewController.revealPercentage = "\(userSelectedHappyScore)"
         }
  
     }

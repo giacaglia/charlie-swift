@@ -53,9 +53,10 @@ class tutorialViewController: UIViewController {
         nextButton.backgroundColor = listBlue
         nextButton.layer.cornerRadius = 10
         
+        
         happyFlowDefinition.layer.cornerRadius = 20
         happyFlowDefinition.layer.borderWidth = 1
-        happyFlowDefinition.layer.borderColor = UIColor.lightGrayColor().CGColor
+        happyFlowDefinition.layer.borderColor = lightGray.CGColor
         slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
             
             
