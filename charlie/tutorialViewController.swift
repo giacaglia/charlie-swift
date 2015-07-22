@@ -17,6 +17,7 @@ class tutorialViewController: UIViewController {
     let users = realm.objects(User)
     var cHelp = cHelper()
     
+    @IBOutlet weak var happyFlowDefinition: UIView!
     
 
     @IBOutlet weak var slider: UISlider!
@@ -52,6 +53,9 @@ class tutorialViewController: UIViewController {
         nextButton.backgroundColor = listBlue
         nextButton.layer.cornerRadius = 10
         
+        happyFlowDefinition.layer.cornerRadius = 20
+        happyFlowDefinition.layer.borderWidth = 1
+        happyFlowDefinition.layer.borderColor = UIColor.lightGrayColor().CGColor
         slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
             
             
@@ -84,7 +88,9 @@ class tutorialViewController: UIViewController {
         }
         
         
-        sliderAmount.text = String(stringInterpolationSegment: selectedValue)
+        let selectedStringValue = String(selectedValue)
+        
+        sliderAmount.text = "\(selectedValue)%"
         
         
     }

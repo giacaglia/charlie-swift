@@ -17,6 +17,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     let users = realm.objects(User)
     var cHelp = cHelper()
     
+    @IBOutlet weak var pageControl: UIPageControl!
     
     var pageImages: [UIImage] = []
     var pageViews: [UIView?] = []
@@ -54,8 +55,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         let pageCount = pageImages.count
         
-        // pageControl.currentPage = 0
-        // pageControl.numberOfPages = pageCount
+         pageControl.currentPage = 0
+         pageControl.numberOfPages = pageCount
         
         for _ in 0..<pageCount {
             pageViews.append(nil)
@@ -206,9 +207,13 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 welcome.textAlignment = NSTextAlignment.Center
                 welcome.text = "Welcome to Charlie"
                 newPageView.addSubview(welcome)
+               
             }
 
-            
+           
+            pageControl.currentPageIndicatorTintColor = UIColor.lightGrayColor()
+            pageControl.pageIndicatorTintColor = UIColor.blackColor()
+
             //tutorial title
             var titleFrame = CGRectMake(0, 0, 280, 150)
             titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
@@ -251,9 +256,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             {
                 var loginButtonFrame = CGRectMake(0, 0, 300, 50)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
-                loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
+                loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.12)
                 var loginButton = UIButton(frame: loginButtonFrame)
-                loginButton.setTitle("Login", forState: .Normal)
+                loginButton.setTitle("Let's Get Started", forState: .Normal)
                 loginButton.addTarget(self, action: "loginButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
                 newPageView.addSubview(loginButton)
             }
@@ -336,7 +341,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         }
         
         // Update the page control
-        //pageControl.currentPage = page
+        pageControl.currentPage = page
         
         // Work out which pages you want to load
         
