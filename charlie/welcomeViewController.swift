@@ -37,8 +37,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         pageImages =
             [
                 UIImage(named: "iTunesArtwork")!,
-                UIImage(named: "iTunesArtwork")!,
-                UIImage(named: "iTunesArtwork")!,
+                UIImage(named: "happy_onboard")!,
+                UIImage(named: "sad_onboard")!,
                 UIImage(named: "iTunesArtwork")!
         ]
         
@@ -239,6 +239,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             imageView.image =   pageImages[page]
             imageView.layer.cornerRadius = 125
             imageView.clipsToBounds = true
+
             newPageView.addSubview(imageView)
 
             
