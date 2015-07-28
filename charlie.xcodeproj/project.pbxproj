@@ -49,6 +49,8 @@
 		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
 		45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */; };
 		45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2101B5E7E660005B234 /* revealViewController.swift */; };
+		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
+		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +166,8 @@
 		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
 		45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialCardViewController.swift; sourceTree = "<group>"; };
 		45E0F2101B5E7E660005B234 /* revealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revealViewController.swift; sourceTree = "<group>"; };
+		45E0F2131B613F420005B234 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,8 @@
 				098D16131B593AD4008D9950 /* Charts.framework in Frameworks */,
 				090BD3671B26878800F26E78 /* RealmSwift.framework in Frameworks */,
 				090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */,
+				45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */,
+				45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +301,8 @@
 		09C2A7391B21F0AC005A40DA = {
 			isa = PBXGroup;
 			children = (
+				45E0F2131B613F420005B234 /* Fabric.framework */,
+				45E0F2141B613F420005B234 /* Crashlytics.framework */,
 				093EEACD1B59301600347BB9 /* CloudKit.framework */,
 				090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */,
 				090BD3471B250B9B00F26E78 /* frameworks */,
@@ -370,7 +378,8 @@
 				09C2A73F1B21F0AD005A40DA /* Frameworks */,
 				09C2A7401B21F0AD005A40DA /* Resources */,
 				090BD3591B250D2D00F26E78 /* Embed Frameworks */,
-				090BD36D1B268B3300F26E78 /* ShellScript */,
+				090BD36D1B268B3300F26E78 /* Run Script */,
+				45E0F2121B613F070005B234 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -509,7 +518,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		090BD36D1B268B3300F26E78 /* ShellScript */ = {
+		090BD36D1B268B3300F26E78 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
+		};
+		45E0F2121B613F070005B234 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -520,7 +543,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
+			shellScript = "./Fabric.framework/run cd314e020dc53f8d2ce36d42d28a552bcb8f6b6c c3659a9304466a48786c8245cbcb1d9b94a42632b9503be94116867b17e95915";
 		};
 /* End PBXShellScriptBuildPhase section */
 

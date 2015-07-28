@@ -311,8 +311,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
             println("REFRESH ACCOUNTS")
             let access_token = users[0].access_token
             
-            
-            let  lastTransaction = allTransactionItems[0].date as NSDate
+            if allTransactionItems.count > 0
+            {
+                let  lastTransaction = allTransactionItems[0].date as NSDate
+            }
 
             
             

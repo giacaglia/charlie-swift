@@ -20,6 +20,11 @@ var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
+import Fabric
+import Crashlytics
+
+
+
 @UIApplicationMain
 
 
@@ -39,6 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var cHelp = cHelper()
        
         filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
+
+        
+        Fabric.with([Crashlytics()])
 
         return true
     }
