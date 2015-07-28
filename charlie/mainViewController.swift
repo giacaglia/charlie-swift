@@ -133,68 +133,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
    
     
     
-    func setChart(dataPoints: [String], values: [Double]) {
-        chartView!.noDataText = "You need to provide data for the chart."
-        
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-          
-            dataEntries.append(dataEntry)
-        }
-        
-        
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
-        
-        lineChartDataSet.drawFilledEnabled = true
-        lineChartDataSet.fillColor = UIColor.lightGrayColor()
-        lineChartDataSet.drawValuesEnabled = true
-        lineChartDataSet.drawCirclesEnabled = true
-        
-        lineChartDataSet.drawCubicEnabled = true
-
-        
-        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-        chartView!.gridBackgroundColor = UIColor.whiteColor()
-        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        chartView!.rightAxis.drawGridLinesEnabled = false
-        chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
-        
-        
-        
-        
-        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
-        chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
-
-        chartView!.leftAxis.labelCount = 4
-        
-            
-        chartView!.pinchZoomEnabled = true
-        
-      
-        
-        //chartView!.leftAxis.enabled = false
-        
-        chartView!.leftAxis.axisLineWidth = 10
-        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
-        chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
-        chartView!.rightAxis.enabled = false
-    
-
-        
-        chartView!.xAxis.labelPosition = .Bottom
-        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
-        chartView!.xAxis.enabled = true
-        chartView!.legend.enabled = false
-        chartView!.descriptionText = ""
-        chartView!.data = lineChartData
-        
-        chartView!.maxVisibleValueCount = 3
-    
-    }
+   
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -580,7 +519,72 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
     }
     
+   
+ func setChart(dataPoints: [String], values: [Double]) {
+        chartView!.noDataText = "You need to provide data for the chart."
+        
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+          
+            dataEntries.append(dataEntry)
+        }
+        
+        
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
+        
+        lineChartDataSet.drawFilledEnabled = true
+        lineChartDataSet.fillColor = UIColor.lightGrayColor()
+        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.drawCirclesEnabled = true
+        
+        lineChartDataSet.drawCubicEnabled = true
+
+        
+        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+        chartView!.gridBackgroundColor = UIColor.whiteColor()
+        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        chartView!.rightAxis.drawGridLinesEnabled = false
+        chartView!.leftAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        
+        
+        
+        
+        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
+        chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
+
+        chartView!.leftAxis.labelCount = 4
+        
+            
+        chartView!.pinchZoomEnabled = true
+        
+      
+        
+        //chartView!.leftAxis.enabled = false
+        
+        chartView!.leftAxis.axisLineWidth = 10
+        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
+        chartView!.rightAxis.enabled = false
     
+
+        
+        chartView!.xAxis.labelPosition = .Bottom
+        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+        chartView!.xAxis.enabled = true
+        chartView!.legend.enabled = false
+        chartView!.descriptionText = ""
+        chartView!.data = lineChartData
+        
+        chartView!.maxVisibleValueCount = 3
+    
+    }
+
+
+
     func firstDayOfWeek(date: NSDate) -> NSDate {
         let calendar = NSCalendar.currentCalendar()
         var dateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitWeekOfMonth, fromDate: date)
