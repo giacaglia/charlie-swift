@@ -14,28 +14,43 @@ var realm = Realm()
 
 
 
-class loginViewController: UIViewController {
+class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerDelegate {
     
-   
+   var pinSetValidated = false
     
     override func viewDidAppear(animated: Bool) {
-        let users = realm.objects(User)
-        if users.count  == 0
+        
+        if pinSetValidated == false
         {
-            // Create a Person object
-            let user = User()
-            user.email = "test@charlie.com"
-            user.pin = "0000"
-            user.password = "password"
-            realm.write {
-                realm.add(user, update: true)
-            }
-            
+            var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+            presentViewController(ABPinSetup, animated: true, completion: nil)
         }
         else
         {
-            performSegueWithIdentifier("segueFromLoginToMain", sender: self)
+           performSegueWithIdentifier("segueFromLoginToMain", sender: self) 
         }
+        
+        
+        
+        //let users = realm.objects(User)
+       
+        
+//        if users.count  == 0
+//        {
+//            // Create a Person object
+//            let user = User()
+//            user.email = "test@charlie.com"
+//            user.pin = "0000"
+//            user.password = "password"
+//            realm.write {
+//                realm.add(user, update: true)
+//            }
+//            
+//        }
+//        else
+//        {
+//            performSegueWithIdentifier("segueFromLoginToMain", sender: self)
+//        }
 
         
     }
@@ -48,6 +63,41 @@ class loginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    
+    func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
+        
+        
+        defaults.setObject(pin, forKey: "pin")
+        pinSetValidated = true
+        //let users = realm.objects(User)
+
+
+            // Create a Person object
+            let user = User()
+            user.email = "test@charlie.com"
+            user.pin = "0000"
+            user.password = "password"
+            realm.write {
+                realm.add(user, update: true)
+            }
+
+        
+
+        padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("segueFromLoginToMain", sender: self)
+        
+        
+        
+        
+    }
+    
+    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+        
+        
     }
     
     

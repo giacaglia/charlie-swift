@@ -34,6 +34,24 @@
         </mutableArray>
     </customFonts>
     <scenes>
+        <!--Passcode View Controller-->
+        <scene sceneID="cyk-f1-V2x">
+            <objects>
+                <viewController storyboardIdentifier="passcodeViewController" id="Vhb-CB-Mm8" customClass="passcodeViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YOo-E3-2Rh"/>
+                        <viewControllerLayoutGuide type="bottom" id="lLp-Fy-Fh1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z2C-AD-sXb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O6k-is-dPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-935" y="513"/>
+        </scene>
         <!--Welcome View Controller-->
         <scene sceneID="KQH-Fv-Slh">
             <objects>
@@ -142,7 +160,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="happy flow" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u72-VB-F4i">
                                         <rect key="frame" x="13" y="8" width="94" height="25"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="noun" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IoF-bk-T7K">
@@ -160,7 +178,7 @@
                                             <constraint firstAttribute="height" constant="62" id="3sZ-wY-PA2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -243,6 +261,7 @@
                         <outlet property="slider" destination="UzW-Sw-AC4" id="uOC-Jc-kew"/>
                         <outlet property="sliderAmount" destination="sEk-C8-LRO" id="GFp-Cf-ZkU"/>
                         <segue destination="HbA-5y-1yC" kind="showDetail" identifier="toMainfromTutorial" id="NZC-ff-rSb"/>
+                        <segue destination="OSi-Zt-ur6" kind="show" identifier="happyFlowToLogin" id="ncg-qJ-bWB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1652,6 +1671,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="swt-fH-1dv"/>
-        <segue reference="euX-y7-kZF"/>
+        <segue reference="MIk-q3-hAj"/>
     </inferredMetricsTieBreakers>
 </document>

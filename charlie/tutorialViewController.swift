@@ -36,10 +36,12 @@ class tutorialViewController: UIViewController {
        
         
        
-            
         
 
     }
+    
+    
+   
     
     
     
@@ -102,8 +104,8 @@ class tutorialViewController: UIViewController {
         
         defaults.setObject(sliderAmount.text, forKey: "userSelectedHappyScore")
         defaults.setObject("0", forKey: "happyScoreViewed")
-        performSegueWithIdentifier("toMainfromTutorial", sender: self)
-
+        //performSegueWithIdentifier("toMainfromTutorial", sender: self)
+        performSegueWithIdentifier("happyFlowToLogin", sender: self)
         
         
     }

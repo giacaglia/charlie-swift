@@ -34,9 +34,32 @@ class showTransactionViewController: UIViewController {
 
     
     
+    func willEnterForeground(notification: NSNotification!) {
+        
+        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
+        {
+            
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+                presentViewController(resultController, animated: true, completion: nil)
+            }
+            
+            
+        }
+        else
+        {
+            defaults.setObject("no", forKey: "firstLoad")
+            defaults.synchronize()
+            
+        }
+        
+        
+    }
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
 
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
     

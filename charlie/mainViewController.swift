@@ -129,8 +129,35 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     //this is a test
     
+   
+    var pinApproved = false
 
    
+    
+    func willEnterForeground(notification: NSNotification!) {
+        
+        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
+        {
+            
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+                presentViewController(resultController, animated: true, completion: nil)
+                pinApproved = true
+
+            }
+           
+            
+        }
+        else
+        {
+            defaults.setObject("no", forKey: "firstLoad")
+            defaults.synchronize()  
+
+        }
+        
+        
+    }
+    
+      
     
     
    
@@ -138,12 +165,29 @@ class mainViewController: UIViewController, UITableViewDataSource {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+       
+        if defaults.objectForKey("pin") != nil && defaults.stringForKey("firstLoad") != nil && pinApproved == false
+        {
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+                presentViewController(resultController, animated: true, completion: nil)
+            }
+
+            pinApproved = true
+            defaults.setObject("no", forKey: "firstLoad")
+            defaults.synchronize()   
+            
+            
+        }
+        else
+        {
+            defaults.setObject("no", forKey: "firstLoad")
+            defaults.synchronize()
+        }
+        
+        
         if accounts.count > 0 && allTransactionItems.count > 0
         {
             println("normal all is loaded")
-            
-
-            
             
         }
       
@@ -180,7 +224,11 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         super.viewDidLoad()
         
-         println(realm.path)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+       
+        
+        
+        println(realm.path)
         
         
         rewardView.hidden = true
@@ -217,20 +265,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         
         
-        
-        let users = realm.objects(User)
-        if users.count  == 0
-        {
-            // Create a Person object
-            let user = User()
-            user.email = "test@charlie.com"
-            user.pin = "0000"
-            user.password = "password"
-            realm.write {
-                realm.add(user, update: true)
-            }
-            
-        }
+     
 
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil

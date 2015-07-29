@@ -14,7 +14,7 @@ import RealmSwift
 
 
 
-class welcomeViewController: UIViewController, ABPadLockScreenViewControllerDelegate, UIScrollViewDelegate {
+class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     var keyStore = NSUbiquitousKeyValueStore()
     
@@ -35,15 +35,20 @@ class welcomeViewController: UIViewController, ABPadLockScreenViewControllerDele
     
    
     func willEnterForeground(notification: NSNotification!) {
-        // do whatever you want when the app is brought back to the foreground
-        var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
-        presentViewController(ABPin, animated: true, completion: nil)
+      
+         if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
+         {
+        
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+                presentViewController(resultController, animated: true, completion: nil)
+                
+                
+                
+            }
+        }
+        
 
     }
-    
-    
-   
-   
     
     
     
@@ -101,69 +106,56 @@ class welcomeViewController: UIViewController, ABPadLockScreenViewControllerDele
         
         
         
-        if access_token != "" && users.count == 0
-        {
-            //recover user
-            println("Need to recover user")
-            
-            
-            //get categories
-            cService.getCategories()
-                {
-                    
-                    (responses) in
-                    
-                    for response in responses
-                    {
-                        
-                        var cat = Category()
-                        var id:String = response["id"] as! String
-                        var type:String = response["type"] as! String
-                        cat.id = id
-                        cat.type = type
-                        let categories = ",".join(response["hierarchy"] as! Array)
-                        cat.categories = categories
-                        realm.write {
-                            realm.add(cat, update: true)
-                        }
-                    }
-                    
-                    let access_token = self.keyStore.stringForKey("access_token")!
-                    
-                    
-                    // Create a user object
-                    let user = User()
-                    user.email = "test@charlie.com"
-                    user.pin = "0000"
-                    user.password = "password"
-                    user.access_token = access_token
-                    realm.write {
-                        realm.add(user, update: true)
-                    }
-                    
-                    self.keyStore.setString("test@charlie.com", forKey: "email")
-                    self.keyStore.setString("password", forKey: "password")
-                    self.keyStore.setString(access_token, forKey: "access_token")
-                    self.keyStore.synchronize()
+//        if access_token != "" && users.count == 0
+//        {
+//            //recover user
+//            println("Need to recover user")
+//            
+//            
+//            //get categories
+//            cService.getCategories()
+//                {
+//                    
+//                    (responses) in
+//                    
+//                    for response in responses
+//                    {
+//                        
+//                        var cat = Category()
+//                        var id:String = response["id"] as! String
+//                        var type:String = response["type"] as! String
+//                        cat.id = id
+//                        cat.type = type
+//                        let categories = ",".join(response["hierarchy"] as! Array)
+//                        cat.categories = categories
+//                        realm.write {
+//                            realm.add(cat, update: true)
+//                        }
+//                    }
+//                    
+//                    let access_token = self.keyStore.stringForKey("access_token")!
                     
                     
+        
                     
                     
-                    self.cHelp.addUpdateResetAccount(1, dayLength: 0)
-                        {
-                            (response) in
-                            
-                        
-                            self.performSegueWithIdentifier("skipOnboarding", sender: self)
-                            
-                    }
-                    
-            }
-            
-            
-        }
+//                    
+//                    self.cHelp.addUpdateResetAccount(1, dayLength: 0)
+//                        {
+//                            (response) in
+//                            
+//                        
+//                            self.performSegueWithIdentifier("skipOnboarding", sender: self)
+//                            
+//                    }
+//                    
+//            }
+//            
+//            
+//        }
             //no icloud token and no users so show onboarding
-        else if users.count == 0
+//        else
+            if users.count == 0
         {
             println("no user so show onboarding")
             
@@ -396,57 +388,7 @@ class welcomeViewController: UIViewController, ABPadLockScreenViewControllerDele
     
    
   
-    
-    func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
-        
-        if pin == "5088"
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
-    
-    func unlockWasSuccessfulForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
-        
-        println("succsesful")
-        padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-    
-    func unlockWasUnsuccessful(falsePin: String!, afterAttemptNumber attemptNumber: Int, padLockScreenViewController: ABPadLockScreenViewController!) {
-        println("unsuccsesful")
-    }
-    
-    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
-        println("cancelled")
-    }
-    
-    
-    
-    
-    
-    func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController)
-    {
-        println("expired")
-        
-        
-        
-    }
-
-    
-    //
-    //    func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
-    //        println("pin set")
-    //    }
-    //
-    //    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
-    //        println("pin cancelled")
-    //    }
-    //    
-
+  
     
     
     
