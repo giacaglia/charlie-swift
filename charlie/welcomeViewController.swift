@@ -10,14 +10,17 @@ import UIKit
 import RealmSwift
 
 
-class welcomeViewController: UIViewController, UIScrollViewDelegate {
+
+
+
+
+class welcomeViewController: UIViewController, ABPadLockScreenViewControllerDelegate, UIScrollViewDelegate {
     
     var keyStore = NSUbiquitousKeyValueStore()
     
     let users = realm.objects(User)
     var cHelp = cHelper()
     
-    @IBOutlet weak var pageControl: UIPageControl!
     
     var pageImages: [UIImage] = []
     var pageViews: [UIView?] = []
@@ -26,13 +29,30 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var pageControl: UIPageControl!
+ 
+    
+    
+   
+    func willEnterForeground(notification: NSNotification!) {
+        // do whatever you want when the app is brought back to the foreground
+        var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
+        presentViewController(ABPin, animated: true, completion: nil)
+
+    }
+    
+    
+   
+   
+    
+    
     
     
     
     override func viewDidAppear(animated: Bool) {
-        //if no users and we have icloud access token we should restore user
-        
-        
+       
+       
+    
         
         
         pageImages =
@@ -164,6 +184,11 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+ 
+        
+        
         
         
         
@@ -370,8 +395,58 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
    
+  
     
-   
+    func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
+        
+        if pin == "5088"
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+    func unlockWasSuccessfulForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
+        
+        println("succsesful")
+        padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    func unlockWasUnsuccessful(falsePin: String!, afterAttemptNumber attemptNumber: Int, padLockScreenViewController: ABPadLockScreenViewController!) {
+        println("unsuccsesful")
+    }
+    
+    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
+        println("cancelled")
+    }
+    
+    
+    
+    
+    
+    func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController)
+    {
+        println("expired")
+        
+        
+        
+    }
+
+    
+    //
+    //    func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
+    //        println("pin set")
+    //    }
+    //
+    //    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+    //        println("pin cancelled")
+    //    }
+    //    
+
     
     
     

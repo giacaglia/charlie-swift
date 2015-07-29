@@ -20,6 +20,8 @@ var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
+ 
+
 import Fabric
 import Crashlytics
 

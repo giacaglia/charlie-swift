@@ -51,6 +51,12 @@
 		45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2101B5E7E660005B234 /* revealViewController.swift */; };
 		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
 		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
+		45E0F2301B67D7F40005B234 /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2251B67D7F40005B234 /* ABPadButton.m */; };
+		45E0F2311B67D7F40005B234 /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2271B67D7F40005B234 /* ABPadLockScreenAbstractViewController.m */; };
+		45E0F2321B67D7F40005B234 /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2291B67D7F40005B234 /* ABPadLockScreenSetupViewController.m */; };
+		45E0F2331B67D7F40005B234 /* ABPadLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F22B1B67D7F40005B234 /* ABPadLockScreenView.m */; };
+		45E0F2341B67D7F40005B234 /* ABPadLockScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F22D1B67D7F40005B234 /* ABPadLockScreenViewController.m */; };
+		45E0F2351B67D7F40005B234 /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F22F1B67D7F40005B234 /* ABPinSelectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +174,19 @@
 		45E0F2101B5E7E660005B234 /* revealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revealViewController.swift; sourceTree = "<group>"; };
 		45E0F2131B613F420005B234 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		45E0F21C1B67D3E40005B234 /* charlie-bridge-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "charlie-bridge-header.h"; sourceTree = "<group>"; };
+		45E0F2241B67D7F40005B234 /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPadButton.h; path = ABPadLockScreen/ABPadButton.h; sourceTree = SOURCE_ROOT; };
+		45E0F2251B67D7F40005B234 /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPadButton.m; path = ABPadLockScreen/ABPadButton.m; sourceTree = SOURCE_ROOT; };
+		45E0F2261B67D7F40005B234 /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPadLockScreenAbstractViewController.h; path = ABPadLockScreen/ABPadLockScreenAbstractViewController.h; sourceTree = SOURCE_ROOT; };
+		45E0F2271B67D7F40005B234 /* ABPadLockScreenAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPadLockScreenAbstractViewController.m; path = ABPadLockScreen/ABPadLockScreenAbstractViewController.m; sourceTree = SOURCE_ROOT; };
+		45E0F2281B67D7F40005B234 /* ABPadLockScreenSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPadLockScreenSetupViewController.h; path = ABPadLockScreen/ABPadLockScreenSetupViewController.h; sourceTree = SOURCE_ROOT; };
+		45E0F2291B67D7F40005B234 /* ABPadLockScreenSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPadLockScreenSetupViewController.m; path = ABPadLockScreen/ABPadLockScreenSetupViewController.m; sourceTree = SOURCE_ROOT; };
+		45E0F22A1B67D7F40005B234 /* ABPadLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPadLockScreenView.h; path = ABPadLockScreen/ABPadLockScreenView.h; sourceTree = SOURCE_ROOT; };
+		45E0F22B1B67D7F40005B234 /* ABPadLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPadLockScreenView.m; path = ABPadLockScreen/ABPadLockScreenView.m; sourceTree = SOURCE_ROOT; };
+		45E0F22C1B67D7F40005B234 /* ABPadLockScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPadLockScreenViewController.h; path = ABPadLockScreen/ABPadLockScreenViewController.h; sourceTree = SOURCE_ROOT; };
+		45E0F22D1B67D7F40005B234 /* ABPadLockScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPadLockScreenViewController.m; path = ABPadLockScreen/ABPadLockScreenViewController.m; sourceTree = SOURCE_ROOT; };
+		45E0F22E1B67D7F40005B234 /* ABPinSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPinSelectionView.h; path = ABPadLockScreen/ABPinSelectionView.h; sourceTree = SOURCE_ROOT; };
+		45E0F22F1B67D7F40005B234 /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPinSelectionView.m; path = ABPadLockScreen/ABPinSelectionView.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +235,7 @@
 		090BD3471B250B9B00F26E78 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45E0F2231B67D7DD0005B234 /* ABPin */,
 				090BD3661B26878800F26E78 /* RealmSwift.framework */,
 				090BD3691B26879200F26E78 /* Realm.framework */,
 				090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */,
@@ -346,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				09C2A7461B21F0AD005A40DA /* Info.plist */,
+				45E0F21C1B67D3E40005B234 /* charlie-bridge-header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -365,6 +386,25 @@
 				09C2A75F1B21F0AD005A40DA /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		45E0F2231B67D7DD0005B234 /* ABPin */ = {
+			isa = PBXGroup;
+			children = (
+				45E0F2241B67D7F40005B234 /* ABPadButton.h */,
+				45E0F2251B67D7F40005B234 /* ABPadButton.m */,
+				45E0F2261B67D7F40005B234 /* ABPadLockScreenAbstractViewController.h */,
+				45E0F2271B67D7F40005B234 /* ABPadLockScreenAbstractViewController.m */,
+				45E0F2281B67D7F40005B234 /* ABPadLockScreenSetupViewController.h */,
+				45E0F2291B67D7F40005B234 /* ABPadLockScreenSetupViewController.m */,
+				45E0F22A1B67D7F40005B234 /* ABPadLockScreenView.h */,
+				45E0F22B1B67D7F40005B234 /* ABPadLockScreenView.m */,
+				45E0F22C1B67D7F40005B234 /* ABPadLockScreenViewController.h */,
+				45E0F22D1B67D7F40005B234 /* ABPadLockScreenViewController.m */,
+				45E0F22E1B67D7F40005B234 /* ABPinSelectionView.h */,
+				45E0F22F1B67D7F40005B234 /* ABPinSelectionView.m */,
+			);
+			name = ABPin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,7 +462,7 @@
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 38CJ735V37;
+						DevelopmentTeam = UFDBYP5MQ8;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 1;
@@ -556,18 +596,24 @@
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
 				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
 				45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */,
+				45E0F2331B67D7F40005B234 /* ABPadLockScreenView.m in Sources */,
+				45E0F2301B67D7F40005B234 /* ABPadButton.m in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
 				09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */,
+				45E0F2321B67D7F40005B234 /* ABPadLockScreenSetupViewController.m in Sources */,
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
 				090BD3451B25089300F26E78 /* mainViewController.swift in Sources */,
+				45E0F2311B67D7F40005B234 /* ABPadLockScreenAbstractViewController.m in Sources */,
 				091620281B2DA2330004C781 /* SBGestureTableViewCellSideView.swift in Sources */,
 				09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */,
 				09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */,
+				45E0F2351B67D7F40005B234 /* ABPinSelectionView.m in Sources */,
 				095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */,
 				090BD35E1B25D2F600F26E78 /* SwiftyJSON.swift in Sources */,
+				45E0F2341B67D7F40005B234 /* ABPadLockScreenViewController.m in Sources */,
 				45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */,
 				091620271B2DA2330004C781 /* SBGestureTableViewCellAction.swift in Sources */,
 				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
@@ -730,6 +776,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 			};
 			name = Debug;
 		};
@@ -750,6 +797,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 			};
 			name = Release;
 		};
