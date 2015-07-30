@@ -185,6 +185,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         
         
+        
+        
         if accounts.count > 0 && allTransactionItems.count > 0
         {
             println("normal all is loaded")

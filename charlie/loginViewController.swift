@@ -65,17 +65,17 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         defaults.setObject(pin, forKey: "pin")
         pinSetValidated = true
-        //let users = realm.objects(User)
-
-
-            // Create a Person object
-            let user = User()
-            user.email = "test@charlie.com"
-            user.pin = "0000"
-            user.password = "password"
-            realm.write {
-                realm.add(user, update: true)
-            }
+//        //let users = realm.objects(User)
+//
+//
+//            // Create a Person object
+//            let user = User()
+//            user.email = "test@charlie.com"
+//            user.pin = "0000"
+//            user.password = "password"
+//            realm.write {
+//                realm.add(user, update: true)
+//            }
 
         
 
