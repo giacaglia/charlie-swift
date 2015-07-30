@@ -35,8 +35,6 @@ class tutorialViewController: UIViewController {
         //if no users and we have icloud access token we should restore user
        
         
-       
-        
 
     }
     

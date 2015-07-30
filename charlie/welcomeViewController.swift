@@ -155,7 +155,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
 //        }
             //no icloud token and no users so show onboarding
 //        else
-            if users.count == 0
+            if users.count == 0 || defaults.stringForKey("pin") == nil
         {
             println("no user so show onboarding")
             
@@ -218,7 +218,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 welcomeFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
                 var welcome = UILabel(frame: welcomeFrame)
                 welcome.numberOfLines = 0
-                welcome.font = UIFont (name: "Montserrat-Bold", size: 24)
+                welcome.font = UIFont (name: "AvenirNext-Regular", size: 22)
                 welcome.textColor =  UIColor.blackColor()
                 welcome.textAlignment = .Center
                 welcome.textAlignment = NSTextAlignment.Center
@@ -237,7 +237,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
             var title = UILabel(frame: titleFrame)
             title.numberOfLines = 0
-            title.font = UIFont (name: "Montserrat-Regular", size: 20)
+            title.font = UIFont (name: "AvenirNext-Regular", size: 22)
             if page == 0
             {
                 title.textColor =  UIColor.lightGrayColor()

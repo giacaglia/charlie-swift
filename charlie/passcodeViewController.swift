@@ -13,17 +13,26 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
 
     var pinValidated = false
 
+   
+    
+    
     override func viewWillAppear(animated: Bool) {
         
         if pinValidated == false
         {
             var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
+            var  ABCustomView = ABPadLockScreenView()
             presentViewController(ABPin, animated: true, completion: nil)
         }
         
 
         
     
+    }
+    
+    
+    override func viewDidLoad() {
+        
     }
     
     

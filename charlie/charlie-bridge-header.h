@@ -10,3 +10,6 @@
 
 #import "ABPadLockScreenViewController.h"
 #import "ABPadLockScreenSetupViewController.h"
+#import "ABPadLockScreenView.h"
+#import "ABPadButton.h"
+#import "ABPinSelectionView.h"

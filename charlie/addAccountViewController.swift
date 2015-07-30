@@ -34,7 +34,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     
     
     func willEnterForeground(notification: NSNotification!) {
-        
+       
         if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
         {
             
