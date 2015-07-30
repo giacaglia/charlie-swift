@@ -165,8 +165,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         (response) in
                         var access_token = response["access_token"] as! String
                         
-                         self.keyStore.setString(access_token, forKey: "access_token")
-                         self.keyStore.synchronize()
+//                         self.keyStore.setString(access_token, forKey: "access_token")
+//                         self.keyStore.synchronize()
                         
                         //let storedString = keyStore.stringForKey("MyString")
                         
@@ -183,6 +183,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 println("ACCESS TOKEN \(access_token)")
                                 
                                 let accounts = response["accounts"] as! [NSDictionary]
+                                
+                       
                                 realm.write {
                                     // Save one Venue object (and dependents) for each element of the array
                                     for account in accounts {
@@ -238,18 +240,10 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 
                                self.dismissViewControllerAnimated(true, completion: nil)
                                 
-                              
-
-                                
-                                
-                                
                                 
                         }
                         
-                        
-                    
-                        
-                        
+                      
                 }
                 
             }

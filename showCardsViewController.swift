@@ -16,6 +16,9 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
     
    
     @IBOutlet weak var cardsTableView: UITableView!
+    
+    
+    @IBOutlet weak var addAccountButton: UIButton!
    
     
      let accounts = realm.objects(Account)
@@ -49,6 +52,12 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
+        if accounts.count > 0
+        {
+            
+            addAccountButton.enabled = false
+            
+        }
         
     }
     

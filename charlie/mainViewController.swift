@@ -27,7 +27,7 @@ var keyStore = NSUbiquitousKeyValueStore()
 
 
 var transactionItems = realm.objects(Transaction)
-var allTransactionItems = realm.objects(Transaction)
+var allTransactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
 
 
 
@@ -850,7 +850,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     self.timer.invalidate()
                     self.setPredicates(true)
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    allTransactionItems = realm.objects(Transaction)
+                    allTransactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
                     self.toastView.hidden = true
