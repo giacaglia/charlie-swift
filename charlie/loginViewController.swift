@@ -21,11 +21,15 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     
     @IBOutlet weak var emailAddress: UITextField!
     
+    @IBOutlet weak var nextButton: UIButton!
    var pinSetValidated = false
     
     var access_token = ""
     var email_address = ""
 
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     
     override func viewDidAppear(animated: Bool) {
@@ -87,18 +91,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         defaults.setObject(pin, forKey: "pin")
         pinSetValidated = true
-//        //let users = realm.objects(User)
-//
-//
-//            // Create a Person object
-//            let user = User()
-//            user.email = "test@charlie.com"
-//            user.pin = "0000"
-//            user.password = "password"
-//            realm.write {
-//                realm.add(user, update: true)
-//            }
-
         
 
         padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
@@ -117,14 +109,18 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func alertUserRecoverData()
     {
         
+        let access_token = keyStore.stringForKey("access_token")!
+        let email = keyStore.stringForKey("email_address")!
         
         
-        var refreshAlert = UIAlertController(title: "Alert", message: "Would you like us to recover?", preferredStyle: UIAlertControllerStyle.Alert)
+        var refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
             
-            
-            
+            self.activityIndicator.startAnimating()
+            self.emailAddress.enabled = false
+            self.nextButton.enabled = false
+
             
             //get categories
             cService.getCategories()
@@ -147,8 +143,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                         }
                     }
                     
-                    let access_token = keyStore.stringForKey("access_token")!
-                    let email = keyStore.stringForKey("email_address")!
                     
                     //add user
                     // Create a Person object
@@ -171,6 +165,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                             
                             
                     }
+                    
+                    
+                    self.activityIndicator.stopAnimating()
                     
             }
             

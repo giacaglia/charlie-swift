@@ -27,7 +27,7 @@ var keyStore = NSUbiquitousKeyValueStore()
 
 
 var transactionItems = realm.objects(Transaction)
-var allTransactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 
 
@@ -185,7 +185,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         
         
-        
+        println(allTransactionItems.count)
         
         if accounts.count > 0 && allTransactionItems.count > 0
         {
@@ -488,6 +488,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     realm.beginWrite()
                     transactionItems[indexPath!.row].status = 2
                     realm.commitWrite()
+                    
+                    
+                    
+                    
                     tableView.removeCell(cell, duration: 0.3, completion: nil)
                     let transactionSum = self.sumTransactionsCount()
                     let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
@@ -850,7 +854,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     self.timer.invalidate()
                     self.setPredicates(true)
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    allTransactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                    allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
                     self.toastView.hidden = true
@@ -943,14 +947,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
     }
   
-    func sumTransactionsCount( ) -> Double
+    func sumTransactionsCount() -> Double
     {
         var transactionSum:Double = 0
         for transaction in transactionItems {
+            
+            
             if transaction.amount < 0
             { transactionSum += transaction.amount * -1 }
             else
             { transactionSum += transaction.amount  }
+       
         }
         
 
