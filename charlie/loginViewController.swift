@@ -11,7 +11,10 @@ import RealmSwift
 
 var realm = Realm()
 
-  let users = realm.objects(User)
+let users = realm.objects(User)
+
+
+var cHelp = cHelper()
 
 
 class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerDelegate, UITextFieldDelegate {
@@ -20,19 +23,38 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     
    var pinSetValidated = false
     
+    var access_token = ""
+    var email_address = ""
+
+    
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(true)
+        
+                var user_count = users.count
+        if keyStore.stringForKey("access_token") != nil
+        {
+            access_token = keyStore.stringForKey("access_token")!
+            email_address = keyStore.stringForKey("email_address")!
+        }
+        
         
         if pinSetValidated == true //already completed pin setup and can go to mainscreen (this should prob never get called...
         {
             performSegueWithIdentifier("segueFromLoginToMain", sender: self)
         }
-        else if users.count > 0 //if user was setup but for some reason the passcode has not been set yet
+        else if user_count > 0 //if user was setup but for some reason the passcode has not been set yet
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             presentViewController(ABPinSetup, animated: true, completion: nil)
 
+        }
+        else if access_token != "" && users.count == 0
+        {
+            
+           alertUserRecoverData()
+            
         }
         else
         {
@@ -92,6 +114,82 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
     }
     
+    func alertUserRecoverData()
+    {
+        
+        
+        
+        var refreshAlert = UIAlertController(title: "Alert", message: "Would you like us to recover?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            
+            
+            
+            //get categories
+            cService.getCategories()
+                {
+                    
+                    (responses) in
+                    
+                    for response in responses
+                    {
+                        
+                        var cat = Category()
+                        var id:String = response["id"] as! String
+                        var type:String = response["type"] as! String
+                        cat.id = id
+                        cat.type = type
+                        let categories = ",".join(response["hierarchy"] as! Array)
+                        cat.categories = categories
+                        realm.write {
+                            realm.add(cat, update: true)
+                        }
+                    }
+                    
+                    let access_token = keyStore.stringForKey("access_token")!
+                    let email = keyStore.stringForKey("email_address")!
+                    
+                    //add user
+                    // Create a Person object
+                    let user = User()
+                    user.email = email
+                    user.password = "password"
+                    user.access_token = access_token
+                    realm.write {
+                        realm.add(user, update: true)
+                    }
+                    
+                    cHelp.addUpdateResetAccount(1, dayLength: 0)
+                        {
+                            (response) in
+                            
+                            
+                            var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+                            self.presentViewController(ABPinSetup, animated: true, completion: nil)
+                            self.createUser(self.email_address)
+                            
+                            
+                    }
+                    
+            }
+            
+            
+            
+            
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
+            //do nothing and allow user to sign up again
+        }))
+        
+        self.presentViewController(refreshAlert, animated: true, completion: nil)
+        
+        
+        
+        
+    }
+
     
     @IBAction func nextButtonPressed(sender: AnyObject) {
         

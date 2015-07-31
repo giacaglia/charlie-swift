@@ -52,13 +52,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     
-    
-    
-    override func viewDidAppear(animated: Bool) {
-       
-       
-    
+    func setupWelcomeScreens() {
         
+        //setup welcome screens
         
         pageImages =
             [
@@ -80,8 +76,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         let pageCount = pageImages.count
         
-         pageControl.currentPage = 0
-         pageControl.numberOfPages = pageCount
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = pageCount
         
         for _ in 0..<pageCount {
             pageViews.append(nil)
@@ -96,6 +92,95 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         loadVisiblePages()
         
         
+    }
+    
+    
+    
+    
+    func alertUserRecoverData()
+    {
+        
+        
+        
+        var refreshAlert = UIAlertController(title: "Alert", message: "Would you like us to recover?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            
+            
+            
+                        //get categories
+                        cService.getCategories()
+                            {
+            
+                                (responses) in
+            
+                                for response in responses
+                                {
+            
+                                    var cat = Category()
+                                    var id:String = response["id"] as! String
+                                    var type:String = response["type"] as! String
+                                    cat.id = id
+                                    cat.type = type
+                                    let categories = ",".join(response["hierarchy"] as! Array)
+                                    cat.categories = categories
+                                    realm.write {
+                                        realm.add(cat, update: true)
+                                    }
+                                }
+            
+                                let access_token = self.keyStore.stringForKey("access_token")!
+                                let email = self.keyStore.stringForKey("email_address")!
+                                
+                                //add user
+                                // Create a Person object
+                                let user = User()
+                                user.email = email
+                                user.password = "password"
+                                user.access_token = access_token    
+                                realm.write {
+                                    realm.add(user, update: true)
+                                }
+            
+                                self.cHelp.addUpdateResetAccount(1, dayLength: 0)
+                                    {
+                                        (response) in
+                                        
+                                         
+                                        
+                                        self.performSegueWithIdentifier("skipOnboarding", sender: self)
+                                        
+                                }
+                                
+                        }
+
+            
+            
+            
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            self.setupWelcomeScreens()
+        }))
+        
+        self.presentViewController(refreshAlert, animated: true, completion: nil)
+        
+        
+        
+        
+    }
+    
+    
+    
+    override func viewDidAppear(animated: Bool) {
+       
+       
+    
+       
+        setupWelcomeScreens()
+        
         
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil
@@ -104,58 +189,22 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         }
         
         
+        if access_token != "" && users.count == 0
+        {
+            //recover user
+            println("Need to recover user")
+            
+            
+            //alertUserRecoverData()
+            
+            
+        }
+       //     no icloud token and no users so show onboarding
         
         
-//        if access_token != "" && users.count == 0
-//        {
-//            //recover user
-//            println("Need to recover user")
-//            
-//            
-//            //get categories
-//            cService.getCategories()
-//                {
-//                    
-//                    (responses) in
-//                    
-//                    for response in responses
-//                    {
-//                        
-//                        var cat = Category()
-//                        var id:String = response["id"] as! String
-//                        var type:String = response["type"] as! String
-//                        cat.id = id
-//                        cat.type = type
-//                        let categories = ",".join(response["hierarchy"] as! Array)
-//                        cat.categories = categories
-//                        realm.write {
-//                            realm.add(cat, update: true)
-//                        }
-//                    }
-//                    
-//                    let access_token = self.keyStore.stringForKey("access_token")!
-                    
-                    
         
-                    
-                    
-//                    
-//                    self.cHelp.addUpdateResetAccount(1, dayLength: 0)
-//                        {
-//                            (response) in
-//                            
-//                        
-//                            self.performSegueWithIdentifier("skipOnboarding", sender: self)
-//                            
-//                    }
-//                    
-//            }
-//            
-//            
-//        }
-            //no icloud token and no users so show onboarding
-//        else
-            if users.count == 0 || defaults.stringForKey("pin") == nil
+        
+        else if users.count == 0 || defaults.stringForKey("pin") == nil
         {
             println("no user so show onboarding")
             

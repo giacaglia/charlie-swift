@@ -162,11 +162,14 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                 spinner.startAnimating()
                 cService.getAccessToken(public_token)
                     {
+                       
+                        
                         (response) in
                         var access_token = response["access_token"] as! String
-                        
-//                         self.keyStore.setString(access_token, forKey: "access_token")
-//                         self.keyStore.synchronize()
+                        let email_address = self.users[0].email
+                         self.keyStore.setString(access_token, forKey: "access_token")
+                         self.keyStore.setString(email_address, forKey: "email_address")
+                         self.keyStore.synchronize()
                         
                         //let storedString = keyStore.stringForKey("MyString")
                         
