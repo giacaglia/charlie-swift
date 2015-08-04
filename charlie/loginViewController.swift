@@ -38,7 +38,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         var user_count = users.count
         
-        if keyStore.stringForKey("access_token") != nil
+        if keyStore.stringForKey("access_token") != nil && keyStore.stringForKey("email") != nil
         {
             access_token = keyStore.stringForKey("access_token")!
             email_address = keyStore.stringForKey("email_address")!
@@ -185,7 +185,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         self.presentViewController(refreshAlert, animated: true, completion: nil)
         
         }
-        }
+    }
         
     }
 
