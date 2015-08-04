@@ -58,7 +58,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         else if access_token != "" && users.count == 0
         {
             
-           alertUserRecoverData()
+          alertUserRecoverData()
+          charlieAnalytics.track("Account Recovered")
             
         }
         else
@@ -113,6 +114,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func alertUserRecoverData()
     {
         
+        var uuid = ""
+        var properties:[String:AnyObject] = [:]
+        
     if let access_token = keyStore.stringForKey("access_token")
     {
         if let email = keyStore.stringForKey("email_address")
@@ -159,6 +163,31 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                         realm.add(user, update: true)
                     }
                     
+                    
+                    if let uuid = keyStore.stringForKey("uuid")
+                    {
+                       //all set
+                    }
+                    else
+                    {
+                        let uuid = NSUUID().UUIDString
+                    }
+                   
+                    
+                    
+                    keyStore.setString(access_token, forKey: "access_token")
+                    keyStore.setString(self.email_address, forKey: "email_address")
+                    keyStore.setString(uuid, forKey: "uuid")
+                    keyStore.synchronize()
+                    
+                    Mixpanel.sharedInstance().identify(uuid)
+                    properties["$email"] = self.email_address
+                    Mixpanel.sharedInstance().people.set(properties)
+
+                    
+                    
+                    
+                    
                     cHelp.addUpdateResetAccount(1, dayLength: 0)
                         {
                             (response) in
@@ -201,6 +230,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             presentViewController(ABPinSetup, animated: true, completion: nil)
             createUser(emailAddress.text)
+            
+            
         }
         else
         {
@@ -225,7 +256,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func createUser(email:String)
     {
       
-        
+                    var properties:[String:AnyObject] = [:]
         
                     // Create a Person object
                     let user = User()
@@ -234,6 +265,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     realm.write {
                         realm.add(user, update: true)
                     }
+        
+                   
+                  
+        
         
         
 

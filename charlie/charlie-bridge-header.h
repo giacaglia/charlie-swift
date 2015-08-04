@@ -13,3 +13,5 @@
 #import "ABPadLockScreenView.h"
 #import "ABPadButton.h"
 #import "ABPinSelectionView.h"
+
+#import "../frameworks/Mixpanel/Mixpanel.h"

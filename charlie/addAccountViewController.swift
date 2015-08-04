@@ -165,11 +165,21 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                        
                         
                         (response) in
+                        
+                        
+                        var uuid = NSUUID().UUIDString
+                         var properties:[String:AnyObject] = [:]
+                        
                         var access_token = response["access_token"] as! String
                         let email_address = self.users[0].email
                          self.keyStore.setString(access_token, forKey: "access_token")
                          self.keyStore.setString(email_address, forKey: "email_address")
+                         self.keyStore.setString(uuid, forKey: "uuid")
                          self.keyStore.synchronize()
+                        
+                        Mixpanel.sharedInstance().identify(uuid)
+                        properties["$email"] = email_address
+                        Mixpanel.sharedInstance().people.set(properties)
                         
                         //let storedString = keyStore.stringForKey("MyString")
                         

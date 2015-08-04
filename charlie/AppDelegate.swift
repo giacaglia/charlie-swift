@@ -24,6 +24,8 @@ let defaults = NSUserDefaults.standardUserDefaults()
 
 import Fabric
 import Crashlytics
+import UIKit
+
 
 
 
@@ -50,6 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
 
+        Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda")
+        
+        charlieAnalytics.track("App Launched")
+
+     
+        
         return true
     }
 

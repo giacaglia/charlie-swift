@@ -411,6 +411,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         
                         var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                         
+                         charlieAnalytics.track("Worth It Swipe")
+                        
                         
                         if rowCount == 1 && self.inboxListButton.tag == 1
                         {
@@ -498,6 +500,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
                     self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
                     
+                    charlieAnalytics.track("Not Worth It Swipe")
                     
                     var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                     
@@ -671,7 +674,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     {
         
         
-        
+        charlieAnalytics.track("Show Reward")
         
         happyRewardPercentage.textColor = listGreen
         months = [String()]
@@ -703,8 +706,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
         while i > -1
         {
             
-            
-          
             
          let (happyPer, beginDate, endDate) = getHappyPercentage(lastTransaction, weeksFrom: i)
             
@@ -1054,6 +1055,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func approvedListButtonress(sender: UIButton) {
         
+        
+        charlieAnalytics.track("Worth It Button")
+        
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("date", ascending: false)
@@ -1108,6 +1112,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
+        
+        
+        
+        charlieAnalytics.track("Inbox Button")
         
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
        
@@ -1173,6 +1181,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
 
+        
+        charlieAnalytics.track("Not Worth It Button")
         
         hideReward()
         

@@ -10,15 +10,19 @@
 	<string>charlie</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>16ACBFB590A9E1151B4BE762DC3AC04A938B37EF</key>
+		<string>https://github.com/mixpanel/mixpanel-iphone.git</string>
 		<key>2E1324C2BCAFD8AECF622EDE0575DD3D2CB08A21</key>
 		<string>github.com:bladenet/BladeKit-iOS.git</string>
 		<key>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</key>
 		<string>https://github.com/bladenet/charlie-swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>charlie.xcodeproj/project.xcworkspace</string>
+	<string>charlie.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>16ACBFB590A9E1151B4BE762DC3AC04A938B37EF</key>
+		<string>../../../Downloads/mixpanel-iphone</string>
 		<key>2E1324C2BCAFD8AECF622EDE0575DD3D2CB08A21</key>
 		<string>../..frameworks/BladeKit-iOS</string>
 		<key>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</key>
@@ -46,7 +50,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>343A0DCFB970B28D6E7DBD36CD6FF5FD0B2C7110</string>
 			<key>IDESourceControlWCCName</key>
-			<string>charlie</string>
+			<string>charlie-swift</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>16ACBFB590A9E1151B4BE762DC3AC04A938B37EF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mixpanel-iphone</string>
 		</dict>
 	</array>
 </dict>

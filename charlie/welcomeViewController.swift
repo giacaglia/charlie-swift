@@ -54,6 +54,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func setupWelcomeScreens() {
         
+        charlieAnalytics.track("Tutorial Show")
+        
         //setup welcome screens
         
         pageImages =
