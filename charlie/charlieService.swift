@@ -23,6 +23,12 @@ var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/cat
 var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
 var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
 
+var apiKey = "jj859i3mfp230p34"
+
+
+var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+
+
 class charlieService {
 
 init(){
@@ -30,6 +36,45 @@ init(){
     
 }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    func saveAccessToken(token:String, callback: Bool->())
+    {
+        
+        
+        
+        var parameters = [
+            "type": "token",
+            "context": token,
+        ]
+        
+        var sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+        sr.httpMethod = .Post
+        sr.headerDict["X-Charlie-API-Key"] = apiKey
+        
+        sr.httpMethod = .Post
+        sr.parameters = parameters
+        
+        ServerClient.performRequest(sr, completion: { (response) -> Void in
+            
+            println(response)
+            callback(true)
+            
+        })
+        
+        
+        
+        
+        
+        
+    }
+    
     
     func getAccessToken(public_token:String, callback: NSDictionary->())
     

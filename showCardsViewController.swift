@@ -14,6 +14,7 @@ import Realm
 class showCardsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
+    
    
     @IBOutlet weak var cardsTableView: UITableView!
     
@@ -81,13 +82,55 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.cardBalance.text = String(stringInterpolationSegment: accounts[indexPath.row].balance.available)
         cell.cardName.text = accounts[indexPath.row].meta.name
         cell.cardAccountNumber.text = accounts[indexPath.row].meta.number
+        cell.accountID.text = accounts[indexPath.row]._id
+        
+        
         
         
         return cell
     }
 
     
+    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+        return true
+    }
     
+    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            
+            
+            if let tv=tableView
+            {
+                
+                var acctID = accounts[indexPath.row]._id
+                var acct = accounts[indexPath.row]
+                
+                let transactionsToDeletePred = NSPredicate(format: "_account = %@", acctID)
+                let transactions = realm.objects(Transaction).filter(transactionsToDeletePred)
+                
+                for transaction in transactions
+                {
+                    realm.write {
+                        realm.delete(transaction)
+                    }
+                    
+                }
+                
+                realm.write {
+                    realm.delete(acct)
+                }
+                
+                
+                
+                tv.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                
+                
+                
+            }
+        }
+    
+    }
     
     @IBAction func dismissViewButtonPress(sender: UIButton ) {
         

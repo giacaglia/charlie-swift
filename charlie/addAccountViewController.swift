@@ -177,6 +177,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         self.users[0].access_token = access_token
                         realm.commitWrite()
                         
+                        cService.saveAccessToken(access_token)
+                            {
+                                (response) in
+                                
+                                println("Access token saved to server")
+                        }
                         
                         cService.updateAccount(access_token, dayLength: 0)
                             {

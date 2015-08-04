@@ -13,6 +13,7 @@ class cardTableViewCell: UITableViewCell {
     
     
     
+    @IBOutlet weak var accountID: UILabel!
   
     
     @IBOutlet weak var cardView: UIView!

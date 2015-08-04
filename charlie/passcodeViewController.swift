@@ -23,6 +23,23 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
             var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
             var  ABCustomView = ABPadLockScreenView()
             presentViewController(ABPin, animated: true, completion: nil)
+            
+            
+            if users.count > 0
+            {
+                //save access_token on server
+                cService.saveAccessToken(users[0].access_token)
+                    {
+                        (response) in
+                        
+                        println("Access token saved to server")
+                }
+                
+                
+            }
+            
+            
+            
         }
         
 
