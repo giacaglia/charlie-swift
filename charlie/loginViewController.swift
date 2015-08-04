@@ -36,7 +36,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         super.viewDidAppear(true)
         
-                var user_count = users.count
+        var user_count = users.count
+        
         if keyStore.stringForKey("access_token") != nil
         {
             access_token = keyStore.stringForKey("access_token")!
@@ -109,10 +110,11 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func alertUserRecoverData()
     {
         
-        let access_token = keyStore.stringForKey("access_token")!
-        let email = keyStore.stringForKey("email_address")!
+    if let access_token = keyStore.stringForKey("access_token")
+    {
+        if let email = keyStore.stringForKey("email_address")
         
-        
+        {
         var refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
@@ -182,8 +184,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         self.presentViewController(refreshAlert, animated: true, completion: nil)
         
-        
-        
+        }
+        }
         
     }
 
