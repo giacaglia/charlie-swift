@@ -126,6 +126,7 @@
 		45604A0F1B71183200C37B9D /* UIView+MPHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 456049CA1B71183200C37B9D /* UIView+MPHelpers.m */; };
 		45604A111B7118A200C37B9D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45604A101B7118A200C37B9D /* libicucore.dylib */; };
 		45604A141B712EEE00C37B9D /* charlieAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45604A131B712EEE00C37B9D /* charlieAnalytics.swift */; };
+		45604A1B1B7266BE00C37B9D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */; };
 		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
 		45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */; };
 		45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2101B5E7E660005B234 /* revealViewController.swift */; };
@@ -384,6 +385,7 @@
 		456049CA1B71183200C37B9D /* UIView+MPHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MPHelpers.m"; sourceTree = "<group>"; };
 		45604A101B7118A200C37B9D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		45604A131B712EEE00C37B9D /* charlieAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = charlieAnalytics.swift; sourceTree = "<group>"; };
+		45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
 		45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialCardViewController.swift; sourceTree = "<group>"; };
 		45E0F2101B5E7E660005B234 /* revealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revealViewController.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 			isa = PBXGroup;
 			children = (
 				095414B01B46A68300682172 /* cHelper.swift */,
+				45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -848,6 +851,9 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 38CJ735V37;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -1040,6 +1046,7 @@
 				45604A041B71183200C37B9D /* MPUIImageToNSDictionaryValueTransformer.m in Sources */,
 				456049E91B71183200C37B9D /* MPNotification.m in Sources */,
 				091620281B2DA2330004C781 /* SBGestureTableViewCellSideView.swift in Sources */,
+				45604A1B1B7266BE00C37B9D /* KeychainHelper.swift in Sources */,
 				45604A071B71183200C37B9D /* MPWebSocket.m in Sources */,
 				456049E51B71183200C37B9D /* MPDesignerEventBindingResponseMesssage.m in Sources */,
 				456049DB1B71183200C37B9D /* MPApplicationStateSerializer.m in Sources */,

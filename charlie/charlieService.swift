@@ -169,14 +169,14 @@ init(){
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
             println(JSON(response.results()))
             httpStatusCode = response.rawResponse!.statusCode
-            if httpStatusCode == 201 //needs mfa
+            if httpStatusCode == 200 
             {
                println(JSON(response.results()))
             }
                 
             else //can process data
             {
-                //println(JSON(response.results()))
+                println("ERROR")
             }
             
             

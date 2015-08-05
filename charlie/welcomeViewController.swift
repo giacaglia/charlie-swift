@@ -18,13 +18,15 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     var keyStore = NSUbiquitousKeyValueStore()
     
-    let users = realm.objects(User)
     var cHelp = cHelper()
     
     
     var pageImages: [UIImage] = []
     var pageViews: [UIView?] = []
     var pageTitles = [String()]
+    
+   // var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
+    var realm = Realm()
     
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
@@ -53,6 +55,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     func setupWelcomeScreens() {
+        
+       
+        
+        
         
         charlieAnalytics.track("Tutorial Show")
         
@@ -127,8 +133,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                                     cat.type = type
                                     let categories = ",".join(response["hierarchy"] as! Array)
                                     cat.categories = categories
-                                    realm.write {
-                                        realm.add(cat, update: true)
+                                    self.realm.write {
+                                        self.realm.add(cat, update: true)
                                     }
                                 }
             
@@ -141,8 +147,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                                 user.email = email
                                 user.password = "password"
                                 user.access_token = access_token    
-                                realm.write {
-                                    realm.add(user, update: true)
+                                self.realm.write {
+                                    self.realm.add(user, update: true)
                                 }
             
                                 self.cHelp.addUpdateResetAccount(1, dayLength: 0)
@@ -178,47 +184,57 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
        
-       
+        println("Got here")
     
-       
-        setupWelcomeScreens()
         
         
-        var access_token = ""
-        if keyStore.stringForKey("access_token") != nil
-        {
-            access_token = keyStore.stringForKey("access_token")!
-        }
+           
         
         
-        if access_token != "" && users.count == 0
-        {
-            //recover user
-            println("Need to recover user")
+             println(realm.path)
+        
+        
+            
+            setupWelcomeScreens()
             
             
-            //alertUserRecoverData()
+            var access_token = ""
+            if keyStore.stringForKey("access_token") != nil
+            {
+                access_token = keyStore.stringForKey("access_token")!
+            }
             
             
-        }
-       //     no icloud token and no users so show onboarding
-        
-        
-        
-        
-        else if users.count == 0 || defaults.stringForKey("pin") == nil
-        {
-            println("no user so show onboarding")
+            if access_token != "" && users.count == 0
+            {
+                //recover user
+                println("Need to recover user")
+                
+                
+                //alertUserRecoverData()
+                
+                
+            }
+           //     no icloud token and no users so show onboarding
             
-        }
-            //if we have users skip onboarding
-        else
-        {
-            println("have user")
             
-            performSegueWithIdentifier("skipOnboarding", sender: self)
             
-        }
+            
+            else if users.count == 0 ||  keyChainStore.get("pin") == nil
+            {
+                println("no user so show onboarding")
+                
+            }
+                //if we have users skip onboarding
+            else
+            {
+                println("have user")
+                
+                performSegueWithIdentifier("skipOnboarding", sender: self)
+                
+            }
+            
+    
         
     }
     
@@ -438,6 +454,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
    
+    
   
   
     

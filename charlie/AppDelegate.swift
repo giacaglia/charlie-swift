@@ -11,7 +11,8 @@ import CoreData
 import Fabric
 import Crashlytics
 import UIKit
-
+import Security
+import RealmSwift
 
 
 let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
@@ -24,8 +25,6 @@ var cService = charlieService()
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
 let defaults = NSUserDefaults.standardUserDefaults()
-
- 
 
 
 
@@ -55,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda")
         
         charlieAnalytics.track("App Launched")
+        
+       
 
      
         

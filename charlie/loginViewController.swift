@@ -27,7 +27,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     var access_token = ""
     var email_address = ""
 
-    
+    var keyChainStore = KeychainHelper()
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
@@ -94,7 +94,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
         
         
-        defaults.setObject(pin, forKey: "pin")
+        //defaults.setObject(pin, forKey: "pin")
+        
+        keyChainStore.set(pin, key: "pin")
+        
         pinSetValidated = true
         
 
@@ -158,10 +161,12 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     let user = User()
                     user.email = email
                     user.password = "password"
-                    user.access_token = access_token
+                    //user.access_token = access_token
                     realm.write {
                         realm.add(user, update: true)
                     }
+                    
+                     self.keyChainStore.set(access_token, key: "access_token")
                     
                     
                     if let uuid = keyStore.stringForKey("uuid")

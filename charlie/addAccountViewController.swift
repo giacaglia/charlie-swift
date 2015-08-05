@@ -13,12 +13,12 @@ import RealmSwift
 import WebKit
 
 
+
 class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMessageHandler {
 
     let users = realm.objects(User)
-    
     var keyStore = NSUbiquitousKeyValueStore()
-   
+    var keyChainStore = KeychainHelper()
     
     
     var timer = NSTimer()
@@ -183,9 +183,20 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         
                         //let storedString = keyStore.stringForKey("MyString")
                         
-                        realm.beginWrite()
-                        self.users[0].access_token = access_token
-                        realm.commitWrite()
+                        
+                        
+                        self.keyChainStore.set(access_token, key: "access_token")
+
+                        
+//                        realm.beginWrite()
+//                        self.users[0].access_token = access_token
+//                        realm.commitWrite()
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         cService.saveAccessToken(access_token)
                             {

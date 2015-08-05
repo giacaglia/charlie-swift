@@ -22,8 +22,10 @@ var inboxPredicate = NSPredicate()
 var approvedPredicate = NSPredicate()
 var flaggedPredicate = NSPredicate()
 
-var keyStore = NSUbiquitousKeyValueStore()
 
+
+var keyStore = NSUbiquitousKeyValueStore()
+var keyChainStore = KeychainHelper()
 
 
 var transactionItems = realm.objects(Transaction)
@@ -166,7 +168,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         super.viewWillAppear(true)
         
        
-        if defaults.objectForKey("pin") != nil && defaults.stringForKey("firstLoad") != nil && pinApproved == false
+        if keyChainStore.get("pin") != nil && defaults.stringForKey("firstLoad") != nil && pinApproved == false
         {
             if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
                 presentViewController(resultController, animated: true, completion: nil)
@@ -284,7 +286,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             access_token = keyStore.stringForKey("access_token")!
             realm.beginWrite()
-            self.users[0].access_token = access_token
+            //self.users[0].access_token = access_token
+            keyChainStore.set(access_token, key: "access_token")
+
             realm.commitWrite()
             
         }
@@ -356,7 +360,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
              //refresh accounts
             println("REFRESH ACCOUNTS")
-            let access_token = users[0].access_token
+            let access_token =  keyChainStore.get("access_token")
             
             if allTransactionItems.count > 0
             {
@@ -1045,7 +1049,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
      
       if accounts.count > 0
         {
-            let access_token = users[0].access_token
+            let access_token =  keyChainStore.get("access_token")
             spinner.startAnimating()
             cHelp.addUpdateResetAccount(1, dayLength: 7)
                 {
@@ -1245,7 +1249,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         if accounts.count > 0
         {
-            let access_token = users[0].access_token
+            let access_token =  keyChainStore.get("access_token")
             cHelp.addUpdateResetAccount(99, dayLength: 7) {
                 (response) in
                 self.transactionsTable.reloadData()

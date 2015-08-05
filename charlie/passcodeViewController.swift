@@ -28,7 +28,7 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
             if users.count > 0
             {
                 //save access_token on server
-                cService.saveAccessToken(users[0].access_token)
+                cService.saveAccessToken(keyChainStore.get("access_token")!)
                     {
                         (response) in
                         
@@ -55,7 +55,7 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     
     func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
         
-         var savedPin = defaults.stringForKey("pin")
+         var savedPin =  keyChainStore.get("pin")
         
         if pin == savedPin
         {
