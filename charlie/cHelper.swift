@@ -178,5 +178,27 @@ func pathForBuggyWKWebView(filePath: String?) -> String? {
     }
     return dstPath
 }
+    
+    
+    func isiCloudAvalaible() -> Bool
+    {
+        
+        
+        let fileManager = NSFileManager.defaultManager()
+        let cloudURL = fileManager.ubiquityIdentityToken
+        if (cloudURL != nil)
+        {
+               return true
+        }
+        else
+        {
+            return false
+        }
+        
+        
+    }
+
+    
+    
 
 }

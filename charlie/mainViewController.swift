@@ -226,6 +226,16 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         super.viewDidLoad()
         
+        if cHelp.isiCloudAvalaible()
+        {
+            println("icloud is available")
+        }
+        else
+        {
+            println("icloud is not available")
+        }
+        
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
        
         
