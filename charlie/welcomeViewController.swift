@@ -51,18 +51,13 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func didFinishLaunching(notification: NSNotification!) {
         
-//        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-//        blur.frame = view.frame
-//        blur.tag = 86
-//        view.addSubview(blur)
-        
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            
-            presentViewController(resultController, animated: true, completion: { () -> Void in
+
+        if defaults.stringForKey("firstLoad") != nil
+        {
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
                 
-//                self.view.viewWithTag(86)?.removeFromSuperview()
-                
-            })
+                presentViewController(resultController, animated: true, completion: nil)
+            }
         }
         
     }
