@@ -1254,7 +1254,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXt-bo-h5s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688" y="1991"/>
+            <point key="canvasLocation" x="1610" y="2116"/>
         </scene>
         <!--Add Account View Controller-->
         <scene sceneID="eMk-dF-stb">

@@ -25,14 +25,18 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
      let accounts = realm.objects(Account)
     
     
-   
+    
     func willEnterForeground(notification: NSNotification!) {
+        
+        
         
         if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
         {
             
             if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
                 presentViewController(resultController, animated: true, completion: nil)
+                
+                
             }
             
             
@@ -45,13 +49,35 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         
+        imageView.removeFromSuperview()
     }
+    
+    
+    
+    
+    
+    func didEnterBackgroundNotification(notification: NSNotification)
+    {
+        
+        
+        cHelp.splashImageView()
+        self.view.addSubview(imageView)
+        
+        
+        
+        
+        
+    }
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+
         
         if accounts.count > 0
         {

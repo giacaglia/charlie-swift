@@ -54,6 +54,27 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     
+    func didFinishLaunching(notification: NSNotification!) {
+        
+        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
+        {
+            
+            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+                presentViewController(resultController, animated: true, completion: nil)
+                
+                
+                
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
     func setupWelcomeScreens() {
         
        
@@ -190,8 +211,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
            
         
-        
-             println(realm.path)
+      
         
         
             
@@ -230,6 +250,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             {
                 println("have user")
                 
+                
+                
                 performSegueWithIdentifier("skipOnboarding", sender: self)
                 
             }
@@ -246,7 +268,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
  
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
+ 
         
         
         

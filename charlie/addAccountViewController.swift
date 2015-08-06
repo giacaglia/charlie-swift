@@ -33,13 +33,18 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     
     
     
+    
     func willEnterForeground(notification: NSNotification!) {
+        
+        
         
         if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
         {
             
             if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
                 presentViewController(resultController, animated: true, completion: nil)
+                
+                
             }
             
             
@@ -52,7 +57,26 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         }
         
         
+        imageView.removeFromSuperview()
     }
+    
+    
+    
+    
+    
+    func didEnterBackgroundNotification(notification: NSNotification)
+    {
+        
+        cHelp.splashImageView()
+        self.view.addSubview(imageView)
+        
+        
+        
+        
+        
+    }
+    
+
     
     
     override func viewWillAppear(animated: Bool) {
@@ -66,6 +90,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+
         
 
 
@@ -181,21 +208,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         properties["$email"] = email_address
                         Mixpanel.sharedInstance().people.set(properties)
                         
-                        //let storedString = keyStore.stringForKey("MyString")
-                        
-                        
-                        
                         self.keyChainStore.set(access_token, key: "access_token")
 
-                        
-//                        realm.beginWrite()
-//                        self.users[0].access_token = access_token
-//                        realm.commitWrite()
-                        
-                        
-                        
-                        
-                        
                         
                         
                         cService.saveAccessToken(access_token)
@@ -205,72 +219,48 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 println("Access token saved to server")
                         }
                         
-                        cService.updateAccount(access_token, dayLength: 0)
-                            {
-                                (response) in
-                                
-                                println("Got token")
-                                println("ACCESS TOKEN \(access_token)")
-                                
-                                let accounts = response["accounts"] as! [NSDictionary]
-                                
-                       
-                                realm.write {
-                                    // Save one Venue object (and dependents) for each element of the array
-                                    for account in accounts {
-                                        realm.create(Account.self, value: account, update: true)
-                                        println("saved accounts")
-                                    }
+                        
+                        
+                        //download categories if don't exist
+                        let cats = realm.objects(Category)
+                        cService.getCategories()
+                                {
+                                    (responses) in
+                
+                                        for response in responses
+                                        {
+                    
+                                            var cat = Category()
+                                            var id:String = response["id"] as! String
+                                            var type:String = response["type"] as! String
+                                            cat.id = id
+                                            cat.type = type
+                                            let categories = ",".join(response["hierarchy"] as! Array)
+                                            cat.categories = categories
+                                            realm.write {
+                                                realm.add(cat, update: true)
+                                            }
+                                        }
+     
+                                    cService.updateAccount(access_token, dayLength: 0)
+                                    {
+                                        (response) in
+                                        let accounts = response["accounts"] as! [NSDictionary]
+                                        realm.write {
+                                            // Save one Venue object (and dependents) for each element of the array
+                                            for account in accounts {
+                                                realm.create(Account.self, value: account, update: true)
+                                                println("saved accounts")
+                                            }
+                                        }
+                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                                        self.spinner.stopAnimating()
+                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                        
+                                        
                                 }
-                                self.dismissViewControllerAnimated(true, completion: nil)
-         
-//                                
-//                                var transactions = response["transactions"] as! [NSDictionary]
-//                                // Save one Venue object (and dependents) for each element of the array
-//                                for transaction in transactions {
-//                                    println("saved")
-//                                    
-//                                    realm.write {
-//                                        
-//                                        //clean up name
-//                                        var dictName = transaction.valueForKey("name") as? String
-//                                        transaction.setValue(self.cHelp.cleanName(dictName!), forKey: "name")
-//                                        
-//                                        println(dictName)
-//                                        
-//                                        //convert string to date before insert
-//                                        var dictDate = transaction.valueForKey("date") as? String
-//                                        transaction.setValue(self.cHelp.convertDate(dictDate!), forKey: "date")
-//                                        
-//                                        
-//                                        //add category
-//                                        if let category_id = transaction.valueForKey("category_id") as? String
-//                                        {
-//                                            let predicate = NSPredicate(format: "id = %@", category_id)
-//                                            var categoryToAdd = realm.objects(Category).filter(predicate)
-//                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-//                                            newTrans.categories = categoryToAdd[0]
-//                                        }
-//                                        else
-//                                        {
-//                                            var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-//                                            
-//                                        }
-//                                        
-//                                    }
-//                                }
-                                
-                                //run through transactions and see if they can be preliminarly categorized
-                                
-                                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                                
-                                
-                                println(transactionItems.count)
-                                self.spinner.stopAnimating()
-                                
-                               self.dismissViewControllerAnimated(true, completion: nil)
-                                
-                                
+                                    
                         }
                         
                       

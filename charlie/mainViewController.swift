@@ -31,8 +31,6 @@ var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
-
-
 class mainViewController: UIViewController, UITableViewDataSource {
     
   
@@ -138,56 +136,30 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func willEnterForeground(notification: NSNotification!) {
         
-        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
-        {
+        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
-                pinApproved = true
-
-            }
-           
+            presentViewController(resultController, animated: true, completion: { () -> Void in
             
+            self.pinApproved = true
+            imageView.removeFromSuperview()
+        })
         }
-        else
-        {
-            defaults.setObject("no", forKey: "firstLoad")
-            defaults.synchronize()  
-
-        }
-        
-        
+ 
     }
     
-      
     
+    func didEnterBackgroundNotification(notification: NSNotification)
+    {
+        cHelp.splashImageView()
+        self.view.addSubview(imageView)
+      
+    }
     
    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-       
-        if keyChainStore.get("pin") != nil && defaults.stringForKey("firstLoad") != nil && pinApproved == false
-        {
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
-            }
-
-            pinApproved = true
-            defaults.setObject("no", forKey: "firstLoad")
-            defaults.synchronize()   
-            
-            
-        }
-        else
-        {
-            defaults.setObject("no", forKey: "firstLoad")
-            defaults.synchronize()
-        }
-        
-        
-        println(allTransactionItems.count)
         
         if accounts.count > 0 && allTransactionItems.count > 0
         {
@@ -227,89 +199,24 @@ class mainViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        if cHelp.isiCloudAvalaible()
-        {
-            println("icloud is available")
-        }
-        else
-        {
-            println("icloud is not available")
-        }
-        
-        
+  
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
        
-        
-        
-        println(realm.path)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
         
 
-        
-        //download categories if don't exist
-        let cats = realm.objects(Category)
-        if cats.count == 0
-        {
-            
-            cService.getCategories()
-                {
-                    
-                    (responses) in
-                    
-                    for response in responses
-                    {
-                        
-                        var cat = Category()
-                        var id:String = response["id"] as! String
-                        var type:String = response["type"] as! String
-                        cat.id = id
-                        cat.type = type
-                        let categories = ",".join(response["hierarchy"] as! Array)
-                        cat.categories = categories
-                        realm.write {
-                            realm.add(cat, update: true)
-                        }
-                    }
-            }
-        }
-        
-        
-     
-
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil
         {
             access_token = keyStore.stringForKey("access_token")!
-            realm.beginWrite()
-            //self.users[0].access_token = access_token
             keyChainStore.set(access_token, key: "access_token")
-
-            realm.commitWrite()
-            
+     
         }
     
-        println("ACCESS TOKEN = \(access_token)")
-            
-        
-//        //we have accounts so set the predicate based on whether the account is fake or real
-//        if accounts.count > 0
-//        {
-//            setPredicates(true)
-//        }
-//        //we don't have accounts but set the predicated anyway so user can navigate through screens
-//        else
-//        {
-//            setPredicates(false)
-//        }
-//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-//        
-        
-        
         if accounts.count  == 0  //&& access_token == "" //show add user
         {
             setPredicates(false)
@@ -318,36 +225,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
             transactionsTable.hidden = true
              transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         }
-//        else if accounts.count  == 0  && access_token != ""
-//        {
-//            
-//            println("Need to restore")
-//            addAccountButton.hidden = true
-//            accountAddView.hidden = true
-//            setPredicates(false)
-//
-//            
-//            spinner.startAnimating()
-//            
-//            
-//            //All stuff here
-//            
-//            cHelp.addUpdateResetAccount(1, dayLength: 30)
-//                {
-//                    (response) in
-//                    
-//                    self.transactionsTable.reloadData()
-//                    self.spinner.stopAnimating()
-//                    
-//                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-//                    {
-//                        self.showReward()
-//                    }
-//                    
-//                    
-//            }
-//
-//        }
         else
         {
             
@@ -750,52 +627,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         
         setChart(months, values: unitsSold)
-        
-       
         rewardView.hidden = false
         transactionsTable.hidden = true
         accountAddView.hidden = true    
         moneyCountLabel.hidden = true
-        
-        
-//        var  transactionsHappy = realm.objects(Transaction).filter("status = 1")
-//        var  transactionsSad = realm.objects(Transaction).filter("status = 2")
-//        
-//        let totaltransaction = transactionsHappy.count + transactionsSad.count
-//        
-//        let happyPercentage = round((Double(transactionsHappy.count) / Double(totaltransaction)) * 100)
-//        let sadPercentage = round((Double(transactionsSad.count) / Double(totaltransaction)) * 100)
-        
-//        println("HAPPY = \(happyPercentage)")
-//        println("SAD = \(sadPercentage)")
-        
-       
-            happyImage.image = UIImage(named: "result_happy")
-           // happyRewardPercentage.text = "\(Int(happyPercentage))%"
-           
-
-        
-        
+        happyImage.image = UIImage(named: "result_happy")
         
         var incomeSum:Double = 0.0
         var spendableSum:Double = 0.0
         var billsSum:Double = 0.0
-        
-        
-        //        for transaction in transactionItemsReward
-        //        {
-        //            if transaction.ctype == 1
-        //            {incomeSum +=  transaction.amount}
-        //            if transaction.ctype == 2
-        //            {spendableSum +=  transaction.amount}
-        //            if transaction.ctype == 3
-        //            {billsSum +=  transaction.amount}
-        //        }
-        //
-        //        println("INCOME \(incomeSum)")
-        //        println("SPENDABLE \(spendableSum)")
-        //        println("BILLS \(billsSum)")
-    
         
     }
     
@@ -861,7 +701,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             {
                 
                 (response) in
-                println("added records")
+                
                 println(response)
                
                 if response > 0

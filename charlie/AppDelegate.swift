@@ -26,6 +26,7 @@ var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
+var imageView = UIImageView()
 
 
 @UIApplicationMain
@@ -38,9 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
-    
-    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -55,9 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         charlieAnalytics.track("App Launched")
         
-       
-
-     
+        
+        println("DidFinishLaunch")
         
         return true
     }
@@ -74,10 +71,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        println("will enter forground")
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        println("did become active")
+        
+        
+        
+        
+        
+        
+
     }
 
     func applicationWillTerminate(application: UIApplication) {

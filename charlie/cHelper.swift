@@ -200,6 +200,19 @@ func pathForBuggyWKWebView(filePath: String?) -> String? {
 
   
     
+    func splashImageView() {
+    
+
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        imageView.frame =  screenSize
+        imageView.image =  UIImage(named: "iTunesArtwork")!
+       
+        
+    
+    }
+    
+    
+    
     
     
     func getKey() -> NSData {

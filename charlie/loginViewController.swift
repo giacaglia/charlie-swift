@@ -100,6 +100,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         
         pinSetValidated = true
         
+        defaults.setObject("no", forKey: "firstLoad")
+        defaults.synchronize()
+
+        
 
         padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
         performSegueWithIdentifier("segueFromLoginToMain", sender: self)
