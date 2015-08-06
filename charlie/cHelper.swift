@@ -200,12 +200,11 @@ func pathForBuggyWKWebView(filePath: String?) -> String? {
 
   
     
-    func splashImageView() {
+    func splashImageView() -> UIView {
     
-
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        imageView.frame =  screenSize
-        imageView.image =  UIImage(named: "iTunesArtwork")!
+        
+        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+        return blur
        
         
     

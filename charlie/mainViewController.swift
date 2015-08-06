@@ -31,9 +31,11 @@ var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
+
+
 class mainViewController: UIViewController, UITableViewDataSource {
     
-  
+    
        
     @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
     
@@ -135,31 +137,45 @@ class mainViewController: UIViewController, UITableViewDataSource {
    
     
     func willEnterForeground(notification: NSNotification!) {
+      
         
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             
             presentViewController(resultController, animated: true, completion: { () -> Void in
             
             self.pinApproved = true
-            imageView.removeFromSuperview()
+                
+            self.view.viewWithTag(86)?.removeFromSuperview()
+            
+           
         })
+
         }
- 
+        
     }
     
     
     func didEnterBackgroundNotification(notification: NSNotification)
     {
-        cHelp.splashImageView()
-        self.view.addSubview(imageView)
-      
+        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+        blur.frame = view.frame
+        blur.tag = 86
+        view.addSubview(blur)
     }
     
    
     
+    
+    override func viewDidAppear(animated: Bool) {
+        self.view.viewWithTag(86)?.removeFromSuperview()
+
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        
+
         
         if accounts.count > 0 && allTransactionItems.count > 0
         {
@@ -827,6 +843,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+
         if (segue.identifier == "segueFromMainToDetailView") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self

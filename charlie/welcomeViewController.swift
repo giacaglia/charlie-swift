@@ -35,38 +35,35 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
  
     
     
-   
-    func willEnterForeground(notification: NSNotification!) {
-      
-         if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
-         {
-        
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
-                
-                
-                
-            }
-        }
-        
-
+  
+    
+    
+    func didEnterBackgroundNotification(notification: NSNotification)
+    {
+        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+        blur.frame = view.frame
+        blur.tag = 86
+        view.addSubview(blur)
     }
+
     
     
     
     func didFinishLaunching(notification: NSNotification!) {
         
-        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
-        {
-            
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
-                
-                
-                
-            }
-        }
+//        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+//        blur.frame = view.frame
+//        blur.tag = 86
+//        view.addSubview(blur)
         
+        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+            
+            presentViewController(resultController, animated: true, completion: { () -> Void in
+                
+//                self.view.viewWithTag(86)?.removeFromSuperview()
+                
+            })
+        }
         
     }
     
@@ -205,18 +202,12 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
        
-        println("Got here")
-    
         
-        
-           
-        
-      
-        
-        
+        if users.count == 0
+        {
             
             setupWelcomeScreens()
-            
+        }
             
             var access_token = ""
             if keyStore.stringForKey("access_token") != nil
@@ -265,9 +256,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+// 
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
- 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
  
         
