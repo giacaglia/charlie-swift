@@ -37,43 +37,25 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     func willEnterForeground(notification: NSNotification!) {
         
         
-        
-        if defaults.stringForKey("firstLoad") != nil //else this is the first time the user has opened the app so don't ask for passcode
-        {
+        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
+            presentViewController(resultController, animated: true, completion: { () -> Void in
                 
+                self.cHelp.removeSpashImageView(self.view)
+                self.cHelp.removeSpashImageView(self.presentingViewController!.view)
                 
-            }
-            
-            
-        }
-        else
-        {
-            defaults.setObject("no", forKey: "firstLoad")
-            defaults.synchronize()
-            
+            })
         }
         
         
-        imageView.removeFromSuperview()
+        
+        
     }
-    
-    
-    
     
     
     func didEnterBackgroundNotification(notification: NSNotification)
     {
-        
-        cHelp.splashImageView()
-        self.view.addSubview(imageView)
-        
-        
-        
-        
-        
+        cHelp.splashImageView(self.view)
     }
     
 

@@ -198,14 +198,33 @@ func pathForBuggyWKWebView(filePath: String?) -> String? {
         
     }
 
-  
+    func removeSpashImageView(view:UIView)
+    {
+        
+        for subview in view.subviews
+        {
+            if subview.tag == 86
+            {
+                subview.removeFromSuperview()
+            }
+        }
+        
+        
+    }
     
-    func splashImageView() -> UIView {
+    func splashImageView(view:UIView) {
     
         
-        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-        return blur
-       
+        var imageView = UIImageView(frame: view.frame)
+        var image = UIImage(named: "iTunesArtwork")
+        imageView.backgroundColor = UIColor.whiteColor()
+        imageView.image = image
+        imageView.autoresizingMask = UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleWidth
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.tag = 86
+        view.addSubview(imageView)
+        
+        
         
     
     }

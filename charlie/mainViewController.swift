@@ -141,14 +141,14 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             
-            presentViewController(resultController, animated: true, completion: { () -> Void in
+            presentViewController(resultController, animated: false, completion: { () -> Void in
             
             self.pinApproved = true
-                
-            self.view.viewWithTag(86)?.removeFromSuperview()
-            
+            self.cHelp.removeSpashImageView(self.view)     
+           
            
         })
+            
 
         }
         
@@ -157,10 +157,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func didEnterBackgroundNotification(notification: NSNotification)
     {
-        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-        blur.frame = view.frame
-        blur.tag = 86
-        view.addSubview(blur)
+        cHelp.splashImageView(self.view)
+        
     }
     
    

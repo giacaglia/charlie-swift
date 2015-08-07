@@ -13,15 +13,20 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
 
     var pinValidated = false
 
-   
+    
     
     
     override func viewWillAppear(animated: Bool) {
+       
+        
         
         if pinValidated == false
         {
             var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
-            var  ABCustomView = ABPadLockScreenView()
+            ABPin.view.backgroundColor = listBlue
+            
+            self.view.backgroundColor = listBlue
+
             presentViewController(ABPin, animated: true, completion: nil)
             
             
@@ -50,6 +55,8 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     
     override func viewDidLoad() {
         
+       
+        
     }
     
     
@@ -66,26 +73,22 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
             return false
         }
     }
+   
+    
     
     func unlockWasSuccessfulForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
         pinValidated = true
-        println("succsesful")
         
-//        defaults.setObject("no", forKey: "firstLoad")
-//        defaults.synchronize()
-
-        
-        padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
- 
+        padLockScreenViewController.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func unlockWasUnsuccessful(falsePin: String!, afterAttemptNumber attemptNumber: Int, padLockScreenViewController: ABPadLockScreenViewController!) {
-        println("unsuccsesful")
+        
     }
     
     func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
-        println("cancelled")
+    
     }
     
     
@@ -94,9 +97,6 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     
     func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController)
     {
-        println("expired")
-        
-        
         
     }
     

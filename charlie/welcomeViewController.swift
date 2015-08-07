@@ -20,6 +20,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     var cHelp = cHelper()
     
+    @IBOutlet weak var splashImageView: UIImageView!
     
     var pageImages: [UIImage] = []
     var pageViews: [UIView?] = []
@@ -61,6 +62,83 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         }
         
     }
+    
+    
+    
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        //
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
+        
+        
+        
+        
+        
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        if users.count == 0
+        {
+            splashImageView.hidden = true
+            setupWelcomeScreens()
+        }
+        
+        
+        var access_token = ""
+        if keyStore.stringForKey("access_token") != nil
+        {
+            access_token = keyStore.stringForKey("access_token")!
+        }
+        
+        
+        if access_token != "" && users.count == 0
+        {
+            //recover user
+            println("Need to recover user")
+            
+            
+            //alertUserRecoverData()
+            
+            
+        }
+            //     no icloud token and no users so show onboarding
+            
+            
+            
+            
+        else if users.count == 0 ||  keyChainStore.get("pin") == nil
+        {
+            println("no user so show onboarding")
+            
+        }
+            //if we have users skip onboarding
+        else
+        {
+            println("have user")
+            
+            
+            
+            performSegueWithIdentifier("skipOnboarding", sender: self)
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+   
+    
+
     
     
     
@@ -193,75 +271,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    
-    
-    override func viewDidAppear(animated: Bool) {
-       
-        
-        if users.count == 0
-        {
-            
-            setupWelcomeScreens()
-        }
-            
-            var access_token = ""
-            if keyStore.stringForKey("access_token") != nil
-            {
-                access_token = keyStore.stringForKey("access_token")!
-            }
-            
-            
-            if access_token != "" && users.count == 0
-            {
-                //recover user
-                println("Need to recover user")
-                
-                
-                //alertUserRecoverData()
-                
-                
-            }
-           //     no icloud token and no users so show onboarding
-            
-            
-            
-            
-            else if users.count == 0 ||  keyChainStore.get("pin") == nil
-            {
-                println("no user so show onboarding")
-                
-            }
-                //if we have users skip onboarding
-            else
-            {
-                println("have user")
-                
-                
-                
-                performSegueWithIdentifier("skipOnboarding", sender: self)
-                
-            }
-            
-    
-        
-    }
-    
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-// 
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
- 
-        
-        
-        
-        
-    }
     
     
     

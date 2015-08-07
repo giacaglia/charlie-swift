@@ -52,7 +52,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         else if user_count > 0 //if user was setup but for some reason the passcode has not been set yet
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
-            presentViewController(ABPinSetup, animated: true, completion: nil)
+            ABPinSetup.view.backgroundColor = listBlue
+            presentViewController(ABPinSetup, animated: false, completion: nil)
 
         }
         else if access_token != "" && users.count == 0
@@ -203,6 +204,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                             
                             
                             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+                            ABPinSetup.view.backgroundColor = listBlue
                             self.presentViewController(ABPinSetup, animated: true, completion: nil)
                             self.createUser(self.email_address)
                             
@@ -237,6 +239,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         if isValidEmail(emailAddress.text)
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+            ABPinSetup.view.backgroundColor = listBlue
             presentViewController(ABPinSetup, animated: true, completion: nil)
             createUser(emailAddress.text)
             

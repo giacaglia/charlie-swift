@@ -34,23 +34,21 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
             
             presentViewController(resultController, animated: true, completion: { () -> Void in
                 
-                self.view.viewWithTag(86)?.removeFromSuperview()
-                
+                cHelp.removeSpashImageView(self.view)
                 
             })
         }
+        
+        
+        
         
     }
     
     
     func didEnterBackgroundNotification(notification: NSNotification)
     {
-        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-        blur.frame = view.frame
-        blur.tag = 86
-        view.addSubview(blur)
+        cHelp.splashImageView(self.view)
     }
-    
     
 
     
