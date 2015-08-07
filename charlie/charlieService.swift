@@ -7,16 +7,9 @@
 //
 
 import BladeKit
-import CoreData
+import CloudKit
 
-
-
-
-var client_id = "556e4fd33b5cadf40371c32c"
-var client_secret = "56c550d30f65794124f7a6b5e180bd"
 var httpStatusCode:Int = 0
-
-
 var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
 var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
 var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
@@ -24,8 +17,6 @@ var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/c
 var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
 
 var apiKey = "jj859i3mfp230p34"
-
-
 var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
 
 
@@ -33,14 +24,11 @@ class charlieService {
 
 init(){
     
-    
+  
+  
+   
 }
 
-    
-    
-    
-    
-    
     
     
     
@@ -80,43 +68,61 @@ init(){
     
     {
         
-        let parameters = [
-            "client_id": client_id,
-            "secret": client_secret,
-            "public_token": public_token
-        ]
+       
+        var client_id = keyChainStore.get("client_id")!
+        var client_secret = keyChainStore.get("client_secret")!
+
         
         
-        srGetToken.httpMethod = .Post
-        srGetToken.parameters = parameters
-        
-        ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
-            httpStatusCode = response.rawResponse!.statusCode
-            if httpStatusCode == 201 //needs mfa
-            {
-                println(JSON(response.results()))
-            }
-                
-            else //can process data
-            {
-                println(JSON(response.results()))
-            }
-            
-            
-            
-            callback(response.results() as! NSDictionary)
-            
-            
-        })
-        
-        
-        
-        
-        
+                    let parameters = [
+                        "client_id": client_id,
+                        "secret": client_secret,
+                        "public_token": public_token
+                    ]
+                    
+                    
+                    srGetToken.httpMethod = .Post
+                    srGetToken.parameters = parameters
+                    
+                    ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
+                       
+                        if let errorMsg:String = response.error?.description {
+                            println(errorMsg)
+                            var emptyDic = Dictionary<String, String>()
+                            callback(emptyDic)
+                        }
+                        else
+                        {
+
+                        
+                        httpStatusCode = response.rawResponse!.statusCode
+                        if httpStatusCode == 201 //needs mfa
+                        {
+                            println(JSON(response.results()))
+                        }
+                            
+                        else //can process data
+                        {
+                            println(JSON(response.results()))
+                        }
+                        
+                        
+                        
+                        callback(response.results() as! NSDictionary)
+                        
+                        }
+                    })
     }
+   
+    
     
     func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->())
     {
+      
+        var client_id = keyChainStore.get("client_id")!
+        var client_secret = keyChainStore.get("client_secret")!
+
+        
         
         if dayLength > 0
         {
@@ -168,6 +174,15 @@ init(){
         
         ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
             println(JSON(response.results()))
+            
+            if let errorMsg:String = response.error?.description {
+                println(errorMsg)
+                var emptyDic = Dictionary<String, String>()
+                callback(emptyDic)
+            }
+            else
+            {
+            
             httpStatusCode = response.rawResponse!.statusCode
             if httpStatusCode == 200 
             {
@@ -181,8 +196,8 @@ init(){
             
             
             
-            callback(response.results() as! NSDictionary)
-            
+                callback(response.results() as! NSDictionary)
+            }
             
         })
         

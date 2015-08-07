@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         println("DidFinishLaunch")
         
+       
+
+        
         return true
     }
 

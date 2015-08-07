@@ -164,16 +164,14 @@ class mainViewController: UIViewController, UITableViewDataSource {
    
     
     
-    override func viewDidAppear(animated: Bool) {
-        self.view.viewWithTag(86)?.removeFromSuperview()
-
-    }
+//    override func viewDidAppear(animated: Bool) {
+//        self.view.viewWithTag(86)?.removeFromSuperview()
+//
+//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        
-
         
         if accounts.count > 0 && allTransactionItems.count > 0
         {
@@ -217,6 +215,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
+        
+      
+        
         
         rewardView.hidden = true
         transactionsTable.hidden = false

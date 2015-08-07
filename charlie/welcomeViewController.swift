@@ -11,73 +11,45 @@ import RealmSwift
 
 
 
-
-
-
 class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
-    var keyStore = NSUbiquitousKeyValueStore()
-    
     var cHelp = cHelper()
-    
-    @IBOutlet weak var splashImageView: UIImageView!
-    
+    var keyStore = NSUbiquitousKeyValueStore()
     var pageImages: [UIImage] = []
     var pageViews: [UIView?] = []
     var pageTitles = [String()]
+    var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
-   // var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
+    // var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
     var realm = Realm()
     
-    var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
- 
+    @IBOutlet weak var splashImageView: UIImageView!
     
-    
-  
-    
-    
-    func didEnterBackgroundNotification(notification: NSNotification)
-    {
-        var blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-        blur.frame = view.frame
-        blur.tag = 86
-        view.addSubview(blur)
-    }
-
-    
-    
-    
+   
     func didFinishLaunching(notification: NSNotification!) {
         
 
         if defaults.stringForKey("firstLoad") != nil
         {
             if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                
                 presentViewController(resultController, animated: true, completion: nil)
             }
         }
         
     }
     
-    
+    func didEnterBackgroundNotification(notification: NSNotification) {
+        cHelp.splashImageView(self.view)
+        
+    }
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //
-        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        //
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
-        
-        
-        
-        
-        
     }
     
     
@@ -86,8 +58,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         if users.count == 0
         {
-            splashImageView.hidden = true
-            setupWelcomeScreens()
+            self.splashImageView.hidden = true
+            self.setupWelcomeScreens()
+            
         }
         
         
@@ -135,26 +108,27 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     
-    
-   
-    
-
-    
-    
-    
-    
-    
-    
     func setupWelcomeScreens() {
         
        
+        
+        cHelp.getSettings()
+            {
+                (response) in
+                
+                println("FINSHED GETTING TOKENS \(response)")
+                
+                
+                
+                
+        }
+        
         
         
         
         charlieAnalytics.track("Tutorial Show")
         
         //setup welcome screens
-        
         pageImages =
             [
                 UIImage(named: "iTunesArtwork")!,
@@ -192,86 +166,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         
     }
-    
-    
-    
-    
-    func alertUserRecoverData()
-    {
-        
-        
-        
-        var refreshAlert = UIAlertController(title: "Alert", message: "Would you like us to recover?", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
-            
-            
-            
-            
-                        //get categories
-                        cService.getCategories()
-                            {
-            
-                                (responses) in
-            
-                                for response in responses
-                                {
-            
-                                    var cat = Category()
-                                    var id:String = response["id"] as! String
-                                    var type:String = response["type"] as! String
-                                    cat.id = id
-                                    cat.type = type
-                                    let categories = ",".join(response["hierarchy"] as! Array)
-                                    cat.categories = categories
-                                    self.realm.write {
-                                        self.realm.add(cat, update: true)
-                                    }
-                                }
-            
-                                let access_token = self.keyStore.stringForKey("access_token")!
-                                let email = self.keyStore.stringForKey("email_address")!
-                                
-                                //add user
-                                // Create a Person object
-                                let user = User()
-                                user.email = email
-                                user.password = "password"
-                                user.access_token = access_token    
-                                self.realm.write {
-                                    self.realm.add(user, update: true)
-                                }
-            
-                                self.cHelp.addUpdateResetAccount(1, dayLength: 0)
-                                    {
-                                        (response) in
-                                        
-                                         
-                                        
-                                        self.performSegueWithIdentifier("skipOnboarding", sender: self)
-                                        
-                                }
-                                
-                        }
-
-            
-            
-            
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
-            
-            self.setupWelcomeScreens()
-        }))
-        
-        self.presentViewController(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-    }
-    
-    
     
     
     

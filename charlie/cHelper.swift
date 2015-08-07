@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
 import RealmSwift
+import CloudKit
 
 class cHelper {
     
@@ -39,90 +39,117 @@ class cHelper {
                     (response) in
                 
                
-   
+                    
                 
-                    let accounts = response["accounts"] as! [NSDictionary]
-                    realm.write {
-                        // Save one Venue object (and dependents) for each element of the array
-                        for account in accounts {
-                            realm.create(Account.self, value: account, update: true)
-                            //println("saved accounts")
-                        }
-                    }
-                    
-                    
-                    var transactions = response["transactions"] as! [NSDictionary]
-                    // Save one Venue object (and dependents) for each element of the array
-                    for transaction in transactions {
-                       // println("saved")
-                        
+                  if let accounts = response["accounts"] as? [NSDictionary]
+                  {
                         realm.write {
-                            
-                            //clean up name
-                            var dictName = transaction.valueForKey("name") as? String
-                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
-                            
-                            //println(dictName)
-                            
-                            //convert string to date before insert
-                            var dictDate = transaction.valueForKey("date") as? String
-                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
-                            
-                            
-                            //check for deposits and remove
-                            var dictAmount = transaction.valueForKey("amount") as? Double
-                            
-                            
-                            
-                            //add category
-                            if let category_id = transaction.valueForKey("category_id") as? String
-                            {
-                                let predicate = NSPredicate(format: "id = %@", category_id)
-                                var categoryToAdd = realm.objects(Category).filter(predicate)
-                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                newTrans.categories = categoryToAdd[0]
-                                if (category_id == "21008000" || category_id == "21007001" || dictAmount < 0)
+                            // Save one Venue object (and dependents) for each element of the array
+                            for account in accounts {
+                                realm.create(Account.self, value: account, update: true)
+                                //println("saved accounts")
+                            }
+                        }
+                        
+                        
+                        var transactions = response["transactions"] as! [NSDictionary]
+                        // Save one Venue object (and dependents) for each element of the array
+                        for transaction in transactions {
+                           // println("saved")
+                            realm.write {
+                                //clean up name
+                                var dictName = transaction.valueForKey("name") as? String
+                                transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                                //convert string to date before insert
+                                var dictDate = transaction.valueForKey("date") as? String
+                                transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                                //check for deposits and remove
+                                var dictAmount = transaction.valueForKey("amount") as? Double
+                                //add category
+                                if let category_id = transaction.valueForKey("category_id") as? String
                                 {
-                                    newTrans.status = 86 //sets status to ignore from totals
+                                    let predicate = NSPredicate(format: "id = %@", category_id)
+                                    var categoryToAdd = realm.objects(Category).filter(predicate)
+                                    var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                    newTrans.categories = categoryToAdd[0]
+                                    if (category_id == "21008000" || category_id == "21007001" || dictAmount < 0)
+                                    {
+                                        newTrans.status = 86 //sets status to ignore from totals
+                                    }
+                                    else
+                                    {
+                                        if type == 99 //if type passed to this function is 99 then user wants to reset the data
+                                        {
+                                            newTrans.status = 0
+                                        }
+                                    }
                                 }
                                 else
                                 {
-                                    if type == 99 //if type passed to this function is 99 then user wants to reset the data
+                                    var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                    if type == 99
                                     {
                                         newTrans.status = 0
                                     }
                                     
                                 }
                                 
-                                
                             }
-                            else
-                            {
-                                var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                if type == 99
-                                {
-                                    newTrans.status = 0
-                                }
-                                
-                            }
-                            
                         }
+                        let transactions_count = transactions.count
+                        callback(transactions_count)
                     }
-                    
-                    let transactions_count = transactions.count
-                    //transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                    else
+                    {
+                       callback(0)
+                    }
+        
+        
+            }
+        }
+    }
+
+
+    
+    
+    func getSettings(callback: Bool->())
+    {
+        
+        
+        let container = CKContainer.defaultContainer()
+        let publicData = container.publicCloudDatabase
+        
+        let query = CKQuery(recordType: "Settings", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
+        publicData.performQuery(query, inZoneWithID: nil) { results, error in
+            if error == nil { // There is no error
                 
+                if let client_id = results[0]["client_id"] as? String,
+                    client_secret = results[0]["client_secret"] as? String
+                {
+                    keyChainStore.set(client_id, key: "client_id")
+                    keyChainStore.set(client_secret, key: "client_secret")
                     
-                    callback(transactions_count)
-               
+                    println("CLIENT_ID \(client_id)")
+                    println("CLIENT_ID \(client_secret)")
+                    callback(true)
+                   
+                    
+                }
+                
+                
+            }
+            else {
+                println(error)
+                callback(false)
             }
             
         }
         
-        
-        
     }
-
+    
+    
+    
+    
 func formatCurrency(currency: Double) -> String
 {
     let formatter = NSNumberFormatter()
