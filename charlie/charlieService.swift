@@ -69,8 +69,9 @@ init(){
     {
         
        
-        var client_id = keyChainStore.get("client_id")!
-        var client_secret = keyChainStore.get("client_secret")!
+        if let client_id = keyChainStore.get("client_id"),
+           let client_secret = keyChainStore.get("client_secret")
+        {
 
         
         
@@ -112,6 +113,7 @@ init(){
                         
                         }
                     })
+        }
     }
    
     
@@ -119,91 +121,91 @@ init(){
     func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->())
     {
       
-        var client_id = keyChainStore.get("client_id")!
-        var client_secret = keyChainStore.get("client_secret")!
-
-        
-        
-        if dayLength > 0
+        if let client_id = keyChainStore.get("client_id"),
+            let client_secret = keyChainStore.get("client_secret")
         {
         
-            var options = [
-                "pending": false,
-                "gte": "\(dayLength) days ago"
-            ]
-       
-            var parameters = [
-                "client_id": client_id,
-                "secret": client_secret,
-                "access_token": access_token,
-                "options": options
-            ]
         
-           // println(parameters)
+            if dayLength > 0
+            {
+            
+                var options = [
+                    "pending": false,
+                    "gte": "\(dayLength) days ago"
+                ]
+           
+                var parameters = [
+                    "client_id": client_id,
+                    "secret": client_secret,
+                    "access_token": access_token,
+                    "options": options
+                ]
+            
+               // println(parameters)
 
-            srConnectGet.parameters = parameters
-        
-        }
-        else
-        {
+                srConnectGet.parameters = parameters
             
-            var options = [
-                "pending": false
-            ]
-            
-            var parameters = [
-                "client_id": client_id,
-                "secret": client_secret,
-                "access_token": access_token,
-                "options": options
-            ]
-           // println(parameters)
-
-            
-            srConnectGet.parameters = parameters as! [String : AnyObject]
-        }
-      
-        
-        
-        srConnectGet.httpMethod = .Post
-       
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            //All stuff here
-
-        
-        ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
-            println(JSON(response.results()))
-            
-            if let errorMsg:String = response.error?.description {
-                println(errorMsg)
-                var emptyDic = Dictionary<String, String>()
-                callback(emptyDic)
             }
             else
             {
-            
-            httpStatusCode = response.rawResponse!.statusCode
-            if httpStatusCode == 200 
-            {
-               println(JSON(response.results()))
-            }
                 
-            else //can process data
-            {
-                println("ERROR")
+                var options = [
+                    "pending": false
+                ]
+                
+                var parameters = [
+                    "client_id": client_id,
+                    "secret": client_secret,
+                    "access_token": access_token,
+                    "options": options
+                ]
+               // println(parameters)
+
+                
+                srConnectGet.parameters = parameters as! [String : AnyObject]
             }
+          
             
             
+            srConnectGet.httpMethod = .Post
+           
             
-                callback(response.results() as! NSDictionary)
-            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                //All stuff here
+
+            
+            ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
+                println(JSON(response.results()))
+                
+                if let errorMsg:String = response.error?.description {
+                    println(errorMsg)
+                    var emptyDic = Dictionary<String, String>()
+                    callback(emptyDic)
+                }
+                else
+                {
+                
+                httpStatusCode = response.rawResponse!.statusCode
+                if httpStatusCode == 200 
+                {
+                   println(JSON(response.results()))
+                }
+                    
+                else //can process data
+                {
+                    println("ERROR")
+                }
+                
+                
+                
+                    callback(response.results() as! NSDictionary)
+                }
+                
+            })
             
         })
         
-    })
-        
-        
+        }
         
         
         
