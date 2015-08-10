@@ -50,6 +50,20 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
+        
+        
+        
+        if Reachability.isConnectedToNetwork() {
+            // Go ahead and fetch your data from the internet
+            // ...
+        } else {
+            println("Internet connection not available")
+            
+            var alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
+        
     }
     
     

@@ -14,7 +14,7 @@ import Charts
 
 
 //number of days we show transaction data for
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -35, toDate: NSDate(), options: nil)!
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -60, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -317,7 +317,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         let transactionSum = self.sumTransactionsCount()
                         let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                         let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                        self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                         self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
                         
                         var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                         
@@ -357,7 +357,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         let transactionSum = self.sumTransactionsCount()
                             let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                             let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                            self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                            self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
                         
                         var rowCount = Int(tableView.numberOfRowsInSection(0).value)
                         
@@ -408,7 +408,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     let transactionSum = self.sumTransactionsCount()
                     let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                     let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                    self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                     self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
                     
                     charlieAnalytics.track("Not Worth It Swipe")
                     
@@ -444,7 +444,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 let transactionSum = self.sumTransactionsCount()
                 let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
                 let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-                self.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
                 
                 
                 var rowCount = Int(tableView.numberOfRowsInSection(0).value)
@@ -646,7 +646,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 let happyPercentage = Int(happyPer * 100)
                 
                 happyRewardPercentage.text = "\(happyPercentage)%"
-                happyDateRange.text = "Week of \(beginDateFormatted)"
+                happyDateRange.text = "Week starting on \(beginDateFormatted)"
             }
            
            
@@ -918,34 +918,46 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
-    if allTransactionItems.count > 0
-    {
-        let  lastTransaction = allTransactionItems[0].date as NSDate
-        var calendar: NSCalendar = NSCalendar.currentCalendar()
-        let flags = NSCalendarUnit.DayCalendarUnit
-        let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
-        
-        let dateToSychTo = components.day
-        
-        spinner.startAnimating()
-        println("DAYS \(dateToSychTo)")
-        cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
+   
+        if Reachability.isConnectedToNetwork() {
+            // Go ahead and fetch your data from the internet
+            // ...
+            
+            if allTransactionItems.count > 0
             {
-                (response) in
+                let  lastTransaction = allTransactionItems[0].date as NSDate
+                var calendar: NSCalendar = NSCalendar.currentCalendar()
+                let flags = NSCalendarUnit.DayCalendarUnit
+                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
                 
-                self.transactionsTable.reloadData()
-                self.spinner.stopAnimating()
-                if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-                {
-                    self.showReward()
-                }
+                let dateToSychTo = components.day
+                
+                spinner.startAnimating()
+                println("DAYS \(dateToSychTo)")
+                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
+                    {
+                        (response) in
+                        
+                        self.transactionsTable.reloadData()
+                        self.spinner.stopAnimating()
+                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+                        {
+                            self.showReward()
+                        }
 
-      
-        
+              
+                
+                }
+                
+            }
+            
+        } else {
+            println("Internet connection not available")
+            
+            var alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
         }
-        
-    }
-        
+
     }
     
     

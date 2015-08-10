@@ -25,6 +25,14 @@ class cHelper {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->())
     {
         
