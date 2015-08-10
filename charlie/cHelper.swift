@@ -128,12 +128,7 @@ class cHelper {
                 {
                     keyChainStore.set(client_id, key: "client_id")
                     keyChainStore.set(client_secret, key: "client_secret")
-                    
-                    println("CLIENT_ID \(client_id)")
-                    println("CLIENT_ID \(client_secret)")
                     callback(true)
-                   
-                    
                 }
                 
                 

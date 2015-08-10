@@ -13,8 +13,8 @@ import WebKit
 import Charts
 
 
-
-let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
+//number of days we show transaction data for
+let date = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -35, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -252,33 +252,36 @@ class mainViewController: UIViewController, UITableViewDataSource {
             accountAddView.hidden = true
             
              //refresh accounts
-            println("REFRESH ACCOUNTS")
-            let access_token =  keyChainStore.get("access_token")
             
             if allTransactionItems.count > 0
             {
                 let  lastTransaction = allTransactionItems[0].date as NSDate
+                var calendar: NSCalendar = NSCalendar.currentCalendar()
+                let flags = NSCalendarUnit.DayCalendarUnit
+                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
+                
+                let dateToSychTo = components.day
+                
+                spinner.startAnimating()
+                println("DAYS \(dateToSychTo)")
+                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
+                    {
+                        (response) in
+                        
+                        self.transactionsTable.reloadData()
+                        self.spinner.stopAnimating()
+                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
+                        {
+                            self.showReward()
+                        }
+                       self.spinner.stopAnimating()
+                }
+
+                
             }
 
             
             
-            spinner.startAnimating()
-           
-         
-            //All stuff here
-            
-           cHelp.addUpdateResetAccount(1, dayLength: 7)
-               {
-                   (response) in
-                
-                   self.transactionsTable.reloadData()
-                   self.spinner.stopAnimating()                   
-                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-                    {
-                        self.showReward()
-                    }
-
-        }
            
            
             
@@ -479,18 +482,25 @@ class mainViewController: UIViewController, UITableViewDataSource {
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
+            
             let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-          
             dataEntries.append(dataEntry)
         }
-        
-        
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Units Sold")
+    
+    
+    
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Weeks")
         
         lineChartDataSet.drawFilledEnabled = true
         lineChartDataSet.fillColor = UIColor.lightGrayColor()
         lineChartDataSet.drawValuesEnabled = true
         lineChartDataSet.drawCirclesEnabled = true
+    
+
+    
+ 
+    
+    
         
         lineChartDataSet.drawCubicEnabled = true
 
@@ -502,6 +512,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         chartView!.leftAxis.drawGridLinesEnabled = false
         chartView!.xAxis.drawGridLinesEnabled = false
         chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
+    
         
         
         
@@ -519,6 +530,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
         //chartView!.leftAxis.enabled = false
         
         chartView!.leftAxis.axisLineWidth = 10
+    
+        chartView!.leftAxis.valueFormatter = NSNumberFormatter()
+        chartView!.leftAxis.valueFormatter!.minimumFractionDigits = 0
         chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
         chartView!.rightAxis.enabled = false
@@ -904,23 +918,33 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func refreshAccounts(sender: UIButton) {
         
-     
-      if accounts.count > 0
-        {
-            let access_token =  keyChainStore.get("access_token")
-            spinner.startAnimating()
-            cHelp.addUpdateResetAccount(1, dayLength: 7)
+    if allTransactionItems.count > 0
+    {
+        let  lastTransaction = allTransactionItems[0].date as NSDate
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let flags = NSCalendarUnit.DayCalendarUnit
+        let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
+        
+        let dateToSychTo = components.day
+        
+        spinner.startAnimating()
+        println("DAYS \(dateToSychTo)")
+        cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
+            {
+                (response) in
+                
+                self.transactionsTable.reloadData()
+                self.spinner.stopAnimating()
+                if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
                 {
-                    (response) in
-                    
-                    
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
+                    self.showReward()
                 }
-            
 
+      
+        
         }
         
+    }
         
     }
     
@@ -1103,19 +1127,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
 
     
-    @IBAction func resetButtonPressed(sender: AnyObject) {
-        
-        if accounts.count > 0
-        {
-            let access_token =  keyChainStore.get("access_token")
-            cHelp.addUpdateResetAccount(99, dayLength: 7) {
-                (response) in
-                self.transactionsTable.reloadData()
-            }
-
-        }
-  
-    }
 
   }
 

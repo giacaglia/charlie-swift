@@ -99,12 +99,12 @@ init(){
                         httpStatusCode = response.rawResponse!.statusCode
                         if httpStatusCode == 201 //needs mfa
                         {
-                            println(JSON(response.results()))
+                           // println(JSON(response.results()))
                         }
                             
                         else //can process data
                         {
-                            println(JSON(response.results()))
+                           // println(JSON(response.results()))
                         }
                         
                         
@@ -175,7 +175,7 @@ init(){
 
             
             ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
-                println(JSON(response.results()))
+              //  println(JSON(response.results()))
                 
                 if let errorMsg:String = response.error?.description {
                     println(errorMsg)
@@ -188,7 +188,7 @@ init(){
                 httpStatusCode = response.rawResponse!.statusCode
                 if httpStatusCode == 200 
                 {
-                   println(JSON(response.results()))
+                  // println(JSON(response.results()))
                 }
                     
                 else //can process data

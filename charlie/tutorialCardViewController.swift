@@ -48,27 +48,12 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         
         loadVisiblePages()
         
-        //scrollViewDidScroll(scrollView)
-        
-        
-        
-        
-        
-        
         
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
-        
-      
-   
-       
-       
-        
     }
     
     func loadPage(page: Int) {
@@ -119,42 +104,11 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     
     func loadVisiblePages() {
         
-        println(scrollView.frame.size)
+       
         // First, determine which page is currently visible
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        println("PAGE \(page)")
-        if page == 0
-        {
-//            fbLoginView.hidden = true
-//            message12.hidden = false
-//            message12.text = "When curiosity strikes,\n poll your friends"
-//            message3.hidden = true
-//            privacyButton.hidden = true
-            
-        }
-        
-        if page == 1
-        {
-//            fbLoginView.hidden = true
-//            message12.hidden = false
-//            message12.text = "Help others gain knowledge, \n answer their polls"
-//            message3.hidden = true
-//            privacyButton.hidden = true
-            
-        }
-        
-        if page == 2
-        {
-//            fbLoginView.hidden = false
-//            message12.hidden = true
-//            message3.hidden = false
-//            message3.text = "We will never post anything to Facebook on your behalf! "
-//            privacyButton.hidden = false
-            
-            
-        }
-    
+       
         // Update the page control
         pageControl.currentPage = page
         

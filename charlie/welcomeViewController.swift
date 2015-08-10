@@ -56,50 +56,25 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        if users.count == 0
-        {
-            self.splashImageView.hidden = true
-            self.setupWelcomeScreens()
-            
-        }
+    
         
-        
-        var access_token = ""
-        if keyStore.stringForKey("access_token") != nil
+        if defaults.stringForKey("firstLoad") == nil
         {
-            access_token = keyStore.stringForKey("access_token")!
+             keyChainStore.set("", key: "pin")
+          
         }
-        
-        
-        if access_token != "" && users.count == 0
+
+            
+        if users.count > 0 &&  keyChainStore.get("pin") != ""
+
         {
-            //recover user
-            println("Need to recover user")
-            
-            
-            //alertUserRecoverData()
-            
-            
+            performSegueWithIdentifier("skipOnboarding", sender: self)
         }
-            //     no icloud token and no users so show onboarding
-            
-            
-            
-            
-        else if users.count == 0 ||  keyChainStore.get("pin") == nil
-        {
-            println("no user so show onboarding")
-            
-        }
-            //if we have users skip onboarding
         else
         {
-            println("have user")
             
-            
-            
-            performSegueWithIdentifier("skipOnboarding", sender: self)
-            
+            self.splashImageView.hidden = true
+            self.setupWelcomeScreens()
         }
         
         
@@ -110,18 +85,11 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func setupWelcomeScreens() {
         
-       
-        
         cHelp.getSettings()
             {
                 (response) in
                 
-                println("FINSHED GETTING TOKENS \(response)")
-                
-                
-                
-                
-        }
+            }
         
         
         
@@ -257,7 +225,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 var loginButton = UIButton(frame: loginButtonFrame)
+                loginButton.backgroundColor = UIColor.whiteColor()
                 loginButton.setTitle("Let's Get Started", forState: .Normal)
+                loginButton.setTitleColor(listBlue, forState: UIControlState.Normal)
+                loginButton.layer.cornerRadius = 10
                 loginButton.addTarget(self, action: "loginButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
                 newPageView.addSubview(loginButton)
             }
@@ -277,7 +248,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func loginButtonAction(sender:UIButton!)
     {
-        println("Button tapped")
+        
         performSegueWithIdentifier("toRegistration", sender: self)
         
     }
@@ -303,41 +274,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func loadVisiblePages() {
         
-        println(scrollView.frame.size)
+       
         // First, determine which page is currently visible
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        println("PAGE \(page)")
-        if page == 0
-        {
-            //            fbLoginView.hidden = true
-            //            message12.hidden = false
-            //            message12.text = "When curiosity strikes,\n poll your friends"
-            //            message3.hidden = true
-            //            privacyButton.hidden = true
-            
-        }
-        
-        if page == 1
-        {
-            //            fbLoginView.hidden = true
-            //            message12.hidden = false
-            //            message12.text = "Help others gain knowledge, \n answer their polls"
-            //            message3.hidden = true
-            //            privacyButton.hidden = true
-            
-        }
-        
-        if page == 2
-        {
-            //            fbLoginView.hidden = false
-            //            message12.hidden = true
-            //            message3.hidden = false
-            //            message3.text = "We will never post anything to Facebook on your behalf! "
-            //            privacyButton.hidden = false
-            
-            
-        }
         
         // Update the page control
         pageControl.currentPage = page
