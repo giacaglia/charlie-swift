@@ -29,11 +29,6 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
-    
-    
-    
-    
-    
     func willEnterForeground(notification: NSNotification!) {
         
         

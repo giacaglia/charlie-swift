@@ -38,38 +38,20 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
        
     @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
-    
-    
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     @IBOutlet weak var transactionsTable: SBGestureTableView!
-
-
     @IBOutlet weak var happyDateRange: UILabel!
     @IBOutlet weak var chartView: LineChartView?
-    var months: [String]!
-    
-    
     @IBOutlet weak var listNavBar: UIView!
     @IBOutlet weak var approvedListButton: UIButton!
     @IBOutlet weak var inboxListButton: UIButton!
     @IBOutlet weak var flagListButton: UIButton!
-    
     @IBOutlet weak var dividerView: UIView!
-    
-
-
-    
     @IBOutlet weak var accountAddView: UIView!
-    
-
     @IBOutlet weak var rewardView: UIView!
-
-  
     @IBOutlet weak var happyImage: UIImageView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topSeperator: UIView!
     @IBOutlet weak var moneyActionAmountLabel: UILabel!
@@ -77,14 +59,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubHeadLabel: UILabel!
     @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
-   
     @IBOutlet weak var addAccountButton: UIButton!
-    
-    
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var cardButton: UIButton!
     
     
+    var months: [String]!
     var cHelp = cHelper()
     
     var currentTransactionSwipeID = ""
@@ -129,9 +109,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
     
-    //this is a test
-    
-   
     var pinApproved = false
 
    
@@ -140,47 +117,26 @@ class mainViewController: UIViewController, UITableViewDataSource {
       
         
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            
             presentViewController(resultController, animated: false, completion: { () -> Void in
-            
             self.pinApproved = true
             self.cHelp.removeSpashImageView(self.view)     
-           
-           
         })
-            
-
         }
-        
     }
     
     
     func didEnterBackgroundNotification(notification: NSNotification)
     {
         cHelp.splashImageView(self.view)
-        
     }
     
-   
-    
-    
-//    override func viewDidAppear(animated: Bool) {
-//        self.view.viewWithTag(86)?.removeFromSuperview()
-//
-//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
         
-        if accounts.count > 0 && allTransactionItems.count > 0
-        {
-            println("normal all is loaded")
-            
-        }
-      
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
-        else if accounts.count > 0 && allTransactionItems.count == 0
+        if accounts.count > 0 && allTransactionItems.count == 0
         {
             if timerCount == 0 //first time after adding account so show tutorial
             {
@@ -199,14 +155,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
-        else if accounts.count == 0
-        {
-            println("First Time in or has never added an account")
-        }
+        
         
         transactionsTable.reloadData()
     }
   
+    
+    
     
     override func viewDidLoad() {
         
@@ -215,9 +170,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
-        
-      
         
         
         rewardView.hidden = true
@@ -773,12 +725,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        
-        println(indexPath.row)
-        println(transactionItems[indexPath.row].ctype)
-        println(transactionItems[indexPath.row].name)
         
 
         performSegueWithIdentifier("segueFromMainToDetailView", sender: self)

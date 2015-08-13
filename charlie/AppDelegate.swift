@@ -26,10 +26,6 @@ var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
-var imageView = UIImageView()
-
-
-
 
 @UIApplicationMain
 
