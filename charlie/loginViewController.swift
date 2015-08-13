@@ -66,8 +66,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         else
         {
             
-            
-            
             emailAddress.becomeFirstResponder()
 
         }
@@ -242,6 +240,12 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             ABPinSetup.view.backgroundColor = listBlue
             presentViewController(ABPinSetup, animated: true, completion: nil)
             createUser(emailAddress.text)
+            
+            var uuid = NSUUID().UUIDString
+            Mixpanel.sharedInstance().identify(uuid)
+            
+            keyStore.setString(uuid, forKey: "uuid")
+        
             
             
         }

@@ -11,24 +11,23 @@ import CloudKit
 
 var httpStatusCode:Int = 0
 
-dev
-var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
-var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
-var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
-var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
-var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
+//dev
+//var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
+//var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
+//var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
+//var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
+//var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
 
 ////production
-//var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
-//var srConnect = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect"))
-//var srCategory = ServerRequest(url: NSURL(string:  "https://api.plaid.com/categories"))
-//var srConnectGet = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect/get"))
-//var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/institutions"))
-//
-//
+var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
+var srConnect = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect"))
+var srCategory = ServerRequest(url: NSURL(string:  "https://api.plaid.com/categories"))
+var srConnectGet = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect/get"))
+var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/institutions"))
+
 
 var apiKey = "jj859i3mfp230p34"
-var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/prod/track"))
 
 
 class charlieService {
