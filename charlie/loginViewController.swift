@@ -171,6 +171,12 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     
                      self.keyChainStore.set(access_token, key: "access_token")
                     
+                     cService.saveAccessToken(access_token)
+                        {
+                            (response) in
+                            
+                        }
+                    
                     
                     if let uuid = keyStore.stringForKey("uuid")
                     {

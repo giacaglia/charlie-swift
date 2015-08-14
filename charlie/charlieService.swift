@@ -27,7 +27,7 @@ var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/in
 
 
 var apiKey = "jj859i3mfp230p34"
-var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/prod/track"))
+var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
 
 
 class charlieService {
@@ -52,7 +52,7 @@ init(){
             "context": token,
         ]
         
-        var sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+        var sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
         
@@ -61,7 +61,7 @@ init(){
         
         ServerClient.performRequest(sr, completion: { (response) -> Void in
             
-            println(response)
+           // println(response)
             callback(true)
             
         })
