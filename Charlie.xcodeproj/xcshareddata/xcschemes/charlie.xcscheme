@@ -15,23 +15,23 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09C2A7411B21F0AD005A40DA"
-               BuildableName = "charlie.app"
-               BlueprintName = "charlie"
-               ReferencedContainer = "container:charlie.xcodeproj">
+               BuildableName = "Charlie.temp_caseinsensitive_rename.app"
+               BlueprintName = "Charlie.temp_caseinsensitive_rename"
+               ReferencedContainer = "container:Charlie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09C2A7591B21F0AD005A40DA"
-               BuildableName = "charlieTests.xctest"
-               BlueprintName = "charlieTests"
-               ReferencedContainer = "container:charlie.xcodeproj">
+               BuildableName = "Charlie.temp_caseinsensitive_renameTests.xctest"
+               BlueprintName = "Charlie.temp_caseinsensitive_renameTests"
+               ReferencedContainer = "container:Charlie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,16 +40,16 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09C2A7591B21F0AD005A40DA"
-               BuildableName = "charlieTests.xctest"
-               BlueprintName = "charlieTests"
-               ReferencedContainer = "container:charlie.xcodeproj">
+               BuildableName = "Charlie.temp_caseinsensitive_renameTests.xctest"
+               BlueprintName = "Charlie.temp_caseinsensitive_renameTests"
+               ReferencedContainer = "container:Charlie.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C2A7411B21F0AD005A40DA"
-            BuildableName = "charlie.app"
-            BlueprintName = "charlie"
-            ReferencedContainer = "container:charlie.xcodeproj">
+            BuildableName = "Charlie.temp_caseinsensitive_rename.app"
+            BlueprintName = "Charlie.temp_caseinsensitive_rename"
+            ReferencedContainer = "container:Charlie.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C2A7411B21F0AD005A40DA"
-            BuildableName = "charlie.app"
-            BlueprintName = "charlie"
-            ReferencedContainer = "container:charlie.xcodeproj">
+            BuildableName = "Charlie.temp_caseinsensitive_rename.app"
+            BlueprintName = "Charlie.temp_caseinsensitive_rename"
+            ReferencedContainer = "container:Charlie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,14 +96,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C2A7411B21F0AD005A40DA"
-            BuildableName = "charlie.app"
-            BlueprintName = "charlie"
-            ReferencedContainer = "container:charlie.xcodeproj">
+            BuildableName = "Charlie.temp_caseinsensitive_rename.app"
+            BlueprintName = "Charlie.temp_caseinsensitive_rename"
+            ReferencedContainer = "container:Charlie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
