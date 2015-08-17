@@ -86,7 +86,7 @@ class showTransactionViewController: UIViewController {
         addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
         
     
-        
+        println(transactionItems[transactionIndex].ctype)
         var lat = transactionItems[transactionIndex].meta.location.coordinates.lat
         var lon = transactionItems[transactionIndex].meta.location.coordinates.lon
         

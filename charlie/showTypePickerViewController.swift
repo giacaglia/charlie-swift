@@ -46,50 +46,54 @@ class showTypePickerViewController: UIViewController {
         
         realm.beginWrite()
             transactionToUpdate[0].ctype = Int(sender.tag)
-            transactionToUpdate[0].status = 1
         realm.commitWrite()
-        
-        let transactionSum = mainVC.sumTransactionsCount()
-        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-        let finalFormat = mainVC.stripCents(transactionSumCurrecnyFormat)
-        mainVC.moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-
-        
         
         dismissViewControllerAnimated(true, completion: nil)
        
         
-        
-        //check to see if others with same name exist
-        
-        
-        let predicate = NSPredicate(format: "name = %@", transactionToUpdate[0].name )
-        
-       var sameTransactions = realm.objects(Transaction).filter(predicate)
-        
-       if sameTransactions.count > 0
+      
+        for trans in transactionItems
         {
-        
-          for trans in sameTransactions
-            {
-                realm.beginWrite()
-                    trans.ctype = Int(sender.tag)
-                if sameTransactions.count > 1
-                {
+            if trans.ctype == 0 && trans.name == transactionToUpdate[0].name
 
-                    trans.status = 1
+            {
+                println("repeat")
+                realm.write {
+                    trans.ctype = Int(sender.tag)
                 }
-                realm.commitWrite()
+
             }
-            
-            transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-            mainVC.transactionsTable.reloadData()
-       
+
         }
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+        mainVC.transactionsTable.reloadData()
+        
+//        let predicate = NSPredicate(format: "name = %@ and ctype = %d", transactionToUpdate[0].name, 0 )
+//        
+//       var sameTransactions = realm.objects(Transaction).filter(predicate)
+//        
+//       if sameTransactions.count > 0
+//        {
+//        
+//          for trans in sameTransactions
+//            {
+//                realm.beginWrite()
+//                    trans.ctype = Int(sender.tag)
+//                if sameTransactions.count > 1
+//                {
+//
+//                    trans.status = 1
+//                }
+//                realm.commitWrite()
+//            }
+//            
+//            transactionItems = realm.objects(Transaction).filter(inboxPredicate)
+//            mainVC.transactionsTable.reloadData()
+//       
+//        }
         
         
-       println(sameTransactions.count)
-        
+               
         
         
     }

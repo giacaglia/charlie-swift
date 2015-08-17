@@ -80,6 +80,8 @@ class cHelper {
                                     var categoryToAdd = realm.objects(Category).filter(predicate)
                                     var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
                                     newTrans.categories = categoryToAdd[0]
+                                   
+                                    
                                     if (category_id == "21008000" || category_id == "21007001" || dictAmount < 0)
                                     {
                                         newTrans.status = 86 //sets status to ignore from totals
