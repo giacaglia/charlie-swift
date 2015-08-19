@@ -64,6 +64,10 @@ class Transaction: Object {
     dynamic var ctype = 0
     
     
+    override static func indexedProperties() -> [String] {
+        return ["name"]
+    }
+    
     override static func primaryKey() -> String? {
         return "_id"
         

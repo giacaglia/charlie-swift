@@ -14,7 +14,7 @@ import Charts
 
 
 //number of days we show transaction data for
-let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -60, toDate: NSDate(), options: nil)!
+let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -255,7 +255,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         self.finishSwipe(tableView, cell: cell, direction: 1)
                         if ctype == 0
                         {
-                            self.performSegueWithIdentifier("showTypePicker", sender: self)
+                          //  self.performSegueWithIdentifier("showTypePicker", sender: self)
                         }
                         
                         
@@ -282,7 +282,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         self.finishSwipe(tableView, cell: cell, direction: 1)
                         if ctype == 0
                         {
-                            self.performSegueWithIdentifier("showTypePicker", sender: self)
+                           // self.performSegueWithIdentifier("showTypePicker", sender: self)
                         }
                     }
         
@@ -315,7 +315,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     self.finishSwipe(tableView, cell: cell, direction: 2)
                     if ctype == 0
                     {
-                        self.performSegueWithIdentifier("showTypePicker", sender: self)
+                       // self.performSegueWithIdentifier("showTypePicker", sender: self)
                     }
 
                     
@@ -341,7 +341,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     self.finishSwipe(tableView, cell: cell, direction: 2)
                     if ctype == 0
                     {
-                        self.performSegueWithIdentifier("showTypePicker", sender: self)
+                      //  self.performSegueWithIdentifier("showTypePicker", sender: self)
                     }
                     
 
