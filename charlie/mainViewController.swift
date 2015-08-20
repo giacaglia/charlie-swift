@@ -22,6 +22,11 @@ var inboxPredicate = NSPredicate() //items yet to be processed
 var approvedPredicate = NSPredicate() // items marked as worth it
 var flaggedPredicate = NSPredicate() // items makes as not worth it
 var actedUponPredicate = NSPredicate() // items marked as either worth it or not worth it
+var groupedPredicate = NSPredicate()
+
+
+
+
 
 
 
@@ -1007,8 +1012,20 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     
-    
    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
    
 
     @IBAction func showTutorial(sender: UIButton) {
@@ -1084,7 +1101,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         hideReward()
         
-        transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("date", ascending: false)
+        transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
         transactionsTable.reloadData()
 
          listNavBar.backgroundColor = listGreen
@@ -1211,6 +1228,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
+        
+      
+        
         transactionsTable.reloadData()
         
          listNavBar.backgroundColor = listRed
@@ -1249,12 +1269,80 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
        // menuButton.setImage(menuButtonRedImage, forState: .Normal)
        // cardButton.setImage(cardButtonRedImage, forState: .Normal)
+        
+        
+        
+      
+        
+        var charlieGroupList = [charlieGroup]()
+        charlieGroupList = []
+        
+       var current_name = ""
+       var i = 0
+
+       let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+       var actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
 
         
-    }
-    
+        for trans in actedUponItems
+        {
+            if trans.name == current_name
+            {
+                
+                //get current index
+                var current_index = charlieGroupList.count - 1
+                println("add to existing \(trans.name) at index \(current_index)")
+                
+                if trans.status == 1
+                {
+                    charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount! + 1
+                    charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue! + trans.amount
+                }
+                else if trans.status == 2
+                {
+                    charlieGroupList[current_index].notWorthCount =  charlieGroupList[current_index].notWorthCount! + 1
+                    charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue! + trans.amount
+                    
+                }
+                
+                
+                
+         
+            }
+            else
+            {
+                
+                println("create new \(trans.name)")
+                var cGroup = charlieGroup(name: trans.name)
+                
+                if trans.status == 1
+                {
+                    cGroup.worthCount = 1
+                    cGroup.worthValue = trans.amount
+                }
+                else if trans.status == 2
+                {
+                    cGroup.notWorthCount = 1
+                    cGroup.notWorthValue = trans.amount
+                    
+                }
+                
+                
+                
+                charlieGroupList.append((cGroup))
+                
+                
+              
+                
 
-    
+            }
+            
+            current_name = trans.name
+            
+        }
+        
+        
+    }
 
   }
 

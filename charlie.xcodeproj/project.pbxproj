@@ -48,6 +48,7 @@
 		09C2A7611B21F0AD005A40DA /* charlieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A7601B21F0AD005A40DA /* charlieTests.swift */; };
 		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
 		09CA4D721B71915300D4F63D /* persistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA4D711B71915300D4F63D /* persistenceStore.swift */; };
+		454858911B861E6300AFEAB1 /* charlieGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454858901B861E6300AFEAB1 /* charlieGroup.swift */; };
 		456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4560493F1B71155800C37B9D /* CFNetwork.framework */; };
 		456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049411B71156100C37B9D /* CoreGraphics.framework */; };
 		456049441B71156F00C37B9D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049431B71156F00C37B9D /* CoreLocation.framework */; };
@@ -254,6 +255,7 @@
 		09C2A7601B21F0AD005A40DA /* charlieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = charlieTests.swift; sourceTree = "<group>"; };
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		09CA4D711B71915300D4F63D /* persistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = persistenceStore.swift; sourceTree = "<group>"; };
+		454858901B861E6300AFEAB1 /* charlieGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = charlieGroup.swift; sourceTree = "<group>"; };
 		4560493F1B71155800C37B9D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		456049411B71156100C37B9D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456049431B71156F00C37B9D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -546,6 +548,7 @@
 		095447631B289C3C005816F5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				09CA4D711B71915300D4F63D /* persistenceStore.swift */,
 				095414B01B46A68300682172 /* cHelper.swift */,
 				45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */,
 				091E008B1B7937730014012D /* Reachability.swift */,
@@ -587,15 +590,14 @@
 		09C2A7441B21F0AD005A40DA /* charlie */ = {
 			isa = PBXGroup;
 			children = (
-				09CA4D6F1B71911E00D4F63D /* Persistence */,
 				45604A121B712EC500C37B9D /* Analytics */,
 				09C114651B585266004D9DB5 /* charlie.entitlements */,
 				0974544E1B44CF5F0004B8EC /* plaid.html */,
-				0954475F1B268DBC005816F5 /* CharlieRealm.swift */,
 				09C2A7471B21F0AD005A40DA /* AppDelegate.swift */,
 				0916204A1B2F06100004C781 /* UI */,
 				0916202D1B2DA5030004C781 /* lib */,
 				091620201B2DA2330004C781 /* SBGestureTableView */,
+				4548588D1B861C5D00AFEAB1 /* models */,
 				095447631B289C3C005816F5 /* Helpers */,
 				090BD3611B25D86E00F26E78 /* Services */,
 				090BD3461B25098900F26E78 /* ViewControllers */,
@@ -632,12 +634,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		09CA4D6F1B71911E00D4F63D /* Persistence */ = {
+		4548588D1B861C5D00AFEAB1 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				09CA4D711B71915300D4F63D /* persistenceStore.swift */,
+				0954475F1B268DBC005816F5 /* CharlieRealm.swift */,
+				454858901B861E6300AFEAB1 /* charlieGroup.swift */,
 			);
-			name = Persistence;
+			name = models;
 			sourceTree = "<group>";
 		};
 		4560494F1B71183200C37B9D /* Mixpanel */ = {
@@ -1040,6 +1043,7 @@
 				456049E71B71183200C37B9D /* MPEnumDescription.m in Sources */,
 				456049F91B71183200C37B9D /* MPSurveyQuestion.m in Sources */,
 				45604A011B71183200C37B9D /* MPUIControlBinding.m in Sources */,
+				454858911B861E6300AFEAB1 /* charlieGroup.swift in Sources */,
 				456049D21B71183200C37B9D /* MPABTestDesignerClearResponseMessage.m in Sources */,
 				456049EE1B71183200C37B9D /* MPObjectIdentityProvider.m in Sources */,
 				456049D61B71183200C37B9D /* MPABTestDesignerDisconnectMessage.m in Sources */,
