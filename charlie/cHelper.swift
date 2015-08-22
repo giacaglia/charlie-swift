@@ -188,7 +188,9 @@ func cleanName(name:String) -> String{
     
     var modString2 = regex2.stringByReplacingMatchesInString(modString, options: nil, range: NSMakeRange(0, stringlength2), withTemplate: "")
     
-    return modString2
+    var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    
+    return trimmedStr
     
 }
 
