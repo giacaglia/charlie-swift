@@ -12,10 +12,10 @@ import Foundation
 class charlieGroup {
     
     var name:String
-    var worthCount:Int?
-    var notWorthCount:Int?
-    var worthValue:Double?
-    var notWorthValue:Double?
+    var worthCount:Int = 0
+    var notWorthCount:Int = 0
+    var worthValue:Double = 0
+    var notWorthValue:Double = 0
 
     
     init(name:String) {

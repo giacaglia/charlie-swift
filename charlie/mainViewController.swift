@@ -14,7 +14,7 @@ import Charts
 
 
 //number of days we show transaction data for
-let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -21, toDate: NSDate(), options: nil)!
+let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -60, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -26,9 +26,8 @@ var groupedPredicate = NSPredicate()
 
 
 
-
-
-
+var charlieGroupList = [charlieGroup]()
+var charlieGroupListFiltered = [charlieGroup]()
 
 
 var keyStore = NSUbiquitousKeyValueStore()
@@ -882,19 +881,28 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if transactionItems.count > 0
+        
+        if flagListButton.tag == 1 || approvedListButton.tag == 1
         {
-            transactionsTable.hidden = false
-            addAccountButton.hidden = true
-            accountAddView.hidden = true
-            let transactionSum = sumTransactionsCount()
-            let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-            let finalFormat = stripCents(transactionSumCurrecnyFormat)
-            moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-            
-            
+            return charlieGroupListFiltered.count
         }
-        return transactionItems.count
+        else
+        {
+        
+            if transactionItems.count > 0
+            {
+                transactionsTable.hidden = false
+                addAccountButton.hidden = true
+                accountAddView.hidden = true
+                let transactionSum = sumTransactionsCount()
+                let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+                let finalFormat = stripCents(transactionSumCurrecnyFormat)
+                moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+                
+                
+            }
+            return transactionItems.count
+        }
         
     }
     
@@ -908,31 +916,39 @@ class mainViewController: UIViewController, UITableViewDataSource {
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        
-        
         let size = CGSizeMake(30, 30)
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
-        cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-        cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-        cell.nameCellLabel.text = transactionItems[indexPath.row].name
-        cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
-      
         
         
-
-        
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-        var dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
-        cell.dateCellLabel.text = dateString
-        //cell.selectionStyle = .None
-       
-        
-        
-        
+        if flagListButton.tag == 1
+        {
+            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
+            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount) of \(totalTransactions) transactions"
             
-        
+        }
+        else if approvedListButton.tag == 1
+        {
+            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
+            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount) of \(totalTransactions) transactions"
+            
+        }
+        else
+        {
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+            cell.nameCellLabel.text = transactionItems[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
+          
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
+            var dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+            cell.dateCellLabel.text = dateString
+            //cell.selectionStyle = .None
+        }
         
         if inboxListButton.tag == 1
         {cell.amountCellLabel.textColor = listBlue}
@@ -1102,7 +1118,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
-        transactionsTable.reloadData()
+        
 
          listNavBar.backgroundColor = listGreen
         
@@ -1141,7 +1157,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
 
+        charlieGroupListFiltered = groupBy(1) as! [(charlieGroup)]
         
+        transactionsTable.reloadData()
+
 
         //menuButton.setImage(menuButtonGreenImage, forState: .Normal)
         //cardButton.setImage(cardButtonGreenImage, forState: .Normal)
@@ -1175,7 +1194,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
         }
            
-            transactionsTable.reloadData()
+        
           
             
             listNavBar.backgroundColor = listBlue
@@ -1209,7 +1228,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
             approvedListButton.tag = 0
             approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
-            
+        
+         transactionsTable.reloadData()
+        
+        
            // menuButton.setImage(menuButtonBlueImage, forState: .Normal)
            // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
         
@@ -1231,7 +1253,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
       
         
-        transactionsTable.reloadData()
+        
         
          listNavBar.backgroundColor = listRed
     
@@ -1272,49 +1294,46 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         
         
+      charlieGroupListFiltered = groupBy(2) as! [(charlieGroup)]
+        
+      transactionsTable.reloadData()
       
         
-        var charlieGroupList = [charlieGroup]()
+        
+    }
+    
+    
+    func groupBy(type: Int) -> NSArray
+    {
+        
         charlieGroupList = []
+        var current_name = ""
+        var i = 0
         
-       var current_name = ""
-       var i = 0
-
-       let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-       var actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
-
-        
+        let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        var actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
+        var current_index = 0
         for trans in actedUponItems
         {
             if trans.name == current_name
             {
-                
-                //get current index
-                var current_index = charlieGroupList.count - 1
                 println("add to existing \(trans.name) at index \(current_index)")
-                
                 if trans.status == 1
                 {
-                    charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount! + 1
-                    charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue! + trans.amount
+                
+                    charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
+                    charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue + trans.amount
                 }
                 else if trans.status == 2
                 {
-                    charlieGroupList[current_index].notWorthCount =  charlieGroupList[current_index].notWorthCount! + 1
-                    charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue! + trans.amount
-                    
+                    charlieGroupList[current_index].notWorthCount =   charlieGroupList[current_index].notWorthCount + 1
+                    charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
                 }
-                
-                
-                
-         
             }
             else
             {
-                
                 println("create new \(trans.name)")
                 var cGroup = charlieGroup(name: trans.name)
-                
                 if trans.status == 1
                 {
                     cGroup.worthCount = 1
@@ -1324,25 +1343,24 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 {
                     cGroup.notWorthCount = 1
                     cGroup.notWorthValue = trans.amount
-                    
                 }
-                
-                
-                
                 charlieGroupList.append((cGroup))
-                
-                
-              
-                
+                current_index = charlieGroupList.count - 1
 
             }
-            
             current_name = trans.name
-            
         }
         
         
+        if type == 2
+        { return charlieGroupList.filter({$0.notWorthValue > 0}) }
+        else if type == 1
+        { return charlieGroupList.filter({$0.worthValue > 0}) }
+        else
+        { return charlieGroupList.filter({$0.notWorthValue > 0}) }
+        
     }
+    
 
   }
 
