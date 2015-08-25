@@ -909,8 +909,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-
-        performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+        if flagListButton.tag == 1 || approvedListButton.tag == 2
+        {
+            performSegueWithIdentifier("groupDetail", sender: indexPath)
+        }
+        else
+        {
+            performSegueWithIdentifier("groupDetail", sender: self)
+        }
+        
         
     }
    
@@ -1002,29 +1009,30 @@ class mainViewController: UIViewController, UITableViewDataSource {
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionIndex = indexPath!.row
             
-            
         }
         else if (segue.identifier == "showTypePicker") {
-            
-            
-          
-         
             let viewController = segue.destinationViewController as! showTypePickerViewController
             //let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionID = currentTransactionSwipeID
             viewController.transactionCell = currentTransactionCell
             viewController.mainVC = self
-
-            
         }
         else if (segue.identifier == "showReveal")
         {
-           var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
-            
+            var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
             let viewController = segue.destinationViewController as! revealViewController
             viewController.revealPercentage = "\(userSelectedHappyScore)"
         }
+        else if (segue.identifier == "groupDetail")
+        {
+            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            let viewController = segue.destinationViewController as! groupDetailViewController
+            viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
+            
+        }
  
+
+    
     }
     
     

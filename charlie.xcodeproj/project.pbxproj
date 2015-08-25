@@ -27,6 +27,8 @@
 		091620541B2F3B410004C781 /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 091620531B2F3B3D0004C781 /* Gotham-Light.ttf */; };
 		091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091620551B2F8B5A0004C781 /* GothamRounded-Book.otf */; };
 		091620581B2F8B650004C781 /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091620561B2F8B5A0004C781 /* GothamRounded-Light.otf */; };
+		09167F171B8B6CA30093BA53 /* groupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */; };
+		09167F191B8B96500093BA53 /* groupDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09167F181B8B96500093BA53 /* groupDetailTableViewCell.swift */; };
 		091E008C1B7937730014012D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091E008B1B7937730014012D /* Reachability.swift */; };
 		091E008E1B7959AB0014012D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091E008D1B7959AB0014012D /* CloudKit.framework */; };
 		09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D411B38B42F006E126B /* showCardsViewController.swift */; };
@@ -230,6 +232,8 @@
 		091620531B2F3B3D0004C781 /* Gotham-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.ttf"; sourceTree = "<group>"; };
 		091620551B2F8B5A0004C781 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
 		091620561B2F8B5A0004C781 /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Light.otf"; sourceTree = "<group>"; };
+		09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = groupDetailViewController.swift; sourceTree = "<group>"; };
+		09167F181B8B96500093BA53 /* groupDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = groupDetailTableViewCell.swift; sourceTree = "<group>"; };
 		091E008B1B7937730014012D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		091E008D1B7959AB0014012D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		09435D411B38B42F006E126B /* showCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showCardsViewController.swift; path = ../showCardsViewController.swift; sourceTree = "<group>"; };
@@ -460,6 +464,8 @@
 				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
 				45E0F2101B5E7E660005B234 /* revealViewController.swift */,
 				45E0F2361B6918420005B234 /* passcodeViewController.swift */,
+				09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */,
+				09167F181B8B96500093BA53 /* groupDetailTableViewCell.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -871,7 +877,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "Charlie" */;
+			buildConfigurationList = 09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "charlie" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1001,6 +1007,7 @@
 				456049DE1B71183200C37B9D /* MPCGAffineTransformToNSDictionaryValueTransformer.m in Sources */,
 				091620261B2DA2330004C781 /* SBGestureTableViewCell.swift in Sources */,
 				456049D51B71183200C37B9D /* MPABTestDesignerDeviceInfoResponseMessage.m in Sources */,
+				09167F191B8B96500093BA53 /* groupDetailTableViewCell.swift in Sources */,
 				45604A0D1B71183200C37B9D /* UIImage+MPAverageColor.m in Sources */,
 				456049FB1B71183200C37B9D /* MPSwizzler.m in Sources */,
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
@@ -1032,6 +1039,7 @@
 				456049F21B71183200C37B9D /* MPObjectSerializerContext.m in Sources */,
 				45604A141B712EEE00C37B9D /* charlieAnalytics.swift in Sources */,
 				456049F41B71183200C37B9D /* MPPropertyDescription.m in Sources */,
+				09167F171B8B6CA30093BA53 /* groupDetailViewController.swift in Sources */,
 				45E0F2321B67D7F40005B234 /* ABPadLockScreenSetupViewController.m in Sources */,
 				456049F11B71183200C37B9D /* MPObjectSerializerConfig.m in Sources */,
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
@@ -1315,7 +1323,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "Charlie" */ = {
+		09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "charlie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				09C2A7621B21F0AD005A40DA /* Debug */,
