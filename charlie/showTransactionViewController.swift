@@ -13,6 +13,7 @@ class showTransactionViewController: UIViewController {
 
     var transactionIndex:Int = 0
     var mainVC:mainViewController!
+    var transactionID:String = ""
     
     
     @IBOutlet weak var merchantLabel: UILabel!
@@ -27,6 +28,8 @@ class showTransactionViewController: UIViewController {
     
     
     let regionRadius: CLLocationDistance = 1000
+    
+    var transactionItems = realm.objects(Transaction)
    
     
     
@@ -68,27 +71,29 @@ class showTransactionViewController: UIViewController {
 
 
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
+        
+        self.transactionItems = realm.objects(Transaction).filter("_id = '\(self.transactionID)'")
     
         accountNumberLabel.text = account[0].meta.number
         accountNameLabel.text = account[0].meta.name
         
         
-        descriptionLabel.text = transactionItems[transactionIndex].name
+        descriptionLabel.text = self.transactionItems[transactionIndex].name
         
         
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd" //format style. Browse online to get a format that fits your needs.
-        var dateString = dateFormatter.stringFromDate(transactionItems[transactionIndex].date)
+        var dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 
-       categoryLabel.text = transactionItems[transactionIndex].categories.categories
+       categoryLabel.text = self.transactionItems[transactionIndex].categories.categories
         
-        addressLabel.text = "\(transactionItems[transactionIndex].meta.location.address) \n  \(transactionItems[transactionIndex].meta.location.city) \(transactionItems[transactionIndex].meta.location.state) \(transactionItems[transactionIndex].meta.location.zip)"
+        addressLabel.text = "\(self.transactionItems[transactionIndex].meta.location.address) \n  \(self.transactionItems[transactionIndex].meta.location.city) \(self.transactionItems[transactionIndex].meta.location.state) \(self.transactionItems[transactionIndex].meta.location.zip)"
         
     
-        println(transactionItems[transactionIndex].ctype)
-        var lat = transactionItems[transactionIndex].meta.location.coordinates.lat
-        var lon = transactionItems[transactionIndex].meta.location.coordinates.lon
+        println(self.transactionItems[transactionIndex].ctype)
+        var lat = self.transactionItems[transactionIndex].meta.location.coordinates.lat
+        var lon = self.transactionItems[transactionIndex].meta.location.coordinates.lon
         
         if lat > 0
         {

@@ -909,13 +909,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if flagListButton.tag == 1 || approvedListButton.tag == 2
+        if flagListButton.tag == 1 || approvedListButton.tag == 1
         {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else
         {
-            performSegueWithIdentifier("groupDetail", sender: self)
+            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         }
         
         
@@ -1007,7 +1007,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
-            viewController.transactionIndex = indexPath!.row
+            viewController.transactionID = transactionItems[indexPath!.row]._id
             
         }
         else if (segue.identifier == "showTypePicker") {
@@ -1027,6 +1027,16 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
             let viewController = segue.destinationViewController as! groupDetailViewController
+            
+            if flagListButton.tag == 1
+            {
+             viewController.comingFromSad = true
+            }
+            else if approvedListButton.tag == 1
+            {
+             viewController.comingFromSad = false
+            }
+            
             viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
             
         }

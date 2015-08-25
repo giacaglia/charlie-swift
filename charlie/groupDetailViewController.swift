@@ -9,7 +9,7 @@
 import RealmSwift
 import UIKit
 
-class groupDetailViewController: UIViewController, UITableViewDataSource {
+class groupDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var sadButton: UIButton!
     
@@ -26,13 +26,33 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     var transactionItems = realm.objects(Transaction)
     var happyItems = realm.objects(Transaction)
     var sadItems = realm.objects(Transaction)
+    var comingFromSad:Bool = false
+    
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sadButton.tag = 1
-        happyButton.tag = 0
+       
+        if comingFromSad
+        {
+            sadButton.tag = 1
+            happyButton.tag = 0
+            sadButton.backgroundColor = listRed
+            happyButton.backgroundColor = UIColor.whiteColor()
+            sadButton.tintColor = UIColor.whiteColor()
+            happyButton.tintColor = listGreen
+        }
+        else
+        {
+            sadButton.tag = 0
+            happyButton.tag = 1
+            sadButton.backgroundColor = UIColor.whiteColor()
+            happyButton.backgroundColor = listGreen
+            sadButton.tintColor = listRed
+            happyButton.tintColor = UIColor.whiteColor()
+        }
         
         self.name.text = transactionName
         
@@ -41,8 +61,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
 
-        happyItems = transactionItems.filter("status = 1")
-        sadItems = transactionItems.filter("status = 2")
+        happyItems = transactionItems.filter("status = 1").sorted("date", ascending: false)
+        sadItems = transactionItems.filter("status = 2").sorted("date", ascending: false)
         
         
         if transactionItems.count == 1
@@ -68,7 +88,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             if trans.status == 2
             {   sad += 1 }
         }
-    return (happy / (happy + sad) * 100)
+        
+    return Int((Double(happy) / Double((happy + sad)) * 100))
     }
     
     
@@ -83,6 +104,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         if sadButton.tag == 1
         {
             return sadItems.count
+ 
         }
         else if happyButton.tag == 1
         {
@@ -93,18 +115,26 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
     }
     
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("groupDetailCell", forIndexPath: indexPath) as! groupDetailTableViewCell
         
         if sadButton.tag == 1
         {
-            cell.transactionDate.text = "\(sadItems[indexPath.row].date)"
-            cell.transactionAmount.text =  "\(sadItems[indexPath.row].amount)"
+            
+            let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
+            let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
+            cell.transactionDate.text = dateString
+            cell.transactionAmount.text =  currencyString
         }
         else if happyButton.tag == 1
         {
-            cell.transactionDate.text = "\(happyItems[indexPath.row].date)"
-            cell.transactionAmount.text =  "\(happyItems[indexPath.row].amount)"
+            
+            let dateString = cHelp.convertDateGroup(happyItems[indexPath.row].date)
+            let currencyString = cHelp.formatCurrency(happyItems[indexPath.row].amount)
+            cell.transactionDate.text = dateString
+            cell.transactionAmount.text = currencyString
 
         }
         
@@ -113,12 +143,36 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
 
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+       
+       performSegueWithIdentifier("groupToDetail", sender: self)
+       
+        
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        
+        if (segue.identifier == "groupToDetail") {
+            let viewController = segue.destinationViewController as! showTransactionViewController
+            //viewController.mainVC = self
+            let indexPath = tableView.indexPathForSelectedRow()
+            viewController.transactionID = transactionItems[indexPath!.row]._id
+            
+        }
+    }
     
     @IBAction func notWorthButtonPress(sender: UIButton) {
         
         
         sadButton.tag =  1
         happyButton.tag = 0
+        sadButton.backgroundColor = listRed
+        sadButton.tintColor = UIColor.whiteColor()
+        happyButton.tintColor = listGreen
+        happyButton.backgroundColor = UIColor.whiteColor()
         tableView.reloadData()
         
         
@@ -130,6 +184,11 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         sadButton.tag =  0
         happyButton.tag = 1
+        sadButton.backgroundColor = UIColor.whiteColor()
+        happyButton.backgroundColor = listGreen
+        sadButton.tintColor = listRed
+        happyButton.tintColor = UIColor.whiteColor()
+
         tableView.reloadData()
 
         

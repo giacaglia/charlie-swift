@@ -173,6 +173,13 @@ func convertDate(date:String) -> NSDate
 }
 
 
+func convertDateGroup(date:NSDate) -> String
+{
+    let formatter = NSDateFormatter()
+    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+    return formatter.stringFromDate(date)
+}
+    
 func cleanName(name:String) -> String{
     
     var stringlength = count(name)
