@@ -34,25 +34,17 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-        if comingFromSad
-        {
-            sadButton.tag = 1
-            happyButton.tag = 0
-            sadButton.backgroundColor = listRed
-            happyButton.backgroundColor = UIColor.whiteColor()
-            sadButton.tintColor = UIColor.whiteColor()
-            happyButton.tintColor = listGreen
-        }
-        else
-        {
-            sadButton.tag = 0
-            happyButton.tag = 1
-            sadButton.backgroundColor = UIColor.whiteColor()
-            happyButton.backgroundColor = listGreen
-            sadButton.tintColor = listRed
-            happyButton.tintColor = UIColor.whiteColor()
-        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         self.name.text = transactionName
         
@@ -61,8 +53,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
 
-        happyItems = transactionItems.filter("status = 1").sorted("date", ascending: false)
-        sadItems = transactionItems.filter("status = 2").sorted("date", ascending: false)
+        happyItems = transactionItems.filter("status = 1").sorted("date", ascending: true)
+        sadItems = transactionItems.filter("status = 2").sorted("date", ascending: true)
         
         
         if transactionItems.count == 1
@@ -73,7 +65,82 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
+        
+        
+        
+        if comingFromSad
+        {
+            sadButton.tag = 1
+            happyButton.tag = 0
+            sadButton.backgroundColor = listRed
+            happyButton.backgroundColor = UIColor.whiteColor()
+            sadButton.tintColor = UIColor.whiteColor()
+            happyButton.tintColor = listGreen
+            setAttribText("NOT WORTH IT", message2: "sad", button: sadButton)
+            setAttribText("WORTH IT", message2: "happy", button: happyButton)
+
+        }
+        else
+        {
+            sadButton.tag = 0
+            happyButton.tag = 1
+            sadButton.backgroundColor = UIColor.whiteColor()
+            happyButton.backgroundColor = listGreen
+            sadButton.tintColor = listRed
+            happyButton.tintColor = UIColor.whiteColor()
+            setAttribText("NOT WORTH IT", message2: "sad", button: sadButton)
+            setAttribText("WORTH IT", message2: "happy", button: happyButton)
+        }
+        
+        
+        
+
+        
+        
+        
         //tableView.reloadData()
+    }
+    
+   func  setAttribText(message1:NSString, message2:NSString, button:UIButton)
+    {
+    
+        
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        var buttonText: NSString = "\(message1)\n\(message2)"
+
+        //getting the range to separate the button title strings
+        var newlineRange: NSRange = buttonText.rangeOfString("\n")
+        
+        //getting both substrings
+        var substring1: NSString = ""
+        var substring2: NSString = ""
+        
+        if(newlineRange.location != NSNotFound) {
+            substring1 = buttonText.substringToIndex(newlineRange.location)
+            substring2 = buttonText.substringFromIndex(newlineRange.location)
+        }
+        
+        //assigning diffrent fonts to both substrings
+        let font:UIFont? = UIFont(name: "Avenir Next", size: 17.0)
+        let attrString = NSMutableAttributedString(
+            string: substring1 as String,
+            attributes: NSDictionary(
+                object: font!,
+                forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        
+        let font1:UIFont? = UIFont(name: "Avenir Next", size: 11.0)
+        let attrString1 = NSMutableAttributedString(
+            string: substring2 as String,
+            attributes: NSDictionary(
+                object: font1!,
+                forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        
+        //appending both attributed strings
+        attrString.appendAttributedString(attrString1)
+        
+        //assigning the resultant attributed strings to the button
+        button.setAttributedTitle(attrString, forState: UIControlState.Normal)
+        
     }
     
     
@@ -159,7 +226,11 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
             let viewController = segue.destinationViewController as! showTransactionViewController
             //viewController.mainVC = self
             let indexPath = tableView.indexPathForSelectedRow()
-            viewController.transactionID = transactionItems[indexPath!.row]._id
+            if happyButton.tag == 1
+            {    viewController.transactionID = happyItems[indexPath!.row]._id }
+            else
+            {    viewController.transactionID = sadItems[indexPath!.row]._id }
+            
             
         }
     }
