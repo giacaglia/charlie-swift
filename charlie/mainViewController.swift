@@ -880,6 +880,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if flagListButton.tag == 1 || approvedListButton.tag == 1
@@ -916,6 +927,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         else
         {
             performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+            
         }
         
         
@@ -968,6 +980,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func stripCents(currency: String) -> String
     {
         let stringLength = count(currency) // Since swift1.2 `countElements` became `count`
@@ -1008,6 +1031,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionID = transactionItems[indexPath!.row]._id
+            viewController.sourceVC = "main"
             
         }
         else if (segue.identifier == "showTypePicker") {

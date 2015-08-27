@@ -20,22 +20,20 @@ var cHelp = cHelper()
 class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var emailAddress: UITextField!
-    
     @IBOutlet weak var nextButton: UIButton!
-   var pinSetValidated = false
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
+    var pinSetValidated = false
     
     var access_token = ""
     var email_address = ""
 
     var keyChainStore = KeychainHelper()
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     
     
     override func viewDidAppear(animated: Bool) {
-        
         super.viewDidAppear(true)
-        
         var user_count = users.count
         
         if keyStore.stringForKey("access_token") != nil && keyStore.stringForKey("email_address") != nil
@@ -53,42 +51,31 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
-            presentViewController(ABPinSetup, animated: false, completion: nil)
+            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
 
+            presentViewController(ABPinSetup, animated: false, completion: nil)
         }
         else if access_token != "" && users.count == 0
         {
-            
           alertUserRecoverData()
           charlieAnalytics.track("Account Recovered")
-            
         }
         else
         {
-            
             emailAddress.becomeFirstResponder()
-
         }
-        
-        
-        
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         emailAddress.delegate = self
-
-        
-           }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
     
     func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
         

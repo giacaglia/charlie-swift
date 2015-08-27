@@ -9,14 +9,16 @@
 import RealmSwift
 import UIKit
 
-class groupDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class groupDetailViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var sadButton: UIButton!
     
     
     @IBOutlet weak var happyButton: UIButton!
     
-    @IBOutlet weak var tableView: UITableView!
+  
+    @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
+    
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!
@@ -28,22 +30,21 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
     var sadItems = realm.objects(Transaction)
     var comingFromSad:Bool = false
     
-
+    var happyAmount:Double = 0.0
+    var sadAmount:Double = 0.0
+    
+    var currentTransactionSwipeID = ""
+    var currentTransactionCell:SBGestureTableViewGroupCell!
+    let checkImage = UIImage(named: "happy_on")
+    let flagImage = UIImage(named: "sad_on")
+    
+    
+    var removeCellBlockLeft: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
+    var removeCellBlockRight: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         self.name.text = transactionName
@@ -63,50 +64,134 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         { self.transactionCount.text = "\(transactionItems.count) transactions" }
        self.happyPercentage.text = "\(calculateHappy())%"
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //groupTableView.registerClass(SBGestureTableViewGroupCell.self, forCellReuseIdentifier: "cell")
+
         
         
+        sadAmount = sadItems.sum("amount")
+        happyAmount = happyItems.sum("amount")
+        var totalAmount = sadAmount + happyAmount
+
         
+        removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
+            let indexPath = tableView.indexPathForCell(cell)
+            
+            self.finishSwipe(tableView, cell: cell, direction: 1)
+            
+        }
+       
+        removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
+            let indexPath = tableView.indexPathForCell(cell)
+            
+            self.finishSwipe(tableView, cell: cell, direction: 2)
+            
+        }
         
         if comingFromSad
         {
             sadButton.tag = 1
             happyButton.tag = 0
-            sadButton.backgroundColor = listRed
-            happyButton.backgroundColor = UIColor.whiteColor()
-            sadButton.tintColor = UIColor.whiteColor()
-            happyButton.tintColor = listGreen
-            setAttribText("NOT WORTH IT", message2: "sad", button: sadButton)
-            setAttribText("WORTH IT", message2: "happy", button: happyButton)
+            
+            
+            
+            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
+            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
 
         }
         else
         {
             sadButton.tag = 0
             happyButton.tag = 1
-            sadButton.backgroundColor = UIColor.whiteColor()
-            happyButton.backgroundColor = listGreen
-            sadButton.tintColor = listRed
-            happyButton.tintColor = UIColor.whiteColor()
-            setAttribText("NOT WORTH IT", message2: "sad", button: sadButton)
-            setAttribText("WORTH IT", message2: "happy", button: happyButton)
+            
+            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
+            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
+
+            
         }
         
+        
+        
+       
+        
+       
+    }
+    
+    
+    
+    func finishSwipe(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int)
+    {
+        
+        let indexPath = tableView.indexPathForCell(cell)
+        
+        currentTransactionCell = cell
+        
+        println("Direction \(direction)")
         
         
 
         
         
+        if happyButton.tag == 1
+        {
+            currentTransactionSwipeID = happyItems[indexPath!.row]._id
+          realm.beginWrite()
+            happyItems[indexPath!.row].status = direction
+            tableView.removeCell(cell, duration: 0.3, completion: nil)
+          realm.commitWrite()
+            
+            sadAmount = sadItems.sum("amount")
+            happyAmount = happyItems.sum("amount")
+            
+            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
+            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
+
+        }
+        else
+        {
+            currentTransactionSwipeID = sadItems[indexPath!.row]._id
+           realm.beginWrite()
+            sadItems[indexPath!.row].status = direction
+            tableView.removeCell(cell, duration: 0.3, completion: nil)
+        realm.commitWrite()
+            
+            sadAmount = sadItems.sum("amount")
+            happyAmount = happyItems.sum("amount")
+            
+            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
+            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
+
+            
+        }
         
-        //tableView.reloadData()
+        self.happyPercentage.text = "\(calculateHappy())%"
+
+     
+        
     }
+
     
-   func  setAttribText(message1:NSString, message2:NSString, button:UIButton)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func  setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor)
     {
     
         
         button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         var buttonText: NSString = "\(message1)\n\(message2)"
+        
+        button.backgroundColor = backGroundColor
+       
 
         //getting the range to separate the button title strings
         var newlineRange: NSRange = buttonText.rangeOfString("\n")
@@ -121,14 +206,14 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         //assigning diffrent fonts to both substrings
-        let font:UIFont? = UIFont(name: "Avenir Next", size: 17.0)
+        let font:UIFont? = UIFont(name: "Avenir Next", size: 14.0)
         let attrString = NSMutableAttributedString(
             string: substring1 as String,
             attributes: NSDictionary(
                 object: font!,
                 forKey: NSFontAttributeName) as [NSObject : AnyObject])
         
-        let font1:UIFont? = UIFont(name: "Avenir Next", size: 11.0)
+        let font1:UIFont? = UIFont(name: "Avenir Next", size: 12.0)
         let attrString1 = NSMutableAttributedString(
             string: substring2 as String,
             attributes: NSDictionary(
@@ -170,11 +255,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         if sadButton.tag == 1
         {
+            println(sadItems.count)
             return sadItems.count
  
         }
         else if happyButton.tag == 1
         {
+            println(happyItems.count)
             return happyItems.count
         }
         else
@@ -185,15 +272,26 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("groupDetailCell", forIndexPath: indexPath) as! groupDetailTableViewCell
+     
+       let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
+        
+        
+        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         
         if sadButton.tag == 1
         {
             
+
             let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
             let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
             cell.transactionDate.text = dateString
             cell.transactionAmount.text =  currencyString
+         
+            
+
+            
+            
         }
         else if happyButton.tag == 1
         {
@@ -216,8 +314,20 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
        performSegueWithIdentifier("groupToDetail", sender: self)
        
         
+       
         
     }
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
@@ -225,11 +335,19 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             //viewController.mainVC = self
-            let indexPath = tableView.indexPathForSelectedRow()
+            let indexPath = groupTableView.indexPathForSelectedRow()
             if happyButton.tag == 1
-            {    viewController.transactionID = happyItems[indexPath!.row]._id }
+            {
+                viewController.transactionID = happyItems[indexPath!.row]._id
+                viewController.sourceVC = "happy"
+            
+            }
             else
-            {    viewController.transactionID = sadItems[indexPath!.row]._id }
+            {
+                viewController.transactionID = sadItems[indexPath!.row]._id
+                viewController.sourceVC = "sad"
+            }
+            
             
             
         }
@@ -240,11 +358,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         sadButton.tag =  1
         happyButton.tag = 0
-        sadButton.backgroundColor = listRed
-        sadButton.tintColor = UIColor.whiteColor()
-        happyButton.tintColor = listGreen
-        happyButton.backgroundColor = UIColor.whiteColor()
-        tableView.reloadData()
+        
+        
+        setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
+        setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
+        
+     
+        groupTableView.reloadData()
         
         
     }
@@ -255,12 +375,11 @@ class groupDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         sadButton.tag =  0
         happyButton.tag = 1
-        sadButton.backgroundColor = UIColor.whiteColor()
-        happyButton.backgroundColor = listGreen
-        sadButton.tintColor = listRed
-        happyButton.tintColor = UIColor.whiteColor()
+       
+        setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
+        setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
 
-        tableView.reloadData()
+        groupTableView.reloadData()
 
         
     }

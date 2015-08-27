@@ -24,7 +24,6 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
         {
             var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
             ABPin.view.backgroundColor = listBlue
-            
             self.view.backgroundColor = listBlue
 
             presentViewController(ABPin, animated: true, completion: nil)

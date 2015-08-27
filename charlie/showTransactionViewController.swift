@@ -32,6 +32,8 @@ class showTransactionViewController: UIViewController {
     var transactionItems = realm.objects(Transaction)
    
     
+    var sourceVC = "main"
+    
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -78,7 +80,18 @@ class showTransactionViewController: UIViewController {
         accountNameLabel.text = account[0].meta.name
         
         
-        descriptionLabel.text = self.transactionItems[transactionIndex].name
+        if sourceVC == "main"
+        {
+            descriptionLabel.text = "Was \(self.transactionItems[transactionIndex].name)\nworth it?"
+        }
+        else if sourceVC == "happy"
+        {
+            descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas worth it"
+        }
+        else if sourceVC == "sad"
+        {
+            descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas not worth it"
+        }
         
         
         var dateFormatter = NSDateFormatter()
