@@ -196,6 +196,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                             
                             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
                             ABPinSetup.view.backgroundColor = listBlue
+                            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
                             self.presentViewController(ABPinSetup, animated: true, completion: nil)
                             self.createUser(self.email_address)
                             
@@ -231,7 +232,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
+            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
             presentViewController(ABPinSetup, animated: true, completion: nil)
+
+
             createUser(emailAddress.text)
             
             var uuid = NSUUID().UUIDString

@@ -14,7 +14,7 @@ import Charts
 
 
 //number of days we show transaction data for
-let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -60, toDate: NSDate(), options: nil)!
+let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -35, toDate: NSDate(), options: nil)!
 let status = 0
 
 
@@ -176,6 +176,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
+        
+        transactionsTable.contentInset = UIEdgeInsetsZero
+        self.automaticallyAdjustsScrollViewInsets = false
         
         
         rewardView.hidden = true
@@ -516,7 +520,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         
         
-        if transactionsDateDifference > 1
+        if transactionsDateDifference >= 1
         {
         
             var i = 2
@@ -944,7 +948,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount) of \(totalTransactions) transactions"
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
             
         }
         else if approvedListButton.tag == 1
@@ -952,7 +956,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount) of \(totalTransactions) transactions"
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
             
         }
         else

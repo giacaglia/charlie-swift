@@ -46,6 +46,9 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
         
         self.name.text = transactionName
         
@@ -94,8 +97,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             
             
             
-            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
-            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
+            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
+            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
 
         }
         else
@@ -103,8 +106,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             sadButton.tag = 0
             happyButton.tag = 1
             
-            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
-            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
+            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
+            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
 
             
         }
@@ -117,6 +120,22 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
     
     
+    
+    func willEnterForeground(notification: NSNotification!) {
+        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
+            presentViewController(resultController, animated: true, completion: { () -> Void in
+                cHelp.removeSpashImageView(self.view)
+                cHelp.removeSpashImageView(self.presentingViewController!.view)
+            })
+        }
+    }
+    
+    
+    func didEnterBackgroundNotification(notification: NSNotification)
+    {
+        cHelp.splashImageView(self.view)
+    }
+
     
     func finishSwipe(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int)
     {
@@ -142,8 +161,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             sadAmount = sadItems.sum("amount")
             happyAmount = happyItems.sum("amount")
             
-            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
-            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
+            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT" , button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
+            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
 
         }
         else
@@ -157,8 +176,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             sadAmount = sadItems.sum("amount")
             happyAmount = happyItems.sum("amount")
             
-            setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
-            setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
+            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
+            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
 
             
         }
@@ -183,11 +202,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     
     
     
-    func  setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor)
+    func  setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor, textColor2:UIColor)
     {
     
         
         button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        
+        button.titleLabel?.textAlignment = NSTextAlignment.Center
         var buttonText: NSString = "\(message1)\n\(message2)"
         
         button.backgroundColor = backGroundColor
@@ -206,19 +227,30 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         }
         
         //assigning diffrent fonts to both substrings
-        let font:UIFont? = UIFont(name: "Avenir Next", size: 14.0)
+        let font:UIFont? = UIFont(name: "Avenir Next", size: 20.0)
         let attrString = NSMutableAttributedString(
             string: substring1 as String,
             attributes: NSDictionary(
                 object: font!,
                 forKey: NSFontAttributeName) as [NSObject : AnyObject])
         
-        let font1:UIFont? = UIFont(name: "Avenir Next", size: 12.0)
+        
+       
+        
+
+        
+        
+        let font1:UIFont? = UIFont(name: "Avenir Next", size: 10.0)
         let attrString1 = NSMutableAttributedString(
             string: substring2 as String,
             attributes: NSDictionary(
                 object: font1!,
                 forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        
+        
+        attrString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSRange(location:0,length:substring1.length))
+        attrString1.addAttribute(NSForegroundColorAttributeName, value: textColor2, range: NSRange(location:0,length:substring2.length))
+        
         
         //appending both attributed strings
         attrString.appendAttributedString(attrString1)
@@ -312,6 +344,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
        
        performSegueWithIdentifier("groupToDetail", sender: self)
+        
+       tableView.deselectRowAtIndexPath(indexPath, animated: true)
        
         
        
@@ -360,8 +394,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         happyButton.tag = 0
         
         
-        setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor())
-        setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen)
+        setAttribText("$\(sadAmount)", message2: "NOT WORTH IT" , button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
+        setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
         
      
         groupTableView.reloadData()
@@ -376,8 +410,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         sadButton.tag =  0
         happyButton.tag = 1
        
-        setAttribText("NOT WORTH IT", message2: "$\(sadAmount)", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed)
-        setAttribText("WORTH IT", message2: "$\(happyAmount)", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor())
+        setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
+        setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
 
         groupTableView.reloadData()
 
