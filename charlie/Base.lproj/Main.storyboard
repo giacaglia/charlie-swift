@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZrX-Ji-UKh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZrX-Ji-UKh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -19,7 +19,6 @@
             <string>Montserrat-Bold</string>
         </mutableArray>
         <mutableArray key="Montserrat-Regular.ttf">
-            <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
@@ -630,7 +629,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
-                                        <rect key="frame" x="279" y="124" width="42" height="20"/>
+                                        <rect key="frame" x="279" y="124" width="42" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -649,7 +648,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIj-Dx-ITS" userLabel="MoneyActionDetail">
-                                        <rect key="frame" x="280" y="119" width="38" height="20"/>
+                                        <rect key="frame" x="280" y="119" width="37.5" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -719,7 +718,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="512" y="27" width="70" height="21"/>
+                                                    <rect key="frame" x="512" y="27" width="70" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="3mS-5n-vnb"/>
                                                         <constraint firstAttribute="width" constant="38" id="FiU-sn-dQT"/>
@@ -736,7 +735,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3-1-02" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHf-3p-UR2" userLabel="Date">
-                                                    <rect key="frame" x="8" y="43" width="42" height="20"/>
+                                                    <rect key="frame" x="8" y="43" width="41.5" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -798,7 +797,7 @@
                                 <rect key="frame" x="200" y="325" width="200" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie is downloading your transactions. This might take a couple of minutes. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
-                                        <rect key="frame" x="10" y="18" width="180" height="64"/>
+                                        <rect key="frame" x="10" y="18" width="180" height="63.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -830,72 +829,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
-                                <rect key="frame" x="20" y="170" width="560" height="326"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbA-n2-qga">
-                                        <rect key="frame" x="179" y="47" width="202" height="151"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="Flx-Gw-0mG"/>
-                                        </constraints>
-                                        <state key="normal" image="findbank">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Flx-Gw-0mG"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <segue destination="A8c-Cy-a9O" kind="showDetail" id="swt-fH-1dv"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie needs to sync your bank account so we can help you start spend money on what makes you happy. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyS-Jn-tAk">
-                                        <rect key="frame" x="20" y="-5" width="520" height="32"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mcafee" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
-                                        <rect key="frame" x="224" y="218" width="113" height="49"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We use bank level encryption." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8Q-Hv-thB">
-                                        <rect key="frame" x="10" y="277" width="540" height="14"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
-                                        <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" id="0vQ-Iq-YsG"/>
-                                    <constraint firstAttribute="centerY" secondItem="pbA-n2-qga" secondAttribute="centerY" constant="-44" id="2Hf-ci-y1b"/>
-                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" id="4ny-jU-Tw5"/>
-                                    <constraint firstAttribute="centerX" secondItem="DyS-Jn-tAk" secondAttribute="centerX" id="AOt-c5-w0f"/>
-                                    <constraint firstItem="DyS-Jn-tAk" firstAttribute="top" secondItem="Ssu-hU-syf" secondAttribute="top" constant="-5" id="DDT-jA-N6c"/>
-                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="20" id="Iet-KE-1qz"/>
-                                    <constraint firstItem="V8Q-Hv-thB" firstAttribute="leading" secondItem="Ssu-hU-syf" secondAttribute="leading" constant="10" id="YSf-Bw-2q4"/>
-                                    <constraint firstAttribute="centerX" secondItem="pbA-n2-qga" secondAttribute="centerX" id="Z5j-rW-Hof"/>
-                                    <constraint firstItem="DyS-Jn-tAk" firstAttribute="leading" secondItem="Ssu-hU-syf" secondAttribute="leading" constant="20" id="cMY-jE-S6l"/>
-                                    <constraint firstAttribute="trailing" secondItem="DyS-Jn-tAk" secondAttribute="trailing" constant="20" id="hsP-Gv-km8"/>
-                                    <constraint firstAttribute="trailing" secondItem="V8Q-Hv-thB" secondAttribute="trailing" constant="10" id="jQZ-2l-6lK"/>
-                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="16" id="kTa-2e-x4r"/>
-                                    <constraint firstItem="V8Q-Hv-thB" firstAttribute="top" secondItem="Ml7-f5-3py" secondAttribute="bottom" constant="10" id="ksE-vh-xhD"/>
-                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" constant="6.5" id="qhp-YT-7Ks"/>
-                                    <constraint firstItem="pbA-n2-qga" firstAttribute="top" secondItem="DyS-Jn-tAk" secondAttribute="bottom" constant="20" id="qnL-eU-4aa"/>
-                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="20" id="rd0-uJ-v7L"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="2Hf-ci-y1b"/>
-                                        <exclude reference="4ny-jU-Tw5"/>
-                                        <exclude reference="kTa-2e-x4r"/>
-                                        <exclude reference="qhp-YT-7Ks"/>
-                                        <exclude reference="rd0-uJ-v7L"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
                                 <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -916,7 +849,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzM-mE-JAo" userLabel="happy_percentage">
-                                        <rect key="frame" x="267" y="145" width="66" height="30"/>
+                                        <rect key="frame" x="267" y="145" width="66" height="29.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="24"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -929,7 +862,7 @@
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMy-Vo-NdC" customClass="LineChartView" customModule="Charts">
-                                        <rect key="frame" x="10" y="205" width="580" height="171"/>
+                                        <rect key="frame" x="10" y="204" width="580" height="171.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -966,6 +899,83 @@
                                         <exclude reference="xVt-08-hLg"/>
                                         <exclude reference="RZw-fw-FWk"/>
                                         <exclude reference="T0t-zg-Mux"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
+                                <rect key="frame" x="20" y="170" width="560" height="326"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbA-n2-qga">
+                                        <rect key="frame" x="179" y="47" width="202" height="151"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="Flx-Gw-0mG"/>
+                                        </constraints>
+                                        <state key="normal" image="findbank">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Flx-Gw-0mG"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <segue destination="A8c-Cy-a9O" kind="showDetail" id="swt-fH-1dv"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie uses bank level security 256-bit encryption protection, secure HTTP (HTTPS) sessions and encrypts data on disk" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyS-Jn-tAk">
+                                        <rect key="frame" x="20" y="-5" width="520" height="32"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
+                                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mcafee" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
+                                        <rect key="frame" x="224" y="218" width="113" height="49"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nqf-bM-u2M">
+                                        <rect key="frame" x="218.5" y="271" width="103" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <state key="normal" title="Terms and Conditions">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HE-Ot-uuc">
+                                        <rect key="frame" x="237" y="300" width="66" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <state key="normal" title="Privacy Policy">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="Nqf-bM-u2M" secondAttribute="centerX" constant="10" id="0sY-0Z-qy4"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" id="0vQ-Iq-YsG"/>
+                                    <constraint firstAttribute="centerY" secondItem="pbA-n2-qga" secondAttribute="centerY" constant="-44" id="2Hf-ci-y1b"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" id="4ny-jU-Tw5"/>
+                                    <constraint firstAttribute="centerX" secondItem="DyS-Jn-tAk" secondAttribute="centerX" id="AOt-c5-w0f"/>
+                                    <constraint firstItem="DyS-Jn-tAk" firstAttribute="top" secondItem="Ssu-hU-syf" secondAttribute="top" constant="-5" id="DDT-jA-N6c"/>
+                                    <constraint firstAttribute="centerY" secondItem="8HE-Ot-uuc" secondAttribute="centerY" constant="-148" id="HV9-ND-HM0"/>
+                                    <constraint firstAttribute="centerX" secondItem="8HE-Ot-uuc" secondAttribute="centerX" constant="10" id="IGS-RM-RNq"/>
+                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="20" id="Iet-KE-1qz"/>
+                                    <constraint firstAttribute="centerX" secondItem="pbA-n2-qga" secondAttribute="centerX" id="Z5j-rW-Hof"/>
+                                    <constraint firstItem="DyS-Jn-tAk" firstAttribute="leading" secondItem="Ssu-hU-syf" secondAttribute="leading" constant="20" id="cMY-jE-S6l"/>
+                                    <constraint firstItem="8HE-Ot-uuc" firstAttribute="top" secondItem="Nqf-bM-u2M" secondAttribute="bottom" constant="5" id="h7N-pb-Pg5"/>
+                                    <constraint firstAttribute="trailing" secondItem="DyS-Jn-tAk" secondAttribute="trailing" constant="20" id="hsP-Gv-km8"/>
+                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="16" id="kTa-2e-x4r"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ml7-f5-3py" secondAttribute="centerX" constant="6.5" id="qhp-YT-7Ks"/>
+                                    <constraint firstItem="pbA-n2-qga" firstAttribute="top" secondItem="DyS-Jn-tAk" secondAttribute="bottom" constant="20" id="qnL-eU-4aa"/>
+                                    <constraint firstItem="Ml7-f5-3py" firstAttribute="top" secondItem="pbA-n2-qga" secondAttribute="bottom" constant="20" id="rd0-uJ-v7L"/>
+                                    <constraint firstItem="Nqf-bM-u2M" firstAttribute="top" secondItem="Ml7-f5-3py" secondAttribute="bottom" constant="4" id="v3g-Ln-ZLs"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2Hf-ci-y1b"/>
+                                        <exclude reference="4ny-jU-Tw5"/>
+                                        <exclude reference="kTa-2e-x4r"/>
+                                        <exclude reference="qhp-YT-7Ks"/>
+                                        <exclude reference="rd0-uJ-v7L"/>
+                                        <exclude reference="HV9-ND-HM0"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1751,7 +1761,7 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HAPPY FLOW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-we-FcK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="HAPPY FLOW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-we-FcK">
                                         <rect key="frame" x="256" y="179" width="88" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
