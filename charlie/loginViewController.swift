@@ -53,12 +53,13 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             ABPinSetup.view.backgroundColor = listBlue
             ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
 
+            
             presentViewController(ABPinSetup, animated: false, completion: nil)
         }
         else if access_token != "" && users.count == 0
         {
           alertUserRecoverData()
-          charlieAnalytics.track("Account Recovered")
+         
         }
         else
         {
@@ -70,6 +71,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         emailAddress.delegate = self
+        
+
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,6 +87,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         //defaults.setObject(pin, forKey: "pin")
         
         keyChainStore.set(pin, key: "pin")
+        
+        
+        charlieAnalytics.track("Pin Code Created")
         
         pinSetValidated = true
         
@@ -123,10 +130,13 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             self.emailAddress.enabled = false
             self.nextButton.enabled = false
 
+            charlieAnalytics.track("Account Recovered")
+
             
             //get categories
             cService.getCategories()
                 {
+                    
                     
                     (responses) in
                     
@@ -178,10 +188,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     
                     keyStore.setString(access_token, forKey: "access_token")
                     keyStore.setString(self.email_address, forKey: "email_address")
-                    keyStore.setString(uuid, forKey: "uuid")
+                    keyStore.setString(uuid, forKey: self.email_address)
                     keyStore.synchronize()
                     
-                    Mixpanel.sharedInstance().identify(uuid)
+                    Mixpanel.sharedInstance().identify(self.email_address)
                     properties["$email"] = self.email_address
                     Mixpanel.sharedInstance().people.set(properties)
 
@@ -239,9 +249,11 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             createUser(emailAddress.text)
             
             var uuid = NSUUID().UUIDString
-            Mixpanel.sharedInstance().identify(uuid)
+            Mixpanel.sharedInstance().identify(emailAddress.text)
             
-            keyStore.setString(uuid, forKey: "uuid")
+            keyStore.setString(uuid, forKey: emailAddress.text)
+            
+              charlieAnalytics.track("Email Added")
         
             
             

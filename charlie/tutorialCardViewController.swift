@@ -54,6 +54,7 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        charlieAnalytics.track("App Tutorial Started")
     }
     
     func loadPage(page: Int) {
@@ -138,6 +139,7 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func closeButtonPressed(sender: AnyObject) {
         
         dismissViewControllerAnimated(true, completion: nil)
+        charlieAnalytics.track("App Tutorial Completed")
     }
     
 

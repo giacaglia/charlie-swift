@@ -95,7 +95,7 @@ class showTransactionViewController: UIViewController {
         
         
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. Browse online to get a format that fits your needs.
+        dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
         var dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 

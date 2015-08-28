@@ -105,6 +105,10 @@ class tutorialViewController: UIViewController {
         //performSegueWithIdentifier("toMainfromTutorial", sender: self)
         performSegueWithIdentifier("happyFlowToLogin", sender: self)
         
+        //add way to send what was guessed
+        charlieAnalytics.track("Happy Flow Guessed")
+        
+        
         
     }
 

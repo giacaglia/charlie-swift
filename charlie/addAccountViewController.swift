@@ -71,7 +71,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
 
         
-
+        charlieAnalytics.track("Find Bank Button Pressed")
 
         let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
         
@@ -168,6 +168,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     {
                        
                         
+                        
                         (response) in
                         
                         
@@ -181,12 +182,13 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                          //self.keyStore.setString(uuid, forKey: "uuid")
                          self.keyStore.synchronize()
                         
-                        //Mixpanel.sharedInstance().identify(uuid)
-                        properties["$email"] = email_address
+                                                properties["$email"] = email_address
                         Mixpanel.sharedInstance().people.set(properties)
                         
                         self.keyChainStore.set(access_token, key: "access_token")
 
+                        
+                      
                         
                         
                         cService.saveAccessToken(access_token)
@@ -230,6 +232,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                                 println("saved accounts")
                                             }
                                         }
+                                        
+                                        charlieAnalytics.track("Accounts Added")
                                         self.dismissViewControllerAnimated(true, completion: nil)
                                         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                                         self.spinner.stopAnimating()

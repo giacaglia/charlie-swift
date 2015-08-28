@@ -52,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         charlieAnalytics.track("App Launched")
         
         
+               
+        
         
        
 
@@ -86,6 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
 
+    }
+    
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+         Mixpanel.sharedInstance().people.addPushDeviceToken(deviceToken)
+    
+        
     }
 
     func applicationWillTerminate(application: UIApplication) {

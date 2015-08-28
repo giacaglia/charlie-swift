@@ -108,7 +108,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         
         
-        charlieAnalytics.track("Tutorial Show")
+        charlieAnalytics.track("Onboarding Tutorial Started")
         
         //setup welcome screens
         pageImages =
@@ -262,7 +262,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     func loginButtonAction(sender:UIButton!)
     {
-        
+        charlieAnalytics.track("Onboarding Tutorial Completed")
         performSegueWithIdentifier("toRegistration", sender: self)
         
     }

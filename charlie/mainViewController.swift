@@ -201,7 +201,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
-             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+            transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+            charlieAnalytics.track("Find Bank Screen - Main")
+            
+            
         }
         else
         {
@@ -488,6 +491,11 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func showReward()
     {
         
+    
+        var type = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        var setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
         
       var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
         
@@ -514,6 +522,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
             performSegueWithIdentifier("showReveal", sender: self)
             defaults.setValue("1", forKey: "happyScoreViewed")
             defaults.synchronize()
+            
+            
             
         }
         
@@ -555,9 +565,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     if i == 0
                     {
                         let happyPercentage = Int(happyPer * 100)
-                        
                         happyRewardPercentage.text = "\(happyPercentage)%"
-                        happyDateRange.text = "Week starting on \(beginDateFormatted)"
+                        happyDateRange.text = "Starting on \(beginDateFormatted)"
                     }
                     
                     
@@ -861,6 +870,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
             {
                 
                 (response) in
+                
+                charlieAnalytics.track("Account Transations Initial Sync Completed")
                 
                 println(response)
                
@@ -1236,6 +1247,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 addAccountButton.hidden = false
                 accountAddView.hidden = false
                 transactionsTable.hidden = true
+                charlieAnalytics.track("Find Bank Screen - Main")
             }
             
         }
