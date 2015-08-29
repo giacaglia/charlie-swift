@@ -32,14 +32,15 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
             if users.count > 0
             {
                 //save access_token on server
-                cService.saveAccessToken(keyChainStore.get("access_token")!)
-                    {
-                        (response) in
-                        
-                        println("Access token saved to server")
+                if let access_token = keyChainStore.get("access_token")
+                {
+                    cService.saveAccessToken(access_token)
+                        {
+                            (response) in
+                    }
+                
                 }
-                
-                
+            
             }
             
             

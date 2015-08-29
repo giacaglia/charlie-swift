@@ -51,7 +51,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
-            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
+            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
 
             
             presentViewController(ABPinSetup, animated: false, completion: nil)
@@ -206,7 +206,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                             
                             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
                             ABPinSetup.view.backgroundColor = listBlue
-                            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
+
+                            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
+                            
                             self.presentViewController(ABPinSetup, animated: true, completion: nil)
                             self.createUser(self.email_address)
                             
@@ -242,7 +244,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         {
             var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
-            ABPinSetup.setEnterPasscodeLabelText("Please choose a passcode")
+            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
             presentViewController(ABPinSetup, animated: true, completion: nil)
 
 

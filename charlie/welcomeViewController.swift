@@ -103,6 +103,13 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             {
                 (response) in
                 
+                if response == false
+                {
+                    println("error getting public database")
+                }
+
+                
+                
             }
         
         
@@ -216,12 +223,12 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             
             
             //tutorial image
-            var imageViewFrame = CGRectMake(0, 0, 250, 250)
-            imageViewFrame.origin.x = (self.view.frame.size.width / 2) - 125
+            var imageViewFrame = CGRectMake(0, 0, 230, 230)
+            imageViewFrame.origin.x = (self.view.frame.size.width / 2) - 115
             imageViewFrame.origin.y = (self.view.frame.size.height) - (self.view.frame.size.height * 0.60)
             var imageView = UIImageView(frame: imageViewFrame)
             imageView.image =   pageImages[page]
-            imageView.layer.cornerRadius = 125
+            imageView.layer.cornerRadius = 115
             imageView.clipsToBounds = true
             imageView.layer.borderColor = UIColor.whiteColor().CGColor
             imageView.layer.borderWidth = 10
@@ -235,7 +242,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             //loginbutton
             if page == 3
             {
-                var loginButtonFrame = CGRectMake(0, 0, 300, 50)
+                var loginButtonFrame = CGRectMake(0, 0, 300, 40)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 var loginButton = UIButton(frame: loginButtonFrame)

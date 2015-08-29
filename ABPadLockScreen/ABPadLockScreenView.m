@@ -46,6 +46,7 @@
 - (CGFloat)correctWidth;
 - (CGFloat)correctHeight;
 
+
 @end
 
 @implementation ABPadLockScreenView
@@ -69,7 +70,7 @@
 			_digitsTextField.textAlignment = NSTextAlignmentCenter;
 			_digitsTextField.borderStyle = UITextBorderStyleNone;
 			_digitsTextField.layer.borderWidth = 1.0f;
-			_digitsTextField.layer.cornerRadius = 5.0f;
+			//_digitsTextField.layer.cornerRadius = 5.0f;
 		}
     }
     return self;
@@ -90,7 +91,7 @@
         _requiresRotationCorrection = NO;
         
         _enterPasscodeLabel = [self standardLabel];
-        _enterPasscodeLabel.text = NSLocalizedString(@"Enter Passcode", @"");
+        _enterPasscodeLabel.text = NSLocalizedString(@"Enter Charlie Passcode", @"");
         
         _detailLabel = [self standardLabel];
         
@@ -417,6 +418,11 @@
 	
     self.enterPasscodeLabel.frame = CGRectMake(([self correctWidth]/2) - 150, top, 300, 23);
     [self.contentView addSubview:self.enterPasscodeLabel];
+    
+    
+        
+    
+    
 	
 	CGFloat pinSelectionTop = self.enterPasscodeLabel.frame.origin.y + self.enterPasscodeLabel.frame.size.height + 17.5;
 
@@ -559,7 +565,7 @@
     CGRect newFrame = CGRectMake(roundedView.frame.origin.x, roundedView.frame.origin.y, newSize, newSize);
     roundedView.frame = newFrame;
     roundedView.clipsToBounds = YES;
-    roundedView.layer.cornerRadius = newSize / 2.0;
+    //roundedView.layer.cornerRadius = newSize / 2.0;
 }
 
 @end
