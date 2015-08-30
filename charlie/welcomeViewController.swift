@@ -19,9 +19,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var pageTitles = [String()]
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
-    //var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
+    var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
   
-    var realm = Realm()
+    //var realm = Realm()
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -106,6 +106,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 if response == false
                 {
                     println("error getting public database")
+                
                 }
 
                 

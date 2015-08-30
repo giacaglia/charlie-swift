@@ -87,6 +87,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         
         
         
+       
+        
         
         contentController.addScriptMessageHandler(
             self,
@@ -107,10 +109,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         
         self.webViewView.addSubview(webView!)
         
-        
+    
        
-        
+
         webView?.sizeToFit()
+        
+        webView?.userInteractionEnabled =  true
         webView!.loadRequest(req)
         
         
@@ -140,6 +144,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     }
     
     
+
     
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         if(message.name == "callbackHandler") {
@@ -242,7 +247,20 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                       
                 }
                 
+                
             }
+            
+            
+        }
+        else
+        {
+            
+            
+            println("something else")
+            
+            
+            
+            
         }
     }
     

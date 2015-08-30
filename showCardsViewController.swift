@@ -109,5 +109,33 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         dismissViewControllerAnimated(true, completion: nil)
    }
     
+    @IBAction func openLink(sender: UIButton) {
+        
+        
+        
+        if sender.tag == 0
+        {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms.html")!)
+            
+            
+        }
+        else
+        {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy.html")!)
+            
+            
+        }
+        
+
+        
+        
+        
+        
+    }
+    
+    
+    
     
 }

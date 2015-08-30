@@ -62,6 +62,7 @@ class Transaction: Object {
     dynamic var status = 0
     dynamic var meta = Meta()
     dynamic var ctype = 0
+    dynamic var note = ""
     
     
     override static func indexedProperties() -> [String] {

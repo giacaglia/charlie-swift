@@ -30,9 +30,6 @@ let defaults = NSUserDefaults.standardUserDefaults()
 @UIApplicationMain
 
 
-
-
-
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -43,20 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var cHelp = cHelper()
        
         filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
-
-        
         Fabric.with([Crashlytics()])
 
-        Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda")
-        
+       // Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
+        Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328")
         charlieAnalytics.track("App Launched")
         
-        
-               
-        
-        
-       
-
         
         return true
     }

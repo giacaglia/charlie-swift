@@ -293,14 +293,36 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                         realm.add(user, update: true)
                     }
         
-                   
-                  
-        
-        
-        
-
+  
         
     }
+    
+    
+    
+    @IBAction func openLink(sender: UIButton) {
+        
+        
+        
+        if sender.tag == 0
+        {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms.html")!)
+            
+            
+        }
+        else
+        {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy.html")!)
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
     
     
 }
