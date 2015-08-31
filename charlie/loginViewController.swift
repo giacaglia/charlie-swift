@@ -306,14 +306,14 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         if sender.tag == 0
         {
             
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms.html")!)
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms")!)
             
             
         }
         else
         {
             
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy.html")!)
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy")!)
             
             
         }
