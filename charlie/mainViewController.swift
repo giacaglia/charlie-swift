@@ -961,6 +961,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
             cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
             
+            cell.firstLeftAction = nil
+            cell.firstRightAction = nil
         }
         else if approvedListButton.tag == 1
         {
@@ -968,7 +970,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
             cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
-            
+            cell.firstLeftAction = nil
+            cell.firstRightAction = nil
         }
         else
         {

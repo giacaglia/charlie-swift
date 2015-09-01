@@ -79,14 +79,31 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             
-            self.finishSwipe(tableView, cell: cell, direction: 1)
+          if self.happyButton.tag == 1
+            {
+             tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+
+            }
+            else
+            {
+                self.finishSwipe(tableView, cell: cell, direction: 1)
+            }
             
         }
        
         removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             
-            self.finishSwipe(tableView, cell: cell, direction: 2)
+            if self.sadButton.tag == 1
+            {
+                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+            }
+            else
+            {
+                self.finishSwipe(tableView, cell: cell, direction: 2)
+            }
+            
+            
             
         }
         
@@ -308,20 +325,21 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
         
         
+      
         cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
         cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+
         
         if sadButton.tag == 1
         {
             
-
+            
             let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
             let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
             cell.transactionDate.text = dateString
             cell.transactionAmount.text =  currencyString
          
             
-
             
             
         }
@@ -332,7 +350,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             let currencyString = cHelp.formatCurrency(happyItems[indexPath.row].amount)
             cell.transactionDate.text = dateString
             cell.transactionAmount.text = currencyString
-
+            
         }
         
         
