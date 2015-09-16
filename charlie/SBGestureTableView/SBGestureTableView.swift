@@ -65,7 +65,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
         initialize()
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initialize()
     }
@@ -106,7 +106,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
     func longPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.locationInView(self)
         let indexPath = indexPathForRowAtPoint(location)
-        let sections = numberOfSections()
+        let sections = numberOfSections
         var rows = 0
         for var i = 0; i < sections; i++ {
             rows += numberOfRowsInSection(i)
@@ -130,7 +130,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
             
             // make an image from the pressed tableview cell
             UIGraphicsBeginImageContextWithOptions(cell.bounds.size, false, 0)
-            cell.layer.renderInContext(UIGraphicsGetCurrentContext())
+            cell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
             let cellImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             
@@ -202,10 +202,15 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
                 }, completion: {(Bool) -> Void in
                     self.draggingView!.removeFromSuperview()
                     cell.hidden = false
-                    let visibleRows: NSArray = self.indexPathsForVisibleRows()!
+                    let visibleRows: NSArray = self.indexPathsForVisibleRows!
                     let mutableRows = visibleRows.mutableCopy() as! NSMutableArray
                     mutableRows.removeObject(indexPath)
-                    self.reloadRowsAtIndexPaths(mutableRows as [AnyObject], withRowAnimation: UITableViewRowAnimation.None)
+                    let n = mutableRows.count
+                    var i = 0, rows: [NSIndexPath] = []
+                        for (i = 0; i < n; ++i) {
+                                rows.append(mutableRows[i] as! NSIndexPath)
+                        }
+                    self.reloadRowsAtIndexPaths(rows as [NSIndexPath], withRowAnimation: UITableViewRowAnimation.None)
                     self.currentLocationIndexPath = nil
                     self.draggingView = nil
             })
@@ -317,12 +322,14 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
         })
     }
     
-    private func deleteRowsAtIndexPaths(indexPaths: [AnyObject], withRowAnimation animation: UITableViewRowAnimation, duration: NSTimeInterval, completion:() -> Void) {
+    private func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation, duration: NSTimeInterval, completion:() -> Void) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+        
+        UIView.animateWithDuration(duration) { () -> Void in
             self.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-        })
+            
+        }
         CATransaction.commit()
     }
     
@@ -349,7 +356,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
         return true
     }
 
-    override func insertRowsAtIndexPaths(indexPaths: [AnyObject], withRowAnimation animation: UITableViewRowAnimation) {
+    override func insertRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
         super.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
         showOrHideBackgroundViewAnimatedly(true)
     }
@@ -359,7 +366,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
         showOrHideBackgroundViewAnimatedly(true)
     }
 
-    override func deleteRowsAtIndexPaths(indexPaths: [AnyObject], withRowAnimation animation: UITableViewRowAnimation) {
+    override func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
         super.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
         showOrHideBackgroundViewAnimatedly(true)
     }

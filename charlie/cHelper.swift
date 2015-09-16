@@ -51,34 +51,34 @@ class cHelper {
                 
                   if let accounts = response["accounts"] as? [NSDictionary]
                   {
-                        realm.write {
+                    try!    realm.write {
                             // Save one Venue object (and dependents) for each element of the array
                             for account in accounts {
                                 realm.create(Account.self, value: account, update: true)
                                 //println("saved accounts")
                             }
                         }
+                    
                         
-                        
-                        var transactions = response["transactions"] as! [NSDictionary]
+                        let transactions = response["transactions"] as! [NSDictionary]
                         // Save one Venue object (and dependents) for each element of the array
                         for transaction in transactions {
                            // println("saved")
-                            realm.write {
+                         try!   realm.write {
                                 //clean up name
-                                var dictName = transaction.valueForKey("name") as? String
+                                let dictName = transaction.valueForKey("name") as? String
                                 transaction.setValue(self.cleanName(dictName!), forKey: "name")
                                 //convert string to date before insert
-                                var dictDate = transaction.valueForKey("date") as? String
+                                let dictDate = transaction.valueForKey("date") as? String
                                 transaction.setValue(self.convertDate(dictDate!), forKey: "date")
                                 //check for deposits and remove
-                                var dictAmount = transaction.valueForKey("amount") as? Double
+                                let dictAmount = transaction.valueForKey("amount") as? Double
                                 //add category
                                 if let category_id = transaction.valueForKey("category_id") as? String
                                 {
                                     let predicate = NSPredicate(format: "id = %@", category_id)
-                                    var categoryToAdd = realm.objects(Category).filter(predicate)
-                                    var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                    let categoryToAdd = realm.objects(Category).filter(predicate)
+                                    let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
                                     newTrans.categories = categoryToAdd[0]
                                    
                                     
@@ -96,7 +96,7 @@ class cHelper {
                                 }
                                 else
                                 {
-                                    var newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                    let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
                                     if type == 99
                                     {
                                         newTrans.status = 0
@@ -133,18 +133,26 @@ class cHelper {
         publicData.performQuery(query, inZoneWithID: nil) { results, error in
             if error == nil { // There is no error
                 
-                if let client_id = results[0]["client_id"] as? String,
-                    client_secret = results[0]["client_secret"] as? String
+               
+                
+                for result in results!
                 {
+                   if let client_id = result["client_id"] as? String,
+                     let client_secret = result["client_secret"] as? String
+                   {
                     keyChainStore.set(client_id, key: "client_id")
                     keyChainStore.set(client_secret, key: "client_secret")
                     callback(true)
+                    }
+                    
                 }
+
+              
                 
                 
             }
             else {
-                println(error)
+                print(error)
                 callback(false)
             }
             
@@ -160,14 +168,14 @@ func formatCurrency(currency: Double) -> String
     let formatter = NSNumberFormatter()
     formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
     formatter.locale = NSLocale(localeIdentifier: "en_US")
-    var numberFromField = currency
+    let numberFromField = currency
     return formatter.stringFromNumber(numberFromField)!
 }
 
 
 func convertDate(date:String) -> NSDate
 {
-    var dateFormatter = NSDateFormatter()
+    let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     return dateFormatter.dateFromString(date)!
 }
@@ -182,44 +190,50 @@ func convertDateGroup(date:NSDate) -> String
     
 func cleanName(name:String) -> String{
     
-    var stringlength = count(name)
+    let stringlength = name.characters.count
     
     var ierror: NSError?
-    var regex:NSRegularExpression = NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
+    let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
     
-    var regex2:NSRegularExpression = NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive, error: &ierror)!
+    let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
     
-    var modString = regex.stringByReplacingMatchesInString(name, options: nil, range: NSMakeRange(0, stringlength), withTemplate: "")
+    let modString = regex.stringByReplacingMatchesInString(name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
     
-    var stringlength2 = count(modString)
+    let stringlength2 = modString.characters.count
     
-    var modString2 = regex2.stringByReplacingMatchesInString(modString, options: nil, range: NSMakeRange(0, stringlength2), withTemplate: "")
+    let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
     
-    var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    let trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     
     return trimmedStr
     
 }
 
 
-func pathForBuggyWKWebView(filePath: String?) -> String? {
-    let fileMgr = NSFileManager.defaultManager()
-    let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-    var error: NSErrorPointer = nil
-    if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil, error: error) {
-        println("Couldn't create www subdirectory. \(error)")
-        return nil
-    }
-    let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-    if !fileMgr.fileExistsAtPath(dstPath) {
-        if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
-            println("Couldn't copy file to /tmp/www. \(error)")
-            return nil
-        }
-    }
-    return dstPath
-}
-    
+//func pathForBuggyWKWebView(filePath: String?) -> String? {
+//    let fileMgr = NSFileManager.defaultManager()
+//    let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+//    let error: NSErrorPointer = nil
+//    do {
+//        try fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil)
+//    } catch let error1 as NSError {
+//        error.memory = error1
+//        print("Couldn't create www subdirectory. \(error)")
+//        return nil
+//    }
+//    let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+//    if !fileMgr.fileExistsAtPath(dstPath) {
+//        do {
+//            try fileMgr.copyItemAtPath(filePath!, toPath: dstPath)
+//        } catch let error1 as NSError {
+//            error.memory = error1
+//            print("Couldn't copy file to /tmp/www. \(error)")
+//            return nil
+//        }
+//    }
+//    return dstPath
+//}
+//    
     
     func isiCloudAvalaible() -> Bool
     {
@@ -256,11 +270,11 @@ func pathForBuggyWKWebView(filePath: String?) -> String? {
     func splashImageView(view:UIView) {
     
         
-        var imageView = UIImageView(frame: view.frame)
-        var image = UIImage(named: "iTunesArtwork")
+        let imageView = UIImageView(frame: view.frame)
+        let image = UIImage(named: "iTunesArtwork")
         imageView.backgroundColor = UIColor.whiteColor()
         imageView.image = image
-        imageView.autoresizingMask = UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleWidth
+        imageView.autoresizingMask = [UIViewAutoresizing.FlexibleBottomMargin, UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleRightMargin, UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleTopMargin, UIViewAutoresizing.FlexibleWidth]
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         imageView.tag = 86
         view.addSubview(imageView)
@@ -327,7 +341,7 @@ extension NSDate {
     func startOfMonth() -> NSDate? {
         
         let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth, fromDate: self)
+        let currentDateComponents = calendar.components([.Year, .Month], fromDate: self)
         let startOfMonth = calendar.dateFromComponents(currentDateComponents)
         
         return startOfMonth
@@ -339,14 +353,14 @@ extension NSDate {
         let months = NSDateComponents()
         months.month = monthsToAdd
         
-        return calendar.dateByAddingComponents(months, toDate: self, options: nil)
+        return calendar.dateByAddingComponents(months, toDate: self, options: [])
     }
     
     func endOfMonth() -> NSDate? {
         
         let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1) {
-            let plusOneMonthDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth, fromDate: plusOneMonthDate)
+            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
             
             let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-1)
             

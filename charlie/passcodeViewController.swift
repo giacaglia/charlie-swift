@@ -62,7 +62,7 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     
     func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
         
-         var savedPin =  keyChainStore.get("pin")
+         let savedPin =  keyChainStore.get("pin")
         
         if pin == savedPin
         {

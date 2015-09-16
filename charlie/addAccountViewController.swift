@@ -73,7 +73,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         
         charlieAnalytics.track("Find Bank Button Pressed")
 
-        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!)!)
+        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!))
+        
+        
         
         var webView: WKWebView?
         var contentController = WKUserContentController();
@@ -124,24 +126,30 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     
     }
     
-    
-    func pathForBuggyWKWebView(filePath: String?) -> String? {
-        let fileMgr = NSFileManager.defaultManager()
-        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-        var error: NSErrorPointer = nil
-        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil, error: error) {
-            println("Couldn't create www subdirectory. \(error)")
-            return nil
-        }
-        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-        if !fileMgr.fileExistsAtPath(dstPath) {
-            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
-                println("Couldn't copy file to /tmp/www. \(error)")
-                return nil
-            }
-        }
-        return dstPath
-    }
+//    
+//    func pathForBuggyWKWebView(filePath: String?) -> String? {
+//        let fileMgr = NSFileManager.defaultManager()
+//        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+//        let error: NSErrorPointer = nil
+//        do {
+//            try fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil)
+//        } catch let error1 as NSError {
+//            error.memory = error1
+//            print("Couldn't create www subdirectory. \(error)")
+//            return nil
+//        }
+//        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+//        if !fileMgr.fileExistsAtPath(dstPath) {
+//            do {
+//                try fileMgr.copyItemAtPath(filePath!, toPath: dstPath)
+//            } catch let error1 as NSError {
+//                error.memory = error1
+//                print("Couldn't copy file to /tmp/www. \(error)")
+//                return nil
+//            }
+//        }
+//        return dstPath
+//    }
     
     
 
@@ -155,14 +163,14 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
             
             if public_token == "exit"
             {
-                println("Exit")
+                print("Exit")
                 dismissViewControllerAnimated(true, completion: nil)
                 spinner.stopAnimating()
                 
             }
             else if public_token == "loaded"
             {
-               println("finished loading")
+               print("finished loading")
                spinner.stopAnimating()
                 
             }
@@ -195,7 +203,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                             {
                                 (response) in
                                 
-                                println("Access token saved to server")
+                                print("Access token saved to server")
                         }
                         
                         
@@ -214,9 +222,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                             var type:String = response["type"] as! String
                                             cat.id = id
                                             cat.type = type
-                                            let categories = ",".join(response["hierarchy"] as! Array)
+                                            let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
                                             cat.categories = categories
-                                            realm.write {
+                                         try! realm.write {
                                                 realm.add(cat, update: true)
                                             }
                                         }
@@ -225,13 +233,17 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                     {
                                         (response) in
                                         let accounts = response["accounts"] as! [NSDictionary]
-                                        realm.write {
+                                        
+                                        
+                                       try! realm.write {
                                             // Save one Venue object (and dependents) for each element of the array
                                             for account in accounts {
                                                 realm.create(Account.self, value: account, update: true)
-                                                println("saved accounts")
+                                                print("saved accounts")
                                             }
                                         }
+                                        
+                                        
                                         
                                         charlieAnalytics.track("Accounts Added")
                                         self.dismissViewControllerAnimated(true, completion: nil)
@@ -256,7 +268,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         {
             
             
-            println("something else")
+            print("something else")
             
             
             

@@ -46,7 +46,7 @@ class showTypePickerViewController: UIViewController {
         
         realm.beginWrite()
             transactionToUpdate[0].ctype = Int(sender.tag)
-        realm.commitWrite()
+       try! realm.commitWrite()
         
         dismissViewControllerAnimated(true, completion: nil)
        
@@ -57,8 +57,8 @@ class showTypePickerViewController: UIViewController {
             if trans.ctype == 0 && trans.name == transactionToUpdate[0].name
 
             {
-                println("repeat")
-                realm.write {
+                print("repeat")
+              try!  realm.write {
                     trans.ctype = Int(sender.tag)
                 }
 

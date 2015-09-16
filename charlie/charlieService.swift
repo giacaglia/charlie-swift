@@ -98,7 +98,7 @@ init(){
                     ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
                        
                         if let errorMsg:String = response.error?.description {
-                            println(errorMsg)
+                            print(errorMsg)
                             var emptyDic = Dictionary<String, String>()
                             callback(emptyDic)
                         }
@@ -188,7 +188,7 @@ init(){
               //  println(JSON(response.results()))
                 
                 if let errorMsg:String = response.error?.description {
-                    println(errorMsg)
+                    print(errorMsg)
                     var emptyDic = Dictionary<String, String>()
                     callback(emptyDic)
                 }
@@ -203,7 +203,7 @@ init(){
                     
                 else //can process data
                 {
-                    println("ERROR")
+                    print("ERROR")
                 }
                 
                 

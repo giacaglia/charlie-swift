@@ -161,7 +161,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         currentTransactionCell = cell
         
-        println("Direction \(direction)")
+        print("Direction \(direction)")
         
         
 
@@ -173,7 +173,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
           realm.beginWrite()
             happyItems[indexPath!.row].status = direction
             tableView.removeCell(cell, duration: 0.3, completion: nil)
-          realm.commitWrite()
+        try!  realm.commitWrite()
             
             sadAmount = sadItems.sum("amount")
             happyAmount = happyItems.sum("amount")
@@ -188,7 +188,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
            realm.beginWrite()
             sadItems[indexPath!.row].status = direction
             tableView.removeCell(cell, duration: 0.3, completion: nil)
-        realm.commitWrite()
+     try!   realm.commitWrite()
             
             sadAmount = sadItems.sum("amount")
             happyAmount = happyItems.sum("amount")
@@ -243,26 +243,29 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             substring2 = buttonText.substringFromIndex(newlineRange.location)
         }
         
+     
+       
+        
         //assigning diffrent fonts to both substrings
-        let font:UIFont? = UIFont(name: "Avenir Next", size: 20.0)
-        let attrString = NSMutableAttributedString(
-            string: substring1 as String,
-            attributes: NSDictionary(
-                object: font!,
-                forKey: NSFontAttributeName) as [NSObject : AnyObject])
         
+       
+        //var attrs = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 20.0)]
         
+        let attrs = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 20.0)!]
+        
+        let attrString = NSMutableAttributedString(string: substring1 as String, attributes: attrs)
+        
+
        
         
 
+        let attrs1 = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 10.0)!]
+        
+        let attrString1 = NSMutableAttributedString(string: substring2 as String, attributes: attrs)
+
         
         
-        let font1:UIFont? = UIFont(name: "Avenir Next", size: 10.0)
-        let attrString1 = NSMutableAttributedString(
-            string: substring2 as String,
-            attributes: NSDictionary(
-                object: font1!,
-                forKey: NSFontAttributeName) as [NSObject : AnyObject])
+       
         
         
         attrString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSRange(location:0,length:substring1.length))
@@ -304,13 +307,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         if sadButton.tag == 1
         {
-            println(sadItems.count)
+            print(sadItems.count)
             return sadItems.count
  
         }
         else if happyButton.tag == 1
         {
-            println(happyItems.count)
+            print(happyItems.count)
             return happyItems.count
         }
         else
@@ -387,7 +390,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             //viewController.mainVC = self
-            let indexPath = groupTableView.indexPathForSelectedRow()
+            let indexPath = groupTableView.indexPathForSelectedRow
             if happyButton.tag == 1
             {
                 viewController.transactionID = happyItems[indexPath!.row]._id

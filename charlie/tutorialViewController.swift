@@ -69,7 +69,7 @@ class tutorialViewController: UIViewController {
     
     @IBAction func sliderChangedValue(sender: UISlider) {
         
-        var selectedValue = Int(sender.value)
+        let selectedValue = Int(sender.value)
         
         if selectedValue >= 0 && selectedValue < 40
         {

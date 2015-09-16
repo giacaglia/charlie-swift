@@ -28,8 +28,8 @@ class Account: Object {
     dynamic var _user = ""
     dynamic var institution_type = ""
     dynamic var type = ""
-    dynamic var balance = Balance()
-    dynamic var meta = Meta()
+    dynamic var balance = Balance?()
+    dynamic var meta = Meta?()
     
     override static func primaryKey() -> String? {
         return "_id"
@@ -37,7 +37,7 @@ class Account: Object {
 }
 
 class Meta: Object {
-    dynamic var location = Location()
+    dynamic var location = Location?()
     dynamic var name = ""
     //dynamic var limit = 0
     dynamic var number = ""
@@ -56,11 +56,11 @@ class Transaction: Object {
     dynamic var _account = ""
     dynamic var amount:Double  = 0.0
     dynamic var pending = true
-    dynamic var categories = Category()
+    dynamic var categories = Category?()
     dynamic var date =  NSDate()
     dynamic var name = ""
     dynamic var status = 0
-    dynamic var meta = Meta()
+    dynamic var meta = Meta?()
     dynamic var ctype = 0
     dynamic var note = ""
     
@@ -91,7 +91,7 @@ class Category: Object {
 }
 
 class Location: Object {
-    dynamic var coordinates = Coordinates()
+    dynamic var coordinates = Coordinates?()
     dynamic var state = ""
     dynamic var city = ""
     dynamic var zip = ""

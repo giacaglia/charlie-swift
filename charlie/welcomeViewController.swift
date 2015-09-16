@@ -19,9 +19,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var pageTitles = [String()]
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     
-    var realm = Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())!
+    //PRODCHANGE
+    //var realm = try! Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())
   
-    //var realm = Realm()
+    var realm = try! Realm()
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -57,9 +58,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             // Go ahead and fetch your data from the internet
             // ...
         } else {
-            println("Internet connection not available")
+            print("Internet connection not available")
             
-            var alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
+            let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
         
@@ -105,7 +106,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 
                 if response == false
                 {
-                    println("error getting public database")
+                    print("error getting public database")
                 
                 }
 
@@ -186,7 +187,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 var welcomeFrame = CGRectMake(0, 0, 326, 50)
                 welcomeFrame.origin.x = (self.view.frame.size.width / 2) - 163
                 welcomeFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
-                var welcome = UILabel(frame: welcomeFrame)
+                let welcome = UILabel(frame: welcomeFrame)
                 welcome.numberOfLines = 0
                 welcome.font = UIFont (name: "AvenirNext-Regular", size: 22)
                 welcome.textColor =  UIColor.blackColor()
@@ -205,7 +206,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             var titleFrame = CGRectMake(0, 0, 280, 150)
             titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
             titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
-            var title = UILabel(frame: titleFrame)
+            let title = UILabel(frame: titleFrame)
             title.numberOfLines = 0
             title.font = UIFont (name: "AvenirNext-Regular", size: 22)
             if page == 0
@@ -227,7 +228,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             var imageViewFrame = CGRectMake(0, 0, 230, 230)
             imageViewFrame.origin.x = (self.view.frame.size.width / 2) - 115
             imageViewFrame.origin.y = (self.view.frame.size.height) - (self.view.frame.size.height * 0.60)
-            var imageView = UIImageView(frame: imageViewFrame)
+            let imageView = UIImageView(frame: imageViewFrame)
             imageView.image =   pageImages[page]
             imageView.layer.cornerRadius = 115
             imageView.clipsToBounds = true
@@ -246,7 +247,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 var loginButtonFrame = CGRectMake(0, 0, 300, 40)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
-                var loginButton = UIButton(frame: loginButtonFrame)
+                let loginButton = UIButton(frame: loginButtonFrame)
                 loginButton.backgroundColor = UIColor.whiteColor()
                 loginButton.setTitle("Let's Get Started", forState: .Normal)
                 loginButton.setTitleColor(listBlue, forState: UIControlState.Normal)

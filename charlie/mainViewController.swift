@@ -14,7 +14,7 @@ import Charts
 
 
 //number of days we show transaction data for
-let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -35, toDate: NSDate(), options: nil)!
+let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -35, toDate: NSDate(), options: [])!
 let status = 0
 
 
@@ -146,7 +146,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             if timerCount == 0 //first time after adding account so show tutorial
             {
-                println("account but no transactions")
+                print("account but no transactions")
                 timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
                 performSegueWithIdentifier("showTutorial", sender: self)
                 timerCount = 1
@@ -157,7 +157,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             }
             else
             {
-                println("Still waiting")
+                print("Still waiting")
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
@@ -222,13 +222,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
             {
                 let  lastTransaction = allTransactionItems[0].date as NSDate
                 var calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.DayCalendarUnit
-                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
+                let flags = NSCalendarUnit.NSDayCalendarUnit
+                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                 
                 let dateToSychTo = components.day
                 
                 spinner.startAnimating()
-                println("DAYS \(dateToSychTo)")
+                print("DAYS \(dateToSychTo)")
                 cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
                     {
                         (response) in
@@ -258,7 +258,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 {
                     var refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                        
                         
                     
@@ -278,7 +278,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                         
                     }))
                     
-                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
                         tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
 
                     }))
@@ -319,7 +319,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                     
 
                 
-                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                     
                     
                     let ctype = transactionItems[indexPath!.row].ctype
@@ -336,7 +336,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 
                 }))
                 
-                refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
                     tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
 
                 }))
@@ -398,7 +398,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     realm.beginWrite()
     transactionItems[indexPath!.row].status = direction
     tableView.removeCell(cell, duration: 0.3, completion: nil)
-    realm.commitWrite()
+   try! realm.commitWrite()
     
     let transactionSum = self.sumTransactionsCount()
     let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
@@ -415,7 +415,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
         if rowCount == 1 && self.inboxListButton.tag == 1
         {
-            println("show reward window")
+            print("show reward window")
             self.showReward()
         }
     }
@@ -426,7 +426,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         if rowCount == 1 && self.inboxListButton.tag == 1
         {
-            println("show reward window")
+            print("show reward window")
             self.showReward()
         }
         
@@ -440,7 +440,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
     func firstDayOfWeek(date: NSDate) -> NSDate {
         let calendar = NSCalendar.currentCalendar()
-        var dateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitWeekOfMonth, fromDate: date)
+        let dateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
         dateComponents.weekday = 1
         return calendar.dateFromComponents(dateComponents)!
     }
@@ -448,7 +448,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func startOfMonth(date: NSDate) -> NSDate? {
         
         let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitWeekOfMonth, fromDate: date)
+        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
         let startOfMonth = calendar.dateFromComponents(currentDateComponents)
         
         return startOfMonth
@@ -462,7 +462,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         let months = NSDateComponents()
         months.month = monthsToAdd
         
-        return calendar.dateByAddingComponents(months, toDate: date, options: nil)
+        return calendar.dateByAddingComponents(months, toDate: date, options: [])
         
     }
     
@@ -472,7 +472,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1, date: date) {
-            let plusOneMonthDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth, fromDate: plusOneMonthDate)
+            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
             
             let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-86402)
             
@@ -492,7 +492,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     {
         
     
-        var type = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        var type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
         var setting = UIUserNotificationSettings(forTypes: type, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
         UIApplication.sharedApplication().registerForRemoteNotifications()
@@ -512,7 +512,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         var unitsSold = [Double()]
      
         
-       var transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitMonth, fromDate: firstTransaction, toDate: lastTransaction, options: nil).month
+       var transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
        
        
         
@@ -690,8 +690,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
         
-        println("First = \(startDate) and last \(endDate)")
-        println("Happy % \(chartHappyWeek1Percentage)")
+        print("First = \(startDate) and last \(endDate)")
+        print("Happy % \(chartHappyWeek1Percentage)")
         return (chartHappyWeek1Percentage, startDate, endDate)
         
         
@@ -703,10 +703,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
     func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate)
     {
         
-        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -(weeksFrom * 7), toDate: date, options: nil)!
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
         
         let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit)
+        components.setValue(6, forComponent: NSCalendarUnit.NSDayCalendarUnit)
         
         let first: NSDate = firstDayOfWeek(startDate)
         let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
@@ -720,8 +720,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
         
-        println("First = \(first) and last \(expirationDate)")
-        println("Happy % \(chartHappyWeek1Percentage)")
+        print("First = \(first) and last \(expirationDate)")
+        print("Happy % \(chartHappyWeek1Percentage)")
         return (chartHappyWeek1Percentage, first, expirationDate!)
         
         
@@ -863,7 +863,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func updateTrans() -> Void
     {
-        println("looking for records")
+        print("looking for records")
         
         
         cHelp.addUpdateResetAccount(1, dayLength: 0)
@@ -873,7 +873,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 
                 charlieAnalytics.track("Account Transations Initial Sync Completed")
                 
-                println(response)
+                print(response)
                
                 if response > 0
                 {
@@ -1011,9 +1011,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     func stripCents(currency: String) -> String
     {
-        let stringLength = count(currency) // Since swift1.2 `countElements` became `count`
+        let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
         let substringIndex = stringLength - 3
-        return currency.substringToIndex(advance(currency.startIndex, substringIndex))
+        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
         
     }
   
@@ -1047,7 +1047,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         if (segue.identifier == "segueFromMainToDetailView") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
-            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            let indexPath = self.transactionsTable.indexPathForSelectedRow
             viewController.transactionID = transactionItems[indexPath!.row]._id
             viewController.sourceVC = "main"
             
@@ -1067,7 +1067,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         else if (segue.identifier == "groupDetail")
         {
-            let indexPath = self.transactionsTable.indexPathForSelectedRow()
+            let indexPath = self.transactionsTable.indexPathForSelectedRow
             let viewController = segue.destinationViewController as! groupDetailViewController
             
             if flagListButton.tag == 1
@@ -1136,13 +1136,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
             {
                 let  lastTransaction = allTransactionItems[0].date as NSDate
                 var calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.DayCalendarUnit
-                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: nil)
+                let flags = NSCalendarUnit.NSDayCalendarUnit
+                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                 
                 let dateToSychTo = components.day
                 
                 spinner.startAnimating()
-                println("DAYS \(dateToSychTo)")
+                print("DAYS \(dateToSychTo)")
                 cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
                     {
                         (response) in
@@ -1161,7 +1161,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             }
             
         } else {
-            println("Internet connection not available")
+            print("Internet connection not available")
             
             var alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
@@ -1378,7 +1378,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         {
             if trans.name == current_name
             {
-                println("add to existing \(trans.name) at index \(current_index)")
+                print("add to existing \(trans.name) at index \(current_index)")
                 if trans.status == 1
                 {
                 
@@ -1393,7 +1393,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             }
             else
             {
-                println("create new \(trans.name)")
+                print("create new \(trans.name)")
                 var cGroup = charlieGroup(name: trans.name)
                 if trans.status == 1
                 {
@@ -1412,6 +1412,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
             current_name = trans.name
         }
         
+        
+    
         
         if type == 2
         { return charlieGroupList.filter({$0.notWorthValue > 0}) }

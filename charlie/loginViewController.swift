@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-var realm = Realm()
+var realm = try! Realm()
 
 let users = realm.objects(User)
 
@@ -124,7 +124,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         {
         var refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
         
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
             
             self.activityIndicator.startAnimating()
             self.emailAddress.enabled = false
@@ -148,11 +148,15 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                         var type:String = response["type"] as! String
                         cat.id = id
                         cat.type = type
-                        let categories = ",".join(response["hierarchy"] as! Array)
+                        let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
                         cat.categories = categories
-                        realm.write {
-                            realm.add(cat, update: true)
-                        }
+                        
+                     
+                      
+                          try!  realm.write {
+                                realm.add(cat, update: true)
+                            }
+                       
                     }
                     
                     
@@ -162,7 +166,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     user.email = email
                     user.password = "password"
                     //user.access_token = access_token
-                    realm.write {
+                   try! realm.write {
                         realm.add(user, update: true)
                     }
                     
@@ -225,7 +229,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction) in
             //do nothing and allow user to sign up again
         }))
         
@@ -240,20 +244,20 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     @IBAction func nextButtonPressed(sender: AnyObject) {
         
         
-        if isValidEmail(emailAddress.text)
+        if isValidEmail(emailAddress.text!)
         {
-            var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+            let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
             presentViewController(ABPinSetup, animated: true, completion: nil)
 
 
-            createUser(emailAddress.text)
+            createUser(emailAddress.text!)
             
-            var uuid = NSUUID().UUIDString
+            let uuid = NSUUID().UUIDString
             Mixpanel.sharedInstance().identify(emailAddress.text)
             
-            keyStore.setString(uuid, forKey: emailAddress.text)
+            keyStore.setString(uuid, forKey: emailAddress.text!)
             
               charlieAnalytics.track("Email Added")
         
@@ -262,7 +266,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         }
         else
         {
-            var alert = UIAlertController(title: "Whoops", message: "Looks like there is a problem with your email address", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Whoops", message: "Looks like there is a problem with your email address", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
@@ -289,10 +293,13 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     let user = User()
                     user.email = email
                     user.password = "password"
-                    realm.write {
-                        realm.add(user, update: true)
-                    }
         
+        
+        
+                       try! realm.write {
+                            realm.add(user, update: true)
+                        }
+                    
   
         
     }

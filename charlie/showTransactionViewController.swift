@@ -70,14 +70,17 @@ class showTransactionViewController: UIViewController {
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-
+    
+        
+         var lat = 0.0
+         var lon = 0.0
 
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
         
         self.transactionItems = realm.objects(Transaction).filter("_id = '\(self.transactionID)'")
     
-        accountNumberLabel.text = account[0].meta.number
-        accountNameLabel.text = account[0].meta.name
+        accountNumberLabel.text = account[0].meta!.number
+        accountNameLabel.text = account[0].meta!.name
         
         
         if sourceVC == "main"
@@ -99,14 +102,14 @@ class showTransactionViewController: UIViewController {
         var dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 
-       categoryLabel.text = self.transactionItems[transactionIndex].categories.categories
+       categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
         
-        addressLabel.text = "\(self.transactionItems[transactionIndex].meta.location.address) \n  \(self.transactionItems[transactionIndex].meta.location.city) \(self.transactionItems[transactionIndex].meta.location.state) \(self.transactionItems[transactionIndex].meta.location.zip)"
+        addressLabel.text = "\(self.transactionItems[transactionIndex].meta?.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
         
     
-        println(self.transactionItems[transactionIndex].ctype)
-        var lat = self.transactionItems[transactionIndex].meta.location.coordinates.lat
-        var lon = self.transactionItems[transactionIndex].meta.location.coordinates.lon
+        print(self.transactionItems[transactionIndex].ctype)
+        lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
+        lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
         
         if lat > 0
         {
