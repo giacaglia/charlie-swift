@@ -1246,7 +1246,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "Charlie" */;
+			buildConfigurationList = 09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "charlie" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1629,6 +1629,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1675,6 +1676,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1781,7 +1783,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "Charlie" */ = {
+		09C2A73D1B21F0AC005A40DA /* Build configuration list for PBXProject "charlie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				09C2A7621B21F0AD005A40DA /* Debug */,
