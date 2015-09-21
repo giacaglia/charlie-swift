@@ -97,9 +97,9 @@ class showTransactionViewController: UIViewController {
         }
         
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
-        var dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
+        let dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 
        categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
@@ -119,7 +119,7 @@ class showTransactionViewController: UIViewController {
             let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             
             centerMapOnLocation(initialLocation)
-            var anotation = MKPointAnnotation()
+            let anotation = MKPointAnnotation()
             anotation.coordinate = location
 
             mapView.addAnnotation(anotation)

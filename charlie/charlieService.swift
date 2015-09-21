@@ -47,12 +47,12 @@ init(){
         
         
         
-        var parameters = [
+        let parameters = [
             "type": "token",
             "context": token,
         ]
         
-        var sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
+        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
         
@@ -99,7 +99,7 @@ init(){
                        
                         if let errorMsg:String = response.error?.description {
                             print(errorMsg)
-                            var emptyDic = Dictionary<String, String>()
+                            let emptyDic = Dictionary<String, String>()
                             callback(emptyDic)
                         }
                         else
@@ -139,12 +139,12 @@ init(){
             if dayLength > 0
             {
             
-                var options = [
+                let options = [
                     "pending": false,
                     "gte": "\(dayLength) days ago"
                 ]
            
-                var parameters = [
+                let parameters = [
                     "client_id": client_id,
                     "secret": client_secret,
                     "access_token": access_token,
@@ -159,11 +159,11 @@ init(){
             else
             {
                 
-                var options = [
+                let options = [
                     "pending": false
                 ]
                 
-                var parameters = [
+                let parameters = [
                     "client_id": client_id,
                     "secret": client_secret,
                     "access_token": access_token,
@@ -172,7 +172,7 @@ init(){
                // println(parameters)
 
                 
-                srConnectGet.parameters = parameters as! [String : AnyObject]
+                srConnectGet.parameters = parameters as? [String : AnyObject]
             }
           
             
@@ -189,7 +189,7 @@ init(){
                 
                 if let errorMsg:String = response.error?.description {
                     print(errorMsg)
-                    var emptyDic = Dictionary<String, String>()
+                    let emptyDic = Dictionary<String, String>()
                     callback(emptyDic)
                 }
                 else

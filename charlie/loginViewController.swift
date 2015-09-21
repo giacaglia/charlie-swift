@@ -34,7 +34,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        var user_count = users.count
+        let user_count = users.count
         
         if keyStore.stringForKey("access_token") != nil && keyStore.stringForKey("email_address") != nil
         {
@@ -49,7 +49,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         }
         else if user_count > 0 //if user was setup but for some reason the passcode has not been set yet
         {
-            var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+            let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
 
@@ -114,7 +114,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func alertUserRecoverData()
     {
         
-        var uuid = ""
+        let uuid = ""
         var properties:[String:AnyObject] = [:]
         
     if let access_token = keyStore.stringForKey("access_token")
@@ -122,7 +122,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         if let email = keyStore.stringForKey("email_address")
         
         {
-        var refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
+        let refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
             
@@ -143,9 +143,9 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     for response in responses
                     {
                         
-                        var cat = Category()
-                        var id:String = response["id"] as! String
-                        var type:String = response["type"] as! String
+                        let cat = Category()
+                        let id:String = response["id"] as! String
+                        let type:String = response["type"] as! String
                         cat.id = id
                         cat.type = type
                         let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
@@ -179,13 +179,13 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                         }
                     
                     
-                    if let uuid = keyStore.stringForKey("uuid")
+                    if let _ = keyStore.stringForKey("uuid")
                     {
                        //all set
                     }
                     else
                     {
-                        let uuid = NSUUID().UUIDString
+                        _ = NSUUID().UUIDString
                     }
                    
                     
@@ -208,7 +208,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                             (response) in
                             
                             
-                            var ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+                            let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
                             ABPinSetup.view.backgroundColor = listBlue
 
                             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
@@ -287,7 +287,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func createUser(email:String)
     {
       
-                    var properties:[String:AnyObject] = [:]
+                    //var properties:[String:AnyObject] = [:]
         
                     // Create a Person object
                     let user = User()

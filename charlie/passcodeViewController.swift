@@ -22,7 +22,7 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
         
         if pinValidated == false
         {
-            var ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
+            let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
             ABPin.view.backgroundColor = listBlue
             self.view.backgroundColor = listBlue
 

@@ -78,7 +78,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         
         
         var webView: WKWebView?
-        var contentController = WKUserContentController();
+        let contentController = WKUserContentController();
         
         let source: NSString = "var meta = document.createElement('meta');" +
             "meta.name = 'viewport';" +
@@ -100,7 +100,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         contentController.addUserScript(script)
         
         
-        var config = WKWebViewConfiguration()
+        let config = WKWebViewConfiguration()
         config.userContentController = contentController
         
         webView = WKWebView(
@@ -159,7 +159,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
             
             //get access_token
             
-            var public_token = message.body as! String
+            let public_token = message.body as! String
             
             if public_token == "exit"
             {
@@ -188,7 +188,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                        // var uuid = NSUUID().UUIDString
                          var properties:[String:AnyObject] = [:]
                         
-                        var access_token = response["access_token"] as! String
+                        let access_token = response["access_token"] as! String
                         let email_address = self.users[0].email
                          self.keyStore.setString(access_token, forKey: "access_token")
                          self.keyStore.setString(email_address, forKey: "email_address")
@@ -209,7 +209,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                         
                         
                         //download categories if don't exist
-                        let cats = realm.objects(Category)
+                        _ = realm.objects(Category)
                         cService.getCategories()
                                 {
                                     (responses) in
@@ -217,9 +217,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                         for response in responses
                                         {
                     
-                                            var cat = Category()
-                                            var id:String = response["id"] as! String
-                                            var type:String = response["type"] as! String
+                                            let cat = Category()
+                                            let id:String = response["id"] as! String
+                                            let type:String = response["type"] as! String
                                             cat.id = id
                                             cat.type = type
                                             let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")

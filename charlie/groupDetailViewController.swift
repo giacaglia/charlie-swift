@@ -52,7 +52,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         self.name.text = transactionName
         
-        var groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
+       
+        let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
         
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
@@ -73,11 +74,11 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         sadAmount = sadItems.sum("amount")
         happyAmount = happyItems.sum("amount")
-        var totalAmount = sadAmount + happyAmount
+       // var totalAmount = sadAmount + happyAmount
 
         
         removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            let indexPath = tableView.indexPathForCell(cell)
+       //     let indexPath = tableView.indexPathForCell(cell)
             
           if self.happyButton.tag == 1
             {
@@ -92,7 +93,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         }
        
         removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            let indexPath = tableView.indexPathForCell(cell)
+        //    let indexPath = tableView.indexPathForCell(cell)
             
             if self.sadButton.tag == 1
             {
@@ -226,13 +227,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         
         button.titleLabel?.textAlignment = NSTextAlignment.Center
-        var buttonText: NSString = "\(message1)\n\(message2)"
+        let buttonText: NSString = "\(message1)\n\(message2)"
         
         button.backgroundColor = backGroundColor
        
 
         //getting the range to separate the button title strings
-        var newlineRange: NSRange = buttonText.rangeOfString("\n")
+        let newlineRange: NSRange = buttonText.rangeOfString("\n")
         
         //getting both substrings
         var substring1: NSString = ""
@@ -259,7 +260,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
        
         
 
-        let attrs1 = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 10.0)!]
+       // let attrs1 = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 10.0)!]
         
         let attrString1 = NSMutableAttributedString(string: substring2 as String, attributes: attrs)
 

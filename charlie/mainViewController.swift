@@ -221,7 +221,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             if allTransactionItems.count > 0
             {
                 let  lastTransaction = allTransactionItems[0].date as NSDate
-                var calendar: NSCalendar = NSCalendar.currentCalendar()
+                let calendar: NSCalendar = NSCalendar.currentCalendar()
                 let flags = NSCalendarUnit.NSDayCalendarUnit
                 let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                 
@@ -248,7 +248,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
         let indexPath = tableView.indexPathForCell(cell)
-        let name = transactionItems[indexPath!.row].name
+        _ = transactionItems[indexPath!.row].name
            
             
             if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
@@ -256,7 +256,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
 
                 if defaults.stringForKey("firstSwipeRight") == nil
                 {
-                    var refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                        
@@ -315,7 +315,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 if defaults.stringForKey("firstSwipeLeft") == nil
                 {
        
-                    var refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
                     
 
                 
@@ -405,7 +405,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
     let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
     self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
     
-    var rowCount = Int(tableView.numberOfRowsInSection(0).value)
+    let rowCount = Int(tableView.numberOfRowsInSection(0).value)
     
     if direction == 1
     {
@@ -492,17 +492,17 @@ class mainViewController: UIViewController, UITableViewDataSource {
     {
         
     
-        var type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
-        var setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
+        let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
-      var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
+      let transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
         
         charlieAnalytics.track("Show Reward")
         happyRewardPercentage.textColor = listGreen
-        let userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")
-        var happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
+        _ =  defaults.stringForKey("userSelectedHappyScore")
+        let happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         let  lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
         let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
@@ -512,7 +512,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         var unitsSold = [Double()]
      
         
-       var transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
+       let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
        
        
         
@@ -546,7 +546,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
                 let beginDateFormatted = dateFormatter.stringFromDate(beginDate)
-                let endDateFormatted = dateFormatter.stringFromDate(endDate)
+                _ = dateFormatter.stringFromDate(endDate)
                 
                 
                 
@@ -582,9 +582,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 moneyCountLabel.hidden = true
                 happyImage.image = UIImage(named: "result_happy")
                 
-                var incomeSum:Double = 0.0
-                var spendableSum:Double = 0.0
-                var billsSum:Double = 0.0
+//                var incomeSum:Double = 0.0
+//                var spendableSum:Double = 0.0
+//                var billsSum:Double = 0.0
             
             }
             
@@ -633,9 +633,9 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 moneyCountLabel.hidden = true
                 happyImage.image = UIImage(named: "result_happy")
                 
-                var incomeSum:Double = 0.0
-                var spendableSum:Double = 0.0
-                var billsSum:Double = 0.0
+//                var incomeSum:Double = 0.0
+//                var spendableSum:Double = 0.0
+//                var billsSum:Double = 0.0
 
                 
             }
@@ -950,7 +950,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let size = CGSizeMake(30, 30)
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         
         
@@ -982,7 +982,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
           
             var dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            var dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
             cell.dateCellLabel.text = dateString
             //cell.selectionStyle = .None
         }
@@ -1061,7 +1061,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         }
         else if (segue.identifier == "showReveal")
         {
-            var userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
+            let userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
             let viewController = segue.destinationViewController as! revealViewController
             viewController.revealPercentage = "\(userSelectedHappyScore)"
         }
@@ -1135,7 +1135,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             if allTransactionItems.count > 0
             {
                 let  lastTransaction = allTransactionItems[0].date as NSDate
-                var calendar: NSCalendar = NSCalendar.currentCalendar()
+                let calendar: NSCalendar = NSCalendar.currentCalendar()
                 let flags = NSCalendarUnit.NSDayCalendarUnit
                 let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                 
@@ -1163,7 +1163,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
         } else {
             print("Internet connection not available")
             
-            var alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
+            let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
 
@@ -1369,10 +1369,10 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         charlieGroupList = []
         var current_name = ""
-        var i = 0
+//        var i = 0
         
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        var actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
+        let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         var current_index = 0
         for trans in actedUponItems
         {
@@ -1394,7 +1394,7 @@ class mainViewController: UIViewController, UITableViewDataSource {
             else
             {
                 print("create new \(trans.name)")
-                var cGroup = charlieGroup(name: trans.name)
+                let cGroup = charlieGroup(name: trans.name)
                 if trans.status == 1
                 {
                     cGroup.worthCount = 1

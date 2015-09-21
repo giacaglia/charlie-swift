@@ -89,7 +89,7 @@ class tutorialViewController: UIViewController {
         }
         
         
-        let selectedStringValue = String(selectedValue)
+        //let selectedStringValue = String(selectedValue)
         
         sliderAmount.text = "\(selectedValue)%"
         

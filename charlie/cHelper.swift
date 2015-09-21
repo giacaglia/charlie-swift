@@ -38,7 +38,7 @@ class cHelper {
         
       let users = realm.objects(User)
         
-       for user in users
+       for _ in users
        {
         
         let user_access_token  = keyChainStore.get("access_token")
@@ -192,7 +192,7 @@ func cleanName(name:String) -> String{
     
     let stringlength = name.characters.count
     
-    var ierror: NSError?
+   // var ierror: NSError?
     let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
     
     let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)

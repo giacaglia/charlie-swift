@@ -33,7 +33,7 @@ class persistenceStore {
         
         
         
-        if var transactionLogsURL:NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil)
+        if var _:NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil)
         {
             print("True")
             return true
