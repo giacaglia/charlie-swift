@@ -58,6 +58,8 @@ class cHelper {
                                 //println("saved accounts")
                             }
                         }
+                   
+                    
                     
                         
                         let transactions = response["transactions"] as! [NSDictionary]
@@ -74,15 +76,16 @@ class cHelper {
                                 //check for deposits and remove
                                 let dictAmount = transaction.valueForKey("amount") as? Double
                                 //add category
-                                if let category_id = transaction.valueForKey("category_id") as? String
+                            
+                               if let category_id = transaction.valueForKey("category_id") as? String
                                 {
                                     let predicate = NSPredicate(format: "id = %@", category_id)
                                     let categoryToAdd = realm.objects(Category).filter(predicate)
                                     let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
                                     newTrans.categories = categoryToAdd[0]
                                    
-                                    
-                                    if (category_id == "21008000" || category_id == "21007001" || dictAmount < 0)
+                            
+                                    if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1)
                                     {
                                         newTrans.status = 86 //sets status to ignore from totals
                                     }
@@ -103,6 +106,10 @@ class cHelper {
                                     }
                                     
                                 }
+                            
+                            
+                            
+                            
                                 
                             }
                         }
@@ -203,7 +210,12 @@ func cleanName(name:String) -> String{
     
     let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
     
-    let trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    
+    if trimmedStr.characters.count == 0
+    {
+       trimmedStr = "Missing Name"
+    }
     
     return trimmedStr
     
