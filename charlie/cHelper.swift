@@ -77,11 +77,19 @@ class cHelper {
                                 let dictAmount = transaction.valueForKey("amount") as? Double
                                 //add category
                             
+                            
+                                let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                            
+                                if dictAmount < 0 //handle if no categorized this all need to be refactored
+                                {
+                                     newTrans.status = 86 //sets status to ignore from totals
+                                }
+                            
                                if let category_id = transaction.valueForKey("category_id") as? String
                                 {
                                     let predicate = NSPredicate(format: "id = %@", category_id)
                                     let categoryToAdd = realm.objects(Category).filter(predicate)
-                                    let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                   
                                     newTrans.categories = categoryToAdd[0]
                                    
                             

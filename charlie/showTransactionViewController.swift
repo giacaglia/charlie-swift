@@ -104,12 +104,28 @@ class showTransactionViewController: UIViewController {
 
        categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
         
-        addressLabel.text = "\(self.transactionItems[transactionIndex].meta?.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
+     
+        
+        addressLabel.text = "\(self.transactionItems[transactionIndex].meta!.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
+        
         
     
+    
         print(self.transactionItems[transactionIndex].ctype)
-        lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
-        lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
+        
+         if self.transactionItems[transactionIndex].meta != nil
+            {
+                if self.transactionItems[transactionIndex].meta!.location != nil
+                    {
+                        if self.transactionItems[transactionIndex].meta!.location?.coordinates != nil
+                        {
+
+                          lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
+                          lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
+                        }
+                    }
+            }
+        
         
         if lat > 0
         {
