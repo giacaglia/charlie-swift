@@ -74,6 +74,10 @@ class showTransactionViewController: UIViewController {
         
          var lat = 0.0
          var lon = 0.0
+         var address = ""
+         var city = ""
+         var state = ""
+         var zip = ""
 
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
         
@@ -104,9 +108,47 @@ class showTransactionViewController: UIViewController {
 
        categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
         
-     
+       if  self.transactionItems[transactionIndex].meta!.location!.address != ""
+       {
+        address = self.transactionItems[transactionIndex].meta!.location!.address
+       }
+        else
+       {
+        address = ""
+        }
         
-        addressLabel.text = "\(self.transactionItems[transactionIndex].meta!.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
+        if  self.transactionItems[transactionIndex].meta!.location!.city != ""
+        {
+            city = self.transactionItems[transactionIndex].meta!.location!.city
+        }
+        else
+        {
+            city = ""
+        }
+        
+        if  self.transactionItems[transactionIndex].meta!.location!.state != ""
+        {
+            state = self.transactionItems[transactionIndex].meta!.location!.state
+        }
+        else
+        {
+            state = ""
+        }
+
+        
+        if  self.transactionItems[transactionIndex].meta!.location!.zip != ""
+        {
+            zip = self.transactionItems[transactionIndex].meta!.location!.zip
+        }
+        else
+        {
+            zip = ""
+        }
+
+        
+        
+        
+        addressLabel.text = "\(address) \n  \(city) \(state) \(zip)"
         
         
     
