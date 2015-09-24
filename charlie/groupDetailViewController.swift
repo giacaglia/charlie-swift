@@ -194,7 +194,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
     
 
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController

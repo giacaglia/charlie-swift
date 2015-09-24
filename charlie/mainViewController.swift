@@ -560,7 +560,7 @@ class mainViewController: UIViewController {
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
         
-        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: .FilterByName) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: .FilterByDate) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
     }
@@ -652,7 +652,7 @@ class mainViewController: UIViewController {
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: .FilterByName) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: .FilterByDate) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
