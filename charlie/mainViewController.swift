@@ -28,7 +28,7 @@ var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
-class mainViewController: UIViewController, UITableViewDataSource {
+class mainViewController: UIViewController {
     
     @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
     @IBOutlet weak var toastView: UIView!
@@ -72,8 +72,6 @@ class mainViewController: UIViewController, UITableViewDataSource {
     let approvedUnSelectedInboxButtonImage = UIImage(named: "happy_off_blue")
     let approvedUnSelectedSadButtonImage = UIImage(named: "happy_off_red")
     let approvedSelectedButtonImage = UIImage(named: "happy_on")
-    
-    
     let menuButtonBlueImage = UIImage(named: "btn-menu-blue.png")
     let menuButtonGreenImage = UIImage(named: "btn-menu-green.png")
     let menuButtonRedImage = UIImage(named: "btn-menu-red.png")
@@ -84,22 +82,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
     
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
-    
-    
-    
     let users = realm.objects(User)
     let accounts = realm.objects(Account)
-    
     var timer = NSTimer()
-    
     var timerCount:Int = 0
-    
-    
     var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
-    
     var pinApproved = false
-    
-    
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -146,15 +134,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
-        
         transactionsTable.contentInset = UIEdgeInsetsZero
         self.automaticallyAdjustsScrollViewInsets = false
-        
         
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
-        
         
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil {
@@ -176,226 +161,107 @@ class mainViewController: UIViewController, UITableViewDataSource {
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             addAccountButton.hidden = true
             accountAddView.hidden = true
-            
             //refresh accounts
-            
-            if allTransactionItems.count > 0 {
-                let  lastTransaction = allTransactionItems[0].date as NSDate
-                let calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.NSDayCalendarUnit
-                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
-                
-                let dateToSychTo = components.day
-                
-                spinner.startAnimating()
-                print("DAYS \(dateToSychTo)")
-                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
+                if allTransactionItems.count > 0 {
+                    let lastTransaction = allTransactionItems[0].date as NSDate
+                    let calendar: NSCalendar = NSCalendar.currentCalendar()
+                    let flags = NSCalendarUnit.Day
+                    let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                     
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-                    {
-                        self.showReward()
+                    let dateToSychTo = components.day
+                    
+                    spinner.startAnimating()
+                    print("DAYS \(dateToSychTo)")
+                    cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
+                        
+                        self.transactionsTable.reloadData()
+                        self.spinner.stopAnimating()
+                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
+                            self.showReward()
+                        }
+                        self.spinner.stopAnimating()
                     }
-                    self.spinner.stopAnimating()
                 }
             }
-        }
-        
-        inboxListButton.tag = 1 //set inbox to default
-        
-        removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
+            
+            inboxListButton.tag = 1 //set inbox to default
+            
+            removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
-            _ = transactionItems[indexPath!.row].name
-            
-            
-            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1
-            {
-                
-                if defaults.stringForKey("firstSwipeRight") == nil
-                {
+            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1 {
+                if defaults.stringForKey("firstSwipeRight") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
-                    
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-                        
-                        
-                        
                         let ctype = transactionItems[indexPath!.row].ctype
                         self.finishSwipe(tableView, cell: cell, direction: 1)
-                        if ctype == 0
-                        {
+                        if ctype == 0 {
                             //  self.performSegueWithIdentifier("showTypePicker", sender: self)
                         }
-                        
-                        
-                        
                         defaults.setObject("yes", forKey: "firstSwipeRight")
                         defaults.synchronize()
-                        
-                        
-                        
                     }))
-                    
                     refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
                         tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-                        
                     }))
-                    
                     self.presentViewController(refreshAlert, animated: true, completion: nil)
-                    
-                    
                 }
-                else
-                {
+                else {
                     let ctype = transactionItems[indexPath!.row].ctype
                     self.finishSwipe(tableView, cell: cell, direction: 1)
-                    if ctype == 0
-                    {
+                    if ctype == 0 {
                         // self.performSegueWithIdentifier("showTypePicker", sender: self)
                     }
                 }
-                
             }
-            else //swiping not acted on
-            {
+            else {
+                //swiping not acted on
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
         }
-        
-        
-        
-        
+
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
-            if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1
-            {
-                
-                if defaults.stringForKey("firstSwipeLeft") == nil
-                {
-                    
+            if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1 {
+                if defaults.stringForKey("firstSwipeLeft") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    
-                    
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-                        
-                        
                         let ctype = transactionItems[indexPath!.row].ctype
                         self.finishSwipe(tableView, cell: cell, direction: 2)
-                        if ctype == 0
-                        {
-                            // self.performSegueWithIdentifier("showTypePicker", sender: self)
+                        if ctype == 0 {
+                                // self.performSegueWithIdentifier("showTypePicker", sender: self)
                         }
-                        
-                        
                         defaults.setObject("yes", forKey: "firstSwipeLeft")
                         defaults.synchronize()
-                        
-                        
                     }))
                     
                     refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
                         tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-                        
                     }))
-                    
                     self.presentViewController(refreshAlert, animated: true, completion: nil)
-                    
-                    
                 }
-                else
-                {
-                    
+                else {
                     let ctype = transactionItems[indexPath!.row].ctype
                     self.finishSwipe(tableView, cell: cell, direction: 2)
-                    if ctype == 0
-                    {
+                    if ctype == 0 {
                         //  self.performSegueWithIdentifier("showTypePicker", sender: self)
                     }
-                    
-                    
-                    
-                    
                 }
-                
-                
-                
-                
             }
-                
-                
-            else
-            {
-                
+            else {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-                
             }
         }
-        
-        
-        
+            
         topView.backgroundColor = UIColor.whiteColor()
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-        
     }
     
     
     
-    
-    
-    func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int)
-    {
-        
-        let indexPath = tableView.indexPathForCell(cell)
-        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
-        currentTransactionCell = cell
-        
-        realm.beginWrite()
-        transactionItems[indexPath!.row].status = direction
-        tableView.removeCell(cell, duration: 0.3, completion: nil)
-        try! realm.commitWrite()
-        
-        let transactionSum = self.sumTransactionsCount()
-        let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
-        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-        self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
-        
-        let rowCount = Int(tableView.numberOfRowsInSection(0).value)
-        
-        if direction == 1
-        {
-            
-            charlieAnalytics.track("Worth It Swipe")
-            
-            
-            if rowCount == 1 && self.inboxListButton.tag == 1
-            {
-                print("show reward window")
-                self.showReward()
-            }
-        }
-        else
-        {
-            charlieAnalytics.track("Not Worth It Swipe")
-            
-            
-            if rowCount == 1 && self.inboxListButton.tag == 1
-            {
-                print("show reward window")
-                self.showReward()
-            }
-            
-            
-        }
-        
-    }
-    
-    
-    
-    
+
     func firstDayOfWeek(date: NSDate) -> NSDate {
         let calendar = NSCalendar.currentCalendar()
         let dateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
@@ -404,30 +270,20 @@ class mainViewController: UIViewController, UITableViewDataSource {
     }
     
     func startOfMonth(date: NSDate) -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
         let startOfMonth = calendar.dateFromComponents(currentDateComponents)
-        
         return startOfMonth
     }
     
-    
-    
     func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         let months = NSDateComponents()
         months.month = monthsToAdd
-        
         return calendar.dateByAddingComponents(months, toDate: date, options: [])
-        
     }
     
-    
-    
     func endOfMonth(date: NSDate) -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1, date: date) {
             let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
@@ -436,20 +292,12 @@ class mainViewController: UIViewController, UITableViewDataSource {
             
             return endOfMonth
         }
-        
         return nil
     }
     
+
     
-    
-    
-    
-    
-    
-    func showReward()
-    {
-        
-        
+    func showReward() {
         let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
         let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
@@ -459,20 +307,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         charlieAnalytics.track("Show Reward")
         happyRewardPercentage.textColor = listGreen
-        _ =  defaults.stringForKey("userSelectedHappyScore")
         let happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         let  lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
         let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
         
-        
         var months = [String()]
         var unitsSold = [Double()]
         
-        
         let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
-        
-        
         
         
         if happyScoreViewed == "0" //user hasn't compared what they thought their score was to what it is
@@ -481,106 +324,58 @@ class mainViewController: UIViewController, UITableViewDataSource {
             defaults.setValue("1", forKey: "happyScoreViewed")
             defaults.synchronize()
             
-            
-            
         }
         
-        
-        
-        
-        if transactionsDateDifference >= 1
-        {
-            
+        if transactionsDateDifference >= 1 {
             var i = 2
-            
-            while i > -1
-            {
-                
-                
-                
-                let (happyPer, beginDate, endDate) = getHappyPercentageMonthly(lastTransaction, monthsFrom: i)
-                
+            while i > -1 {
+                let (happyPer, beginDate, _) = getHappyPercentageMonthly(lastTransaction, monthsFrom: i)
                 let dateFormatter = NSDateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
                 let beginDateFormatted = dateFormatter.stringFromDate(beginDate)
-                _ = dateFormatter.stringFromDate(endDate)
-                
-                
-                
-                
                 let dayTimePeriodFormatter = NSDateFormatter()
                 dayTimePeriodFormatter.dateFormat = "MMM"
-                
                 let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
                 
-                
-                if happyPer >= 0
-                {
+                if happyPer >= 0 {
                     unitsSold.append(Double(happyPer * 100))
                     months.append(dateString)
-                    
-                    if i == 0
-                    {
+                    if i == 0 {
                         let happyPercentage = Int(happyPer * 100)
                         happyRewardPercentage.text = "\(happyPercentage)%"
                         happyDateRange.text = "Starting on \(beginDateFormatted)"
                     }
-                    
-                    
                 }
-                
                 i -= 1
-                
-                
                 setChart(months, values: unitsSold)
                 rewardView.hidden = false
                 transactionsTable.hidden = true
                 accountAddView.hidden = true
                 moneyCountLabel.hidden = true
                 happyImage.image = UIImage(named: "result_happy")
-                
-                //                var incomeSum:Double = 0.0
-                //                var spendableSum:Double = 0.0
-                //                var billsSum:Double = 0.0
-                
             }
-            
-            
-            
         }
-        else
-        {
-            
-            
+        else {            
             var i = 12
             var week = 1
-            while i > -1
-            {
+            while i > -1 {
                 let (happyPer, beginDate, endDate) = getHappyPercentage(lastTransaction, weeksFrom: i)
-                
                 let dateFormatter = NSDateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
                 let beginDateFormatted = dateFormatter.stringFromDate(beginDate)
                 let endDateFormatted = dateFormatter.stringFromDate(endDate)
                 
-                if happyPer >= 0
-                {
+                if happyPer >= 0 {
                     unitsSold.append(Double(happyPer * 100))
                     months.append("\(endDateFormatted )")
-                    
-                    if i == 0
-                    {
+                    if i == 0 {
                         let happyPercentage = Int(happyPer * 100)
-                        
                         happyRewardPercentage.text = "\(happyPercentage)%"
                         happyDateRange.text = "Week starting on \(beginDateFormatted)"
                     }
-                    
-                    
                 }
-                
                 i -= 1
                 week += 1
                 
@@ -590,55 +385,25 @@ class mainViewController: UIViewController, UITableViewDataSource {
                 accountAddView.hidden = true
                 moneyCountLabel.hidden = true
                 happyImage.image = UIImage(named: "result_happy")
-                
-                //                var incomeSum:Double = 0.0
-                //                var spendableSum:Double = 0.0
-                //                var billsSum:Double = 0.0
-                
-                
             }
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
     }
     
-    
-    
-    func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (Double, NSDate, NSDate)
-    {
-        
+    func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (Double, NSDate, NSDate) {
         var newDate = NSDate()
         var startDate = NSDate()
         var endDate = NSDate()
         
-        if monthsFrom > 0
-        {
+        if monthsFrom > 0 {
             newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
             
             startDate = startOfMonth(newDate)!
             endDate = endOfMonth(newDate)!
-            
         }
-        else
-        {
+        else {
             startDate = startOfMonth(date)!
             endDate = endOfMonth(date)!
-            
         }
-        
-        //        let components: NSDateComponents = NSDateComponents()
-        //        components.setValue(6, forComponent: NSCalendarUnit.DayCalendarUnit)
-        //
-        //        let first: NSDate = firstDayOfWeek(startDate)
-        //        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
-        
         
         let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
         let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
@@ -651,20 +416,13 @@ class mainViewController: UIViewController, UITableViewDataSource {
         print("First = \(startDate) and last \(endDate)")
         print("Happy % \(chartHappyWeek1Percentage)")
         return (chartHappyWeek1Percentage, startDate, endDate)
-        
-        
-        
     }
     
-    
-    
-    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate)
-    {
-        
+    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate) {
         let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
         
         let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.NSDayCalendarUnit)
+        components.setValue(6, forComponent: NSCalendarUnit.Day)
         
         let first: NSDate = firstDayOfWeek(startDate)
         let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
@@ -681,43 +439,24 @@ class mainViewController: UIViewController, UITableViewDataSource {
         print("First = \(first) and last \(expirationDate)")
         print("Happy % \(chartHappyWeek1Percentage)")
         return (chartHappyWeek1Percentage, first, expirationDate!)
-        
-        
-        
     }
-    
-    
-    
     
     
     func setChart(dataPoints: [String], values: [Double]) {
         chartView!.noDataText = "You need to provide data for the chart."
-        
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
-            
             let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
             dataEntries.append(dataEntry)
         }
-        
-        
-        
+
         let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Weeks")
-        
         lineChartDataSet.drawFilledEnabled = true
         lineChartDataSet.fillColor = UIColor.lightGrayColor()
         lineChartDataSet.drawValuesEnabled = true
         lineChartDataSet.drawCirclesEnabled = true
-        
-        
-        
-        
-        
-        
-        
         lineChartDataSet.drawCubicEnabled = true
-        
         
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         chartView!.gridBackgroundColor = UIColor.whiteColor()
@@ -726,289 +465,101 @@ class mainViewController: UIViewController, UITableViewDataSource {
         chartView!.leftAxis.drawGridLinesEnabled = false
         chartView!.xAxis.drawGridLinesEnabled = false
         chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
-        
-        
-        
-        
-        
         chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
         chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
-        
         chartView!.leftAxis.labelCount = 4
-        
-        
         chartView!.pinchZoomEnabled = true
-        
-        
-        
-        //chartView!.leftAxis.enabled = false
-        
         chartView!.leftAxis.axisLineWidth = 10
-        
         chartView!.leftAxis.valueFormatter = NSNumberFormatter()
         chartView!.leftAxis.valueFormatter!.minimumFractionDigits = 0
         chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
         chartView!.rightAxis.enabled = false
-        
-        
-        
         chartView!.xAxis.labelPosition = .Bottom
         chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
         chartView!.xAxis.enabled = true
         chartView!.legend.enabled = false
         chartView!.descriptionText = ""
         chartView!.data = lineChartData
-        
         chartView!.maxVisibleValueCount = 3
-        
     }
     
-    
-    
-    
-    func setPredicates(hasAccounts:Bool)
-    {
-        
-        if hasAccounts
-        {
-            
-            if accounts[0].institution_type == "fake_institution"
-            {
+    func setPredicates(hasAccounts:Bool) {
+        if hasAccounts {
+            if accounts[0].institution_type == "fake_institution" {
                 inboxPredicate = NSPredicate(format: "status = 0")
                 approvedPredicate = NSPredicate(format: "status = 1")
                 flaggedPredicate = NSPredicate(format: "status = 2")
                 actedUponPredicate = NSPredicate(format: "status > 0", showTransactionDays)
             }
-            else
-            {
-                
-                
-                
+            else {
                 inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
                 approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
                 flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
                 actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
-                
             }
-            
         }
-        else
-        {
-            
+        else {
             inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
             approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
             flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
             actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
-            
-            
         }
-        
-        
-        
-        
     }
     
-    
-    
-    func hideReward()
-    {
+    func hideReward() {
         rewardView.hidden = true
         transactionsTable.hidden = false
-        
     }
     
     
-    func updateTrans() -> Void
-    {
+    func updateTrans() -> Void {
         print("looking for records")
-        
-        
-        cHelp.addUpdateResetAccount(1, dayLength: 0)
-            {
-                
-                (response) in
-                
-                charlieAnalytics.track("Account Transations Initial Sync Completed")
-                
-                print(response)
-                
-                if response > 0
-                {
-                    self.timer.invalidate()
-                    self.setPredicates(true)
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-                    self.toastView.hidden = true
-                    
-                }
-                
-        }
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if flagListButton.tag == 1 || approvedListButton.tag == 1
-        {
-            return charlieGroupListFiltered.count
-        }
-        else
-        {
+        cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
+            charlieAnalytics.track("Account Transations Initial Sync Completed")
             
-            if transactionItems.count > 0
-            {
-                transactionsTable.hidden = false
-                addAccountButton.hidden = true
-                accountAddView.hidden = true
-                let transactionSum = sumTransactionsCount()
-                let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-                let finalFormat = stripCents(transactionSumCurrecnyFormat)
-                moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-                
+            print(response)
+            
+            if response > 0 {
+                self.timer.invalidate()
+                self.setPredicates(true)
+                transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
+                self.transactionsTable.reloadData()
+                self.spinner.stopAnimating()
+                self.toastView.hidden = true
                 
             }
-            return transactionItems.count
         }
-        
     }
     
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if flagListButton.tag == 1 || approvedListButton.tag == 1
-        {
-            performSegueWithIdentifier("groupDetail", sender: indexPath)
-        }
-        else
-        {
-            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
-            
-        }
-        
-        
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
-        
-        
-        if flagListButton.tag == 1
-        {
-            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
-            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
-            
-            cell.firstLeftAction = nil
-            cell.firstRightAction = nil
-        }
-        else if approvedListButton.tag == 1
-        {
-            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
-            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
-            cell.firstLeftAction = nil
-            cell.firstRightAction = nil
-        }
-        else
-        {
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-            cell.nameCellLabel.text = transactionItems[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
-            cell.dateCellLabel.text = dateString
-            //cell.selectionStyle = .None
-        }
-        
-        if inboxListButton.tag == 1
-        {cell.amountCellLabel.textColor = listBlue}
-        else if flagListButton.tag == 1 {cell.amountCellLabel.textColor = listRed}
-        else if approvedListButton.tag == 1 {cell.amountCellLabel.textColor = listGreen}
-        
-        
-        
-        
-        return cell
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func stripCents(currency: String) -> String
-    {
+    func stripCents(currency: String) -> String {
         let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
         let substringIndex = stringLength - 3
         return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
-        
     }
     
-    func sumTransactionsCount() -> Double
-    {
+    func sumTransactionsCount() -> Double {
         var transactionSum:Double = 0
         for transaction in transactionItems {
-            
-            
-            if transaction.amount < 0
-            { transactionSum += transaction.amount * -1 }
-            else
-            { transactionSum += transaction.amount  }
+            if transaction.amount < 0 {
+                transactionSum += transaction.amount * -1
+            }
+            else {
+                transactionSum += transaction.amount
+            }
             
         }
-        
-        
-        
         return transactionSum
-        
-        
-        
     }
     
-    
-    
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-        
         if (segue.identifier == "segueFromMainToDetailView") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow
             viewController.transactionID = transactionItems[indexPath!.row]._id
             viewController.sourceVC = "main"
-            
         }
         else if (segue.identifier == "showTypePicker") {
             let viewController = segue.destinationViewController as! showTypePickerViewController
@@ -1017,127 +568,72 @@ class mainViewController: UIViewController, UITableViewDataSource {
             viewController.transactionCell = currentTransactionCell
             viewController.mainVC = self
         }
-        else if (segue.identifier == "showReveal")
-        {
+        else if (segue.identifier == "showReveal") {
             let userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
             let viewController = segue.destinationViewController as! revealViewController
             viewController.revealPercentage = "\(userSelectedHappyScore)"
         }
-        else if (segue.identifier == "groupDetail")
-        {
+        else if (segue.identifier == "groupDetail") {
             let indexPath = self.transactionsTable.indexPathForSelectedRow
             let viewController = segue.destinationViewController as! groupDetailViewController
             
-            if flagListButton.tag == 1
-            {
+            if flagListButton.tag == 1 {
                 viewController.comingFromSad = true
             }
-            else if approvedListButton.tag == 1
-            {
+            else if approvedListButton.tag == 1 {
                 viewController.comingFromSad = false
             }
             
             viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
-            
         }
-        
-        
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @IBAction func showTutorial(sender: UIButton) {
-        
-        // performSegueWithIdentifier("showTutorial", sender: self)
-        
         //remove icloud
-        
         //
         keyStore.setString("", forKey: "access_token")
         keyStore.setString("", forKey: "email")
         keyStore.setString("", forKey: "password")
         keyStore.synchronize()
-        
     }
     
-    
-    
-    
-    
-    
-    
-    
     @IBAction func refreshAccounts(sender: UIButton) {
-        
-        
         if Reachability.isConnectedToNetwork() {
             // Go ahead and fetch your data from the internet
             // ...
             
             if allTransactionItems.count > 0
             {
-                let  lastTransaction = allTransactionItems[0].date as NSDate
+                let lastTransaction = allTransactionItems[0].date as NSDate
                 let calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.NSDayCalendarUnit
+                let flags = NSCalendarUnit.Day
                 let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
-                
                 let dateToSychTo = components.day
                 
                 spinner.startAnimating()
                 print("DAYS \(dateToSychTo)")
-                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo)
-                    {
-                        (response) in
-                        
+                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
                         self.transactionsTable.reloadData()
                         self.spinner.stopAnimating()
-                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0
-                        {
+                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
                             self.showReward()
                         }
-                        
-                        
-                        
                 }
-                
             }
-            
         } else {
             print("Internet connection not available")
-            
             let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
-        
     }
     
     
     @IBAction func approvedListButtonress(sender: UIButton) {
-        
-        
         charlieAnalytics.track("Worth It Button")
-        
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
-        
-        
         listNavBar.backgroundColor = listGreen
         
         inboxListButton.tag = 0
@@ -1182,39 +678,24 @@ class mainViewController: UIViewController, UITableViewDataSource {
         
         //menuButton.setImage(menuButtonGreenImage, forState: .Normal)
         //cardButton.setImage(cardButtonGreenImage, forState: .Normal)
-        
-        
-        
     }
     
-    
-    
     @IBAction func inboxListButtonPress(sender: UIButton) {
-        
-        
-        
         charlieAnalytics.track("Inbox Button")
-        
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
         
-        if transactionItems.count == 0 && allTransactionItems.count > 0
-        {
+        if transactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()
         }
-        else{
-            if accounts.count  == 0 && allTransactionItems.count == 0
-            {
+        else {
+            if accounts.count  == 0 && allTransactionItems.count == 0 {
                 addAccountButton.hidden = false
                 accountAddView.hidden = false
                 transactionsTable.hidden = true
                 charlieAnalytics.track("Find Bank Screen - Main")
             }
-            
         }
-        
-        
-        
         
         listNavBar.backgroundColor = listBlue
         
@@ -1222,10 +703,8 @@ class mainViewController: UIViewController, UITableViewDataSource {
         moneyCountSubHeadLabel.hidden = false
         moneyCountSubSubHeadLabel.hidden = false
         
-        
         moneyActionAmountLabel.hidden = true
         moneyActionDetailLabel.hidden = true
-        
         
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
@@ -1249,30 +728,15 @@ class mainViewController: UIViewController, UITableViewDataSource {
         approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
         
         transactionsTable.reloadData()
-        
-        
-        // menuButton.setImage(menuButtonBlueImage, forState: .Normal)
-        // cardButton.setImage(cardButtonBlueImage, forState: .Normal)
-        
-        
-        
-        
-        
     }
     
     
     @IBAction func flagListButtonPress(sender: UIButton) {
-        
-        
         charlieAnalytics.track("Not Worth It Button")
         
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
-        
-        
-        
-        
         
         listNavBar.backgroundColor = listRed
         
@@ -1316,74 +780,157 @@ class mainViewController: UIViewController, UITableViewDataSource {
         charlieGroupListFiltered = groupBy(2) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
-        
-        
-        
     }
     
     
-    func groupBy(type: Int) -> NSArray
-    {
-        
+    func groupBy(type: Int) -> NSArray {
         charlieGroupList = []
         var current_name = ""
-        //        var i = 0
-        
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         var current_index = 0
-        for trans in actedUponItems
-        {
-            if trans.name == current_name
-            {
+        for trans in actedUponItems {
+            if trans.name == current_name {
                 print("add to existing \(trans.name) at index \(current_index)")
-                if trans.status == 1
-                {
-                    
+                if trans.status == 1 {
                     charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
                     charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue + trans.amount
                 }
-                else if trans.status == 2
-                {
+                else if trans.status == 2 {
                     charlieGroupList[current_index].notWorthCount =   charlieGroupList[current_index].notWorthCount + 1
                     charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
                 }
             }
-            else
-            {
+            else {
                 print("create new \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name)
-                if trans.status == 1
-                {
+                if trans.status == 1 {
                     cGroup.worthCount = 1
                     cGroup.worthValue = trans.amount
                 }
-                else if trans.status == 2
-                {
+                else if trans.status == 2 {
                     cGroup.notWorthCount = 1
                     cGroup.notWorthValue = trans.amount
                 }
                 charlieGroupList.append((cGroup))
                 current_index = charlieGroupList.count - 1
-                
             }
             current_name = trans.name
         }
         
+        if type == 2 {
+            return charlieGroupList.filter({$0.notWorthValue > 0})
+        }
+        else if type == 1 {
+            return charlieGroupList.filter({$0.worthValue > 0})
+        }
+        else {
+            return charlieGroupList.filter({$0.notWorthValue > 0})
+        }
+    }
+}
+
+// Swipe part of the main view controller
+extension mainViewController : UITableViewDataSource{
+    func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
+        let indexPath = tableView.indexPathForCell(cell)
+        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+        currentTransactionCell = cell
         
+        realm.beginWrite()
+        transactionItems[indexPath!.row].status = direction
+        tableView.removeCell(cell, duration: 0.3, completion: nil)
+        try! realm.commitWrite()
         
+        let transactionSum = self.sumTransactionsCount()
+        let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+        self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
         
-        if type == 2
-        { return charlieGroupList.filter({$0.notWorthValue > 0}) }
-        else if type == 1
-        { return charlieGroupList.filter({$0.worthValue > 0}) }
-        else
-        { return charlieGroupList.filter({$0.notWorthValue > 0}) }
+        let rowCount = Int(tableView.numberOfRowsInSection(0).value)
         
+        if direction == 1 {
+            charlieAnalytics.track("Worth It Swipe")
+            if rowCount == 1 && self.inboxListButton.tag == 1 {
+                print("show reward window")
+                self.showReward()
+            }
+        }
+        else {
+            charlieAnalytics.track("Not Worth It Swipe")
+            
+            if rowCount == 1 && self.inboxListButton.tag == 1 {
+                print("show reward window")
+                self.showReward()
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if flagListButton.tag == 1 || approvedListButton.tag == 1 {
+            return charlieGroupListFiltered.count
+        }
+        else {
+            if transactionItems.count > 0 {
+                transactionsTable.hidden = false
+                addAccountButton.hidden = true
+                accountAddView.hidden = true
+                let transactionSum = sumTransactionsCount()
+                let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+                let finalFormat = stripCents(transactionSumCurrecnyFormat)
+                moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+            }
+            return transactionItems.count
+        }
     }
     
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if flagListButton.tag == 1 || approvedListButton.tag == 1 {
+            performSegueWithIdentifier("groupDetail", sender: indexPath)
+        }
+        else {
+            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
+        
+        if flagListButton.tag == 1 {
+            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
+            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
+            
+            cell.firstLeftAction = nil
+            cell.firstRightAction = nil
+        }
+        else if approvedListButton.tag == 1 {
+            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
+            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
+            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
+            cell.firstLeftAction = nil
+            cell.firstRightAction = nil
+        }
+        else {
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+            cell.nameCellLabel.text = transactionItems[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
+            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+            cell.dateCellLabel.text = dateString
+            //cell.selectionStyle = .None
+        }
+        
+        if inboxListButton.tag == 1
+        {cell.amountCellLabel.textColor = listBlue}
+        else if flagListButton.tag == 1 {cell.amountCellLabel.textColor = listRed}
+        else if approvedListButton.tag == 1 {cell.amountCellLabel.textColor = listGreen}
+        return cell
+    }
 }
-
-
-
