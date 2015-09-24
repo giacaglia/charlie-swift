@@ -632,7 +632,6 @@
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
 				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
-				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
 				45E0F2101B5E7E660005B234 /* revealViewController.swift */,
 				45E0F2361B6918420005B234 /* passcodeViewController.swift */,
 				09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */,
@@ -1165,6 +1164,7 @@
 		88E6209F1BB476330060ED28 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
 				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
 				09C2A74C1B21F0AD005A40DA /* tutorialViewController.swift */,
 				09C2A76A1B238EFB005A40DA /* loginViewController.swift */,
