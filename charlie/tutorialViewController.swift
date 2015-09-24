@@ -68,6 +68,4 @@ class tutorialViewController: UIViewController {
         charlieAnalytics.track("Happy Flow Guessed")
     }
     
-    
-    
 }

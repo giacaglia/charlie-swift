@@ -12,14 +12,8 @@ import UIKit
 class groupDetailViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var sadButton: UIButton!
-    
-    
     @IBOutlet weak var happyButton: UIButton!
-    
-    
     @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
-    
-    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!
     @IBOutlet weak var happyPercentage: UILabel!
@@ -277,7 +271,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
     
     
-    
     @IBAction func worthButtonPress(sender: UIButton) {
         sadButton.tag =  0
         happyButton.tag = 1
@@ -287,7 +280,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         groupTableView.reloadData()
     }
-    
     
     //actions
     @IBAction func closeButtonPressed(sender: UIButton) {

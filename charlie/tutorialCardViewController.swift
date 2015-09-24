@@ -10,24 +10,19 @@ import UIKit
 
 
 class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
-    
     var pageImages: [UIImage] = []
     var pageViews: [UIImageView?] = []
     
     @IBOutlet weak var pageControl: UIPageControl!
-    
-    
     @IBOutlet weak var scrollView: UIScrollView!
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(true)
-        pageImages =
-            [
-                UIImage(named: "tutorial_1.png")!,
-                UIImage(named: "tutorial_4.png")!,
-                UIImage(named: "tutorial_5.png")!,
-                UIImage(named: "tutorial_6.png")!
+        pageImages = [
+                UIImage(named: "tutorial_1")!,
+                UIImage(named: "tutorial_4")!,
+                UIImage(named: "tutorial_5")!,
+                UIImage(named: "tutorial_6")!
         ]
         
         let pageCount = pageImages.count
@@ -37,9 +32,7 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         for _ in 0..<pageCount {
             pageViews.append(nil)
         }
-        
         let pagesScrollViewSize = scrollView.frame.size
-        
         
         scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(pageImages.count),
             height: pagesScrollViewSize.height)

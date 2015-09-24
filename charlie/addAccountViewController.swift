@@ -79,8 +79,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         userContentController: WKUserContentController,
         didReceiveScriptMessage message: WKScriptMessage) {
             
-            if(message.name == "callbackHandler") {
-                
+            if message.name == "callbackHandler" {
                 //get access_token
                 let public_token = message.body as! String
                 if public_token == "exit" {
