@@ -10,11 +10,6 @@ import UIKit
 import MapKit
 
 class showTransactionViewController: UIViewController {
-
-    var transactionIndex:Int = 0
-    var mainVC:mainViewController!
-    var transactionID:String = ""
-    
     
     @IBOutlet weak var merchantLabel: UILabel!
     @IBOutlet weak var accountNumberLabel: UILabel!
@@ -23,128 +18,77 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var lastFourLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
     
-    
+    var transactionIndex:Int = 0
+    var mainVC:mainViewController!
+    var transactionID:String = ""
     let regionRadius: CLLocationDistance = 1000
-    
     var transactionItems = realm.objects(Transaction)
-   
-    
     var sourceVC = "main"
     
-    
-    @IBOutlet weak var mapView: MKMapView!
-
     func willEnterForeground(notification: NSNotification!) {
-        
-        
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            
             presentViewController(resultController, animated: true, completion: { () -> Void in
-                
                 cHelp.removeSpashImageView(self.view)
                 cHelp.removeSpashImageView(self.presentingViewController!.view)
-                
             })
         }
-        
-       
-
-        
     }
     
-    
-    func didEnterBackgroundNotification(notification: NSNotification)
-    {
-         cHelp.splashImageView(self.view)
+    func didEnterBackgroundNotification(notification: NSNotification) {
+        cHelp.splashImageView(self.view)
     }
-    
-
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-    
         
-         var lat = 0.0
-         var lon = 0.0
-
+        var lat = 0.0
+        var lon = 0.0
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
         
         self.transactionItems = realm.objects(Transaction).filter("_id = '\(self.transactionID)'")
-    
+        
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
         
         
-        if sourceVC == "main"
-        {
+        if sourceVC == "main" {
             descriptionLabel.text = "Was \(self.transactionItems[transactionIndex].name)\nworth it?"
         }
-        else if sourceVC == "happy"
-        {
+        else if sourceVC == "happy" {
             descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas worth it"
         }
-        else if sourceVC == "sad"
-        {
+        else if sourceVC == "sad" {
             descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas not worth it"
         }
-        
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
         let dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
-
-       categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
-        
-     
-        
-        addressLabel.text = "\(self.transactionItems[transactionIndex].meta!.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
+        categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
+        addressLabel.text = "\(self.transactionItems[transactionIndex].meta?.location!.address) \n  \(self.transactionItems[transactionIndex].meta?.location!.city) \(self.transactionItems[transactionIndex].meta?.location!.state) \(self.transactionItems[transactionIndex].meta?.location!.zip)"
         
         
-    
-    
         print(self.transactionItems[transactionIndex].ctype)
+        lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
+        lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
         
-         if self.transactionItems[transactionIndex].meta != nil
-            {
-                if self.transactionItems[transactionIndex].meta!.location != nil
-                    {
-                        if self.transactionItems[transactionIndex].meta!.location?.coordinates != nil
-                        {
-
-                          lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
-                          lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
-                        }
-                    }
-            }
-        
-        
-        if lat > 0
-        {
+        if lat > 0 {
             mapView.hidden = false
             let initialLocation = CLLocation(latitude: lat, longitude: lon)
-            
             let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
             centerMapOnLocation(initialLocation)
             let anotation = MKPointAnnotation()
             anotation.coordinate = location
-
             mapView.addAnnotation(anotation)
-            
-            
-            
         }
-        else
-        {
+        else {
             mapView.hidden = true
         }
         
@@ -156,15 +100,9 @@ class showTransactionViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    
-    
     @IBAction func closeButtonPress(sender: AnyObject) {
-        
-       
         dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
-
+    
 }
-

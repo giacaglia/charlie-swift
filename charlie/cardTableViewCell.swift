@@ -10,18 +10,9 @@ import UIKit
 
 class cardTableViewCell: UITableViewCell {
     
-    
-    
-    
     @IBOutlet weak var accountID: UILabel!
-  
-    
     @IBOutlet weak var cardView: UIView!
-    
     @IBOutlet weak var cardName: UILabel!
-    
     @IBOutlet weak var cardBalance: UILabel!
-    
-    
     @IBOutlet weak var cardAccountNumber: UILabel!
 }

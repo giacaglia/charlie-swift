@@ -10,10 +10,10 @@ import UIKit
 
 
 class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
-
+    
     var pageImages: [UIImage] = []
     var pageViews: [UIImageView?] = []
-
+    
     @IBOutlet weak var pageControl: UIPageControl!
     
     
@@ -21,7 +21,6 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     
     
     override func viewDidAppear(animated: Bool) {
-        
         super.viewWillAppear(true)
         pageImages =
             [
@@ -32,7 +31,6 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         ]
         
         let pageCount = pageImages.count
-        
         pageControl.currentPage = 0
         pageControl.numberOfPages = pageCount
         
@@ -41,14 +39,12 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
         }
         
         let pagesScrollViewSize = scrollView.frame.size
-    
+        
         
         scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(pageImages.count),
             height: pagesScrollViewSize.height)
         
         loadVisiblePages()
-        
-        
     }
     
     
@@ -89,7 +85,6 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
             // If it's outside the range of what you have to display, then do nothing
             return
         }
-        
         // Remove a page from the scroll view and reset the container array
         if let pageView = pageViews[page] {
             pageView.removeFromSuperview()
@@ -104,18 +99,14 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     
     
     func loadVisiblePages() {
-        
-       
         // First, determine which page is currently visible
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-       
+        
         // Update the page control
         pageControl.currentPage = page
         
         // Work out which pages you want to load
-        
-       
         let firstPage = page - 1
         let lastPage = page + 1
         
@@ -137,10 +128,9 @@ class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
-        
         dismissViewControllerAnimated(true, completion: nil)
         charlieAnalytics.track("App Tutorial Completed")
     }
     
-
+    
 }
