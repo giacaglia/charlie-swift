@@ -51,7 +51,6 @@
 		456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4560493F1B71155800C37B9D /* CFNetwork.framework */; };
 		456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049411B71156100C37B9D /* CoreGraphics.framework */; };
 		456049441B71156F00C37B9D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049431B71156F00C37B9D /* CoreLocation.framework */; };
-		456049461B71157E00C37B9D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049451B71157E00C37B9D /* libz.dylib */; };
 		456049481B71159000C37B9D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049471B71159000C37B9D /* MobileCoreServices.framework */; };
 		4560494A1B71159800C37B9D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456049491B71159800C37B9D /* QuartzCore.framework */; };
 		4560494C1B7115A100C37B9D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4560494B1B7115A100C37B9D /* Security.framework */; };
@@ -229,6 +228,7 @@
 		45E0F2341B67D7F40005B234 /* ABPadLockScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F22D1B67D7F40005B234 /* ABPadLockScreenViewController.m */; };
 		45E0F2351B67D7F40005B234 /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F22F1B67D7F40005B234 /* ABPinSelectionView.m */; };
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
+		88A53B231BB38B0300D5A1F0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A53B221BB38B0300D5A1F0 /* libz.tbd */; };
 		88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD39B81BB337CB003AE420 /* libicucore.tbd */; };
 /* End PBXBuildFile section */
 
@@ -350,7 +350,6 @@
 		4560493F1B71155800C37B9D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		456049411B71156100C37B9D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456049431B71156F00C37B9D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		456049451B71157E00C37B9D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		456049471B71159000C37B9D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		456049491B71159800C37B9D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4560494B1B7115A100C37B9D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -480,8 +479,8 @@
 		456049CA1B71183200C37B9D /* UIView+MPHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MPHelpers.m"; sourceTree = "<group>"; };
 		45604A131B712EEE00C37B9D /* charlieAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = charlieAnalytics.swift; sourceTree = "<group>"; };
 		45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
-		459698421BA9E2BC00233C66 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		459698431BA9E2BC00233C66 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		459698421BA9E2BC00233C66 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Realm.framework; sourceTree = "<group>"; };
+		459698431BA9E2BC00233C66 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../RealmSwift.framework; sourceTree = "<group>"; };
 		459698551BA9E50A00233C66 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Charts.xcodeproj; sourceTree = "<group>"; };
 		4596985A1BA9E50A00233C66 /* ChartAnimationEasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartAnimationEasing.swift; sourceTree = "<group>"; };
 		4596985B1BA9E50A00233C66 /* ChartAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartAnimator.swift; sourceTree = "<group>"; };
@@ -587,6 +586,7 @@
 		45E0F22E1B67D7F40005B234 /* ABPinSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABPinSelectionView.h; path = ABPadLockScreen/ABPinSelectionView.h; sourceTree = SOURCE_ROOT; };
 		45E0F22F1B67D7F40005B234 /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABPinSelectionView.m; path = ABPadLockScreen/ABPinSelectionView.m; sourceTree = SOURCE_ROOT; };
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
+		88A53B221BB38B0300D5A1F0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		88AD39B81BB337CB003AE420 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -595,6 +595,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88A53B231BB38B0300D5A1F0 /* libz.tbd in Frameworks */,
 				88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */,
 				4596990E1BA9E5DC00233C66 /* Charts.framework in Frameworks */,
 				4560494E1B7115AE00C37B9D /* SystemConfiguration.framework in Frameworks */,
@@ -602,7 +603,6 @@
 				4560494A1B71159800C37B9D /* QuartzCore.framework in Frameworks */,
 				459698441BA9E2BC00233C66 /* Realm.framework in Frameworks */,
 				456049481B71159000C37B9D /* MobileCoreServices.framework in Frameworks */,
-				456049461B71157E00C37B9D /* libz.dylib in Frameworks */,
 				456049441B71156F00C37B9D /* CoreLocation.framework in Frameworks */,
 				456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */,
 				456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */,
@@ -644,11 +644,15 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		090BD3471B250B9B00F26E78 /* frameworks */ = {
+		090BD3471B250B9B00F26E78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88A53B221BB38B0300D5A1F0 /* libz.tbd */,
+				88AD39B81BB337CB003AE420 /* libicucore.tbd */,
+				459698421BA9E2BC00233C66 /* Realm.framework */,
+				459698431BA9E2BC00233C66 /* RealmSwift.framework */,
+				091E008D1B7959AB0014012D /* CloudKit.framework */,
 				4560494F1B71183200C37B9D /* Mixpanel */,
-				456049451B71157E00C37B9D /* libz.dylib */,
 				4560494D1B7115AE00C37B9D /* SystemConfiguration.framework */,
 				4560494B1B7115A100C37B9D /* Security.framework */,
 				456049491B71159800C37B9D /* QuartzCore.framework */,
@@ -658,9 +662,11 @@
 				4560493F1B71155800C37B9D /* CFNetwork.framework */,
 				45E0F2131B613F420005B234 /* Fabric.framework */,
 				45E0F2141B613F420005B234 /* Crashlytics.framework */,
+				091620201B2DA2330004C781 /* SBGestureTableView */,
 				45E0F2231B67D7DD0005B234 /* ABPin */,
 				090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */,
 			);
+			name = Frameworks;
 			path = frameworks;
 			sourceTree = "<group>";
 		};
@@ -687,14 +693,8 @@
 				453E60051B8E266900F4794E /* Single */,
 				453E60041B8E266100F4794E /* Group */,
 			);
-			path = SBGestureTableView;
-			sourceTree = "<group>";
-		};
-		0916202D1B2DA5030004C781 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = lib;
+			name = SBGestureTableView;
+			path = ../charlie/SBGestureTableView;
 			sourceTree = "<group>";
 		};
 		0916204A1B2F06100004C781 /* UI */ = {
@@ -735,13 +735,9 @@
 		09C2A7391B21F0AC005A40DA = {
 			isa = PBXGroup;
 			children = (
-				88AD39B81BB337CB003AE420 /* libicucore.tbd */,
 				459698541BA9E50A00233C66 /* Charts */,
-				459698421BA9E2BC00233C66 /* Realm.framework */,
-				459698431BA9E2BC00233C66 /* RealmSwift.framework */,
-				091E008D1B7959AB0014012D /* CloudKit.framework */,
 				090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */,
-				090BD3471B250B9B00F26E78 /* frameworks */,
+				090BD3471B250B9B00F26E78 /* Frameworks */,
 				09C2A7441B21F0AD005A40DA /* charlie */,
 				09C2A75D1B21F0AD005A40DA /* charlieTests */,
 				09C2A7431B21F0AD005A40DA /* Products */,
@@ -765,8 +761,6 @@
 				0974544E1B44CF5F0004B8EC /* plaid.html */,
 				09C2A7471B21F0AD005A40DA /* AppDelegate.swift */,
 				0916204A1B2F06100004C781 /* UI */,
-				0916202D1B2DA5030004C781 /* lib */,
-				091620201B2DA2330004C781 /* SBGestureTableView */,
 				4548588D1B861C5D00AFEAB1 /* models */,
 				095447631B289C3C005816F5 /* Helpers */,
 				090BD3611B25D86E00F26E78 /* Services */,

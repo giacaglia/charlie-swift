@@ -24,34 +24,21 @@ var srConnect = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect
 var srCategory = ServerRequest(url: NSURL(string:  "https://api.plaid.com/categories"))
 var srConnectGet = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect/get"))
 var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/institutions"))
-
-
 var apiKey = "jj859i3mfp230p34"
 var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
 
 
 class charlieService {
 
-init(){
-    
-  
-  
-   
-}
+    init(){
+    }
 
     
-    
-    
-    func saveAccessToken(token:String, callback: Bool->())
-    {
-        
-        
-        
+    func saveAccessToken(token:String, callback: Bool->()) {
         let parameters = [
             "type": "token",
             "context": token,
         ]
-        
         let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
@@ -60,85 +47,52 @@ init(){
         sr.parameters = parameters
         
         ServerClient.performRequest(sr, completion: { (response) -> Void in
-            
            // println(response)
             callback(true)
-            
         })
-        
-        
-        
-        
-        
-        
     }
     
-    
-    func getAccessToken(public_token:String, callback: NSDictionary->())
-    
-    {
-        
-       
+    func getAccessToken(public_token:String, callback: NSDictionary->()) {
         if let client_id = keyChainStore.get("client_id"),
-           let client_secret = keyChainStore.get("client_secret")
-        {
-
-        
-        
-                    let parameters = [
-                        "client_id": client_id,
-                        "secret": client_secret,
-                        "public_token": public_token
-                    ]
-                    
-                    
-                    srGetToken.httpMethod = .Post
-                    srGetToken.parameters = parameters
-                    
-                    ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
-                       
-                        if let errorMsg:String = response.error?.description {
-                            print(errorMsg)
-                            let emptyDic = Dictionary<String, String>()
-                            callback(emptyDic)
-                        }
-                        else
-                        {
-
-                        
-                        httpStatusCode = response.rawResponse!.statusCode
-                        if httpStatusCode == 201 //needs mfa
-                        {
-                           // println(JSON(response.results()))
-                        }
-                            
-                        else //can process data
-                        {
-                           // println(JSON(response.results()))
-                        }
-                        
-                        
-                        
-                        callback(response.results() as! NSDictionary)
-                        
-                        }
-                    })
+           let client_secret = keyChainStore.get("client_secret") {
+            let parameters = [
+                "client_id": client_id,
+                "secret": client_secret,
+                "public_token": public_token
+            ]
+            
+            
+            srGetToken.httpMethod = .Post
+            srGetToken.parameters = parameters
+            
+            ServerClient.performRequest(srGetToken, completion: { (response) -> Void in
+                if let errorMsg:String = response.error?.description {
+                    print(errorMsg)
+                    let emptyDic = Dictionary<String, String>()
+                    callback(emptyDic)
+                }
+                else {
+                    httpStatusCode = response.rawResponse!.statusCode
+                    if httpStatusCode == 201 {
+                        //needs mfa
+                       // println(JSON(response.results()))
+                    }
+                    else {
+                        //can process data
+                       // println(JSON(response.results()))
+                    }
+                    callback(response.results() as! NSDictionary)
+                }
+            })
         }
     }
    
     
-    
-    func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->())
-    {
-      
+    func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->()) {
         if let client_id = keyChainStore.get("client_id"),
-            let client_secret = keyChainStore.get("client_secret")
-        {
+            let client_secret = keyChainStore.get("client_secret") {
         
-        
-            if dayLength > 0
-            {
-            
+            if dayLength > 0 {
                 let options = [
                     "pending": false,
                     "gte": "\(dayLength) days ago"
@@ -152,13 +106,9 @@ init(){
                 ]
             
                // println(parameters)
-
                 srConnectGet.parameters = parameters
-            
             }
-            else
-            {
-                
+            else {
                 let options = [
                     "pending": false
                 ]
@@ -170,89 +120,44 @@ init(){
                     "options": options
                 ]
                // println(parameters)
-
-                
                 srConnectGet.parameters = parameters as? [String : AnyObject]
             }
-          
-            
-            
             srConnectGet.httpMethod = .Post
-           
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 //All stuff here
-
-            
-            ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
-              //  println(JSON(response.results()))
-                
-                if let errorMsg:String = response.error?.description {
-                    print(errorMsg)
-                    let emptyDic = Dictionary<String, String>()
-                    callback(emptyDic)
-                }
-                else
-                {
-                
-                httpStatusCode = response.rawResponse!.statusCode
-                if httpStatusCode == 200 
-                {
-                  // println(JSON(response.results()))
-                }
-                    
-                else //can process data
-                {
-                    print("ERROR")
-                }
-                
-                
-                
-                    callback(response.results() as! NSDictionary)
-                }
-                
+                ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
+                  //  println(JSON(response.results()))
+                    if let errorMsg:String = response.error?.description {
+                        print(errorMsg)
+                        let emptyDic = Dictionary<String, String>()
+                        callback(emptyDic)
+                    }
+                    else {
+                        httpStatusCode = response.rawResponse!.statusCode
+                        if httpStatusCode == 200 {
+                            // println(JSON(response.results()))
+                        }
+                        else { //can process data
+                            print("ERROR")
+                        }
+                        callback(response.results() as! NSDictionary)
+                    }
+                })
             })
-            
-        })
-        
         }
-        
-        
-        
     }
-    
-    
-    func getCategories(callback: NSArray->())
-    {
-       
+
+    func getCategories(callback: NSArray->()) {
         srCategory.httpMethod = .Get
         ServerClient.performRequest(srCategory, completion: { (response) -> Void in
             httpStatusCode = response.rawResponse!.statusCode
-            if httpStatusCode == 201 //needs mfa
-            {
+            if httpStatusCode == 201 {//needs mfa
                // println(JSON(response.results()))
             }
-                
-            else //can process data
-            {
+            else {//can process data
                 //println(JSON(response.results()))
             }
-            
-            
-            
             callback(response.results() as! NSArray)
-            
-            
         })
-        
     }
-    
-   
-    
-    
-    
-    
-    
 }
-
-

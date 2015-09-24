@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
 
-
 import CoreData
 import Fabric
 import Crashlytics
@@ -19,21 +18,15 @@ let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
 let listBlue = UIColor(red: 142/255, green: 180/255, blue: 246/255, alpha: 1.0)
 let listGreen = UIColor(red: 153/255, green: 219/255, blue: 103/255, alpha: 1.0)
 let lightGray = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
-
 var cService = charlieService()
-
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-
 let defaults = NSUserDefaults.standardUserDefaults()
 
-
 @UIApplicationMain
-
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,15 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
         Fabric.with([Crashlytics()])
 
-        
         //PRODCHANGE
         Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
         //Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328")
-       
         
         charlieAnalytics.track("App Launched")
-        
-        
         return true
     }
 
@@ -66,29 +55,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
-        
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
-      
-        
-        
-        
-        
-        
-        
-
     }
     
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        
          Mixpanel.sharedInstance().people.addPushDeviceToken(deviceToken)
-    
-        
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -152,7 +127,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     // MARK: - Core Data Saving support
-
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
@@ -169,7 +143,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
 

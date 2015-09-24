@@ -10,7 +10,6 @@ import Foundation
 
 
 class charlieGroup {
-    
     var name:String
     var worthCount:Int = 0
     var notWorthCount:Int = 0
@@ -19,7 +18,6 @@ class charlieGroup {
 
     
     init(name:String) {
-
        self.name = name
     }
 
