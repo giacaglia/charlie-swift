@@ -162,31 +162,31 @@ class mainViewController: UIViewController {
             addAccountButton.hidden = true
             accountAddView.hidden = true
             //refresh accounts
-                if allTransactionItems.count > 0 {
-                    let lastTransaction = allTransactionItems[0].date as NSDate
-                    let calendar: NSCalendar = NSCalendar.currentCalendar()
-                    let flags = NSCalendarUnit.Day
-                    let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
+            if allTransactionItems.count > 0 {
+                let lastTransaction = allTransactionItems[0].date as NSDate
+                let calendar: NSCalendar = NSCalendar.currentCalendar()
+                let flags = NSCalendarUnit.Day
+                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
+                
+                let dateToSychTo = components.day
+                
+                spinner.startAnimating()
+                print("DAYS \(dateToSychTo)")
+                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
                     
-                    let dateToSychTo = components.day
-                    
-                    spinner.startAnimating()
-                    print("DAYS \(dateToSychTo)")
-                    cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
-                        
-                        self.transactionsTable.reloadData()
-                        self.spinner.stopAnimating()
-                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
-                            self.showReward()
-                        }
-                        self.spinner.stopAnimating()
+                    self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
+                        self.showReward()
                     }
+                    self.spinner.stopAnimating()
                 }
             }
-            
-            inboxListButton.tag = 1 //set inbox to default
-            
-            removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
+        }
+        
+        inboxListButton.tag = 1 //set inbox to default
+        
+        removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1 {
                 if defaults.stringForKey("firstSwipeRight") == nil {
@@ -218,7 +218,7 @@ class mainViewController: UIViewController {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
         }
-
+        
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             let indexPath = tableView.indexPathForCell(cell)
             if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1 {
@@ -228,7 +228,7 @@ class mainViewController: UIViewController {
                         let ctype = transactionItems[indexPath!.row].ctype
                         self.finishSwipe(tableView, cell: cell, direction: 2)
                         if ctype == 0 {
-                                // self.performSegueWithIdentifier("showTypePicker", sender: self)
+                            // self.performSegueWithIdentifier("showTypePicker", sender: self)
                         }
                         defaults.setObject("yes", forKey: "firstSwipeLeft")
                         defaults.synchronize()
@@ -251,51 +251,13 @@ class mainViewController: UIViewController {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
         }
-            
+        
         topView.backgroundColor = UIColor.whiteColor()
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
     }
-    
-    
-    
-
-    func firstDayOfWeek(date: NSDate) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        let dateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
-        dateComponents.weekday = 1
-        return calendar.dateFromComponents(dateComponents)!
-    }
-    
-    func startOfMonth(date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
-        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
-        return startOfMonth
-    }
-    
-    func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let months = NSDateComponents()
-        months.month = monthsToAdd
-        return calendar.dateByAddingComponents(months, toDate: date, options: [])
-    }
-    
-    func endOfMonth(date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        if let plusOneMonthDate = dateByAddingMonths(1, date: date) {
-            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
-            
-            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-86402)
-            
-            return endOfMonth
-        }
-        return nil
-    }
-    
-
     
     func showReward() {
         let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
@@ -356,7 +318,7 @@ class mainViewController: UIViewController {
                 happyImage.image = UIImage(named: "result_happy")
             }
         }
-        else {            
+        else {
             var i = 12
             var week = 1
             while i > -1 {
@@ -389,58 +351,6 @@ class mainViewController: UIViewController {
         }
     }
     
-    func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (Double, NSDate, NSDate) {
-        var newDate = NSDate()
-        var startDate = NSDate()
-        var endDate = NSDate()
-        
-        if monthsFrom > 0 {
-            newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
-            
-            startDate = startOfMonth(newDate)!
-            endDate = endOfMonth(newDate)!
-        }
-        else {
-            startDate = startOfMonth(date)!
-            endDate = endOfMonth(date)!
-        }
-        
-        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
-        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
-        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
-        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
-        //let happySum = chartItems.sum("amount") as Int
-        
-        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
-        
-        print("First = \(startDate) and last \(endDate)")
-        print("Happy % \(chartHappyWeek1Percentage)")
-        return (chartHappyWeek1Percentage, startDate, endDate)
-    }
-    
-    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (Double, NSDate, NSDate) {
-        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
-        
-        let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.Day)
-        
-        let first: NSDate = firstDayOfWeek(startDate)
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
-        
-        //println("DATES: \(first), \(expirationDate)")
-        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
-        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
-        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
-        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
-        //let happySum = chartItems.sum("amount") as Int
-        
-        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
-        
-        print("First = \(first) and last \(expirationDate)")
-        print("Happy % \(chartHappyWeek1Percentage)")
-        return (chartHappyWeek1Percentage, first, expirationDate!)
-    }
-    
     
     func setChart(dataPoints: [String], values: [Double]) {
         chartView!.noDataText = "You need to provide data for the chart."
@@ -450,7 +360,7 @@ class mainViewController: UIViewController {
             let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
             dataEntries.append(dataEntry)
         }
-
+        
         let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Weeks")
         lineChartDataSet.drawFilledEnabled = true
         lineChartDataSet.fillColor = UIColor.lightGrayColor()
@@ -512,7 +422,6 @@ class mainViewController: UIViewController {
         transactionsTable.hidden = false
     }
     
-    
     func updateTrans() -> Void {
         print("looking for records")
         cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
@@ -531,26 +440,6 @@ class mainViewController: UIViewController {
                 
             }
         }
-    }
-    
-    func stripCents(currency: String) -> String {
-        let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
-        let substringIndex = stringLength - 3
-        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
-    }
-    
-    func sumTransactionsCount() -> Double {
-        var transactionSum:Double = 0
-        for transaction in transactionItems {
-            if transaction.amount < 0 {
-                transactionSum += transaction.amount * -1
-            }
-            else {
-                transactionSum += transaction.amount
-            }
-            
-        }
-        return transactionSum
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -586,12 +475,10 @@ class mainViewController: UIViewController {
             
             viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
         }
-        
     }
     
     @IBAction func showTutorial(sender: UIButton) {
         //remove icloud
-        //
         keyStore.setString("", forKey: "access_token")
         keyStore.setString("", forKey: "email")
         keyStore.setString("", forKey: "password")
@@ -614,11 +501,11 @@ class mainViewController: UIViewController {
                 spinner.startAnimating()
                 print("DAYS \(dateToSychTo)")
                 cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
-                        self.transactionsTable.reloadData()
-                        self.spinner.stopAnimating()
-                        if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
-                            self.showReward()
-                        }
+                    self.transactionsTable.reloadData()
+                    self.spinner.stopAnimating()
+                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
+                        self.showReward()
+                    }
                 }
             }
         } else {
@@ -674,10 +561,6 @@ class mainViewController: UIViewController {
         charlieGroupListFiltered = groupBy(1) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
-        
-        
-        //menuButton.setImage(menuButtonGreenImage, forState: .Normal)
-        //cardButton.setImage(cardButtonGreenImage, forState: .Normal)
     }
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
@@ -733,13 +616,11 @@ class mainViewController: UIViewController {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
-        
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         
         listNavBar.backgroundColor = listRed
-        
         
         inboxListButton.tag = 0
         inboxListButton.setImage(inboxUnSelectedSadButtonImage, forState: .Normal)
@@ -756,8 +637,6 @@ class mainViewController: UIViewController {
         moneyCountLabel.hidden = true
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
-        
-        
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
@@ -772,13 +651,7 @@ class mainViewController: UIViewController {
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        // menuButton.setImage(menuButtonRedImage, forState: .Normal)
-        // cardButton.setImage(cardButtonRedImage, forState: .Normal)
-        
-        
-        
         charlieGroupListFiltered = groupBy(2) as! [(charlieGroup)]
-        
         transactionsTable.reloadData()
     }
     
@@ -827,6 +700,119 @@ class mainViewController: UIViewController {
         else {
             return charlieGroupList.filter({$0.notWorthValue > 0})
         }
+    }
+}
+
+//Happy calculations
+extension mainViewController {
+    func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
+        var newDate = NSDate()
+        var startDate = NSDate()
+        var endDate = NSDate()
+        
+        if monthsFrom > 0 {
+            newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
+            
+            startDate = startOfMonth(newDate)!
+            endDate = endOfMonth(newDate)!
+        }
+        else {
+            startDate = startOfMonth(date)!
+            endDate = endOfMonth(date)!
+        }
+        
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        //let happySum = chartItems.sum("amount") as Int
+        
+        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
+        
+        print("First = \(startDate) and last \(endDate)")
+        print("Happy % \(chartHappyWeek1Percentage)")
+        return (chartHappyWeek1Percentage, startDate, endDate)
+    }
+    
+    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
+        
+        let components: NSDateComponents = NSDateComponents()
+        components.setValue(6, forComponent: NSCalendarUnit.Day)
+        
+        let first: NSDate = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        
+        //println("DATES: \(first), \(expirationDate)")
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        //let happySum = chartItems.sum("amount") as Int
+        
+        let chartHappyWeek1Percentage = Double(chartHappyWeek1Items.count)  / Double((chartHappyWeek1Items.count + chartSadWeek1Items.count)) as Double
+        
+        print("First = \(first) and last \(expirationDate)")
+        print("Happy % \(chartHappyWeek1Percentage)")
+        return (chartHappyWeek1Percentage, first, expirationDate!)
+    }
+}
+
+// Transaction helpers
+extension mainViewController {
+    func stripCents(currency: String) -> String {
+        let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
+        let substringIndex = stringLength - 3
+        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
+    }
+    
+    func sumTransactionsCount() -> Double {
+        var transactionSum:Double = 0
+        for transaction in transactionItems {
+            if transaction.amount < 0 {
+                transactionSum += transaction.amount * -1
+            }
+            else {
+                transactionSum += transaction.amount
+            }
+        }
+        return transactionSum
+    }
+}
+
+// NSDate helpers
+extension mainViewController {
+    func firstDayOfWeek(date: NSDate) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        let dateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
+        dateComponents.weekday = 1
+        return calendar.dateFromComponents(dateComponents)!
+    }
+    
+    func startOfMonth(date: NSDate) -> NSDate? {
+        let calendar = NSCalendar.currentCalendar()
+        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
+        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
+        return startOfMonth
+    }
+    
+    func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
+        let calendar = NSCalendar.currentCalendar()
+        let months = NSDateComponents()
+        months.month = monthsToAdd
+        return calendar.dateByAddingComponents(months, toDate: date, options: [])
+    }
+    
+    func endOfMonth(date: NSDate) -> NSDate? {
+        let calendar = NSCalendar.currentCalendar()
+        if let plusOneMonthDate = dateByAddingMonths(1, date: date) {
+            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
+            
+            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-86402)
+            
+            return endOfMonth
+        }
+        return nil
     }
 }
 
