@@ -5,8 +5,6 @@
 //  Created by Jim Caralis on 6/22/15.
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
-
-
 import UIKit
 import Realm
 
@@ -55,34 +53,6 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
-    
-    
-    //    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    //        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-    //            // handle delete (by removing the data from your array and updating the tableview)
-    //            var tv=tableView
-    //            var acctID = accounts[indexPath.row]._id
-    //            var acct = accounts[indexPath.row]
-    //            var transactionsToDeletePred = NSPredicate(format: "_account = %@", acctID)
-    //            var transactionsToDelete = realm.objects(Transaction).filter(transactionsToDeletePred)
-    //            var trans = transactionsToDelete.count
-    //            var i = 0
-    //            while i < trans
-    //            {
-    //                realm.write {
-    //                    realm.delete(transactionsToDelete[i])
-    //                    i = i + 1
-    //                }
-    //
-    //            }
-    //            realm.write {
-    //                realm.delete(acct)
-    //            }
-    //            tv.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    //        }
-    //    }
-    //
-    
     
     @IBAction func dismissViewButtonPress(sender: UIButton ) {
         dismissViewControllerAnimated(true, completion: nil)

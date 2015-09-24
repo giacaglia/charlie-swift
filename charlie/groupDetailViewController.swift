@@ -5,7 +5,6 @@
 //  Created by James Caralis on 8/24/15.
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
-
 import RealmSwift
 import UIKit
 
@@ -32,7 +31,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     let checkImage = UIImage(named: "happy_on")
     let flagImage = UIImage(named: "sad_on")
     
-    
     var removeCellBlockLeft: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
     
@@ -43,11 +41,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
-        
         self.name.text = transactionName
-        
         let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
-        
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
         
@@ -63,13 +58,10 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         }
         self.happyPercentage.text = "\(calculateHappy())%"
         
-        //groupTableView.registerClass(SBGestureTableViewGroupCell.self, forCellReuseIdentifier: "cell")
         sadAmount = sadItems.sum("amount")
         happyAmount = happyItems.sum("amount")
-        // var totalAmount = sadAmount + happyAmount
         
         removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            //     let indexPath = tableView.indexPathForCell(cell)
             if self.happyButton.tag == 1 {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
@@ -79,8 +71,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         }
         
         removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            //    let indexPath = tableView.indexPathForCell(cell)
-            
             if self.sadButton.tag == 1 {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
@@ -119,7 +109,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
     
     func finishSwipe(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int) {
-        
         let indexPath = tableView.indexPathForCell(cell)
         currentTransactionCell = cell
         print("Direction \(direction)")
@@ -153,7 +142,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         self.happyPercentage.text = "\(calculateHappy())%"
     }
     
-    func  setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor, textColor2:UIColor) {
+    func setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor, textColor2:UIColor) {
         
         button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         button.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -204,46 +193,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         return Int((Double(happy) / Double((happy + sad)) * 100))
     }
     
-    //table
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sadButton.tag == 1 {
-            print(sadItems.count)
-            return sadItems.count
-        }
-        else if happyButton.tag == 1 {
-            print(happyItems.count)
-            return happyItems.count
-        }
-        else {
-            return happyItems.count
-        }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
-        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-        
-        if sadButton.tag == 1 {
-            let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
-            let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
-            cell.transactionDate.text = dateString
-            cell.transactionAmount.text =  currencyString
-        }
-        else if happyButton.tag == 1 {
-            let dateString = cHelp.convertDateGroup(happyItems[indexPath.row].date)
-            let currencyString = cHelp.formatCurrency(happyItems[indexPath.row].amount)
-            cell.transactionDate.text = dateString
-            cell.transactionAmount.text = currencyString
-        }
-        return cell
-    }
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("groupToDetail", sender: self)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "groupToDetail") {
@@ -285,6 +235,45 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     @IBAction func closeButtonPressed(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+}
+
+// TableView Methods
+extension groupDetailViewController {
+    //table
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if sadButton.tag == 1 {
+            return sadItems.count
+        }
+        else if happyButton.tag == 1 {
+            return happyItems.count
+        }
+        else {
+            return happyItems.count
+        }
+    }
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
+        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+        
+        if sadButton.tag == 1 {
+            let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
+            let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
+            cell.transactionDate.text = dateString
+            cell.transactionAmount.text =  currencyString
+        }
+        else if happyButton.tag == 1 {
+            let dateString = cHelp.convertDateGroup(happyItems[indexPath.row].date)
+            let currencyString = cHelp.formatCurrency(happyItems[indexPath.row].amount)
+            cell.transactionDate.text = dateString
+            cell.transactionAmount.text = currencyString
+        }
+        return cell
+    }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("groupToDetail", sender: self)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 }

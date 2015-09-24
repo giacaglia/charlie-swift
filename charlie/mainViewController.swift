@@ -279,13 +279,11 @@ class mainViewController: UIViewController {
         
         let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
         
-        
-        if happyScoreViewed == "0" //user hasn't compared what they thought their score was to what it is
-        {
+        if happyScoreViewed == "0"  {
+            //user hasn't compared what they thought their score was to what it is
             performSegueWithIdentifier("showReveal", sender: self)
             defaults.setValue("1", forKey: "happyScoreViewed")
             defaults.synchronize()
-            
         }
         
         if transactionsDateDifference >= 1 {
@@ -490,8 +488,7 @@ class mainViewController: UIViewController {
             // Go ahead and fetch your data from the internet
             // ...
             
-            if allTransactionItems.count > 0
-            {
+            if allTransactionItems.count > 0 {
                 let lastTransaction = allTransactionItems[0].date as NSDate
                 let calendar: NSCalendar = NSCalendar.currentCalendar()
                 let flags = NSCalendarUnit.Day
@@ -529,7 +526,6 @@ class mainViewController: UIViewController {
         flagListButton.tag = 0
         flagListButton.setImage(flagUnSelectedHappyButtonImage, forState: .Normal)
         
-        
         approvedListButton.tag = 1
         approvedListButton.setImage(approvedSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listGreen
@@ -540,7 +536,6 @@ class mainViewController: UIViewController {
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
-        
         
         topSeperator.backgroundColor = listGreen
         
@@ -566,7 +561,6 @@ class mainViewController: UIViewController {
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        
         
         if transactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()

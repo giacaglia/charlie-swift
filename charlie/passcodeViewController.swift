@@ -14,23 +14,24 @@
         var pinValidated = false
         
         override func viewWillAppear(animated: Bool) {
-            if pinValidated == false
-            {
-                let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
-                ABPin.view.backgroundColor = listBlue
-                self.view.backgroundColor = listBlue
-                presentViewController(ABPin, animated: true, completion: nil)
-                if users.count > 0 {
-                    //save access_token on server
-                    if let access_token = keyChainStore.get("access_token") {
-                        cService.saveAccessToken(access_token) {
-                            (response) in
-                        }
+            if pinValidated == true {
+                return
+            }
+          
+            // if the pin wasn't validated
+            let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
+            ABPin.view.backgroundColor = listBlue
+            self.view.backgroundColor = listBlue
+            presentViewController(ABPin, animated: true, completion: nil)
+            if users.count > 0 {
+                //save access_token on server
+                if let access_token = keyChainStore.get("access_token") {
+                    cService.saveAccessToken(access_token) {
+                        (response) in
                     }
                 }
             }
         }
-        
         
         func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
             let savedPin =  keyChainStore.get("pin")
@@ -52,7 +53,6 @@
         }
         
         func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController) {
-            
         }
         
     }

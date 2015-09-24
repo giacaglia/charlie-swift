@@ -44,9 +44,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
         
         charlieAnalytics.track("Find Bank Button Pressed")
         
@@ -78,78 +76,77 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     func userContentController(
         userContentController: WKUserContentController,
         didReceiveScriptMessage message: WKScriptMessage) {
-            
-            if message.name == "callbackHandler" {
-                //get access_token
-                let public_token = message.body as! String
-                if public_token == "exit" {
-                    print("Exit")
-                    dismissViewControllerAnimated(true, completion: nil)
-                    spinner.stopAnimating()
-                }
-                else if public_token == "loaded" {
-                    print("finished loading")
-                    spinner.stopAnimating()
-                }
-                else {
-                    spinner.startAnimating()
-                    cService.getAccessToken(public_token) { (response) in
-                        // var uuid = NSUUID().UUIDString
-                        var properties:[String:AnyObject] = [:]
-                        let access_token = response["access_token"] as! String
-                        let email_address = self.users[0].email
-                        self.keyStore.setString(access_token, forKey: "access_token")
-                        self.keyStore.setString(email_address, forKey: "email_address")
-                        self.keyStore.synchronize()
-                        
-                        properties["$email"] = email_address
-                        Mixpanel.sharedInstance().people.set(properties)
-                        
-                        self.keyChainStore.set(access_token, key: "access_token")
-                        
-                        cService.saveAccessToken(access_token) { (response) in
-                            print("Access token saved to server")
+        if message.name == "callbackHandler" {
+            //get access_token
+            let public_token = message.body as! String
+            if public_token == "exit" {
+                print("Exit")
+                dismissViewControllerAnimated(true, completion: nil)
+                spinner.stopAnimating()
+            }
+            else if public_token == "loaded" {
+                print("finished loading")
+                spinner.stopAnimating()
+            }
+            else {
+                spinner.startAnimating()
+                cService.getAccessToken(public_token) { (response) in
+                    // var uuid = NSUUID().UUIDString
+                    var properties:[String:AnyObject] = [:]
+                    let access_token = response["access_token"] as! String
+                    let email_address = self.users[0].email
+                    self.keyStore.setString(access_token, forKey: "access_token")
+                    self.keyStore.setString(email_address, forKey: "email_address")
+                    self.keyStore.synchronize()
+                    
+                    properties["$email"] = email_address
+                    Mixpanel.sharedInstance().people.set(properties)
+                    
+                    self.keyChainStore.set(access_token, key: "access_token")
+                    
+                    cService.saveAccessToken(access_token) { (response) in
+                        print("Access token saved to server")
+                    }
+                    
+                    //download categories if don't exist
+                    _ = realm.objects(Category)
+                    cService.getCategories() { (responses) in
+                        for response in responses {
+                            
+                            let cat = Category()
+                            let id:String = response["id"] as! String
+                            let type:String = response["type"] as! String
+                            cat.id = id
+                            cat.type = type
+                            let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
+                            cat.categories = categories
+                            try! realm.write {
+                                realm.add(cat, update: true)
+                            }
                         }
                         
-                        //download categories if don't exist
-                        _ = realm.objects(Category)
-                        cService.getCategories() { (responses) in
-                            for response in responses {
-                                
-                                let cat = Category()
-                                let id:String = response["id"] as! String
-                                let type:String = response["type"] as! String
-                                cat.id = id
-                                cat.type = type
-                                let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
-                                cat.categories = categories
-                                try! realm.write {
-                                    realm.add(cat, update: true)
+                        cService.updateAccount(access_token, dayLength: 0) { (response) in
+                            let accounts = response["accounts"] as! [NSDictionary]
+                            try! realm.write {
+                                // Save one Venue object (and dependents) for each element of the array
+                                for account in accounts {
+                                    realm.create(Account.self, value: account, update: true)
+                                    print("saved accounts")
                                 }
                             }
-                            
-                            cService.updateAccount(access_token, dayLength: 0) { (response) in
-                                let accounts = response["accounts"] as! [NSDictionary]
-                                try! realm.write {
-                                    // Save one Venue object (and dependents) for each element of the array
-                                    for account in accounts {
-                                        realm.create(Account.self, value: account, update: true)
-                                        print("saved accounts")
-                                    }
-                                }
-                                charlieAnalytics.track("Accounts Added")
-                                self.dismissViewControllerAnimated(true, completion: nil)
-                                transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                                self.spinner.stopAnimating()
-                                self.dismissViewControllerAnimated(true, completion: nil)
-                            }
+                            charlieAnalytics.track("Accounts Added")
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                            self.spinner.stopAnimating()
+                            self.dismissViewControllerAnimated(true, completion: nil)
                         }
                     }
                 }
             }
-            else {
-                print("something else")
-            }
+        }
+        else {
+            print("something else")
+        }
     }
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
