@@ -28,9 +28,12 @@ var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
+enum TransactionType {
+    case FlaggedTransaction, ApprovedTransaction
+}
+
 class mainViewController: UIViewController {
     
-    @IBOutlet weak var userSelectedHappyScoreLabel: UILabel!
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
@@ -553,7 +556,7 @@ class mainViewController: UIViewController {
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
         
-        charlieGroupListFiltered = groupBy(1) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.ApprovedTransaction) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
     }
@@ -645,12 +648,12 @@ class mainViewController: UIViewController {
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        charlieGroupListFiltered = groupBy(2) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
     
-    func groupBy(type: Int) -> NSArray {
+    func groupBy(type: TransactionType) -> NSArray {
         charlieGroupList = []
         var current_name = ""
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
@@ -685,10 +688,10 @@ class mainViewController: UIViewController {
             current_name = trans.name
         }
         
-        if type == 2 {
+        if type == .FlaggedTransaction {
             return charlieGroupList.filter({$0.notWorthValue > 0})
         }
-        else if type == 1 {
+        else if type == .ApprovedTransaction {
             return charlieGroupList.filter({$0.worthValue > 0})
         }
         else {
