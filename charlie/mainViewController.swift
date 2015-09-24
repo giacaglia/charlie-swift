@@ -32,6 +32,10 @@ enum TransactionType {
     case FlaggedTransaction, ApprovedTransaction
 }
 
+enum SortFilterType {
+    case FilterByName, FilterByDate, FilterByAmount
+}
+
 class mainViewController: UIViewController {
     
     @IBOutlet weak var toastView: UIView!
@@ -556,7 +560,7 @@ class mainViewController: UIViewController {
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
         
-        charlieGroupListFiltered = groupBy(.ApprovedTransaction) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: .FilterByName) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
     }
@@ -648,15 +652,25 @@ class mainViewController: UIViewController {
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: .FilterByName) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
     
-    func groupBy(type: TransactionType) -> NSArray {
+    func groupBy(type: TransactionType, sortFilter: SortFilterType) -> NSArray {
         charlieGroupList = []
         var current_name = ""
-        let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        let sortProperties : Array<SortDescriptor>!
+        if sortFilter == .FilterByName {
+            sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        }
+        else if sortFilter == .FilterByDate {
+            sortProperties = [SortDescriptor(property: "date", ascending: true)]
+        }
+        else {
+            sortProperties = [SortDescriptor(property: "worthValue", ascending: true)]
+        }
+        
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         var current_index = 0
         for trans in actedUponItems {
