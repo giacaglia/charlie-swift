@@ -17,9 +17,6 @@ class tutorialViewController: UIViewController {
     @IBOutlet weak var sliderAmount: UILabel!
     @IBOutlet weak var nextButton: UIButton!
     
-    var keyStore = NSUbiquitousKeyValueStore()
-    let users = realm.objects(User)
-    var cHelp = cHelper()
     let blueThumb = UIImage(named: "slider_neutral")
     let redThumb = UIImage(named: "slider_sad")
     let greenThumb = UIImage(named: "slider_happy")
@@ -54,7 +51,6 @@ class tutorialViewController: UIViewController {
             sliderAmount.textColor = listGreen
             slider.setThumbImage(greenThumb, forState: UIControlState.Normal)
         }
-        //let selectedStringValue = String(selectedValue)
         sliderAmount.text = "\(selectedValue)%"
     }
     

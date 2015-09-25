@@ -25,17 +25,17 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        let user_count = users.count
+
         if keyStore.stringForKey("access_token") != nil && keyStore.stringForKey("email_address") != nil {
-            access_token = keyStore.stringForKey("access_token")!
-            email_address = keyStore.stringForKey("email_address")!
+            self.access_token = keyStore.stringForKey("access_token")!
+            self.email_address = keyStore.stringForKey("email_address")!
         }
         
         if pinSetValidated == true {
             //already completed pin setup and can go to mainscreen (this should prob never get called...
             performSegueWithIdentifier("segueFromLoginToMain", sender: self)
         }
-        else if user_count > 0 {
+        else if users.count > 0 {
             //if user was setup but for some reason the passcode has not been set yet
             let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
@@ -77,8 +77,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     }
     
     func alertUserRecoverData() {
-        let uuid = ""
-        var properties:[String:AnyObject] = [:]
         
         guard let access_token = keyStore.stringForKey("access_token") else {
             return
@@ -110,7 +108,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     }
                 }
                 //add user
-                // Create a Person object
                 let user = User()
                 user.email = email
                 user.password = "password"
@@ -122,12 +119,12 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                 self.keyChainStore.set(access_token, key: "access_token")
                 cService.saveAccessToken(access_token) { (response) in
                 }
-                
-                if let _ = keyStore.stringForKey("uuid") {
-                    //all set
+                var uuid : String
+                if (keyStore.stringForKey("uuid") != nil) {
+                    uuid = keyStore.stringForKey("uuid")!
                 }
                 else {
-                    _ = NSUUID().UUIDString
+                    uuid = NSUUID().UUIDString
                 }
                 
                 keyStore.setString(access_token, forKey: "access_token")
@@ -136,8 +133,7 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                 keyStore.synchronize()
                 
                 Mixpanel.sharedInstance().identify(self.email_address)
-                properties["$email"] = self.email_address
-                Mixpanel.sharedInstance().people.set(properties)
+                Mixpanel.sharedInstance().people.set(["$email":self.email_address])
                 
                 cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
                     let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
@@ -168,9 +164,8 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
             presentViewController(ABPinSetup, animated: true, completion: nil)
             createUser(emailAddress.text!)
-            let uuid = NSUUID().UUIDString
             Mixpanel.sharedInstance().identify(emailAddress.text)
-            keyStore.setString(uuid, forKey: emailAddress.text!)
+            keyStore.setString(NSUUID().UUIDString, forKey: emailAddress.text!)
             charlieAnalytics.track("Email Added")
         }
         else {
@@ -181,7 +176,6 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     }
     
     func isValidEmail(testStr:String) -> Bool {
-        // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)

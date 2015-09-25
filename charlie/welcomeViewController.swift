@@ -18,7 +18,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var cHelp = cHelper()
     var keyStore = NSUbiquitousKeyValueStore()
     var pageImages: [UIImage] = []
-    var pageViews: [UIView?] = []
     var pageTitles = [String()]
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     //PRODCHANGE
@@ -41,10 +40,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
-        if Reachability.isConnectedToNetwork() {
-            // Go ahead and fetch your data from the internet
-            // ...
-        } else {
+        
+        // If it's not connected to the internet
+        if !Reachability.isConnectedToNetwork() {
             print("Internet connection not available")
             let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
@@ -65,10 +63,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             self.splashImageView.hidden = true
             self.setupWelcomeScreens()
         }
-        
     }
-    
-    
     
     func setupWelcomeScreens() {
         cHelp.getSettings() { (response) in
@@ -80,16 +75,14 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         charlieAnalytics.track("Onboarding Tutorial Started")
         
         //setup welcome screens
-        pageImages =
-            [
+        pageImages = [
                 UIImage(named: "iTunesArtwork")!,
                 UIImage(named: "happy_onboard")!,
                 UIImage(named: "sad_onboard")!,
                 UIImage(named: "iTunesArtwork")!
         ]
         
-        pageTitles =
-            [
+        pageTitles = [
                 "Spend money on what makes you happy",
                 "Sometimes we spend money on things that bring us joy",
                 "...and sometimes we spend on things that don't",
@@ -100,12 +93,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPage = 0
         pageControl.numberOfPages = pageCount
         
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(pageImages.count),
-            height: pagesScrollViewSize.height)
-        for _ in 0..<pageCount {
-            pageViews.append(nil)
-        }
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(pageImages.count),
+            height: scrollView.frame.size.height)
         loadAllPages()
     }
     
@@ -203,8 +192,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 newPageView.addSubview(loginButton)
             }
             scrollView.addSubview(newPageView)
-            // 4
-            pageViews[page] = newPageView
         }       
     }
     

@@ -49,7 +49,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         happyItems = transactionItems.filter("status = 1").sorted("date", ascending: true)
         sadItems = transactionItems.filter("status = 2").sorted("date", ascending: true)
         
-        
         if transactionItems.count == 1 {
             self.transactionCount.text = "\(transactionItems.count) transaction"
         }
@@ -238,7 +237,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
 
 // TableView Methods
 extension groupDetailViewController {
-    //table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if sadButton.tag == 1 {
             return sadItems.count

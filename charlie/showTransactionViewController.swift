@@ -42,7 +42,6 @@ class showTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
@@ -73,19 +72,16 @@ class showTransactionViewController: UIViewController {
         
         addressLabel.text = "\(location.address) \n  \(location.city) \(location.state) \(location.zip)"
         
-        
         guard let coordinates = self.transactionItems[transactionIndex].meta?.location!.coordinates else {
             mapView.hidden = true
             return
         }
-        let lat = coordinates.lat
-        let lon = coordinates.lon
-    
+        
         mapView.hidden = false
-        let initialLocation = CLLocation(latitude: lat, longitude: lon)
+        let initialLocation = CLLocation(latitude: coordinates.lat, longitude: coordinates.lon)
         centerMapOnLocation(initialLocation)
         let anotation = MKPointAnnotation()
-        anotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        anotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.lat, longitude: coordinates.lon)
         mapView.addAnnotation(anotation)
     }
     
