@@ -1,6 +1,6 @@
-// ABPadButton.h
+// ABPinSelectionView.h
 //
-// Copyright (c) 2014 Aron Bury - http://www.aronbury.com
+// Copyright (c) 2015 Aron Bury - http://www.aronbury.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,15 @@
 @import UIKit;
 
 /**
- A pin button designed to look like a telephone number button displaying the number, letters and handling it's
- own animation
+ A simple view that indicates if a pin has been selected or not.
  */
-@interface ABPadButton : UIButton
+@interface ABPinSelectionView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame number:(NSInteger)number letters:(NSString *)letters;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
 
-@property (nonatomic, strong, readonly) UILabel *numberLabel;
-@property (nonatomic, strong, readonly) UILabel *lettersLabel;
-
-@property (nonatomic, strong) UIColor *borderColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *selectedColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *hightlightedTextColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIFont *numberLabelFont UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIFont *letterLabelFont UI_APPEARANCE_SELECTOR;
 
 @end
 
-extern CGFloat const ABPadButtonHeight;
-extern CGFloat const ABPadButtonWidth;
+extern CGFloat const ABPinSelectionViewWidth;
+extern CGFloat const ABPinSelectionViewHeight;

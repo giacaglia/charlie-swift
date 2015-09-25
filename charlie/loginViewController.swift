@@ -13,7 +13,7 @@ var realm = try! Realm()
 let users = realm.objects(User)
 var cHelp = cHelper()
 
-class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerDelegate, UITextFieldDelegate {
+class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScreenSetupViewControllerDelegate {
     
     @IBOutlet weak var emailAddress: UITextField!
     @IBOutlet weak var nextButton: UIButton!
@@ -73,8 +73,10 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         performSegueWithIdentifier("segueFromLoginToMain", sender: self)
     }
     
-    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+    func unlockWasCancelledForSetupViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+        
     }
+  
     
     func alertUserRecoverData() {
         

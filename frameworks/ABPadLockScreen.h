@@ -1,6 +1,6 @@
-// ABPinSelectionView.h
+// ABPadLockScreen.h
 //
-// Copyright (c) 2014 Aron Bury - http://www.aronbury.com
+// Copyright (c) 2015 Aron Bury - http://www.aronbury.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-/**
- A simple view that indicates if a pin has been selected or not.
- */
-@interface ABPinSelectionView : UIView
+FOUNDATION_EXPORT double ABPadLockScreenVersionNumber;
+FOUNDATION_EXPORT const unsigned char ABPadLockScreenVersionString[];
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
-
-@property (nonatomic, strong) UIColor *selectedColor UI_APPEARANCE_SELECTOR;
-
-@end
-
-extern CGFloat const ABPinSelectionViewWidth;
-extern CGFloat const ABPinSelectionViewHeight;
+#import "ABPadLockScreenViewController.h"
+#import "ABPadLockScreenSetupViewController.h"
+#import "ABPadLockScreenView.h"
+#import "ABPadButton.h"
+#import "ABPinSelectionView.h"

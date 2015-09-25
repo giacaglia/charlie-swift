@@ -1,6 +1,6 @@
 // ABPadLockScreenSetupView.m
 //
-// Copyright (c) 2014 Aron Bury - http://www.aronbury.com
+// Copyright (c) 2015 Aron Bury - http://www.aronbury.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,6 @@
 - (CGFloat)correctWidth;
 - (CGFloat)correctHeight;
 
-
 @end
 
 @implementation ABPadLockScreenView
@@ -70,7 +69,7 @@
 			_digitsTextField.textAlignment = NSTextAlignmentCenter;
 			_digitsTextField.borderStyle = UITextBorderStyleNone;
 			_digitsTextField.layer.borderWidth = 1.0f;
-			//_digitsTextField.layer.cornerRadius = 5.0f;
+			_digitsTextField.layer.cornerRadius = 5.0f;
 		}
     }
     return self;
@@ -91,7 +90,7 @@
         _requiresRotationCorrection = NO;
         
         _enterPasscodeLabel = [self standardLabel];
-        _enterPasscodeLabel.text = NSLocalizedString(@"Enter Charlie Passcode", @"");
+        _enterPasscodeLabel.text = NSLocalizedString(@"Enter Passcode", @"");
         
         _detailLabel = [self standardLabel];
         
@@ -207,14 +206,6 @@
 - (void)updateDetailLabelWithString:(NSString *)string animated:(BOOL)animated completion:(void (^)(BOOL finished))completion
 {
     CGFloat length = (animated) ? animationLength : 0.0;
-    CGFloat labelWidth = 15; // padding
-	if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1)
-		labelWidth += [string sizeWithAttributes:@{NSFontAttributeName:self.detailLabelFont}].width;
-	else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        labelWidth += [string sizeWithFont: self.detailLabelFont].width;
-#pragma clang diagnostic pop
     
     CATransition *animation = [CATransition animation];
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -343,21 +334,16 @@
 				_backgroundBlurringView = [[UIView alloc] initWithFrame:self.bounds];
 				_backgroundBlurringView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.75f];
 			}
-            _backgroundBlurringView.frame = _contentView.frame;
+            _backgroundBlurringView.frame = self.frame;
 			_backgroundBlurringView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 			[self insertSubview:_backgroundBlurringView belowSubview:_contentView];
 		}
 		
 		[_backgroundBlurringView setHidden:NO];
-
 		[_backgroundView setFrame:self.bounds];
 		[_backgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
-            //[_backgroundView addSubview:_backgroundBlurringView];
-            [self insertSubview:_backgroundView belowSubview:_backgroundBlurringView];
-        } else {
-            [self insertSubview:_backgroundView belowSubview:_backgroundBlurringView];
-        }
+
+        [self insertSubview:_backgroundView belowSubview:_backgroundBlurringView];
 	}
 }
 
@@ -418,11 +404,6 @@
 	
     self.enterPasscodeLabel.frame = CGRectMake(([self correctWidth]/2) - 150, top, 300, 23);
     [self.contentView addSubview:self.enterPasscodeLabel];
-    
-    
-        
-    
-    
 	
 	CGFloat pinSelectionTop = self.enterPasscodeLabel.frame.origin.y + self.enterPasscodeLabel.frame.size.height + 17.5;
 
@@ -565,7 +546,7 @@
     CGRect newFrame = CGRectMake(roundedView.frame.origin.x, roundedView.frame.origin.y, newSize, newSize);
     roundedView.frame = newFrame;
     roundedView.clipsToBounds = YES;
-    //roundedView.layer.cornerRadius = newSize / 2.0;
+    roundedView.layer.cornerRadius = newSize / 2.0;
 }
 
 @end
