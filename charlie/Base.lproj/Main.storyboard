@@ -683,6 +683,19 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwI-vp-eZT">
+                                        <rect key="frame" x="491" y="117" width="100" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="jQ4-2V-bxL"/>
+                                            <constraint firstAttribute="height" constant="30" id="vOH-Pa-8YS"/>
+                                        </constraints>
+                                        <state key="normal" title="Filter">
+                                            <color key="titleColor" red="0.43038973829999999" green="0.72458857870000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="filterButtonPressed:" destination="HbA-5y-1yC" eventType="touchUpInside" id="yNC-k8-C2U"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -693,6 +706,7 @@
                                     <constraint firstAttribute="centerY" secondItem="RXb-b7-bsF" secondAttribute="centerY" id="9lY-97-RIV"/>
                                     <constraint firstAttribute="centerX" secondItem="iLy-Fy-hpO" secondAttribute="centerX" id="AFa-mF-S2v"/>
                                     <constraint firstItem="JLJ-av-QVM" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="top" constant="32" id="DaG-Fy-yjU"/>
+                                    <constraint firstAttribute="trailing" secondItem="iwI-vp-eZT" secondAttribute="trailing" constant="9" id="EHv-KL-kHR"/>
                                     <constraint firstAttribute="centerX" secondItem="iLy-Fy-hpO" secondAttribute="centerX" id="F5m-54-MCe"/>
                                     <constraint firstAttribute="width" constant="600" id="KeN-Fo-APK"/>
                                     <constraint firstAttribute="centerX" secondItem="Nuq-Ra-l3O" secondAttribute="centerX" id="MPr-QJ-lck"/>
@@ -710,6 +724,7 @@
                                     <constraint firstAttribute="bottom" secondItem="iLy-Fy-hpO" secondAttribute="bottom" constant="6" id="f50-cx-AyD"/>
                                     <constraint firstAttribute="centerX" secondItem="KIj-Dx-ITS" secondAttribute="centerX" constant="1" id="fTQ-gg-D3C"/>
                                     <constraint firstAttribute="centerY" secondItem="iLy-Fy-hpO" secondAttribute="centerY" id="m9e-j3-p9K"/>
+                                    <constraint firstItem="iwI-vp-eZT" firstAttribute="top" secondItem="JLJ-av-QVM" secondAttribute="bottom" constant="24" id="qkI-eO-9Vc"/>
                                     <constraint firstItem="Nuq-Ra-l3O" firstAttribute="top" secondItem="8h5-bW-v9x" secondAttribute="bottom" constant="-8" id="sAo-Sd-DEa"/>
                                 </constraints>
                                 <variation key="default">
@@ -937,7 +952,7 @@
                                 <rect key="frame" x="0.0" y="170" width="600" height="366"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbA-n2-qga">
-                                        <rect key="frame" x="194" y="62.5" width="211" height="78"/>
+                                        <rect key="frame" x="194" y="62" width="211" height="78"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Flx-Gw-0mG"/>
                                         </constraints>
@@ -1051,6 +1066,7 @@
                         <outlet property="cardButton" destination="JLJ-av-QVM" id="p21-ah-YzQ"/>
                         <outlet property="chartView" destination="jMy-Vo-NdC" id="kD1-y7-jkF"/>
                         <outlet property="dividerView" destination="J2c-VM-doh" id="S2M-7c-HMU"/>
+                        <outlet property="filterButton" destination="iwI-vp-eZT" id="ZaJ-DT-r44"/>
                         <outlet property="flagListButton" destination="oOe-bS-V5E" id="eMe-pe-9hj"/>
                         <outlet property="happyDateRange" destination="8tm-dw-eQJ" id="5aD-oT-pV7"/>
                         <outlet property="happyImage" destination="LVf-VJ-Uui" id="7fS-T8-Cmg"/>
@@ -1958,8 +1974,8 @@
         <image name="sad_on" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="euX-y7-kZF"/>
-        <segue reference="dvs-V3-jSh"/>
-        <segue reference="90x-Hi-7no"/>
+        <segue reference="DF7-7D-dxJ"/>
+        <segue reference="NZC-ff-rSb"/>
+        <segue reference="swt-fH-1dv"/>
     </inferredMetricsTieBreakers>
 </document>

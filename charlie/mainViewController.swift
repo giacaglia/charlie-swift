@@ -62,6 +62,7 @@ class mainViewController: UIViewController {
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var cardButton: UIButton!
+    @IBOutlet weak var filterButton: UIButton!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -95,6 +96,7 @@ class mainViewController: UIViewController {
     var timerCount:Int = 0
     var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
     var pinApproved = false
+    var filterType : SortFilterType! = .FilterByName
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -147,6 +149,7 @@ class mainViewController: UIViewController {
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
+        filterButton.hidden = true
         
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil {
@@ -264,6 +267,20 @@ class mainViewController: UIViewController {
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
+    }
+    
+    @IBAction func filterButtonPressed(sender: AnyObject) {
+        if filterType == .FilterByName {
+            filterType = .FilterByDate
+        }
+        else if filterType == .FilterByDate {
+            filterType = .FilterByAmount
+        }
+        else {
+            filterType = .FilterByName
+        }
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
+        transactionsTable.reloadData()
     }
     
     func showReward() {
@@ -553,14 +570,14 @@ class mainViewController: UIViewController {
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
         
-        
+        filterButton.hidden = false
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
         moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
         
-        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: .FilterByDate) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: filterType) as! [(charlieGroup)]
         
         transactionsTable.reloadData()
     }
@@ -587,6 +604,7 @@ class mainViewController: UIViewController {
         moneyCountSubHeadLabel.hidden = false
         moneyCountSubSubHeadLabel.hidden = false
         
+        filterButton.hidden = true
         moneyActionAmountLabel.hidden = true
         moneyActionDetailLabel.hidden = true
         
@@ -606,7 +624,6 @@ class mainViewController: UIViewController {
         
         flagListButton.tag = 0
         flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
-        
         
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
@@ -638,6 +655,8 @@ class mainViewController: UIViewController {
         moneyCountLabel.hidden = true
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
+        
+        filterButton.hidden = false
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
@@ -652,7 +671,7 @@ class mainViewController: UIViewController {
         approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: .FilterByDate) as! [(charlieGroup)]
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
