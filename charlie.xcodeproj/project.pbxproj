@@ -221,12 +221,12 @@
 		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
 		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
-		88A295061BB4F8C20091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A294FA1BB4F8C20091A36B /* ABPadButton.m */; settings = {ASSET_TAGS = (); }; };
-		88A295071BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A294FD1BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.m */; settings = {ASSET_TAGS = (); }; };
-		88A295081BB4F8C20091A36B /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A294FF1BB4F8C20091A36B /* ABPadLockScreenSetupViewController.m */; settings = {ASSET_TAGS = (); }; };
-		88A295091BB4F8C20091A36B /* ABPadLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295011BB4F8C20091A36B /* ABPadLockScreenView.m */; settings = {ASSET_TAGS = (); }; };
-		88A2950A1BB4F8C20091A36B /* ABPadLockScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295031BB4F8C20091A36B /* ABPadLockScreenViewController.m */; settings = {ASSET_TAGS = (); }; };
-		88A2950B1BB4F8C20091A36B /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295051BB4F8C20091A36B /* ABPinSelectionView.m */; settings = {ASSET_TAGS = (); }; };
+		88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295141BB598AC0091A36B /* ABPadButton.m */; settings = {ASSET_TAGS = (); }; };
+		88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88A295211BB598AC0091A36B /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88A295221BB598AC0091A36B /* ABPadLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2951A1BB598AC0091A36B /* ABPadLockScreenView.m */; settings = {ASSET_TAGS = (); }; };
+		88A295231BB598AC0091A36B /* ABPadLockScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2951C1BB598AC0091A36B /* ABPadLockScreenViewController.m */; settings = {ASSET_TAGS = (); }; };
+		88A295241BB598AC0091A36B /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */; settings = {ASSET_TAGS = (); }; };
 		88A53B231BB38B0300D5A1F0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A53B221BB38B0300D5A1F0 /* libz.tbd */; };
 		88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD39B81BB337CB003AE420 /* libicucore.tbd */; };
 /* End PBXBuildFile section */
@@ -572,19 +572,18 @@
 		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
 		45E0F21C1B67D3E40005B234 /* charlie-bridge-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "charlie-bridge-header.h"; sourceTree = "<group>"; };
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
-		88A294F91BB4F8C20091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
-		88A294FA1BB4F8C20091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
-		88A294FB1BB4F8C20091A36B /* ABPadLockScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreen.h; sourceTree = "<group>"; };
-		88A294FC1BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
-		88A294FD1BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenAbstractViewController.m; sourceTree = "<group>"; };
-		88A294FE1BB4F8C20091A36B /* ABPadLockScreenSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenSetupViewController.h; sourceTree = "<group>"; };
-		88A294FF1BB4F8C20091A36B /* ABPadLockScreenSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenSetupViewController.m; sourceTree = "<group>"; };
-		88A295001BB4F8C20091A36B /* ABPadLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenView.h; sourceTree = "<group>"; };
-		88A295011BB4F8C20091A36B /* ABPadLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenView.m; sourceTree = "<group>"; };
-		88A295021BB4F8C20091A36B /* ABPadLockScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenViewController.h; sourceTree = "<group>"; };
-		88A295031BB4F8C20091A36B /* ABPadLockScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenViewController.m; sourceTree = "<group>"; };
-		88A295041BB4F8C20091A36B /* ABPinSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPinSelectionView.h; sourceTree = "<group>"; };
-		88A295051BB4F8C20091A36B /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPinSelectionView.m; sourceTree = "<group>"; };
+		88A295131BB598AC0091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
+		88A295141BB598AC0091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
+		88A295151BB598AC0091A36B /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
+		88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenAbstractViewController.m; sourceTree = "<group>"; };
+		88A295171BB598AC0091A36B /* ABPadLockScreenSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenSetupViewController.h; sourceTree = "<group>"; };
+		88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenSetupViewController.m; sourceTree = "<group>"; };
+		88A295191BB598AC0091A36B /* ABPadLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenView.h; sourceTree = "<group>"; };
+		88A2951A1BB598AC0091A36B /* ABPadLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenView.m; sourceTree = "<group>"; };
+		88A2951B1BB598AC0091A36B /* ABPadLockScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenViewController.h; sourceTree = "<group>"; };
+		88A2951C1BB598AC0091A36B /* ABPadLockScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenViewController.m; sourceTree = "<group>"; };
+		88A2951D1BB598AC0091A36B /* ABPinSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPinSelectionView.h; sourceTree = "<group>"; };
+		88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPinSelectionView.m; sourceTree = "<group>"; };
 		88A53B221BB38B0300D5A1F0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		88AD39B81BB337CB003AE420 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -1146,19 +1145,18 @@
 		45E0F2231B67D7DD0005B234 /* ABPin */ = {
 			isa = PBXGroup;
 			children = (
-				88A294F91BB4F8C20091A36B /* ABPadButton.h */,
-				88A294FA1BB4F8C20091A36B /* ABPadButton.m */,
-				88A294FB1BB4F8C20091A36B /* ABPadLockScreen.h */,
-				88A294FC1BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.h */,
-				88A294FD1BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.m */,
-				88A294FE1BB4F8C20091A36B /* ABPadLockScreenSetupViewController.h */,
-				88A294FF1BB4F8C20091A36B /* ABPadLockScreenSetupViewController.m */,
-				88A295001BB4F8C20091A36B /* ABPadLockScreenView.h */,
-				88A295011BB4F8C20091A36B /* ABPadLockScreenView.m */,
-				88A295021BB4F8C20091A36B /* ABPadLockScreenViewController.h */,
-				88A295031BB4F8C20091A36B /* ABPadLockScreenViewController.m */,
-				88A295041BB4F8C20091A36B /* ABPinSelectionView.h */,
-				88A295051BB4F8C20091A36B /* ABPinSelectionView.m */,
+				88A295131BB598AC0091A36B /* ABPadButton.h */,
+				88A295141BB598AC0091A36B /* ABPadButton.m */,
+				88A295151BB598AC0091A36B /* ABPadLockScreenAbstractViewController.h */,
+				88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */,
+				88A295171BB598AC0091A36B /* ABPadLockScreenSetupViewController.h */,
+				88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */,
+				88A295191BB598AC0091A36B /* ABPadLockScreenView.h */,
+				88A2951A1BB598AC0091A36B /* ABPadLockScreenView.m */,
+				88A2951B1BB598AC0091A36B /* ABPadLockScreenViewController.h */,
+				88A2951C1BB598AC0091A36B /* ABPadLockScreenViewController.m */,
+				88A2951D1BB598AC0091A36B /* ABPinSelectionView.h */,
+				88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */,
 			);
 			name = ABPin;
 			sourceTree = "<group>";
@@ -1390,7 +1388,7 @@
 				459698C01BA9E50A00233C66 /* LineChartView.swift in Sources */,
 				459698B71BA9E50A00233C66 /* ChartAnimationEasing.swift in Sources */,
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
-				88A295091BB4F8C20091A36B /* ABPadLockScreenView.m in Sources */,
+				88A295221BB598AC0091A36B /* ABPadLockScreenView.m in Sources */,
 				459698FB1BA9E50A00233C66 /* HorizontalBarChartRenderer.swift in Sources */,
 				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
 				459698F21BA9E50A00233C66 /* ChartRendererBase.swift in Sources */,
@@ -1404,8 +1402,8 @@
 				459698CA1BA9E50A00233C66 /* ChartXAxis.swift in Sources */,
 				45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */,
 				459698EB1BA9E50A00233C66 /* HorizontalBarChartHighlighter.swift in Sources */,
-				88A2950B1BB4F8C20091A36B /* ABPinSelectionView.m in Sources */,
-				88A2950A1BB4F8C20091A36B /* ABPadLockScreenViewController.m in Sources */,
+				88A295241BB598AC0091A36B /* ABPinSelectionView.m in Sources */,
+				88A295231BB598AC0091A36B /* ABPadLockScreenViewController.m in Sources */,
 				459698E31BA9E50A00233C66 /* ScatterChartData.swift in Sources */,
 				459699081BA9E50A00233C66 /* ChartViewPortHandler.swift in Sources */,
 				459698FD1BA9E50A00233C66 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
@@ -1492,7 +1490,7 @@
 				456049E41B71183200C37B9D /* MPDesignerEventBindingRequestMesssage.m in Sources */,
 				459698BF1BA9E50A00233C66 /* HorizontalBarChartView.swift in Sources */,
 				459698ED1BA9E50A00233C66 /* BubbleChartRenderer.swift in Sources */,
-				88A295081BB4F8C20091A36B /* ABPadLockScreenSetupViewController.m in Sources */,
+				88A295211BB598AC0091A36B /* ABPadLockScreenSetupViewController.m in Sources */,
 				09CA4D721B71915300D4F63D /* persistenceStore.swift in Sources */,
 				456049CD1B71183200C37B9D /* Mixpanel.m in Sources */,
 				459698BE1BA9E50A00233C66 /* CombinedChartView.swift in Sources */,
@@ -1509,7 +1507,7 @@
 				456049DB1B71183200C37B9D /* MPApplicationStateSerializer.m in Sources */,
 				456049EF1B71183200C37B9D /* MPObjectSelector.m in Sources */,
 				456049E81B71183200C37B9D /* MPEventBinding.m in Sources */,
-				88A295061BB4F8C20091A36B /* ABPadButton.m in Sources */,
+				88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */,
 				45604A001B71183200C37B9D /* MPUIColorToNSStringValueTransformer.m in Sources */,
 				09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */,
 				459698BD1BA9E50A00233C66 /* ChartViewBase.swift in Sources */,
@@ -1544,7 +1542,7 @@
 				459698E61BA9E50A00233C66 /* ChartDataBaseFilter.swift in Sources */,
 				456049FC1B71183200C37B9D /* MPTweak.m in Sources */,
 				459698E81BA9E50A00233C66 /* ChartHighlight.swift in Sources */,
-				88A295071BB4F8C20091A36B /* ABPadLockScreenAbstractViewController.m in Sources */,
+				88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */,
 				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
 				456049FD1B71183200C37B9D /* MPTweakInline.m in Sources */,
 				45604A081B71183200C37B9D /* NSData+MPBase64.m in Sources */,

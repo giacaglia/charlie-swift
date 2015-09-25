@@ -73,10 +73,9 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
         performSegueWithIdentifier("segueFromLoginToMain", sender: self)
     }
     
-    func unlockWasCancelledForSetupViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
-        
+    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+
     }
-  
     
     func alertUserRecoverData() {
         

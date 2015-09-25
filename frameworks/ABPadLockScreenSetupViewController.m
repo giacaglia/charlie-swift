@@ -1,6 +1,6 @@
 // ABPadLockScreenSetupViewController.m
 //
-// Copyright (c) 2015 Aron Bury - http://www.aronbury.com
+// Copyright (c) 2014 Aron Bury - http://www.aronbury.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -134,9 +134,9 @@
 
 - (void)cancelButtonSelected:(UIButton *)sender
 {
-    if ([self.setupScreenDelegate respondsToSelector:@selector(unlockWasCancelledForSetupViewController:)])
+    if ([self.setupScreenDelegate respondsToSelector:@selector(unlockWasCancelledForPadLockScreenViewController:)])
     {
-        [self.setupScreenDelegate unlockWasCancelledForSetupViewController:self];
+        [self.setupScreenDelegate unlockWasCancelledForPadLockScreenViewController:self];
     }
 }
 

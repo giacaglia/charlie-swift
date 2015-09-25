@@ -1,6 +1,6 @@
 // ABPadButton.m
 //
-// Copyright (c) 2015 Aron Bury - http://www.aronbury.com
+// Copyright (c) 2014 Aron Bury - http://www.aronbury.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@
         
         self.accessibilityValue = [NSString stringWithFormat:@"PinButton%ld", (long)number];
         self.tag = number;
-        self.layer.borderWidth = 1.5f;
+        self.layer.borderWidth = 0;
         _numberLabel = ({
             UILabel *label = [self standardLabel];
             label.text = [NSString stringWithFormat:@"%ld", (long)number];
@@ -95,7 +95,7 @@
     _textColor = [UIColor whiteColor];
     _hightlightedTextColor = [UIColor whiteColor];
 	
-	static NSString* fontName = @"HelveticaNeue-Thin";
+	static NSString* fontName = @"HelveticaNeue-Bold";
 	
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -112,7 +112,7 @@
 - (void)prepareApperance
 {
     self.selectedView.backgroundColor = self.selectedColor;
-    self.layer.borderColor = [self.borderColor CGColor];
+    self.layer.borderColor = [self.borderColor CGColor];//(__bridge CGColorRef)(self.selectedColor);//[self.borderColor CGColor];
     self.numberLabel.textColor = self.textColor;
     self.numberLabel.highlightedTextColor = self.hightlightedTextColor;
     self.numberLabel.font = self.numberLabelFont;
@@ -126,7 +126,7 @@
     self.selectedView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     [self addSubview:self.selectedView];
     
-    self.numberLabel.frame = CGRectMake(0, self.frame.size.height / 5, self.frame.size.width, self.frame.size.height/2.5);
+    self.numberLabel.frame = CGRectMake(0, self.frame.size.height / 5.0, self.frame.size.width, self.frame.size.height/2.5);
     [self addSubview:self.numberLabel];
 	
 	if(self.tag == 0)
@@ -137,7 +137,7 @@
 	}
     
     self.lettersLabel.frame = CGRectMake(0, self.numberLabel.frame.origin.y + self.numberLabel.frame.size.height + 3, self.frame.size.width, 10);
-    [self addSubview:self.lettersLabel];
+   // [self addSubview:self.lettersLabel];
 }
 
 #pragma mark -
