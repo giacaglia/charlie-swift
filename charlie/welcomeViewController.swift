@@ -119,15 +119,20 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
         pageControl.currentPage = page
+        if (page == 0) {
+            pageControl.currentPageIndicatorTintColor = listBlue
+            pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        }
+        else {
+            pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
+            pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        }
     }
     
     func loadAllPages() {
-        for page in 0...3 {
-            if page < 0 || page >= pageImages.count {
-                // If it's outside the range of what you have to display, then do nothing
-                return
-            }
-            
+        pageControl.currentPageIndicatorTintColor = listBlue
+        pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        for page in 0..<pageImages.count {
             // 1
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
