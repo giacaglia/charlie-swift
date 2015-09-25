@@ -121,17 +121,17 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPage = page
         if (page == 0) {
             pageControl.currentPageIndicatorTintColor = listBlue
-            pageControl.pageIndicatorTintColor = UIColor.grayColor()
+            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         }
         else {
             pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
-            pageControl.pageIndicatorTintColor = UIColor.grayColor()
+            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         }
     }
     
     func loadAllPages() {
         pageControl.currentPageIndicatorTintColor = listBlue
-        pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         for page in 0..<pageImages.count {
             // 1
             var frame = scrollView.bounds
@@ -157,9 +157,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 welcome.text = "Welcome to Charlie"
                 newPageView.addSubview(welcome)
             }
-            
-            pageControl.currentPageIndicatorTintColor = UIColor.lightGrayColor()
-            pageControl.pageIndicatorTintColor = UIColor.blackColor()
             
             //tutorial title
             var titleFrame = CGRectMake(0, 0, 280, 150)

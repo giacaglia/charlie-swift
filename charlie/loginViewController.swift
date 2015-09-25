@@ -80,81 +80,84 @@ class loginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         let uuid = ""
         var properties:[String:AnyObject] = [:]
         
-        if let access_token = keyStore.stringForKey("access_token") {
-            if let email = keyStore.stringForKey("email_address") {
-                let refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
-                refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
-                    self.activityIndicator.startAnimating()
-                    self.emailAddress.enabled = false
-                    self.nextButton.enabled = false
-                    charlieAnalytics.track("Account Recovered")
-                    
-                    //get categories
-                    cService.getCategories() { (responses) in
-                        for response in responses {
-                            let cat = Category()
-                            let id:String = response["id"] as! String
-                            let type:String = response["type"] as! String
-                            cat.id = id
-                            cat.type = type
-                            let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
-                            cat.categories = categories
-                            try! realm.write {
-                                realm.add(cat, update: true)
-                            }
-                        }
-                        //add user
-                        // Create a Person object
-                        let user = User()
-                        user.email = email
-                        user.password = "password"
-                        //user.access_token = access_token
-                        try! realm.write {
-                            realm.add(user, update: true)
-                        }
-                        
-                        self.keyChainStore.set(access_token, key: "access_token")
-                        cService.saveAccessToken(access_token) { (response) in
-                        }
-                        
-                        if let _ = keyStore.stringForKey("uuid") {
-                            //all set
-                        }
-                        else {
-                            _ = NSUUID().UUIDString
-                        }
-                        
-                        keyStore.setString(access_token, forKey: "access_token")
-                        keyStore.setString(self.email_address, forKey: "email_address")
-                        keyStore.setString(uuid, forKey: self.email_address)
-                        keyStore.synchronize()
-                        
-                        Mixpanel.sharedInstance().identify(self.email_address)
-                        properties["$email"] = self.email_address
-                        Mixpanel.sharedInstance().people.set(properties)
-                        
-                        cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
-                            let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
-                            ABPinSetup.view.backgroundColor = listBlue
-                            
-                            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
-                            
-                            self.presentViewController(ABPinSetup, animated: true, completion: nil)
-                            self.createUser(self.email_address)
-                        }
-                        self.activityIndicator.stopAnimating()
-                        
+        guard let access_token = keyStore.stringForKey("access_token") else {
+            return
+        }
+        
+        guard let email = keyStore.stringForKey("email_address") else {
+            return
+        }
+     
+        let refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
+            self.activityIndicator.startAnimating()
+            self.emailAddress.enabled = false
+            self.nextButton.enabled = false
+            charlieAnalytics.track("Account Recovered")
+            
+            //get categories
+            cService.getCategories() { (responses) in
+                for response in responses {
+                    let cat = Category()
+                    let id:String = response["id"] as! String
+                    let type:String = response["type"] as! String
+                    cat.id = id
+                    cat.type = type
+                    let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
+                    cat.categories = categories
+                    try! realm.write {
+                        realm.add(cat, update: true)
                     }
-                }))
+                }
+                //add user
+                // Create a Person object
+                let user = User()
+                user.email = email
+                user.password = "password"
+                //user.access_token = access_token
+                try! realm.write {
+                    realm.add(user, update: true)
+                }
                 
-                refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction) in
-                    //do nothing and allow user to sign up again
-                }))
+                self.keyChainStore.set(access_token, key: "access_token")
+                cService.saveAccessToken(access_token) { (response) in
+                }
                 
-                self.presentViewController(refreshAlert, animated: true, completion: nil)
+                if let _ = keyStore.stringForKey("uuid") {
+                    //all set
+                }
+                else {
+                    _ = NSUUID().UUIDString
+                }
+                
+                keyStore.setString(access_token, forKey: "access_token")
+                keyStore.setString(self.email_address, forKey: "email_address")
+                keyStore.setString(uuid, forKey: self.email_address)
+                keyStore.synchronize()
+                
+                Mixpanel.sharedInstance().identify(self.email_address)
+                properties["$email"] = self.email_address
+                Mixpanel.sharedInstance().people.set(properties)
+                
+                cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
+                    let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
+                    ABPinSetup.view.backgroundColor = listBlue
+                    
+                    ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
+                    
+                    self.presentViewController(ABPinSetup, animated: true, completion: nil)
+                    self.createUser(self.email_address)
+                }
+                self.activityIndicator.stopAnimating()
                 
             }
-        }
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction) in
+            //do nothing and allow user to sign up again
+        }))
+        
+        self.presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     
