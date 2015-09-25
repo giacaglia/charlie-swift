@@ -89,9 +89,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 "Charlie tracks your spending so you can buy more of what makes you happy"
         ]
         
-        let pageCount = pageImages.count
         pageControl.currentPage = 0
-        pageControl.numberOfPages = pageCount
+        pageControl.numberOfPages = pageImages.count
         
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(pageImages.count),
             height: scrollView.frame.size.height)
@@ -122,12 +121,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPageIndicatorTintColor = listBlue
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         for page in 0..<pageImages.count {
-            // 1
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
             
-            // 3
             let newPageView = UIView()
             newPageView.backgroundColor = colors[page]
             newPageView.frame = frame
@@ -147,7 +144,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 newPageView.addSubview(welcome)
             }
             
-            //tutorial title
             var titleFrame = CGRectMake(0, 0, 280, 150)
             titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
             titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
@@ -160,7 +156,6 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             else {
                 title.textColor =  UIColor.whiteColor()
             }
-            
             title.textAlignment = .Center
             title.textAlignment = NSTextAlignment.Center
             title.text = pageTitles[page]
@@ -180,7 +175,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             
             //loginbutton
             if page == 3 {
-                var loginButtonFrame = CGRectMake(0, 0, 300, 40)
+                var loginButtonFrame = CGRectMake(0, 0, 300, 60)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 let loginButton = UIButton(frame: loginButtonFrame)
