@@ -62,7 +62,6 @@ class mainViewController: UIViewController {
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var cardButton: UIButton!
-    @IBOutlet weak var filterButton: UIButton!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -149,7 +148,6 @@ class mainViewController: UIViewController {
         rewardView.hidden = true
         transactionsTable.hidden = false
         inboxListButton.tag =  1
-        filterButton.hidden = true
         
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil {
@@ -267,20 +265,6 @@ class mainViewController: UIViewController {
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.text = String(stringInterpolationSegment: finalFormat)
-    }
-    
-    @IBAction func filterButtonPressed(sender: AnyObject) {
-        if filterType == .FilterByName {
-            filterType = .FilterByDate
-        }
-        else if filterType == .FilterByDate {
-            filterType = .FilterByAmount
-        }
-        else {
-            filterType = .FilterByName
-        }
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
-        transactionsTable.reloadData()
     }
     
     func showReward() {
@@ -508,32 +492,45 @@ class mainViewController: UIViewController {
     }
     
     @IBAction func refreshAccounts(sender: UIButton) {
-        if Reachability.isConnectedToNetwork() {
-            // Go ahead and fetch your data from the internet
-            // ...
-            
-            if allTransactionItems.count > 0 {
-                let lastTransaction = allTransactionItems[0].date as NSDate
-                let calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.Day
-                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
-                let dateToSychTo = components.day
-                
-                spinner.startAnimating()
-                print("DAYS \(dateToSychTo)")
-                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
-                    self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
-                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
-                        self.showReward()
-                    }
-                }
-            }
-        } else {
-            print("Internet connection not available")
-            let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
-            alert.show()
+        if filterType == .FilterByName {
+            filterType = .FilterByDate
         }
+        else if filterType == .FilterByDate {
+            filterType = .FilterByAmount
+        }
+        else {
+            filterType = .FilterByName
+        }
+        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
+        transactionsTable.reloadData()
+
+        
+//        if Reachability.isConnectedToNetwork() {
+//            // Go ahead and fetch your data from the internet
+//            // ...
+//            
+//            if allTransactionItems.count > 0 {
+//                let lastTransaction = allTransactionItems[0].date as NSDate
+//                let calendar: NSCalendar = NSCalendar.currentCalendar()
+//                let flags = NSCalendarUnit.Day
+//                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
+//                let dateToSychTo = components.day
+//                
+//                spinner.startAnimating()
+//                print("DAYS \(dateToSychTo)")
+//                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
+//                    self.transactionsTable.reloadData()
+//                    self.spinner.stopAnimating()
+//                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
+//                        self.showReward()
+//                    }
+//                }
+//            }
+//        } else {
+//            print("Internet connection not available")
+//            let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
+//            alert.show()
+//        }
     }
     
     
@@ -570,7 +567,6 @@ class mainViewController: UIViewController {
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
         
-        filterButton.hidden = false
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
@@ -604,7 +600,6 @@ class mainViewController: UIViewController {
         moneyCountSubHeadLabel.hidden = false
         moneyCountSubSubHeadLabel.hidden = false
         
-        filterButton.hidden = true
         moneyActionAmountLabel.hidden = true
         moneyActionDetailLabel.hidden = true
         
@@ -656,7 +651,6 @@ class mainViewController: UIViewController {
         moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
         
-        filterButton.hidden = false
         moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
@@ -687,7 +681,9 @@ class mainViewController: UIViewController {
             sortProperties = [SortDescriptor(property: "date", ascending: true)]
         }
         else {
-            sortProperties = [SortDescriptor(property: "worthValue", ascending: true)]
+            sortProperties = [SortDescriptor(property: "amount", ascending: false)]
+
+//            sortProperties = [SortDescriptor(property: "worthValue", ascending: true)]
         }
         
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
