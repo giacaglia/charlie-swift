@@ -64,7 +64,10 @@ class showTransactionViewController: UIViewController {
         dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
         let dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
-        categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
+        // Fix name: Terrible name
+        if let categories = self.transactionItems[transactionIndex].categories {
+            categoryLabel.text = categories.categories
+        }
         guard let location = self.transactionItems[transactionIndex].meta?.location else {
             mapView.hidden = true
             return
