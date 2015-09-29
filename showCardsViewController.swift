@@ -32,6 +32,7 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         if accounts.count > 0 {
             addAccountButton.enabled = false
         }
+        cardsTableView.separatorStyle = .None
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

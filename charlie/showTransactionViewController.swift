@@ -94,6 +94,13 @@ class showTransactionViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    @IBAction func notWorth(sender: AnyObject) {
+    }
+    
+    @IBAction func worth(sender: AnyObject) {
+    }
+    
+    
     @IBAction func closeButtonPress(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
