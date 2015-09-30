@@ -41,6 +41,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
+        groupTableView.tableFooterView = UIView();
         self.name.text = transactionName
         let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]

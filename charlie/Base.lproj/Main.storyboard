@@ -1810,19 +1810,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transactions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sx-d1-p3a">
-                                        <rect key="frame" x="259" y="70" width="82" height="20.5"/>
+                                        <rect key="frame" x="259" y="75" width="82" height="20.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJi-iw-PAW">
-                                        <rect key="frame" x="238" y="105" width="124.5" height="87.5"/>
+                                        <rect key="frame" x="238" y="110" width="124.5" height="87.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="64"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HAPPY FLOW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-we-FcK">
-                                        <rect key="frame" x="256" y="178" width="88" height="19.5"/>
+                                        <rect key="frame" x="256" y="183" width="88" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1843,7 +1843,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Ets-hw-Usp" secondAttribute="trailing" constant="15" id="7Fm-UD-CwH"/>
                                     <constraint firstAttribute="centerX" secondItem="xJi-iw-PAW" secondAttribute="centerX" id="8mK-00-pLk"/>
                                     <constraint firstAttribute="centerX" secondItem="f1G-we-FcK" secondAttribute="centerX" id="9TS-cE-SZo"/>
-                                    <constraint firstItem="7Sx-d1-p3a" firstAttribute="top" secondItem="OvE-MX-Jhf" secondAttribute="bottom" constant="-5" id="Gn8-WE-KkQ"/>
+                                    <constraint firstItem="7Sx-d1-p3a" firstAttribute="top" secondItem="OvE-MX-Jhf" secondAttribute="bottom" id="Gn8-WE-KkQ"/>
                                     <constraint firstItem="xJi-iw-PAW" firstAttribute="top" secondItem="7Sx-d1-p3a" secondAttribute="bottom" constant="15" id="Hap-mx-vwt"/>
                                     <constraint firstItem="Ets-hw-Usp" firstAttribute="top" secondItem="OOw-EN-0XC" secondAttribute="top" constant="32" id="JiD-oo-FZQ"/>
                                     <constraint firstAttribute="centerX" secondItem="7Sx-d1-p3a" secondAttribute="centerX" id="NY5-Zy-buD"/>
@@ -1905,6 +1905,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="NZC-ff-rSb"/>
         <segue reference="swt-fH-1dv"/>
-        <segue reference="DF7-7D-dxJ"/>
+        <segue reference="dvs-V3-jSh"/>
     </inferredMetricsTieBreakers>
 </document>

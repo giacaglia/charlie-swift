@@ -537,6 +537,8 @@ class mainViewController: UIViewController {
     
     @IBAction func approvedListButtonress(sender: UIButton) {
         charlieAnalytics.track("Worth It Button")
+        transactionsTable.backgroundColor = UIColor.clearColor();
+        self.view.backgroundColor = UIColor(red: 169/255, green: 232/255, blue: 121/255, alpha: 1.0);
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
@@ -555,9 +557,9 @@ class mainViewController: UIViewController {
         
 //        moneyCountSubHeadLabel.text = "Worth it!"
         
-        let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-        let finalFormat = stripCents(transactionSumCurrecnyFormat)
+//        let transactionSum = sumTransactionsCount()
+//        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+//        let finalFormat = stripCents(transactionSumCurrecnyFormat)
         
         topSeperator.backgroundColor = listGreen
         
@@ -581,6 +583,8 @@ class mainViewController: UIViewController {
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
+        self.view.backgroundColor = UIColor.whiteColor();
+        transactionsTable.backgroundColor = UIColor.clearColor();
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
         if transactionItems.count == 0 && allTransactionItems.count > 0 {
@@ -630,6 +634,8 @@ class mainViewController: UIViewController {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
+        self.view.backgroundColor =  UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0);
+        transactionsTable.backgroundColor = UIColor.clearColor();
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
@@ -645,9 +651,9 @@ class mainViewController: UIViewController {
         dividerView.backgroundColor = listRed
 //        moneyCountSubHeadLabel.text = "Not Worth it!"
         
-        let transactionSum = sumTransactionsCount()
-        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
-        let finalFormat = stripCents(transactionSumCurrecnyFormat)
+//        let transactionSum = sumTransactionsCount()
+//        let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
+//        let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.hidden = true
 //        moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
