@@ -115,6 +115,7 @@ class mainViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        self.view.backgroundColor = lightBlue
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
         if accounts.count > 0 && allTransactionItems.count == 0 {
             if timerCount == 0 {
@@ -538,7 +539,7 @@ class mainViewController: UIViewController {
     @IBAction func approvedListButtonress(sender: UIButton) {
         charlieAnalytics.track("Worth It Button")
         transactionsTable.backgroundColor = UIColor.clearColor();
-        self.view.backgroundColor = UIColor(red: 169/255, green: 232/255, blue: 121/255, alpha: 1.0);
+        self.view.backgroundColor = lightGreen
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
@@ -583,8 +584,8 @@ class mainViewController: UIViewController {
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
-        self.view.backgroundColor = UIColor.whiteColor();
-        transactionsTable.backgroundColor = UIColor.clearColor();
+        self.view.backgroundColor = lightBlue
+        transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
         if transactionItems.count == 0 && allTransactionItems.count > 0 {
@@ -634,7 +635,7 @@ class mainViewController: UIViewController {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
-        self.view.backgroundColor =  UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0);
+        self.view.backgroundColor = lightRed
         transactionsTable.backgroundColor = UIColor.clearColor();
         hideReward()
         
@@ -861,8 +862,8 @@ extension mainViewController : UITableViewDataSource {
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
         
-        let transactionSum = self.sumTransactionsCount()
-        let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
+//        let transactionSum = self.sumTransactionsCount()
+//        let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
 //        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
 //        self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
         
@@ -935,6 +936,7 @@ extension mainViewController : UITableViewDataSource {
         }
         else {
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+//            cell.firstLeftAction.backgroundColor = lightGreen
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             cell.nameCellLabel.text = transactionItems[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)

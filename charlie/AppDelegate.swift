@@ -15,8 +15,11 @@ import RealmSwift
 
 
 let listRed =  UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
+let lightRed = UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0);
 let listBlue = UIColor(red: 142/255, green: 180/255, blue: 246/255, alpha: 1.0)
+let lightBlue = UIColor(red: 164/255, green: 202/255, blue: 247/255, alpha: 1.0)
 let listGreen = UIColor(red: 153/255, green: 219/255, blue: 103/255, alpha: 1.0)
+let lightGreen = UIColor(red: 169/255, green: 232/255, blue: 121/255, alpha: 1.0)
 let lightGray = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
 var cService = charlieService()
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")

@@ -651,7 +651,7 @@
                                             <constraint firstAttribute="height" constant="35" id="JTU-oy-ZcX"/>
                                             <constraint firstAttribute="width" constant="43" id="jEg-uS-IWz"/>
                                         </constraints>
-                                        <state key="normal" image="card">
+                                        <state key="normal" image="btn_filter">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1887,10 +1887,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="btn_filter" width="27" height="27"/>
         <image name="btn_findbank" width="211" height="78"/>
         <image name="btn_notWorth" width="114" height="47"/>
         <image name="btn_worth" width="114" height="47"/>
-        <image name="card" width="32" height="24"/>
         <image name="close" width="24" height="24"/>
         <image name="happy_off_blue" width="36" height="36"/>
         <image name="happy_on" width="36" height="36"/>
@@ -1903,8 +1903,8 @@
         <image name="sad_on" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="DF7-7D-dxJ"/>
         <segue reference="NZC-ff-rSb"/>
         <segue reference="swt-fH-1dv"/>
-        <segue reference="dvs-V3-jSh"/>
     </inferredMetricsTieBreakers>
 </document>
