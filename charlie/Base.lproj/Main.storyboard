@@ -1899,17 +1899,9 @@
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="xSt-Xg-v3D" secondAttribute="centerY" id="Q0x-oq-ZWq"/>
                                                 <constraint firstAttribute="centerY" secondItem="mGk-Mk-vDS" secondAttribute="centerY" id="Wr8-2u-wuX"/>
-                                                <constraint firstItem="xSt-Xg-v3D" firstAttribute="top" secondItem="ujT-bk-NNn" secondAttribute="topMargin" constant="3" id="fWl-DE-8Qe"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="mGk-Mk-vDS" secondAttribute="trailing" constant="11" id="sG6-N4-h8j"/>
-                                                <constraint firstItem="mGk-Mk-vDS" firstAttribute="top" secondItem="ujT-bk-NNn" secondAttribute="topMargin" constant="3" id="zTk-Uj-M7J"/>
                                                 <constraint firstItem="xSt-Xg-v3D" firstAttribute="leading" secondItem="ujT-bk-NNn" secondAttribute="leadingMargin" constant="20" id="zuI-L1-FFI"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="fWl-DE-8Qe"/>
-                                                    <exclude reference="zTk-Uj-M7J"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
@@ -2033,8 +2025,8 @@
         <image name="sad_on" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DF7-7D-dxJ"/>
-        <segue reference="NZC-ff-rSb"/>
         <segue reference="swt-fH-1dv"/>
+        <segue reference="NZC-ff-rSb"/>
+        <segue reference="dvs-V3-jSh"/>
     </inferredMetricsTieBreakers>
 </document>
