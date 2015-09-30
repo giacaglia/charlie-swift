@@ -47,10 +47,7 @@ class SBGestureTableView: UITableView, UIGestureRecognizerDelegate {
     private var longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
 
     
-   
-    
-    
-    
+
     func initialize() {
         longPress.addTarget(self, action: "longPress:")
         longPress.delegate = self

@@ -20,9 +20,7 @@ class KeychainHelper {
     
     
     func set(value:String, key:String) -> Bool {
-        
         if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            
             let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
                 kSecAttrService as String: self.service,
                 kSecAttrAccount as String: key,
@@ -41,15 +39,13 @@ class KeychainHelper {
         return false
     }
     
+    
     func get(key:String) -> String? {
-        
         let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: self.service,
             kSecAttrAccount as String: key,
             kSecReturnData as String: kCFBooleanTrue,
             kSecMatchLimit as String: kSecMatchLimitOne]
-        
-        
         var dataTypeRef : AnyObject?
         
         let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
@@ -57,27 +53,21 @@ class KeychainHelper {
         var data: String?
         
         if (status == errSecSuccess) {
-
             let retrievedData = dataTypeRef as! NSData
-            
             // Convert the data retrieved from the keychain into a string
             data = NSString(data: retrievedData, encoding: NSUTF8StringEncoding) as? String
         } else {
             print("Nothing was retrieved from the keychain. Status code \(status)")
         }
-        
         return data
     }
     
     func delete(value:String, key:String) -> Bool {
-        
         if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            
             let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
                 kSecAttrService as String: self.service,
                 kSecAttrAccount as String: key,
                 kSecValueData as String: data]
-            
             
             let status: OSStatus = SecItemDelete(keychainQuery as CFDictionaryRef)
             
@@ -86,7 +76,6 @@ class KeychainHelper {
             }
             return status == noErr
         }
-        
         return false
     }
 }

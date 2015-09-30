@@ -6,19 +6,13 @@
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
 
-
-
-
 import Foundation
 
 class charlieAnalytics {
-    
     class func track(name:String) {
         var properties:[String:AnyObject] = [:]
         
-
-        if users.count > 0
-        {
+        if users.count > 0 {
             properties["user_id"] = users[0].email
         }
         

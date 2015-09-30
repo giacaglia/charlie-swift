@@ -11,33 +11,18 @@ import UIKit
 
 
 class revealViewController: UIViewController {
-
+    @IBOutlet weak var revealTitle: UILabel!
+    @IBOutlet weak var revealDetailView: UIView!
     
     var revealPercentage:String = ""
     
-    
-    
-    @IBOutlet weak var revealTitle: UILabel!
-
-    @IBOutlet weak var revealDetailView: UIView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         revealDetailView.layer.cornerRadius = 20
         revealTitle.text = "You guessed \(revealPercentage)"
-        
-        
-        
-        
     }
-
-
+    
     @IBAction func dismissButtonPressed(sender: UIButton) {
-        
-        
         dismissViewControllerAnimated(true, completion: nil)
-        
     }
 }

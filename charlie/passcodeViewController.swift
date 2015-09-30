@@ -1,84 +1,44 @@
-    //
+//
 //  passcodeViewController.swift
 //  charlie
 //
 //  Created by Jim Caralis on 7/29/15.
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
-
 import UIKit
 
 
 class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDelegate {
-
+    
     var pinValidated = false
-
-    
-    
     
     override func viewWillAppear(animated: Bool) {
-       
-        
-        
-        if pinValidated == false
-        {
-            let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
-            ABPin.view.backgroundColor = listBlue
-            self.view.backgroundColor = listBlue
-
-            presentViewController(ABPin, animated: true, completion: nil)
-            
-            
-            if users.count > 0
-            {
-                //save access_token on server
-                if let access_token = keyChainStore.get("access_token")
-                {
-                    cService.saveAccessToken(access_token)
-                        {
-                            (response) in
-                    }
-                
-                }
-            
-            }
-            
-            
-            
+        if pinValidated == true {
+            return
         }
-        
-
-        
-    
+      
+        // if the pin wasn't validated
+        let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
+        ABPin.view.backgroundColor = listBlue
+        self.view.backgroundColor = listBlue
+        presentViewController(ABPin, animated: true, completion: nil)
+        if users.count > 0 {
+            //save access_token on server
+            if let access_token = keyChainStore.get("access_token") {
+                cService.saveAccessToken(access_token) {
+                    (response) in
+                }
+            }
+        }
     }
-    
-    
-    override func viewDidLoad() {
-        
-       
-        
-    }
-    
     
     func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
-        
-         let savedPin =  keyChainStore.get("pin")
-        
-        if pin == savedPin
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
+        let savedPin =  keyChainStore.get("pin")
+        return pin == savedPin
     }
-   
-    
     
     func unlockWasSuccessfulForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
         pinValidated = true
-        
         padLockScreenViewController.dismissViewControllerAnimated(false, completion: nil)
         self.dismissViewControllerAnimated(false, completion: nil)
     }
@@ -88,18 +48,10 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     }
     
     func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
-    
-    }
-    
-    
-    
-    
-    
-    func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController)
-    {
         
     }
     
+    func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController) {
+    }
     
-
 }

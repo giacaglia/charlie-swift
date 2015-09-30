@@ -10,186 +10,89 @@ import UIKit
 import MapKit
 
 class showTransactionViewController: UIViewController {
-
-    var transactionIndex:Int = 0
-    var mainVC:mainViewController!
-    var transactionID:String = ""
     
-    
-    @IBOutlet weak var merchantLabel: UILabel!
     @IBOutlet weak var accountNumberLabel: UILabel!
     @IBOutlet weak var accountNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var lastFourLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
     
-    
+    var transactionIndex:Int = 0
+    var mainVC:mainViewController!
+    var transactionID:String = ""
     let regionRadius: CLLocationDistance = 1000
-    
     var transactionItems = realm.objects(Transaction)
-   
-    
     var sourceVC = "main"
     
-    
-    @IBOutlet weak var mapView: MKMapView!
-
     func willEnterForeground(notification: NSNotification!) {
-        
-        
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            
             presentViewController(resultController, animated: true, completion: { () -> Void in
-                
                 cHelp.removeSpashImageView(self.view)
                 cHelp.removeSpashImageView(self.presentingViewController!.view)
-                
             })
         }
-        
-       
-
-        
     }
     
-    
-    func didEnterBackgroundNotification(notification: NSNotification)
-    {
-         cHelp.splashImageView(self.view)
+    func didEnterBackgroundNotification(notification: NSNotification) {
+        cHelp.splashImageView(self.view)
     }
-    
-
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
-        
-         var lat = 0.0
-         var lon = 0.0
-         var address = ""
-         var city = ""
-         var state = ""
-         var zip = ""
 
         let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
         
         self.transactionItems = realm.objects(Transaction).filter("_id = '\(self.transactionID)'")
-    
+        
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
-        
-        
-        if sourceVC == "main"
-        {
-            descriptionLabel.text = "Was \(self.transactionItems[transactionIndex].name)\nworth it?"
+        if sourceVC == "main" {
+            let amount = self.transactionItems[transactionIndex].amount
+            let myString = "Was $\(amount) at \(self.transactionItems[transactionIndex].name)\nworth it?"
+            let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+            attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(amount).characters.count) + 1))
+
+            descriptionLabel.attributedText = attString
         }
-        else if sourceVC == "happy"
-        {
+        else if sourceVC == "happy" {
             descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas worth it"
         }
-        else if sourceVC == "sad"
-        {
+        else if sourceVC == "sad" {
             descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas not worth it"
         }
-        
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
         let dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
         dateLabel.text = dateString
 
-       categoryLabel.text = self.transactionItems[transactionIndex].categories!.categories
-        
-       if  self.transactionItems[transactionIndex].meta!.location!.address != ""
-       {
-        address = self.transactionItems[transactionIndex].meta!.location!.address
-       }
-        else
-       {
-        address = ""
+        // Fix name: Terrible name
+        if let categories = self.transactionItems[transactionIndex].categories {
+            categoryLabel.text = categories.categories
         }
-        
-        if  self.transactionItems[transactionIndex].meta!.location!.city != ""
-        {
-            city = self.transactionItems[transactionIndex].meta!.location!.city
-        }
-        else
-        {
-            city = ""
-        }
-        
-        if  self.transactionItems[transactionIndex].meta!.location!.state != ""
-        {
-            state = self.transactionItems[transactionIndex].meta!.location!.state
-        }
-        else
-        {
-            state = ""
-        }
-
-        
-        if  self.transactionItems[transactionIndex].meta!.location!.zip != ""
-        {
-            zip = self.transactionItems[transactionIndex].meta!.location!.zip
-        }
-        else
-        {
-            zip = ""
-        }
-
-        
-        
-        
-        addressLabel.text = "\(address) \n  \(city) \(state) \(zip)"
-        
-        
-    
-    
-        print(self.transactionItems[transactionIndex].ctype)
-        
-         if self.transactionItems[transactionIndex].meta != nil
-            {
-                if self.transactionItems[transactionIndex].meta!.location != nil
-                    {
-                        if self.transactionItems[transactionIndex].meta!.location?.coordinates != nil
-                        {
-
-                          lat = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lat)!
-                          lon = (self.transactionItems[transactionIndex].meta?.location!.coordinates!.lon)!
-                        }
-                    }
-            }
-        
-        
-        if lat > 0
-        {
-            mapView.hidden = false
-            let initialLocation = CLLocation(latitude: lat, longitude: lon)
-            
-            let location:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
-            centerMapOnLocation(initialLocation)
-            let anotation = MKPointAnnotation()
-            anotation.coordinate = location
-
-            mapView.addAnnotation(anotation)
-            
-            
-            
-        }
-        else
-        {
+        guard let location = self.transactionItems[transactionIndex].meta?.location else {
             mapView.hidden = true
+            return
         }
         
+        addressLabel.text = "\(location.address) \n  \(location.city) \(location.state) \(location.zip)"
+        
+        guard let coordinates = self.transactionItems[transactionIndex].meta?.location!.coordinates else {
+            mapView.hidden = true
+            return
+        }
+        
+        mapView.hidden = false
+        let initialLocation = CLLocation(latitude: coordinates.lat, longitude: coordinates.lon)
+        centerMapOnLocation(initialLocation)
+        let anotation = MKPointAnnotation()
+        anotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.lat, longitude: coordinates.lon)
+        mapView.addAnnotation(anotation)
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -198,15 +101,15 @@ class showTransactionViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    @IBAction func notWorth(sender: AnyObject) {
+    }
+    
+    @IBAction func worth(sender: AnyObject) {
+    }
     
     
     @IBAction func closeButtonPress(sender: AnyObject) {
-        
-       
         dismissViewControllerAnimated(true, completion: nil)
-        
     }
-    
 
 }
-

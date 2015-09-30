@@ -10,45 +10,23 @@ import Foundation
 import CloudKit
 
 
-
-
 class persistenceStore {
-    
-
-    
     var access_token:String
     var uuid:String?
     var email:String?
     
-    
     init(access_token:String) {
-        
-     self.access_token = access_token
-        
-        
+        self.access_token = access_token
     }
     
-    func isActive() -> Bool
-    {
-        
-        
-        
-        if var _:NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil)
-        {
+    func isActive() -> Bool {
+        if var _:NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil) {
             print("True")
             return true
-
         }
-        else
-        {
+        else {
             print("False")
             return false
         }
-        
-        
-    }
-
-    
-    
-    
+    }    
 }

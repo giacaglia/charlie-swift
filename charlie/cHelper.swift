@@ -12,8 +12,6 @@ import CloudKit
 
 class cHelper {
     
-    
-    
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
             dispatch_time(
@@ -23,273 +21,176 @@ class cHelper {
             dispatch_get_main_queue(), closure)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->())
-    {
+    func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
+        let users = realm.objects(User)
         
-      let users = realm.objects(User)
-        
-       for _ in users
-       {
-        
-        let user_access_token  = keyChainStore.get("access_token")
-        cService.updateAccount(user_access_token!, dayLength: dayLength)
-                {
-                    (response) in
-                
-               
-                    
-                
-                  if let accounts = response["accounts"] as? [NSDictionary]
-                  {
-                    try!    realm.write {
-                            // Save one Venue object (and dependents) for each element of the array
-                            for account in accounts {
-                                realm.create(Account.self, value: account, update: true)
-                                //println("saved accounts")
-                            }
-                        }
-                   
-                    
-                    
-                        
-                        let transactions = response["transactions"] as! [NSDictionary]
+        for _ in users {
+            let user_access_token  = keyChainStore.get("access_token")
+            cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
+                if let accounts = response["accounts"] as? [NSDictionary] {
+                    try! realm.write {
                         // Save one Venue object (and dependents) for each element of the array
-                        for transaction in transactions {
-                           // println("saved")
-                         try!   realm.write {
-                                //clean up name
-                                let dictName = transaction.valueForKey("name") as? String
-                                transaction.setValue(self.cleanName(dictName!), forKey: "name")
-                                //convert string to date before insert
-                                let dictDate = transaction.valueForKey("date") as? String
-                                transaction.setValue(self.convertDate(dictDate!), forKey: "date")
-                                //check for deposits and remove
-                                let dictAmount = transaction.valueForKey("amount") as? Double
-                                //add category
-                            
-                            
-                                let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                            
-                                if dictAmount < 0 //handle if no categorized this all need to be refactored
-                                {
-                                     newTrans.status = 86 //sets status to ignore from totals
+                        for account in accounts {
+                            realm.create(Account.self, value: account, update: true)
+                            //println("saved accounts")
+                        }
+                    }
+                    let transactions = response["transactions"] as! [NSDictionary]
+                    // Save one Venue object (and dependents) for each element of the array
+                    for transaction in transactions {
+                        // println("saved")
+                        try!   realm.write {
+                            //clean up name
+                            let dictName = transaction.valueForKey("name") as? String
+                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                            //convert string to date before insert
+                            let dictDate = transaction.valueForKey("date") as? String
+                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                            //check for deposits and remove
+                            let dictAmount = transaction.valueForKey("amount") as? Double
+                            //add category
+                            let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                            if dictAmount < 0 {
+                                //handle if no categorized this all need to be refactored
+                                newTrans.status = 86 //sets status to ignore from totals
+                            }
+                            if let category_id = transaction.valueForKey("category_id") as? String {
+                                let predicate = NSPredicate(format: "id = %@", category_id)
+                                let categoryToAdd = realm.objects(Category).filter(predicate)
+                                newTrans.categories = categoryToAdd[0]
+                                
+                                if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1) {
+                                    newTrans.status = 86 //sets status to ignore from totals
                                 }
-                            
-                               if let category_id = transaction.valueForKey("category_id") as? String
-                                {
-                                    let predicate = NSPredicate(format: "id = %@", category_id)
-                                    let categoryToAdd = realm.objects(Category).filter(predicate)
-                                   
-                                    newTrans.categories = categoryToAdd[0]
-                                   
-                            
-                                    if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1)
-                                    {
-                                        newTrans.status = 86 //sets status to ignore from totals
-                                    }
-                                    else
-                                    {
-                                        if type == 99 //if type passed to this function is 99 then user wants to reset the data
-                                        {
-                                            newTrans.status = 0
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                    if type == 99
-                                    {
+                                else {
+                                    if type == 99 {
+                                        //if type passed to this function is 99 then user wants to reset the data
                                         newTrans.status = 0
                                     }
-                                    
                                 }
-                            
-                            
-                            
-                            
-                                
+                            }
+                            else {
+                                let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                                if type == 99 {
+                                    newTrans.status = 0
+                                }
                             }
                         }
-                        let transactions_count = transactions.count
-                        callback(transactions_count)
                     }
-                    else
-                    {
-                       callback(0)
-                    }
-        
-        
+                    let transactions_count = transactions.count
+                    callback(transactions_count)
+                }
+                else {
+                    callback(0)
+                }
             }
         }
     }
-
-
     
-    
-    func getSettings(callback: Bool->())
-    {
-        
-        
+    func getSettings(callback: Bool->()) {
         let container = CKContainer.defaultContainer()
         let publicData = container.publicCloudDatabase
-        
         let query = CKQuery(recordType: "Settings", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
         publicData.performQuery(query, inZoneWithID: nil) { results, error in
             if error == nil { // There is no error
-                
-               
-                
-                for result in results!
-                {
-                   if let client_id = result["client_id"] as? String,
-                     let client_secret = result["client_secret"] as? String
-                   {
-                    keyChainStore.set(client_id, key: "client_id")
-                    keyChainStore.set(client_secret, key: "client_secret")
-                    callback(true)
+                for result in results! {
+                    if let client_id = result["client_id"] as? String,
+                        let client_secret = result["client_secret"] as? String {
+                        keyChainStore.set(client_id, key: "client_id")
+                        keyChainStore.set(client_secret, key: "client_secret")
+                        callback(true)
                     }
-                    
                 }
-
-              
-                
-                
             }
             else {
                 print(error)
                 callback(false)
             }
-            
         }
+    }
+    
+    func formatCurrency(currency: Double) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
+        let numberFromField = currency
+        return formatter.stringFromNumber(numberFromField)!
+    }
+    
+    func convertDate(date:String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func convertDateGroup(date:NSDate) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        return formatter.stringFromDate(date)
+    }
+    
+    func cleanName(name:String) -> String{
+        let stringlength = name.characters.count
+        // var ierror: NSError?
+        let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
+        let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
+        let modString = regex.stringByReplacingMatchesInString(name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
+        let stringlength2 = modString.characters.count
+        let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
+        var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
+        if trimmedStr.characters.count == 0 {
+            trimmedStr = "Missing Name"
+        }
+        return trimmedStr
     }
     
     
+    //func pathForBuggyWKWebView(filePath: String?) -> String? {
+    //    let fileMgr = NSFileManager.defaultManager()
+    //    let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+    //    let error: NSErrorPointer = nil
+    //    do {
+    //        try fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil)
+    //    } catch let error1 as NSError {
+    //        error.memory = error1
+    //        print("Couldn't create www subdirectory. \(error)")
+    //        return nil
+    //    }
+    //    let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+    //    if !fileMgr.fileExistsAtPath(dstPath) {
+    //        do {
+    //            try fileMgr.copyItemAtPath(filePath!, toPath: dstPath)
+    //        } catch let error1 as NSError {
+    //            error.memory = error1
+    //            print("Couldn't copy file to /tmp/www. \(error)")
+    //            return nil
+    //        }
+    //    }
+    //    return dstPath
+    //}
+    //
     
-    
-func formatCurrency(currency: Double) -> String
-{
-    let formatter = NSNumberFormatter()
-    formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
-    formatter.locale = NSLocale(localeIdentifier: "en_US")
-    let numberFromField = currency
-    return formatter.stringFromNumber(numberFromField)!
-}
-
-
-func convertDate(date:String) -> NSDate
-{
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    return dateFormatter.dateFromString(date)!
-}
-
-
-func convertDateGroup(date:NSDate) -> String
-{
-    let formatter = NSDateFormatter()
-    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-    return formatter.stringFromDate(date)
-}
-    
-func cleanName(name:String) -> String{
-    
-    let stringlength = name.characters.count
-    
-   // var ierror: NSError?
-    let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
-    
-    let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
-    
-    let modString = regex.stringByReplacingMatchesInString(name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
-    
-    let stringlength2 = modString.characters.count
-    
-    let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
-    
-    var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-    
-    if trimmedStr.characters.count == 0
-    {
-       trimmedStr = "Missing Name"
-    }
-    
-    return trimmedStr
-    
-}
-
-
-//func pathForBuggyWKWebView(filePath: String?) -> String? {
-//    let fileMgr = NSFileManager.defaultManager()
-//    let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-//    let error: NSErrorPointer = nil
-//    do {
-//        try fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil)
-//    } catch let error1 as NSError {
-//        error.memory = error1
-//        print("Couldn't create www subdirectory. \(error)")
-//        return nil
-//    }
-//    let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-//    if !fileMgr.fileExistsAtPath(dstPath) {
-//        do {
-//            try fileMgr.copyItemAtPath(filePath!, toPath: dstPath)
-//        } catch let error1 as NSError {
-//            error.memory = error1
-//            print("Couldn't copy file to /tmp/www. \(error)")
-//            return nil
-//        }
-//    }
-//    return dstPath
-//}
-//    
-    
-    func isiCloudAvalaible() -> Bool
-    {
-        
-        
+    func isiCloudAvalaible() -> Bool {
         let fileManager = NSFileManager.defaultManager()
         let cloudURL = fileManager.ubiquityIdentityToken
-        if (cloudURL != nil)
-        {
-               return true
+        if (cloudURL != nil) {
+            return true
         }
-        else
-        {
+        else {
             return false
         }
-        
-        
     }
-
-    func removeSpashImageView(view:UIView)
-    {
-        
-        for subview in view.subviews
-        {
-            if subview.tag == 86
-            {
+    
+    func removeSpashImageView(view:UIView) {
+        for subview in view.subviews {
+            if subview.tag == 86 {
                 subview.removeFromSuperview()
             }
         }
-        
-        
     }
     
     func splashImageView(view:UIView) {
-    
-        
         let imageView = UIImageView(frame: view.frame)
         let image = UIImage(named: "iTunesArtwork")
         imageView.backgroundColor = UIColor.whiteColor()
@@ -298,15 +199,7 @@ func cleanName(name:String) -> String{
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         imageView.tag = 86
         view.addSubview(imageView)
-        
-        
-        
-    
     }
-    
-    
-    
-    
     
     func getKey() -> NSData {
         // Identifier for our keychain entry - should be unique for your application
@@ -320,7 +213,7 @@ func cleanName(name:String) -> String{
             kSecAttrKeySizeInBits: 512,
             kSecReturnData: true
         ]
-        
+
         // To avoid Swift optimization bug, should use withUnsafeMutablePointer() function to retrieve the keychain item
         // See also: http://stackoverflow.com/questions/24145838/querying-ios-keychain-using-swift/27721328#27721328
         var dataTypeRef: AnyObject?
@@ -348,10 +241,6 @@ func cleanName(name:String) -> String{
         return keyData
     }
     
-    
-    
-    
-
 }
 
 
@@ -359,34 +248,26 @@ func cleanName(name:String) -> String{
 extension NSDate {
     
     func startOfMonth() -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         let currentDateComponents = calendar.components([.Year, .Month], fromDate: self)
         let startOfMonth = calendar.dateFromComponents(currentDateComponents)
-        
         return startOfMonth
     }
     
     func dateByAddingMonths(monthsToAdd: Int) -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         let months = NSDateComponents()
         months.month = monthsToAdd
-        
         return calendar.dateByAddingComponents(months, toDate: self, options: [])
     }
     
     func endOfMonth() -> NSDate? {
-        
         let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1) {
             let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
-            
             let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-1)
-            
             return endOfMonth
         }
-        
         return nil
     }
 }

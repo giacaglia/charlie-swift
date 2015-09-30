@@ -9,180 +9,127 @@
 import UIKit
 import RealmSwift
 
-
 class welcomeViewController: UIViewController, UIScrollViewDelegate {
-    
-    var cHelp = cHelper()
-    var keyStore = NSUbiquitousKeyValueStore()
-    var pageImages: [UIImage] = []
-    var pageViews: [UIView?] = []
-    var pageTitles = [String()]
-    var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
-    
-    //PRODCHANGE
-    //var realm = try! Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())
-  
-    var realm = try! Realm()
-    
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var splashImageView: UIImageView!
     
-   
+    var cHelp = cHelper()
+    var keyStore = NSUbiquitousKeyValueStore()
+    var pageImages: [UIImage] = []
+    var pageTitles = [String()]
+    var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
+    //PRODCHANGE
+    //var realm = try! Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())
+    var realm = try! Realm()
+    
+    
     func didFinishLaunching(notification: NSNotification!) {
-        
-
-        if defaults.stringForKey("firstLoad") != nil
-        {
+        if defaults.stringForKey("firstLoad") != nil {
             if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
                 presentViewController(resultController, animated: true, completion: nil)
             }
         }
-        
     }
     
     func didEnterBackgroundNotification(notification: NSNotification) {
         cHelp.splashImageView(self.view)
-        
     }
     
-   
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
         
-        
-        
-        if Reachability.isConnectedToNetwork() {
-            // Go ahead and fetch your data from the internet
-            // ...
-        } else {
+        // If it's not connected to the internet
+        if !Reachability.isConnectedToNetwork() {
             print("Internet connection not available")
-            
             let alert = UIAlertView(title: "No Internet connection", message: "Please ensure you are connected to the Internet", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
-        
-        
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-    
-        
-        if defaults.stringForKey("firstLoad") == nil
-        {
-             keyChainStore.set("", key: "pin")
-          
+        if defaults.stringForKey("firstLoad") == nil {
+            keyChainStore.set("", key: "pin")
         }
-
-            
-        if users.count > 0 &&  keyChainStore.get("pin") != ""
-
-        {
+        
+        if users.count > 0 &&  keyChainStore.get("pin") != "" {
             performSegueWithIdentifier("skipOnboarding", sender: self)
         }
-        else
-        {
-            
+        else {
             self.splashImageView.hidden = true
             self.setupWelcomeScreens()
         }
-        
-        
-        
     }
     
-    
-    
     func setupWelcomeScreens() {
-        
-        cHelp.getSettings()
-            {
-                (response) in
-                
-                if response == false
-                {
-                    print("error getting public database")
-                
-                }
-
-                
-                
+        cHelp.getSettings() { (response) in
+            if response == false {
+                print("error getting public database")
             }
-        
-        
-        
+        }
         
         charlieAnalytics.track("Onboarding Tutorial Started")
         
         //setup welcome screens
-        pageImages =
-            [
+        pageImages = [
                 UIImage(named: "iTunesArtwork")!,
                 UIImage(named: "happy_onboard")!,
                 UIImage(named: "sad_onboard")!,
                 UIImage(named: "iTunesArtwork")!
         ]
         
-        pageTitles =
-            [  "Spend money on what makes you happy",
+        pageTitles = [
+                "Spend money on what makes you happy",
                 "Sometimes we spend money on things that bring us joy",
                 "...and sometimes we spend on things that don't",
                 "Charlie tracks your spending so you can buy more of what makes you happy"
         ]
         
-        
-        
-        
-        let pageCount = pageImages.count
-        
         pageControl.currentPage = 0
-        pageControl.numberOfPages = pageCount
+        pageControl.numberOfPages = pageImages.count
         
-        for _ in 0..<pageCount {
-            pageViews.append(nil)
-        }
-        
-        let pagesScrollViewSize = scrollView.frame.size
-        
-        
-        scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(pageImages.count),
-            height: pagesScrollViewSize.height)
-        
-        loadVisiblePages()
-        
-        
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(pageImages.count),
+            height: scrollView.frame.size.height)
+        loadAllPages()
     }
     
+    func loginButtonAction(sender:UIButton!) {
+        charlieAnalytics.track("Onboarding Tutorial Completed")
+        performSegueWithIdentifier("toRegistration", sender: self)
+    }
     
-    
-    func loadPage(page: Int) {
-        if page < 0 || page >= pageImages.count {
-            // If it's outside the range of what you have to display, then do nothing
-            return
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        // Load the pages that are now on screen
+        let pageWidth = scrollView.frame.size.width
+        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        pageControl.currentPage = page
+        if (page == 0) {
+            pageControl.currentPageIndicatorTintColor = listBlue
+            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         }
-        
-        // 1
-        if let _ = pageViews[page] {
-            // Do nothing. The view is already loaded.
-        } else {
+        else {
+            pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
+            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+        }
+    }
+    
+    func loadAllPages() {
+        pageControl.currentPageIndicatorTintColor = listBlue
+        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+        for page in 0..<pageImages.count {
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
             
-            // 3
-          
             let newPageView = UIView()
             newPageView.backgroundColor = colors[page]
             newPageView.frame = frame
             
-           
-            if page == 0
-            {
+            if page == 0 {
                 //tutorial title
                 var welcomeFrame = CGRectMake(0, 0, 326, 50)
                 welcomeFrame.origin.x = (self.view.frame.size.width / 2) - 163
@@ -195,34 +142,24 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 welcome.textAlignment = NSTextAlignment.Center
                 welcome.text = "Welcome to Charlie"
                 newPageView.addSubview(welcome)
-               
             }
-
-           
-            pageControl.currentPageIndicatorTintColor = UIColor.lightGrayColor()
-            pageControl.pageIndicatorTintColor = UIColor.blackColor()
-
-            //tutorial title
+            
             var titleFrame = CGRectMake(0, 0, 280, 150)
             titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
             titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
             let title = UILabel(frame: titleFrame)
             title.numberOfLines = 0
             title.font = UIFont (name: "AvenirNext-Regular", size: 22)
-            if page == 0
-            {
+            if page == 0 {
                 title.textColor =  UIColor.lightGrayColor()
             }
-            else
-            {
+            else {
                 title.textColor =  UIColor.whiteColor()
             }
-            
             title.textAlignment = .Center
             title.textAlignment = NSTextAlignment.Center
             title.text = pageTitles[page]
             newPageView.addSubview(title)
-            
             
             //tutorial image
             var imageViewFrame = CGRectMake(0, 0, 230, 230)
@@ -234,17 +171,11 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             imageView.clipsToBounds = true
             imageView.layer.borderColor = UIColor.whiteColor().CGColor
             imageView.layer.borderWidth = 10
-
             newPageView.addSubview(imageView)
-
-            
-            
-            
             
             //loginbutton
-            if page == 3
-            {
-                var loginButtonFrame = CGRectMake(0, 0, 300, 40)
+            if page == 3 {
+                var loginButtonFrame = CGRectMake(0, 0, 300, 60)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 let loginButton = UIButton(frame: loginButtonFrame)
@@ -255,85 +186,8 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
                 loginButton.addTarget(self, action: "loginButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
                 newPageView.addSubview(loginButton)
             }
-            
-            
-            
-            
-            
             scrollView.addSubview(newPageView)
-            // 4
-            pageViews[page] = newPageView
-        }
-    
-
+        }       
     }
-
-    
-    func loginButtonAction(sender:UIButton!)
-    {
-        charlieAnalytics.track("Onboarding Tutorial Completed")
-        performSegueWithIdentifier("toRegistration", sender: self)
-        
-    }
-    
-    func purgePage(page: Int) {
-        if page < 0 || page >= pageImages.count {
-            // If it's outside the range of what you have to display, then do nothing
-            return
-        }
-        
-        // Remove a page from the scroll view and reset the container array
-        if let pageView = pageViews[page] {
-            pageView.removeFromSuperview()
-            pageViews[page] = nil
-        }
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        // Load the pages that are now on screen
-        loadVisiblePages()
-    }
-    
-    
-    func loadVisiblePages() {
-        
-       
-        // First, determine which page is currently visible
-        let pageWidth = scrollView.frame.size.width
-        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        
-        // Update the page control
-        pageControl.currentPage = page
-        
-        // Work out which pages you want to load
-        
-        
-        let firstPage = page - 1
-        let lastPage = page + 1
-        
-        // Purge anything before the first page
-        for var index = 0; index < firstPage; ++index {
-            purgePage(index)
-        }
-        
-        // Load pages in our range
-        for index in firstPage...lastPage {
-            loadPage(index)
-        }
-        
-        // Purge anything after the last page
-        for var index = lastPage+1; index < pageImages.count; ++index {
-            purgePage(index)
-        }
-    }
-    
-    
-    
-   
-    
-  
-  
-    
-    
     
 }

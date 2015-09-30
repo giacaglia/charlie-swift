@@ -13,7 +13,8 @@ class SBGestureTableViewCell: UITableViewCell {
 
     var actionIconsFollowSliding = true
     var actionIconsMargin: CGFloat = 20.0
-    var actionNormalColor = UIColor(white: 0.85, alpha: 1)
+    var leftActionNormalColor = lightGreen
+    var rightActionNormalColor = lightRed
 
     
     var leftSideView = SBGestureTableViewCellSideView()
@@ -163,10 +164,10 @@ class SBGestureTableViewCell: UITableViewCell {
             }
         } else {
             if frame.origin.x > 0 {
-                leftSideView.backgroundColor = actionNormalColor
+                leftSideView.backgroundColor = leftActionNormalColor
                 leftSideView.iconImageView.image = firstLeftAction!.icon
             } else if frame.origin.x < 0 {
-                rightSideView.backgroundColor = actionNormalColor
+                rightSideView.backgroundColor = rightActionNormalColor
                 rightSideView.iconImageView.image = firstRightAction!.icon
             }
         }
