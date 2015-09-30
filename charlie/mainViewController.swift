@@ -553,7 +553,7 @@ class mainViewController: UIViewController {
         dividerView.backgroundColor = listGreen
         topView.backgroundColor = UIColor.whiteColor()
         
-        moneyCountSubHeadLabel.text = "Worth it!"
+//        moneyCountSubHeadLabel.text = "Worth it!"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
@@ -561,17 +561,17 @@ class mainViewController: UIViewController {
         
         topSeperator.backgroundColor = listGreen
         
-        moneyActionAmountLabel.textColor = listGreen
+//        moneyActionAmountLabel.textColor = listGreen
         moneyActionDetailLabel.textColor = listGreen
         
         moneyCountLabel.hidden = true
-        moneyCountSubHeadLabel.hidden = true
+//        moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
         
-        moneyActionAmountLabel.hidden = false
+//        moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
-        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
+//        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "money well spent"
         
         charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: filterType) as! [(charlieGroup)]
@@ -598,17 +598,17 @@ class mainViewController: UIViewController {
         listNavBar.backgroundColor = listBlue
         
         moneyCountLabel.hidden = false
-        moneyCountSubHeadLabel.hidden = false
+//        moneyCountSubHeadLabel.hidden = false
         moneyCountSubSubHeadLabel.hidden = false
         
-        moneyActionAmountLabel.hidden = true
+//        moneyActionAmountLabel.hidden = true
         moneyActionDetailLabel.hidden = true
         
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = UIColor.whiteColor()
         dividerView.backgroundColor = listBlue
-        moneyCountSubHeadLabel.text = "Was it"
+//        moneyCountSubHeadLabel.text = "Was it"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
@@ -643,24 +643,24 @@ class mainViewController: UIViewController {
         flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
         topView.backgroundColor = UIColor.whiteColor()
         dividerView.backgroundColor = listRed
-        moneyCountSubHeadLabel.text = "Not Worth it!"
+//        moneyCountSubHeadLabel.text = "Not Worth it!"
         
         let transactionSum = sumTransactionsCount()
         let transactionSumCurrecnyFormat = cHelp.formatCurrency(transactionSum)
         let finalFormat = stripCents(transactionSumCurrecnyFormat)
         moneyCountLabel.hidden = true
-        moneyCountSubHeadLabel.hidden = true
+//        moneyCountSubHeadLabel.hidden = true
         moneyCountSubSubHeadLabel.hidden = true
         
-        moneyActionAmountLabel.hidden = false
+//        moneyActionAmountLabel.hidden = false
         moneyActionDetailLabel.hidden = false
         
         topSeperator.backgroundColor = listRed
         
-        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
+//        moneyActionAmountLabel.text = String(stringInterpolationSegment: finalFormat)
         moneyActionDetailLabel.text = "could've spent better"
         
-        moneyActionAmountLabel.textColor = listRed
+//        moneyActionAmountLabel.textColor = listRed
         moneyActionDetailLabel.textColor = listRed
         
         approvedListButton.tag = 0
@@ -857,8 +857,8 @@ extension mainViewController : UITableViewDataSource {
         
         let transactionSum = self.sumTransactionsCount()
         let transactionSumCurrecnyFormat = self.cHelp.formatCurrency(transactionSum)
-        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
-        self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
+//        let finalFormat = self.stripCents(transactionSumCurrecnyFormat)
+//        self.moneyActionAmountLabel.text  = String(stringInterpolationSegment: finalFormat)
         
         let rowCount = Int(tableView.numberOfRowsInSection(0).value)
         
