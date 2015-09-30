@@ -93,7 +93,7 @@ class mainViewController: UIViewController {
     let accounts = realm.objects(Account)
     var timer = NSTimer()
     var timerCount:Int = 0
-    var DynamicView=UIView(frame: UIScreen.mainScreen().bounds)
+    var DynamicView = UIView(frame: UIScreen.mainScreen().bounds)
     var pinApproved = false
     var filterType : SortFilterType! = .FilterByName
     
@@ -133,6 +133,7 @@ class mainViewController: UIViewController {
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
+        transactionsTable.tableFooterView = UIView()
         transactionsTable.reloadData()
     }
     
@@ -843,7 +844,7 @@ extension mainViewController {
 }
 
 // Swipe part of the main view controller
-extension mainViewController : UITableViewDataSource{
+extension mainViewController : UITableViewDataSource {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
         currentTransactionSwipeID = transactionItems[indexPath!.row]._id

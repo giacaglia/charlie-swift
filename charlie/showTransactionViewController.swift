@@ -53,7 +53,7 @@ class showTransactionViewController: UIViewController {
         if sourceVC == "main" {
             let amount = self.transactionItems[transactionIndex].amount
             let myString = "Was $\(amount) at \(self.transactionItems[transactionIndex].name)\nworth it?"
-            let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 18.0)!])
+            let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
             attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(amount).characters.count) + 1))
 
             descriptionLabel.attributedText = attString
