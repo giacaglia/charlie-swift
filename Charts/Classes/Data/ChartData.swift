@@ -56,7 +56,8 @@ public class ChartData: NSObject
         self.initialize(_dataSets)
     }
     
-    public init(xVals: [NSObject]?, dataSets: [ChartDataSet]?)
+    
+    init(xVals: [NSObject]?, dataSets: [ChartDataSet]?)
     {
         super.init()
         

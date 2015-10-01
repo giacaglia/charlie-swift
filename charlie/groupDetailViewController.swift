@@ -146,7 +146,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     }
     
     func setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor, textColor2:UIColor) {
-        
         button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         button.titleLabel?.textAlignment = NSTextAlignment.Center
         let buttonText: NSString = "\(message1)\n\(message2)"
@@ -163,7 +162,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             substring1 = buttonText.substringToIndex(newlineRange.location)
             substring2 = buttonText.substringFromIndex(newlineRange.location)
         }
-        
         
         let attrs = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 20.0)!]
         let attrString = NSMutableAttributedString(string: substring1 as String, attributes: attrs)
@@ -197,7 +195,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
-            //viewController.mainVC = self
             let indexPath = groupTableView.indexPathForSelectedRow
             if stateOfTable == .WorthTable {
                 viewController.transactionID = happyItems[indexPath!.row]._id

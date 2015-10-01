@@ -243,10 +243,13 @@ class mainViewController: UIViewController {
         moneyCountLabel.layer.borderWidth = 1.0
         moneyCountLabel.layer.cornerRadius = moneyCountLabel.frame.size.width/2.0
         moneyCountLabel.clipsToBounds = true
+        
+        moneyCountLabel.hidden = (transactionItems.count == 0)
         moneyCountLabel.text = String(transactionItems.count)
     }
     
     func showReward() {
+        self.view.backgroundColor = UIColor.whiteColor()
         let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
         let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(setting)
@@ -354,23 +357,22 @@ class mainViewController: UIViewController {
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
         chartView!.gridBackgroundColor = UIColor.whiteColor()
         chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        chartView!.rightAxis.drawGridLinesEnabled = false
         chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
-        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
         chartView!.leftAxis.labelTextColor = UIColor.darkGrayColor()
         chartView!.leftAxis.labelCount = 4
-        chartView!.pinchZoomEnabled = true
         chartView!.leftAxis.axisLineWidth = 10
         chartView!.leftAxis.valueFormatter = NSNumberFormatter()
         chartView!.leftAxis.valueFormatter!.minimumFractionDigits = 0
         chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chartView!.leftAxis.axisLineColor = UIColor.whiteColor()
+        chartView!.pinchZoomEnabled = true
         chartView!.rightAxis.enabled = false
+        chartView!.rightAxis.drawGridLinesEnabled = false
         chartView!.xAxis.labelPosition = .Bottom
-        chartView!.xAxis.axisLineColor = UIColor.lightGrayColor()
         chartView!.xAxis.enabled = true
+        chartView!.xAxis.drawGridLinesEnabled = false
+        chartView!.xAxis.axisLineColor = UIColor.whiteColor()
+        chartView!.xAxis.labelTextColor = UIColor.darkGrayColor()
         chartView!.legend.enabled = false
         chartView!.descriptionText = ""
         chartView!.data = lineChartData
@@ -533,14 +535,12 @@ class mainViewController: UIViewController {
         inboxListButton.tag = 1
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listBlue
-        
+        moneyCountLabel.hidden = (transactionItems.count == 0)
         moneyCountLabel.text = String(transactionItems.count)
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
         moneyCountSubSubHeadLabel.textColor = listBlue
-        moneyCountLabel.hidden = false
 
-        
         topSeperator.backgroundColor = listBlue
         flagListButton.tag = 0
         flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
