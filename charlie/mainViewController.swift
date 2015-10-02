@@ -28,14 +28,18 @@ var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
-    case FlaggedTransaction, ApprovedTransaction
+    case FlaggedTransaction, ApprovedTransaction, InboxTransaction
 }
 
 enum SortFilterType {
-    case FilterByName, FilterByDate, FilterByAmount
+    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount
 }
 
-class mainViewController: UIViewController {
+protocol ChangeFilterProtocol {
+    func changeFilter(filterType:SortFilterType)
+}
+
+class mainViewController: UIViewController, ChangeFilterProtocol {
     
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -92,6 +96,8 @@ class mainViewController: UIViewController {
     var DynamicView = UIView(frame: UIScreen.mainScreen().bounds)
     var pinApproved = false
     var filterType : SortFilterType! = .FilterByName
+    var inboxType : TransactionType! = .FlaggedTransaction
+    var blackView : UIView?
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -144,7 +150,7 @@ class mainViewController: UIViewController {
         
         rewardView.hidden = true
         transactionsTable.hidden = false
-        inboxListButton.tag =  1
+        inboxType = .InboxTransaction
         
         var access_token = ""
         if keyStore.stringForKey("access_token") != nil {
@@ -182,17 +188,17 @@ class mainViewController: UIViewController {
                     self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-                    if transactionItems.count == 0 && self.inboxListButton.tag ==  1 && allTransactionItems.count > 0 {
+                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
                 }
             }
         }
         
-        inboxListButton.tag = 1 //set inbox to default
+        self.inboxType = .InboxTransaction //set inbox to default
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if self.inboxListButton.tag == 1 || self.flagListButton.tag == 1 {
+            if self.inboxType == .InboxTransaction || self.inboxType == .FlaggedTransaction {
                 if defaults.stringForKey("firstSwipeRight") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
@@ -216,7 +222,7 @@ class mainViewController: UIViewController {
         }
         
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if self.inboxListButton.tag == 1 || self.approvedListButton.tag == 1 {
+            if  self.inboxType == .InboxTransaction || self.inboxType == .ApprovedTransaction{
                 if defaults.stringForKey("firstSwipeLeft") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
@@ -450,10 +456,10 @@ class mainViewController: UIViewController {
             let indexPath = self.transactionsTable.indexPathForSelectedRow
             let viewController = segue.destinationViewController as! groupDetailViewController
             
-            if flagListButton.tag == 1 {
+            if inboxType == .FlaggedTransaction {
                 viewController.comingFromSad = true
             }
-            else if approvedListButton.tag == 1 {
+            else if inboxType == .ApprovedTransaction {
                 viewController.comingFromSad = false
             }
             
@@ -470,17 +476,32 @@ class mainViewController: UIViewController {
     }
     
     @IBAction func refreshAccounts(sender: UIButton) {
-        if filterType == .FilterByName {
-            filterType = .FilterByDate
+        blackView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+        blackView!.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
+        self.view .addSubview(blackView!)
+        let sortVC = SortViewController()
+        sortVC.initialFilterType = self.filterType
+        
+
+//        if self.filterType == .FilterByDate { sortVC.mostRecentButton.titleLabel?.textColor = listBlue }
+//        if self.filterType == .FilterByDescendingDate { sortVC.leastRecentButton.titleLabel?.textColor = listBlue }
+//        if self.filterType == .FilterByName { sortVC.alphabeticalButton.titleLabel?.textColor = listBlue }
+//        if self.filterType == .FilterByAmount { sortVC.amountButton.titleLabel?.textColor = listBlue }
+        sortVC.delegate = self
+        let height = self.view.frame.size.height*0.8
+        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        self.addChildViewController(sortVC)
+        self.view.addSubview(sortVC.view)
+        UIView.animateWithDuration(0.5) { () -> Void in
+            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
         }
-        else if filterType == .FilterByDate {
-            filterType = .FilterByAmount
-        }
-        else {
-            filterType = .FilterByName
-        }
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
+    }
+    
+     func changeFilter(filterType:SortFilterType){
+        self.filterType = filterType
+        charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
+        blackView?.removeFromSuperview()
     }
     
     
@@ -493,13 +514,10 @@ class mainViewController: UIViewController {
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
         listNavBar.backgroundColor = listGreen
         
-        inboxListButton.tag = 0
         inboxListButton.setImage(inboxUnSelectedHappyButtonImage, forState: .Normal)
-        
-        flagListButton.tag = 0
         flagListButton.setImage(flagUnSelectedHappyButtonImage, forState: .Normal)
         
-        approvedListButton.tag = 1
+        self.inboxType = .ApprovedTransaction
         approvedListButton.setImage(approvedSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listGreen
         
@@ -508,7 +526,8 @@ class mainViewController: UIViewController {
         moneyCountSubSubHeadLabel.textColor = listGreen
         moneyCountLabel.hidden = true
         
-        charlieGroupListFiltered = groupBy(.ApprovedTransaction, sortFilter: filterType) as! [(charlieGroup)]
+        inboxType = .ApprovedTransaction
+        charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
@@ -532,7 +551,7 @@ class mainViewController: UIViewController {
         
         listNavBar.backgroundColor = listBlue
         
-        inboxListButton.tag = 1
+        inboxType = .InboxTransaction
         inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listBlue
         moneyCountLabel.hidden = (transactionItems.count == 0)
@@ -542,10 +561,9 @@ class mainViewController: UIViewController {
         moneyCountSubSubHeadLabel.textColor = listBlue
 
         topSeperator.backgroundColor = listBlue
-        flagListButton.tag = 0
+
+        inboxType == .InboxTransaction
         flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
-        
-        approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
         transactionsTable.reloadData()
     }
@@ -561,10 +579,8 @@ class mainViewController: UIViewController {
         
         listNavBar.backgroundColor = listRed
         
-        inboxListButton.tag = 0
+        inboxType = .FlaggedTransaction
         inboxListButton.setImage(inboxUnSelectedSadButtonImage, forState: .Normal)
-        
-        flagListButton.tag = 1
         flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listRed
         moneyCountSubSubHeadLabel.text = "Not Worth it!"
@@ -573,10 +589,10 @@ class mainViewController: UIViewController {
         
         topSeperator.backgroundColor = listRed
 
-        approvedListButton.tag = 0
         approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
-        charlieGroupListFiltered = groupBy(.FlaggedTransaction, sortFilter: filterType) as! [(charlieGroup)]
+        inboxType = .FlaggedTransaction
+        charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
@@ -587,6 +603,9 @@ class mainViewController: UIViewController {
         let sortProperties : Array<SortDescriptor>!
         if sortFilter == .FilterByName {
             sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        }
+        else if sortFilter == .FilterByDescendingDate {
+             sortProperties = [SortDescriptor(property: "date", ascending: false)]
         }
         else if sortFilter == .FilterByDate {
             sortProperties = [SortDescriptor(property: "date", ascending: true)]
@@ -756,7 +775,7 @@ extension mainViewController : UITableViewDataSource {
         
         if direction == 1 {
             charlieAnalytics.track("Worth It Swipe")
-            if rowCount == 1 && self.inboxListButton.tag == 1 {
+            if rowCount == 1 && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
@@ -764,7 +783,7 @@ extension mainViewController : UITableViewDataSource {
         else {
             charlieAnalytics.track("Not Worth It Swipe")
             
-            if rowCount == 1 && self.inboxListButton.tag == 1 {
+            if rowCount == 1 && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
@@ -772,7 +791,7 @@ extension mainViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if flagListButton.tag == 1 || approvedListButton.tag == 1 {
+        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction {
             return charlieGroupListFiltered.count
         }
         else {
@@ -787,7 +806,7 @@ extension mainViewController : UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if flagListButton.tag == 1 || approvedListButton.tag == 1 {
+        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
@@ -798,7 +817,7 @@ extension mainViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         
-        if flagListButton.tag == 1 {
+        if inboxType == .FlaggedTransaction {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
@@ -807,7 +826,7 @@ extension mainViewController : UITableViewDataSource {
             cell.firstLeftAction = nil
             cell.firstRightAction = nil
         }
-        else if approvedListButton.tag == 1 {
+        else if inboxType == .ApprovedTransaction {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
@@ -827,10 +846,9 @@ extension mainViewController : UITableViewDataSource {
             cell.dateCellLabel.text = dateString
         }
         
-        if inboxListButton.tag == 1
-        {cell.amountCellLabel.textColor = listBlue}
-        else if flagListButton.tag == 1 {cell.amountCellLabel.textColor = listRed}
-        else if approvedListButton.tag == 1 {cell.amountCellLabel.textColor = listGreen}
+        if inboxType == .InboxTransaction {cell.amountCellLabel.textColor = listBlue}
+        else if inboxType == .FlaggedTransaction {cell.amountCellLabel.textColor = listRed}
+        else if inboxType == .ApprovedTransaction {cell.amountCellLabel.textColor = listGreen}
         return cell
     }
 }

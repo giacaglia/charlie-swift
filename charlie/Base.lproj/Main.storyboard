@@ -2025,8 +2025,8 @@
         <image name="sad_on" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="swt-fH-1dv"/>
         <segue reference="NZC-ff-rSb"/>
-        <segue reference="dvs-V3-jSh"/>
+        <segue reference="DF7-7D-dxJ"/>
+        <segue reference="swt-fH-1dv"/>
     </inferredMetricsTieBreakers>
 </document>

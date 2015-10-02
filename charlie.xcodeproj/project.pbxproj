@@ -137,6 +137,8 @@
 		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
 		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
+		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295141BB598AC0091A36B /* ABPadButton.m */; settings = {ASSET_TAGS = (); }; };
 		88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */; settings = {ASSET_TAGS = (); }; };
 		88A295211BB598AC0091A36B /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -403,6 +405,8 @@
 		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
 		45E0F21C1B67D3E40005B234 /* charlie-bridge-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "charlie-bridge-header.h"; sourceTree = "<group>"; };
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
+		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
+		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		88A295131BB598AC0091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
 		88A295141BB598AC0091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
 		88A295151BB598AC0091A36B /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
@@ -458,6 +462,8 @@
 			children = (
 				88E6209F1BB476330060ED28 /* SignUp */,
 				090BD3441B25089300F26E78 /* mainViewController.swift */,
+				8816CCB01BBDB596001F6F31 /* SortViewController.xib */,
+				8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */,
 				099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */,
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
@@ -981,6 +987,7 @@
 				091620501B2F28E10004C781 /* Inconsolata-Regular.ttf in Resources */,
 				091620581B2F8B650004C781 /* GothamRounded-Light.otf in Resources */,
 				09C2A7501B21F0AD005A40DA /* Main.storyboard in Resources */,
+				8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */,
 				0916204F1B2F28DE0004C781 /* Inconsolata-Bold.ttf in Resources */,
 				09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */,
 				091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */,
@@ -1133,6 +1140,7 @@
 				453E60031B8E242D00F4794E /* SBGestureTableViewGroup.swift in Sources */,
 				09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */,
 				456049DC1B71183200C37B9D /* MPBOOLToNSNumberValueTransformer.m in Sources */,
+				8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */,
 				456049E01B71183200C37B9D /* MPCGPointToNSDictionaryValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SortViewController">
+            <connections>
+                <outlet property="alphabeticalButton" destination="gbS-1S-QeL" id="XCn-Rw-gcJ"/>
+                <outlet property="amountButton" destination="vsN-Pj-ZnK" id="vUY-kT-Hbs"/>
+                <outlet property="leastRecentButton" destination="djJ-Wl-1dr" id="eQx-wf-NhL"/>
+                <outlet property="mostRecentButton" destination="HEo-86-vcf" id="8TF-tK-ASE"/>
+                <outlet property="view" destination="D6X-BM-Bnh" id="j5w-Ht-im1"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="D6X-BM-Bnh">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How should I sort your inbox?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0RJ-xC-Iv6">
+                    <rect key="frame" x="149.5" y="73" width="302.5" height="27.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-86-vcf">
+                    <rect key="frame" x="251" y="154.5" width="97" height="34"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Most recent">
+                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="mostRecentPressed:" destination="-1" eventType="touchUpInside" id="R1B-m5-9qh"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djJ-Wl-1dr">
+                    <rect key="frame" x="250" y="225.5" width="101" height="34.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Least recent">
+                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="leastRecentPressed:" destination="-1" eventType="touchUpInside" id="l51-jf-PiJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gbS-1S-QeL">
+                    <rect key="frame" x="250" y="291" width="100" height="34"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Alphabetical">
+                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="alphabeticalPressed:" destination="-1" eventType="touchUpInside" id="jHc-Dm-KnS"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsN-Pj-ZnK">
+                    <rect key="frame" x="268" y="354" width="64" height="34"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Amount">
+                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="amountPressed:" destination="-1" eventType="touchUpInside" id="gt9-cG-3KN"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbJ-wC-ivL">
+                    <rect key="frame" x="545" y="25" width="40" height="40"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="lNt-hf-rWZ"/>
+                        <constraint firstAttribute="height" constant="40" id="ykC-Mo-hEg"/>
+                    </constraints>
+                    <state key="normal" image="close"/>
+                    <connections>
+                        <action selector="closePressed:" destination="-1" eventType="touchUpInside" id="8E9-mj-Yse"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ck-R6-7Ql">
+                    <rect key="frame" x="180" y="202.5" width="240" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="DIE-77-26G"/>
+                        <constraint firstAttribute="width" constant="240" id="xDZ-fp-8hU"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0a-0Z-2hc">
+                    <rect key="frame" x="180" y="268" width="240" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="cXD-IQ-47W"/>
+                        <constraint firstAttribute="width" constant="240" id="xrr-af-Rsa"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9rg-RK-YqT">
+                    <rect key="frame" x="180" y="333" width="240" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="BD0-r2-tPD"/>
+                        <constraint firstAttribute="width" constant="240" id="SYN-4f-BQ2"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="gbS-1S-QeL" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="23h-Bc-9fO"/>
+                <constraint firstItem="HEo-86-vcf" firstAttribute="top" secondItem="0RJ-xC-Iv6" secondAttribute="bottom" constant="54.5" id="35e-ix-KPn"/>
+                <constraint firstItem="tbJ-wC-ivL" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="25" id="7BI-TR-Qm8"/>
+                <constraint firstItem="9rg-RK-YqT" firstAttribute="leading" secondItem="h0a-0Z-2hc" secondAttribute="leading" id="BgY-V3-pgD"/>
+                <constraint firstItem="0RJ-xC-Iv6" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="73" id="IAN-8p-2VZ"/>
+                <constraint firstItem="HEo-86-vcf" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="KCe-9i-Axe"/>
+                <constraint firstAttribute="trailing" secondItem="tbJ-wC-ivL" secondAttribute="trailing" constant="15" id="Ohw-WJ-9Pg"/>
+                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="SL7-9z-RNs"/>
+                <constraint firstItem="0RJ-xC-Iv6" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="Xvh-jU-gk0"/>
+                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="29" id="YHf-2F-5MJ"/>
+                <constraint firstItem="3ck-R6-7Ql" firstAttribute="top" secondItem="HEo-86-vcf" secondAttribute="bottom" constant="14" id="ZiH-RU-XdV"/>
+                <constraint firstItem="djJ-Wl-1dr" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="anZ-Dp-74I"/>
+                <constraint firstItem="gbS-1S-QeL" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="31" id="gZW-mZ-CvC"/>
+                <constraint firstItem="9rg-RK-YqT" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="8" symbolic="YES" id="gl1-vh-FcI"/>
+                <constraint firstItem="3ck-R6-7Ql" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="goH-vS-ssU"/>
+                <constraint firstItem="djJ-Wl-1dr" firstAttribute="top" secondItem="HEo-86-vcf" secondAttribute="bottom" constant="37" id="m5U-rN-pSn"/>
+                <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="8" id="pu8-QV-AZZ"/>
+                <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="268" id="sOJ-rA-Gup"/>
+                <constraint firstItem="h0a-0Z-2hc" firstAttribute="leading" secondItem="3ck-R6-7Ql" secondAttribute="leading" id="vZc-y0-coc"/>
+                <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="8" symbolic="YES" id="zpJ-va-mMT"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="close" width="24" height="24"/>
+    </resources>
+</document>
