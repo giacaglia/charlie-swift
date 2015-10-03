@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
         //Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328")
         
+        Mixpanel.sharedInstance().identify(Mixpanel.sharedInstance().distinctId)
         charlieAnalytics.track("App Launched")
         return true
     }

@@ -120,20 +120,10 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
                 self.keyChainStore.set(access_token, key: "access_token")
                 cService.saveAccessToken(access_token) { (response) in
                 }
-                var uuid : String
-                if (keyStore.stringForKey("uuid") != nil) {
-                    uuid = keyStore.stringForKey("uuid")!
-                }
-                else {
-                    uuid = NSUUID().UUIDString
-                }
                 
                 keyStore.setString(access_token, forKey: "access_token")
                 keyStore.setString(self.email_address, forKey: "email_address")
-                keyStore.setString(uuid, forKey: self.email_address)
                 keyStore.synchronize()
-                
-                Mixpanel.sharedInstance().identify(self.email_address)
                 Mixpanel.sharedInstance().people.set(["$email":self.email_address])
                 
                 cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
@@ -165,8 +155,7 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
             presentViewController(ABPinSetup, animated: true, completion: nil)
             createUser(emailAddress.text!)
-            Mixpanel.sharedInstance().identify(emailAddress.text)
-            keyStore.setString(NSUUID().UUIDString, forKey: emailAddress.text!)
+            Mixpanel.sharedInstance().people.set(["$email":self.email_address])
             charlieAnalytics.track("Email Added")
         }
         else {
