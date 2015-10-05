@@ -84,9 +84,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         
         pageTitles = [
                 "Spend money on what makes you happy",
-                "Sometimes we spend money on things that bring us joy",
-                "...and sometimes we spend on things that don't",
-                "Charlie tracks your spending so you can buy more of what makes you happy"
+                "Sometimes we spend money on things that are worth it",
+                "...and sometimes we spend on things that aren't",
+                "Charlie helps you spend on things that are worth it, so you can buy more of what makes you happy"
         ]
         
         pageControl.currentPage = 0
