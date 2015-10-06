@@ -188,7 +188,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
+                    if transactionItems.count == 1 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
                 }
@@ -481,12 +481,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         self.view .addSubview(blackView!)
         let sortVC = SortViewController()
         sortVC.initialFilterType = self.filterType
-        
-
-//        if self.filterType == .FilterByDate { sortVC.mostRecentButton.titleLabel?.textColor = listBlue }
-//        if self.filterType == .FilterByDescendingDate { sortVC.leastRecentButton.titleLabel?.textColor = listBlue }
-//        if self.filterType == .FilterByName { sortVC.alphabeticalButton.titleLabel?.textColor = listBlue }
-//        if self.filterType == .FilterByAmount { sortVC.amountButton.titleLabel?.textColor = listBlue }
         sortVC.delegate = self
         let height = self.view.frame.size.height*0.8
         sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
@@ -537,11 +531,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
-        if transactionItems.count == 0 && allTransactionItems.count > 0 {
+        if transactionItems.count == 1 && allTransactionItems.count > 1 {
             showReward()
         }
         else {
-            if accounts.count  == 0 && allTransactionItems.count == 0 {
+            if accounts.count  == 1 && allTransactionItems.count == 1 {
                 addAccountButton.hidden = false
                 accountAddView.hidden = false
                 transactionsTable.hidden = true
@@ -615,8 +609,10 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
+        let minOftheTwo = min(20,actedUponItems.count)
+        let first20ActedUponItems = actedUponItems[0..<minOftheTwo]
         var current_index = 0
-        for trans in actedUponItems {
+        for trans in first20ActedUponItems {
             if trans.name == current_name {
                 print("add to existing \(trans.name) at index \(current_index)")
                 if trans.status == 1 {
@@ -800,7 +796,7 @@ extension mainViewController : UITableViewDataSource {
                 addAccountButton.hidden = true
                 accountAddView.hidden = true
             }
-            return transactionItems.count
+            return transactionItems.count + 1
         }
     }
     
@@ -810,7 +806,9 @@ extension mainViewController : UITableViewDataSource {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
-            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+            if indexPath.row < transactionItems.count {
+                performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+            }
         }
     }
     
@@ -835,6 +833,12 @@ extension mainViewController : UITableViewDataSource {
             cell.firstRightAction = nil
         }
         else {
+            if (indexPath.row == transactionItems.count) {
+                cell.nameCellLabel.text = "Add More"
+                cell.amountCellLabel.text = ""
+                cell.dateCellLabel.text = ""
+                return cell
+            }
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             cell.nameCellLabel.text = transactionItems[indexPath.row].name
