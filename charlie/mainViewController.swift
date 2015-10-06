@@ -186,7 +186,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-                    if transactionItems.count == 1 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
+                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
                 }
@@ -524,7 +524,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
-        if transactionItems.count == 1 && allTransactionItems.count > 1 {
+        if transactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()
         }
         else {
@@ -754,7 +754,7 @@ extension mainViewController : UITableViewDataSource {
         
         if direction == 1 {
             charlieAnalytics.track("Worth It Swipe")
-            if rowCount == 1 && self.inboxType == .InboxTransaction {
+            if rowCount == 2 && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
@@ -762,7 +762,7 @@ extension mainViewController : UITableViewDataSource {
         else {
             charlieAnalytics.track("Not Worth It Swipe")
             
-            if rowCount == 1 && self.inboxType == .InboxTransaction {
+            if rowCount == 2 && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
