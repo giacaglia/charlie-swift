@@ -47,7 +47,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBOutlet weak var happyDateRange: UILabel!
     @IBOutlet weak var chartView: LineChartView?
     @IBOutlet weak var listNavBar: UIView!
-    @IBOutlet weak var approvedListButton: UIButton!
     @IBOutlet weak var inboxListButton: UIButton!
     @IBOutlet weak var flagListButton: UIButton!
     @IBOutlet weak var dividerView: UIView!
@@ -498,7 +497,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         blackView?.removeFromSuperview()
     }
     
-    
+    // TODO: Clear approved
     @IBAction func approvedListButtonress(sender: UIButton) {
         charlieAnalytics.track("Worth It Button")
         transactionsTable.backgroundColor = UIColor.clearColor();
@@ -506,13 +505,9 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
-        listNavBar.backgroundColor = listGreen
-        
-        inboxListButton.setImage(inboxUnSelectedHappyButtonImage, forState: .Normal)
-        flagListButton.setImage(flagUnSelectedHappyButtonImage, forState: .Normal)
+    
         
         self.inboxType = .ApprovedTransaction
-        approvedListButton.setImage(approvedSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listGreen
         
         topSeperator.backgroundColor = listGreen
@@ -543,10 +538,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
         }
         
-        listNavBar.backgroundColor = listBlue
         
         inboxType = .InboxTransaction
-        inboxListButton.setImage(inboxSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listBlue
         moneyCountLabel.hidden = (transactionItems.count == 0)
         moneyCountLabel.text = String(transactionItems.count)
@@ -557,8 +550,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         topSeperator.backgroundColor = listBlue
 
         inboxType == .InboxTransaction
-        flagListButton.setImage(flagUnSelectedInboxButtonImage, forState: .Normal)
-        approvedListButton.setImage(approvedUnSelectedInboxButtonImage, forState: .Normal)
         transactionsTable.reloadData()
     }
     
@@ -571,19 +562,14 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         
-        listNavBar.backgroundColor = listRed
         
         inboxType = .FlaggedTransaction
-        inboxListButton.setImage(inboxUnSelectedSadButtonImage, forState: .Normal)
-        flagListButton.setImage(flagSelectedButtonImage, forState: .Normal)
         dividerView.backgroundColor = listRed
         moneyCountSubSubHeadLabel.text = "Not Worth it!"
         moneyCountSubSubHeadLabel.textColor = listRed
         moneyCountLabel.hidden = true
         
         topSeperator.backgroundColor = listRed
-
-        approvedListButton.setImage(approvedUnSelectedSadButtonImage, forState: .Normal)
         
         inboxType = .FlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
