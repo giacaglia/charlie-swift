@@ -56,7 +56,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBOutlet weak var happyRewardPercentage: UILabel!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topSeperator: UIView!
-    @IBOutlet weak var moneyCountLabel: UILabel!
     @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
@@ -244,13 +243,13 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
         }
         
-        moneyCountLabel.layer.borderColor = UIColor.clearColor().CGColor
-        moneyCountLabel.layer.borderWidth = 1.0
-        moneyCountLabel.layer.cornerRadius = moneyCountLabel.frame.size.width/2.0
-        moneyCountLabel.clipsToBounds = true
+        inboxListButton.layer.borderColor = UIColor.clearColor().CGColor
+        inboxListButton.layer.borderWidth = 1.0
+        inboxListButton.layer.cornerRadius = inboxListButton.frame.size.width/2.0
+        inboxListButton.clipsToBounds = true
         
-        moneyCountLabel.hidden = (transactionItems.count == 0)
-        moneyCountLabel.text = String(transactionItems.count)
+//        moneyCountLabel.hidden = (transactionItems.count == 0)
+        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
     }
     
     func showReward() {
@@ -513,7 +512,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         topSeperator.backgroundColor = listGreen
         moneyCountSubSubHeadLabel.text = "Worth"
         moneyCountSubSubHeadLabel.textColor = listGreen
-        moneyCountLabel.hidden = true
         
         inboxType = .ApprovedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
@@ -541,8 +539,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-        moneyCountLabel.hidden = (transactionItems.count == 0)
-        moneyCountLabel.text = String(transactionItems.count)
+//        moneyCountLabel.hidden = (transactionItems.count == 0)
+        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
         moneyCountSubSubHeadLabel.textColor = listBlue
@@ -567,7 +565,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         dividerView.backgroundColor = listRed
         moneyCountSubSubHeadLabel.text = "Not Worth it!"
         moneyCountSubSubHeadLabel.textColor = listRed
-        moneyCountLabel.hidden = true
         
         topSeperator.backgroundColor = listRed
         
@@ -751,7 +748,7 @@ extension mainViewController : UITableViewDataSource {
         transactionItems[indexPath!.row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
-        moneyCountLabel.text = String(transactionItems.count)
+        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
 
         let rowCount = Int(tableView.numberOfRowsInSection(0).value)
         

@@ -588,15 +588,15 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97i-Pg-dNr" userLabel="Inbox">
-                                        <rect key="frame" x="100" y="17" width="30" height="30"/>
+                                        <rect key="frame" x="100" y="14" width="36" height="36"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.5568627451" green="0.74509803919999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="1fM-oT-pIl"/>
-                                            <constraint firstAttribute="width" constant="30" id="ePe-3f-jGd"/>
+                                            <constraint firstAttribute="height" constant="36" id="1fM-oT-pIl"/>
+                                            <constraint firstAttribute="width" constant="36" id="ePe-3f-jGd"/>
                                         </constraints>
                                         <state key="normal">
-                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="inboxListButtonPress:" destination="HbA-5y-1yC" eventType="touchUpInside" id="gmb-PU-8Ar"/>
@@ -665,25 +665,12 @@
                                             <action selector="refreshAccounts:" destination="HbA-5y-1yC" eventType="touchUpInside" id="jIr-Jf-jhc"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-Fy-hpO">
-                                        <rect key="frame" x="383" y="20" width="25" height="25"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.55686274509803924" green="0.74509803921568629" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="okd-zw-edE"/>
-                                            <constraint firstAttribute="height" constant="25" id="p3P-Ay-tNy"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Pb2-Pp-Iuo" secondAttribute="bottom" id="0eR-oR-fDT"/>
-                                    <constraint firstItem="Nuq-Ra-l3O" firstAttribute="top" secondItem="iLy-Fy-hpO" secondAttribute="bottom" constant="-15" id="0gO-YE-L8f"/>
                                     <constraint firstItem="Nuq-Ra-l3O" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="top" constant="30" id="1tw-VB-dWc"/>
                                     <constraint firstAttribute="height" constant="80" id="6jn-iw-Hbe"/>
                                     <constraint firstAttribute="width" constant="600" id="KeN-Fo-APK"/>
@@ -692,7 +679,6 @@
                                     <constraint firstAttribute="trailing" secondItem="Pb2-Pp-Iuo" secondAttribute="trailing" id="Rgh-Qg-4fi"/>
                                     <constraint firstAttribute="trailing" secondItem="JLJ-av-QVM" secondAttribute="trailing" constant="9" id="YtU-jB-yHf"/>
                                     <constraint firstItem="Pb2-Pp-Iuo" firstAttribute="leading" secondItem="yXV-7C-aiq" secondAttribute="leading" id="ZIz-yY-KGx"/>
-                                    <constraint firstItem="iLy-Fy-hpO" firstAttribute="leading" secondItem="Nuq-Ra-l3O" secondAttribute="trailing" id="wsY-Uv-MmY"/>
                                     <constraint firstItem="JLJ-av-QVM" firstAttribute="centerY" secondItem="Nuq-Ra-l3O" secondAttribute="centerY" id="yic-gS-sFR"/>
                                     <constraint firstItem="cWc-mr-8Dg" firstAttribute="centerY" secondItem="Nuq-Ra-l3O" secondAttribute="centerY" id="zoB-z6-Ioj"/>
                                 </constraints>
@@ -1054,7 +1040,6 @@
                         <outlet property="inboxListButton" destination="97i-Pg-dNr" id="vz2-1z-nqH"/>
                         <outlet property="listNavBar" destination="0Eh-dx-Cok" id="l2D-Ht-6IC"/>
                         <outlet property="menuButton" destination="cWc-mr-8Dg" id="h42-Nn-Q5U"/>
-                        <outlet property="moneyCountLabel" destination="iLy-Fy-hpO" id="76M-bp-H7c"/>
                         <outlet property="moneyCountSubSubHeadLabel" destination="Nuq-Ra-l3O" id="2Aj-Gi-4h0"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
