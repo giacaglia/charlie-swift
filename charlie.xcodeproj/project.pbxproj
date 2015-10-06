@@ -147,6 +147,8 @@
 		88A295241BB598AC0091A36B /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */; settings = {ASSET_TAGS = (); }; };
 		88A53B231BB38B0300D5A1F0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A53B221BB38B0300D5A1F0 /* libz.tbd */; };
 		88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD39B81BB337CB003AE420 /* libicucore.tbd */; };
+		88B41F0B1BC4614E0038483F /* RewardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B41F0A1BC4614E0038483F /* RewardViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B41F0D1BC461610038483F /* RewardViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -421,6 +423,8 @@
 		88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPinSelectionView.m; sourceTree = "<group>"; };
 		88A53B221BB38B0300D5A1F0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		88AD39B81BB337CB003AE420 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		88B41F0A1BC4614E0038483F /* RewardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardViewController.xib; sourceTree = "<group>"; };
+		88B41F0D1BC461610038483F /* RewardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -462,6 +466,8 @@
 			children = (
 				88E6209F1BB476330060ED28 /* SignUp */,
 				090BD3441B25089300F26E78 /* mainViewController.swift */,
+				88B41F0A1BC4614E0038483F /* RewardViewController.xib */,
+				88B41F0D1BC461610038483F /* RewardViewController.swift */,
 				8816CCB01BBDB596001F6F31 /* SortViewController.xib */,
 				8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */,
 				099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */,
@@ -981,6 +987,7 @@
 				099ACE4D1B32685C0044A068 /* Montserrat-Regular.ttf in Resources */,
 				456049CC1B71183200C37B9D /* Media.xcassets in Resources */,
 				456049F71B71183200C37B9D /* MPSurvey.storyboard in Resources */,
+				88B41F0B1BC4614E0038483F /* RewardViewController.xib in Resources */,
 				091620541B2F3B410004C781 /* Gotham-Light.ttf in Resources */,
 				0974544F1B44CF5F0004B8EC /* plaid.html in Resources */,
 				091620521B2F2E380004C781 /* Gotham-XLight.ttf in Resources */,
@@ -1071,6 +1078,7 @@
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
 				45604A021B71183200C37B9D /* MPUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */,
+				88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */,
 				45604A061B71183200C37B9D /* MPVariant.m in Sources */,
 				456049CB1B71183200C37B9D /* _MPTweakBindObserver.m in Sources */,
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,

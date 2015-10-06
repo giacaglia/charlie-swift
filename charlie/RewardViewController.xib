@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Bold.ttf">
+            <string>Montserrat-Bold</string>
+        </mutableArray>
+        <mutableArray key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RewardViewController" customModule="charlie" customModuleProvider="target">
+            <connections>
+                <outlet property="chartView" destination="Qdc-xs-Ed6" id="U26-i5-4ZV"/>
+                <outlet property="happyRewardPercentage" destination="AAU-ef-60g" id="9rj-Je-ynb"/>
+                <outlet property="view" destination="bEm-Xn-24m" id="0l7-hI-mpL"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="bEm-Xn-24m">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow Score is currently at:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUc-E2-MP5">
+                    <rect key="frame" x="40" y="120" width="232" height="60"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="Apu-hi-Hdo"/>
+                        <constraint firstAttribute="width" constant="232" id="aGc-BF-RP6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
+                    <rect key="frame" x="287" y="117" width="124" height="65"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="124" id="YAW-iC-ARf"/>
+                        <constraint firstAttribute="height" constant="65" id="iqv-TB-EFB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="54"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
+                    <rect key="frame" x="20" y="280" width="560" height="280"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
+                <constraint firstItem="AAU-ef-60g" firstAttribute="centerY" secondItem="RUc-E2-MP5" secondAttribute="centerY" id="FP9-VX-XLg"/>
+                <constraint firstItem="AAU-ef-60g" firstAttribute="leading" secondItem="RUc-E2-MP5" secondAttribute="trailing" constant="15" id="Kdo-4l-paM"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="U5L-Zo-fy7"/>
+                <constraint firstItem="RUc-E2-MP5" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="40" id="YCb-SI-cOa"/>
+                <constraint firstItem="RUc-E2-MP5" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="120" id="ZsK-8H-S9G"/>
+                <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="RUc-E2-MP5" secondAttribute="bottom" constant="100" id="qfJ-ju-fsz"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
