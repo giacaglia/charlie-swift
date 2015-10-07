@@ -92,6 +92,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var filterType : SortFilterType! = .FilterByName
     var inboxType : TransactionType! = .FlaggedTransaction
     var blackView : UIView?
+    var areThereMoreItemsToLoad = false
+    var numItemsToLoad = 20
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -129,6 +131,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
+        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: "addMoreCell")
         transactionsTable.tableFooterView = UIView()
         transactionsTable.reloadData()
     }
@@ -246,8 +249,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
     }
     
+ 
     func showReward() {
-        print("here")
         let rewardVC = RewardViewController()
         self.addChildViewController(rewardVC)
         rewardVC.view.backgroundColor = lightBlue
@@ -412,7 +415,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-//        moneyCountLabel.hidden = (transactionItems.count == 0)
         inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
@@ -465,12 +467,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
-        let minOftheTwo = min(20,actedUponItems.count)
-        let first20ActedUponItems = actedUponItems[0..<minOftheTwo]
+        let minOftheTwo = min(numItemsToLoad, actedUponItems.count)
+        areThereMoreItemsToLoad = (minOftheTwo == numItemsToLoad)
+        let firstItemsToLoad = actedUponItems[0..<minOftheTwo]
         var current_index = 0
-        for trans in first20ActedUponItems {
+        for trans in firstItemsToLoad {
             if trans.name == current_name {
-                print("add to existing \(trans.name) at index \(current_index)")
                 if trans.status == 1 {
                     charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
                     charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue + trans.amount
@@ -551,7 +553,7 @@ extension mainViewController : UITableViewDataSource {
                 addAccountButton.hidden = true
                 accountAddView.hidden = true
             }
-            return transactionItems.count + 1
+            return transactionItems.count + Int(areThereMoreItemsToLoad)
         }
     }
     
@@ -564,15 +566,26 @@ extension mainViewController : UITableViewDataSource {
             if indexPath.row < transactionItems.count {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
+            else {
+                numItemsToLoad += 20
+                charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
+                transactionsTable.reloadData()
+            }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if inboxType == .InboxTransaction && indexPath.row == transactionItems.count {
+            let cell = tableView.dequeueReusableCellWithIdentifier("addMoreCell", forIndexPath: indexPath)  as! AddMoreCell
+            return cell
+        }
+
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         
         if inboxType == .FlaggedTransaction {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
+            cell.amountCellLabel.textColor = listRed
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
             cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
             
@@ -582,32 +595,46 @@ extension mainViewController : UITableViewDataSource {
         else if inboxType == .ApprovedTransaction {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
+            cell.amountCellLabel.textColor = listGreen
             let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
             cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
             cell.firstLeftAction = nil
             cell.firstRightAction = nil
         }
         else {
-            if (indexPath.row == transactionItems.count) {
-                cell.nameCellLabel.text = "Add More"
-                cell.amountCellLabel.text = ""
-                cell.dateCellLabel.text = ""
-                return cell
-            }
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             cell.nameCellLabel.text = transactionItems[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
-            
+            cell.amountCellLabel.textColor = listBlue
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
             let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
             cell.dateCellLabel.text = dateString
         }
         
-        if inboxType == .InboxTransaction {cell.amountCellLabel.textColor = listBlue}
-        else if inboxType == .FlaggedTransaction {cell.amountCellLabel.textColor = listRed}
-        else if inboxType == .ApprovedTransaction {cell.amountCellLabel.textColor = listGreen}
         return cell
+    }
+}
+
+
+class AddMoreCell : UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    func setup() {
+        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+        let centralSetup = UILabel(frame: CGRectMake(0, 0, 100, 30))
+        centralSetup.textAlignment = .Center
+        centralSetup.center = self.contentView.center
+        centralSetup.text = "Add More"
+        self.contentView.addSubview(centralSetup)
     }
 }

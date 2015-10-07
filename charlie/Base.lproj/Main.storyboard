@@ -680,6 +680,53 @@
                                     <constraint firstItem="cWc-mr-8Dg" firstAttribute="centerY" secondItem="Nuq-Ra-l3O" secondAttribute="centerY" id="zoB-z6-Ioj"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o08-Ym-LQO" userLabel="toast">
+                                <rect key="frame" x="200" y="325" width="200" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie is downloading your transactions. This might take a couple of minutes. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
+                                        <rect key="frame" x="10" y="18" width="180" height="63.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="10" id="6Sq-Z9-9P0"/>
+                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="top" secondItem="o08-Ym-LQO" secondAttribute="top" constant="5" id="Bf5-Kw-yWq"/>
+                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Bro-BX-kzz"/>
+                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="-199.5" id="NY1-vl-9Vo"/>
+                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="-199.5" id="Rqu-1t-IXS"/>
+                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="Yql-57-3gu"/>
+                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Z5b-RU-9Jw"/>
+                                    <constraint firstAttribute="bottom" secondItem="C4w-kU-ihB" secondAttribute="bottom" constant="5" id="afD-RW-kgL"/>
+                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="10" id="e0P-a5-AbI"/>
+                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="e11-HC-1KS"/>
+                                    <constraint firstAttribute="height" constant="100" id="ec6-pI-G8g"/>
+                                    <constraint firstAttribute="width" constant="200" id="oAP-QO-0Jw"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Bf5-Kw-yWq"/>
+                                        <exclude reference="Bro-BX-kzz"/>
+                                        <exclude reference="NY1-vl-9Vo"/>
+                                        <exclude reference="Rqu-1t-IXS"/>
+                                        <exclude reference="Yql-57-3gu"/>
+                                        <exclude reference="afD-RW-kgL"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <animations/>
+                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
+                                <rect key="frame" x="0.0" y="80" width="600" height="456"/>
+                                <animations/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-hm-sg5" customClass="SBGestureTableView" customModule="charlie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="80" width="600" height="456"/>
                                 <animations/>
@@ -788,53 +835,6 @@
                                     <outlet property="delegate" destination="HbA-5y-1yC" id="FQF-FY-ZUq"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o08-Ym-LQO" userLabel="toast">
-                                <rect key="frame" x="200" y="325" width="200" height="100"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie is downloading your transactions. This might take a couple of minutes. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
-                                        <rect key="frame" x="10" y="18" width="180" height="63.5"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="10" id="6Sq-Z9-9P0"/>
-                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="top" secondItem="o08-Ym-LQO" secondAttribute="top" constant="5" id="Bf5-Kw-yWq"/>
-                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Bro-BX-kzz"/>
-                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="-199.5" id="NY1-vl-9Vo"/>
-                                    <constraint firstAttribute="trailing" secondItem="C4w-kU-ihB" secondAttribute="trailing" constant="-199.5" id="Rqu-1t-IXS"/>
-                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="Yql-57-3gu"/>
-                                    <constraint firstAttribute="centerX" secondItem="C4w-kU-ihB" secondAttribute="centerX" id="Z5b-RU-9Jw"/>
-                                    <constraint firstAttribute="bottom" secondItem="C4w-kU-ihB" secondAttribute="bottom" constant="5" id="afD-RW-kgL"/>
-                                    <constraint firstItem="C4w-kU-ihB" firstAttribute="leading" secondItem="o08-Ym-LQO" secondAttribute="leading" constant="10" id="e0P-a5-AbI"/>
-                                    <constraint firstAttribute="centerY" secondItem="C4w-kU-ihB" secondAttribute="centerY" id="e11-HC-1KS"/>
-                                    <constraint firstAttribute="height" constant="100" id="ec6-pI-G8g"/>
-                                    <constraint firstAttribute="width" constant="200" id="oAP-QO-0Jw"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Bf5-Kw-yWq"/>
-                                        <exclude reference="Bro-BX-kzz"/>
-                                        <exclude reference="NY1-vl-9Vo"/>
-                                        <exclude reference="Rqu-1t-IXS"/>
-                                        <exclude reference="Yql-57-3gu"/>
-                                        <exclude reference="afD-RW-kgL"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
-                                <rect key="frame" x="282" y="282" width="37" height="37"/>
-                                <animations/>
-                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
-                                <rect key="frame" x="0.0" y="80" width="600" height="456"/>
-                                <animations/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
                                 <rect key="frame" x="0.0" y="100" width="600" height="436"/>
                                 <subviews>
