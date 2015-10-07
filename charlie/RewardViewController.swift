@@ -35,9 +35,9 @@ class RewardViewController : UIViewController {
         
         if happyScoreViewed == "0"  {
             //user hasn't compared what they thought their score was to what it is
-            performSegueWithIdentifier("showReveal", sender: self)
-            defaults.setValue("1", forKey: "happyScoreViewed")
-            defaults.synchronize()
+//            performSegueWithIdentifier("showReveal", sender: self)
+//            defaults.setValue("1", forKey: "happyScoreViewed")
+//            defaults.synchronize()
         }
         
         if transactionsDateDifference >= 1 {
