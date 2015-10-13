@@ -26,24 +26,24 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow Score is currently at:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUc-E2-MP5">
-                    <rect key="frame" x="40" y="120" width="232" height="60"/>
+                    <rect key="frame" x="20" y="120" width="180" height="60"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="Apu-hi-Hdo"/>
-                        <constraint firstAttribute="width" constant="232" id="aGc-BF-RP6"/>
+                        <constraint firstAttribute="width" constant="180" id="aGc-BF-RP6"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
-                    <rect key="frame" x="287" y="117" width="124" height="65"/>
+                    <rect key="frame" x="210" y="117" width="140" height="65"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="124" id="YAW-iC-ARf"/>
+                        <constraint firstAttribute="width" constant="140" id="YAW-iC-ARf"/>
                         <constraint firstAttribute="height" constant="65" id="iqv-TB-EFB"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="54"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="52"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -58,9 +58,9 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
                 <constraint firstItem="AAU-ef-60g" firstAttribute="centerY" secondItem="RUc-E2-MP5" secondAttribute="centerY" id="FP9-VX-XLg"/>
-                <constraint firstItem="AAU-ef-60g" firstAttribute="leading" secondItem="RUc-E2-MP5" secondAttribute="trailing" constant="15" id="Kdo-4l-paM"/>
+                <constraint firstItem="AAU-ef-60g" firstAttribute="leading" secondItem="RUc-E2-MP5" secondAttribute="trailing" constant="10" id="Kdo-4l-paM"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="U5L-Zo-fy7"/>
-                <constraint firstItem="RUc-E2-MP5" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="40" id="YCb-SI-cOa"/>
+                <constraint firstItem="RUc-E2-MP5" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="YCb-SI-cOa"/>
                 <constraint firstItem="RUc-E2-MP5" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="120" id="ZsK-8H-S9G"/>
                 <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="RUc-E2-MP5" secondAttribute="bottom" constant="100" id="qfJ-ju-fsz"/>

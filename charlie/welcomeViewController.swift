@@ -175,7 +175,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
             
             //loginbutton
             if page == 3 {
-                var loginButtonFrame = CGRectMake(0, 0, 300, 60)
+                var loginButtonFrame = CGRectMake(0, 0, 300, 50)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 let loginButton = UIButton(frame: loginButtonFrame)

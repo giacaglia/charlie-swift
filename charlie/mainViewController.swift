@@ -25,6 +25,7 @@ var charlieGroupListFiltered = [charlieGroup]()
 var keyStore = NSUbiquitousKeyValueStore()
 var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
+var shownTransactionItems : [Transaction] = []
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
@@ -93,7 +94,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var inboxType : TransactionType! = .FlaggedTransaction
     var blackView : UIView?
     var areThereMoreItemsToLoad = false
-    var numItemsToLoad = 20
+    var numItemsToLoad = 10
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -155,18 +156,20 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             keyChainStore.set(access_token, key: "access_token")
         }
         
-        if accounts.count  == 0 {
+        if accounts.count == 0 {
             //&& access_token == "" //show add user
             setPredicates(false)
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+            shownTransactionItems = getFirstNElementsOfList(transactionItems)
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
             setPredicates(true)
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+            shownTransactionItems = getFirstNElementsOfList(transactionItems)
             addAccountButton.hidden = true
             accountAddView.hidden = true
             //refresh accounts
@@ -185,7 +188,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
+                    if shownTransactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
                 }
@@ -246,7 +249,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxListButton.layer.borderWidth = 1.0
         inboxListButton.layer.cornerRadius = inboxListButton.frame.size.width/2.0
         inboxListButton.clipsToBounds = true
-        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
+        if shownTransactionItems.count > 0 {
+            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        }
+        else {
+            inboxListButton.setTitle("", forState: .Normal)
+        }
     }
     
  
@@ -287,6 +295,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.hidden = true
     }
     
+    
     func updateTrans() -> Void {
         print("looking for records")
         cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
@@ -297,6 +306,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 self.timer.invalidate()
                 self.setPredicates(true)
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                shownTransactionItems = self.getFirstNElementsOfList(transactionItems)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
                 self.spinner.stopAnimating()
@@ -311,7 +321,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            viewController.transactionID = transactionItems[indexPath!.row]._id
+            viewController.transactionID = shownTransactionItems[indexPath!.row]._id
             viewController.sourceVC = "main"
         }
         else if (segue.identifier == "showTypePicker") {
@@ -380,7 +390,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
-    
         
         self.inboxType = .ApprovedTransaction
         dividerView.backgroundColor = listGreen
@@ -394,13 +403,23 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.reloadData()
     }
     
+    func getFirstNElementsOfList(list_trans : Results<(Transaction)>) -> [Transaction] {
+        var new_list : [Transaction] = []
+        for i in 0..<min(list_trans.count, numItemsToLoad) {
+            new_list.append(list_trans[i])
+        }
+        areThereMoreItemsToLoad = (new_list.count < list_trans.count)
+        return new_list
+    }
+    
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+        shownTransactionItems = getFirstNElementsOfList(transactionItems)
         
-        if transactionItems.count == 0 && allTransactionItems.count > 0 {
+        if shownTransactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()
         }
         else {
@@ -415,7 +434,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
+        if shownTransactionItems.count > 0 {
+            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        }
+        else {
+            inboxListButton.setTitle("", forState: .Normal)
+        }
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
         moneyCountSubSubHeadLabel.textColor = listBlue
@@ -457,7 +481,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         }
         else if sortFilter == .FilterByDescendingDate {
-             sortProperties = [SortDescriptor(property: "date", ascending: false)]
+            sortProperties = [SortDescriptor(property: "date", ascending: false)]
         }
         else if sortFilter == .FilterByDate {
             sortProperties = [SortDescriptor(property: "date", ascending: true)]
@@ -467,11 +491,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
-        let minOftheTwo = min(numItemsToLoad, actedUponItems.count)
-        areThereMoreItemsToLoad = (minOftheTwo == numItemsToLoad)
-        let firstItemsToLoad = actedUponItems[0..<minOftheTwo]
         var current_index = 0
-        for trans in firstItemsToLoad {
+        for trans in actedUponItems {
             if trans.name == current_name {
                 if trans.status == 1 {
                     charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
@@ -515,14 +536,19 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
 extension mainViewController : UITableViewDataSource {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
-        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+        currentTransactionSwipeID = shownTransactionItems[indexPath!.row]._id
         currentTransactionCell = cell
         
         realm.beginWrite()
-        transactionItems[indexPath!.row].status = direction
+        shownTransactionItems[indexPath!.row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
-        inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
+        if shownTransactionItems.count > 0 {
+            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        }
+        else {
+            inboxListButton.setTitle("", forState: .Normal)
+        }
 
         let rowCount = Int(tableView.numberOfRowsInSection(0).value)
         
@@ -548,12 +574,12 @@ extension mainViewController : UITableViewDataSource {
             return charlieGroupListFiltered.count
         }
         else {
-            if transactionItems.count > 0 {
+            if shownTransactionItems.count > 0 {
                 transactionsTable.hidden = false
                 addAccountButton.hidden = true
                 accountAddView.hidden = true
             }
-            return transactionItems.count + Int(areThereMoreItemsToLoad)
+            return shownTransactionItems.count + Int(areThereMoreItemsToLoad)
         }
     }
     
@@ -563,19 +589,20 @@ extension mainViewController : UITableViewDataSource {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
-            if indexPath.row < transactionItems.count {
+            if indexPath.row < shownTransactionItems.count {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
             else {
-                numItemsToLoad += 20
-                charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
+                numItemsToLoad += 10
+                shownTransactionItems = getFirstNElementsOfList(transactionItems)
+                inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
                 transactionsTable.reloadData()
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if inboxType == .InboxTransaction && indexPath.row == transactionItems.count {
+        if inboxType == .InboxTransaction && indexPath.row == shownTransactionItems.count {
             let cell = tableView.dequeueReusableCellWithIdentifier("addMoreCell", forIndexPath: indexPath)  as! AddMoreCell
             return cell
         }
@@ -586,8 +613,12 @@ extension mainViewController : UITableViewDataSource {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
             cell.amountCellLabel.textColor = listRed
-            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount)/\(totalTransactions) transactions"
+            if charlieGroupListFiltered[indexPath.row].notWorthCount == 1 {
+                 cell.dateCellLabel.text = "1 transaction"
+            }
+            else {
+                cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount) transactions"
+            }
             
             cell.firstLeftAction = nil
             cell.firstRightAction = nil
@@ -596,20 +627,24 @@ extension mainViewController : UITableViewDataSource {
             cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
             cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
             cell.amountCellLabel.textColor = listGreen
-            let totalTransactions = charlieGroupListFiltered[indexPath.row].worthCount + charlieGroupListFiltered[indexPath.row].notWorthCount
-            cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthCount)/\(totalTransactions) transactions"
+            if charlieGroupListFiltered[indexPath.row].worthCount == 1 {
+                cell.dateCellLabel.text = "1 transaction"
+            }
+            else {
+                cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthValue) transactions"
+            }
             cell.firstLeftAction = nil
             cell.firstRightAction = nil
         }
         else {
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-            cell.nameCellLabel.text = transactionItems[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
+            cell.nameCellLabel.text = shownTransactionItems[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(shownTransactionItems[indexPath.row].amount)
             cell.amountCellLabel.textColor = listBlue
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+            let dateString = dateFormatter.stringFromDate(shownTransactionItems[indexPath.row].date)
             cell.dateCellLabel.text = dateString
         }
         
@@ -636,5 +671,42 @@ class AddMoreCell : UITableViewCell {
         centralSetup.center = self.contentView.center
         centralSetup.text = "Add More"
         self.contentView.addSubview(centralSetup)
+    }
+}
+
+extension mainViewController : UIViewControllerPreviewingDelegate {
+    
+    /// Called when the user has pressed a source view in a previewing view controller (Peek).
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        // Get indexPath for location (CGPoint) + cell (for sourceRect)
+        guard let indexPath = transactionsTable.indexPathForRowAtPoint(location),
+            cell = transactionsTable.cellForRowAtIndexPath(indexPath) else { return nil }
+        
+        // Instantiate VC with Identifier (Storyboard ID)
+//        guard let previewViewController = storyboard?.instantiateViewControllerWithIdentifier(storyboardPreviewID) as? DetailsViewController else { return nil }
+        
+        // Pass datas to the previewing context
+//        let previewItem = DataSetted[indexPath.row]
+        
+//        previewViewController.detailTitle = previewItem.title
+//        previewViewController.detailAnnotation = previewItem.annotation
+//        previewViewController.detailLatitude = previewItem.latitude
+//        previewViewController.detailLongitude = previewItem.longitude
+//        
+//        // Preferred Content Size for Preview (CGSize)
+//        previewViewController.preferredContentSize = CGSize(width: 0.0, height: previewItem.currentHeight)
+//        
+//        // Current context Source.
+//        previewingContext.sourceRect = cell.frame
+//        
+//        return previewViewController
+        return nil
+    }
+    
+    /// Called to let you prepare the presentation of a commit (Pop).
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        // Presents viewControllerToCommit in a primary context
+        showViewController(viewControllerToCommit, sender: self)
     }
 }

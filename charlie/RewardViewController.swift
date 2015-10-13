@@ -14,12 +14,6 @@ class RewardViewController : UIViewController {
     @IBOutlet weak var happyRewardPercentage: UILabel!
     
     override func viewDidLoad() {
-        
-        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
-        let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(setting)
-        UIApplication.sharedApplication().registerForRemoteNotifications()
-        
         let transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
         
         charlieAnalytics.track("Show Reward")
@@ -35,9 +29,9 @@ class RewardViewController : UIViewController {
         
         if happyScoreViewed == "0"  {
             //user hasn't compared what they thought their score was to what it is
+            defaults.setValue("1", forKey: "happyScoreViewed")
+            defaults.synchronize()
 //            performSegueWithIdentifier("showReveal", sender: self)
-//            defaults.setValue("1", forKey: "happyScoreViewed")
-//            defaults.synchronize()
         }
         
         if transactionsDateDifference >= 1 {

@@ -78,7 +78,6 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
     }
     
     func alertUserRecoverData() {
-        
         guard let access_token = keyStore.stringForKey("access_token") else {
             return
         }
@@ -112,7 +111,6 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
                 let user = User()
                 user.email = email
                 user.password = "password"
-                //user.access_token = access_token
                 try! realm.write {
                     realm.add(user, update: true)
                 }
@@ -150,6 +148,12 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
     
     @IBAction func nextButtonPressed(sender: AnyObject) {
         if isValidEmail(emailAddress.text!) {
+            // Register for notifications
+            let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
+            let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(setting)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+            
             let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
             ABPinSetup.view.backgroundColor = listBlue
             ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
