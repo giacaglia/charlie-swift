@@ -25,7 +25,6 @@ var charlieGroupListFiltered = [charlieGroup]()
 var keyStore = NSUbiquitousKeyValueStore()
 var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
-var shownTransactionItems : [Transaction] = []
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
@@ -94,7 +93,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var inboxType : TransactionType! = .FlaggedTransaction
     var blackView : UIView?
     var areThereMoreItemsToLoad = false
-    var numItemsToLoad = 10
+    var numItemsToLoad = 20
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -162,14 +161,15 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
+            makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-            shownTransactionItems = getFirstNElementsOfList(transactionItems)
+            //TODO: change status of the inbox elements
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
             setPredicates(true)
+            makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-            shownTransactionItems = getFirstNElementsOfList(transactionItems)
             addAccountButton.hidden = true
             accountAddView.hidden = true
             //refresh accounts
@@ -188,7 +188,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
-                    if shownTransactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
+                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
                 }
@@ -249,8 +249,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxListButton.layer.borderWidth = 1.0
         inboxListButton.layer.cornerRadius = inboxListButton.frame.size.width/2.0
         inboxListButton.clipsToBounds = true
-        if shownTransactionItems.count > 0 {
-            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        if transactionItems.count > 0 {
+            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
         }
         else {
             inboxListButton.setTitle("", forState: .Normal)
@@ -306,7 +306,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 self.timer.invalidate()
                 self.setPredicates(true)
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                shownTransactionItems = self.getFirstNElementsOfList(transactionItems)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
                 self.spinner.stopAnimating()
@@ -321,7 +320,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            viewController.transactionID = shownTransactionItems[indexPath!.row]._id
+            viewController.transactionID = transactionItems[indexPath!.row]._id
             viewController.sourceVC = "main"
         }
         else if (segue.identifier == "showTypePicker") {
@@ -403,13 +402,23 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.reloadData()
     }
     
-    func getFirstNElementsOfList(list_trans : Results<(Transaction)>) -> [Transaction] {
-        var new_list : [Transaction] = []
-        for i in 0..<min(list_trans.count, numItemsToLoad) {
-            new_list.append(list_trans[i])
+    func makeOnlyFirstNElementsVisible() {
+        areThereMoreItemsToLoad = false
+        realm.beginWrite()
+        for i in 0..<allTransactionItems.count {
+            if i > numItemsToLoad + 2  && i < allTransactionItems.count {
+                let trans = allTransactionItems[i]
+                trans.status = -1
+                areThereMoreItemsToLoad = true
+            }
+            else if i < allTransactionItems.count {
+                let trans = allTransactionItems[i]
+                if (trans.status == -1) {
+                    trans.status = 0
+                }
+            }
         }
-        areThereMoreItemsToLoad = (new_list.count < list_trans.count)
-        return new_list
+        try! realm.commitWrite()
     }
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
@@ -417,9 +426,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        shownTransactionItems = getFirstNElementsOfList(transactionItems)
         
-        if shownTransactionItems.count == 0 && allTransactionItems.count > 0 {
+        if transactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()
         }
         else {
@@ -434,8 +442,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-        if shownTransactionItems.count > 0 {
-            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        if transactionItems.count > 0 {
+            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
         }
         else {
             inboxListButton.setTitle("", forState: .Normal)
@@ -536,15 +544,15 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
 extension mainViewController : UITableViewDataSource {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
-        currentTransactionSwipeID = shownTransactionItems[indexPath!.row]._id
+        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
         currentTransactionCell = cell
         
         realm.beginWrite()
-        shownTransactionItems[indexPath!.row].status = direction
+        transactionItems[indexPath!.row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
-        if shownTransactionItems.count > 0 {
-            inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+        if transactionItems.count > 0 {
+            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
         }
         else {
             inboxListButton.setTitle("", forState: .Normal)
@@ -574,12 +582,12 @@ extension mainViewController : UITableViewDataSource {
             return charlieGroupListFiltered.count
         }
         else {
-            if shownTransactionItems.count > 0 {
+            if transactionItems.count > 0 {
                 transactionsTable.hidden = false
                 addAccountButton.hidden = true
                 accountAddView.hidden = true
             }
-            return shownTransactionItems.count + Int(areThereMoreItemsToLoad)
+            return transactionItems.count + Int(areThereMoreItemsToLoad)
         }
     }
     
@@ -589,20 +597,21 @@ extension mainViewController : UITableViewDataSource {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
-            if indexPath.row < shownTransactionItems.count {
+            if indexPath.row < transactionItems.count {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
             else {
                 numItemsToLoad += 10
-                shownTransactionItems = getFirstNElementsOfList(transactionItems)
-                inboxListButton.setTitle(String(shownTransactionItems.count), forState: .Normal)
+                makeOnlyFirstNElementsVisible()
+                transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
                 transactionsTable.reloadData()
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if inboxType == .InboxTransaction && indexPath.row == shownTransactionItems.count {
+        if inboxType == .InboxTransaction && indexPath.row == transactionItems.count {
             let cell = tableView.dequeueReusableCellWithIdentifier("addMoreCell", forIndexPath: indexPath)  as! AddMoreCell
             return cell
         }
@@ -639,12 +648,12 @@ extension mainViewController : UITableViewDataSource {
         else {
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-            cell.nameCellLabel.text = shownTransactionItems[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(shownTransactionItems[indexPath.row].amount)
+            cell.nameCellLabel.text = transactionItems[indexPath.row].name
+            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
             cell.amountCellLabel.textColor = listBlue
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            let dateString = dateFormatter.stringFromDate(shownTransactionItems[indexPath.row].date)
+            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
             cell.dateCellLabel.text = dateString
         }
         
