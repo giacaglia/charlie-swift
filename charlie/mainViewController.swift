@@ -467,7 +467,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         
-        
         inboxType = .FlaggedTransaction
         dividerView.backgroundColor = listRed
         moneyCountSubSubHeadLabel.text = "Not Worth it!"
@@ -562,15 +561,14 @@ extension mainViewController : UITableViewDataSource {
         
         if direction == 1 {
             charlieAnalytics.track("Worth It Swipe")
-            if rowCount == 2 && self.inboxType == .InboxTransaction {
+            if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
         }
         else {
             charlieAnalytics.track("Not Worth It Swipe")
-            
-            if rowCount == 2 && self.inboxType == .InboxTransaction {
+            if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
                 self.showReward()
             }
