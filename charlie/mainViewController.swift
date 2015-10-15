@@ -28,7 +28,7 @@ var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
-    case FlaggedTransaction, ApprovedTransaction, InboxTransaction
+    case FlaggedTransaction, ApprovedTransaction, ApprovedAndFlaggedTransaction,InboxTransaction
 }
 
 enum SortFilterType {
@@ -36,7 +36,8 @@ enum SortFilterType {
 }
 
 protocol ChangeFilterProtocol {
-    func changeFilter(filterType:SortFilterType)
+    func changeFilter( filterType: SortFilterType )
+    func changeTransactionType( type : TransactionType)
 }
 
 class mainViewController: UIViewController, ChangeFilterProtocol {
@@ -163,7 +164,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             transactionsTable.hidden = true
             makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-            //TODO: change status of the inbox elements
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
@@ -305,9 +305,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             if response > 0 {
                 self.timer.invalidate()
                 self.setPredicates(true)
+                self.makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
+                if transactionItems.count > 0 { self.inboxListButton.setTitle(String(transactionItems.count), forState: .Normal) }
+                else { self.inboxListButton.setTitle("", forState: .Normal) }
                 self.spinner.stopAnimating()
                 self.toastView.hidden = true
                 
@@ -377,6 +380,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
      func changeFilter(filterType:SortFilterType){
         self.filterType = filterType
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
+        transactionsTable.reloadData()
+        blackView?.removeFromSuperview()
+    }
+    
+    func changeTransactionType(type: TransactionType) {
+        charlieGroupListFiltered = groupBy(type, sortFilter: self.filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
         blackView?.removeFromSuperview()
     }
@@ -533,8 +542,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         else if type == .ApprovedTransaction {
             return charlieGroupList.filter({$0.worthValue > 0})
         }
+        else if type == .ApprovedAndFlaggedTransaction {
+            return charlieGroupList.filter( { (trans) in trans.worthValue > 0 || trans.notWorthValue > 0 } )
+        }
         else {
-            return charlieGroupList.filter({$0.notWorthValue > 0})
+            return charlieGroupList.filter({$0.worthValue > 0})
         }
     }
 }
@@ -687,28 +699,15 @@ extension mainViewController : UIViewControllerPreviewingDelegate {
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
         // Get indexPath for location (CGPoint) + cell (for sourceRect)
-        guard let indexPath = transactionsTable.indexPathForRowAtPoint(location),
-            cell = transactionsTable.cellForRowAtIndexPath(indexPath) else { return nil }
+        guard let indexPath = transactionsTable.indexPathForRowAtPoint(location) else { return nil }
         
-        // Instantiate VC with Identifier (Storyboard ID)
-//        guard let previewViewController = storyboard?.instantiateViewControllerWithIdentifier(storyboardPreviewID) as? DetailsViewController else { return nil }
+        guard let showTransactionViewController = storyboard?.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else { return nil }
         
-        // Pass datas to the previewing context
-//        let previewItem = DataSetted[indexPath.row]
+        showTransactionViewController.transactionID = transactionItems[indexPath.row]._id
+        showTransactionViewController.sourceVC = "main"
+
         
-//        previewViewController.detailTitle = previewItem.title
-//        previewViewController.detailAnnotation = previewItem.annotation
-//        previewViewController.detailLatitude = previewItem.latitude
-//        previewViewController.detailLongitude = previewItem.longitude
-//        
-//        // Preferred Content Size for Preview (CGSize)
-//        previewViewController.preferredContentSize = CGSize(width: 0.0, height: previewItem.currentHeight)
-//        
-//        // Current context Source.
-//        previewingContext.sourceRect = cell.frame
-//        
-//        return previewViewController
-        return nil
+        return showTransactionViewController
     }
     
     /// Called to let you prepare the presentation of a commit (Pop).

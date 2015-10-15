@@ -54,6 +54,27 @@ class SortViewController : UIViewController {
         self.delegate?.changeFilter(.FilterByAmount)
     }
     
+    @IBAction func allPressed(sender: AnyObject) {
+        self.allButtonsGrayExcept(1)
+        leastRecentButton.titleLabel?.textColor = listBlue
+        self.closePressed(self.leastRecentButton)
+        self.delegate?.changeTransactionType(.FlaggedTransaction)
+    }
+    
+    @IBAction func worthPressed(sender: AnyObject) {
+        self.allButtonsGrayExcept(1)
+        leastRecentButton.titleLabel?.textColor = listBlue
+        self.closePressed(self.leastRecentButton)
+        self.delegate?.changeTransactionType(.ApprovedTransaction)
+    }
+    
+    @IBAction func notWorthPressed(sender: AnyObject) {
+        self.allButtonsGrayExcept(1)
+        leastRecentButton.titleLabel?.textColor = listBlue
+        self.closePressed(self.leastRecentButton)
+        self.delegate?.changeTransactionType(.FlaggedTransaction)
+    }
+    
     private func allButtonsGrayExcept(buttonIndex: Int) {
 //        if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
 //        if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}
@@ -65,7 +86,7 @@ class SortViewController : UIViewController {
         self.willMoveToParentViewController(nil)
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.view.frame = CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)
-            self.delegate?.changeFilter(self.initialFilterType!)
+//            self.delegate?.changeFilter(self.initialFilterType!)
         })
         { (success) -> Void in
             self.view.removeFromSuperview()
