@@ -18,8 +18,9 @@ class SortViewController : UIViewController {
     var delegate:ChangeFilterProtocol? = nil
     var initialFilterType : SortFilterType? = nil
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if self.initialFilterType == .FilterByName { self.mostRecentButton.titleLabel?.textColor = listBlue }
         else if self.initialFilterType == .FilterByDescendingDate { self.leastRecentButton.titleLabel?.textColor = listBlue }
         else if self.initialFilterType == .FilterByDate {self.alphabeticalButton.titleLabel?.textColor = listBlue}
@@ -58,7 +59,7 @@ class SortViewController : UIViewController {
         self.allButtonsGrayExcept(1)
         leastRecentButton.titleLabel?.textColor = listBlue
         self.closePressed(self.leastRecentButton)
-        self.delegate?.changeTransactionType(.FlaggedTransaction)
+        self.delegate?.changeTransactionType(.ApprovedAndFlaggedTransaction)
     }
     
     @IBAction func worthPressed(sender: AnyObject) {
