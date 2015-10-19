@@ -277,8 +277,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="type your email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y04-TI-2q8">
-                                <rect key="frame" x="40" y="167" width="520" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="type your email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y04-TI-2q8">
+                                <rect key="frame" x="40" y="167" width="520" height="29"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="21"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
@@ -741,29 +741,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4QY-YB-o90">
-                                                    <rect key="frame" x="8" y="27" width="452" height="16"/>
+                                                    <rect key="frame" x="8" y="27" width="392" height="16"/>
                                                     <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="Mej-ss-JQX"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="Mej-ss-JQX"/>
-                                                        </mask>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="512" y="27" width="70" height="20.5"/>
+                                                    <rect key="frame" x="452" y="23.5" width="130" height="27.5"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="3mS-5n-vnb"/>
+                                                        <constraint firstAttribute="width" constant="130" id="3mS-5n-vnb"/>
                                                         <constraint firstAttribute="width" constant="38" id="FiU-sn-dQT"/>
                                                         <constraint firstAttribute="width" constant="118" id="V9d-2M-3lF"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
@@ -786,41 +778,11 @@
                                                 <constraint firstItem="SHf-3p-UR2" firstAttribute="top" secondItem="4QY-YB-o90" secondAttribute="bottom" id="3a5-kw-8gZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="foL-uF-Avr" secondAttribute="trailing" constant="18" id="3nW-yU-wSM"/>
                                                 <constraint firstItem="4QY-YB-o90" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" id="7Ar-HP-nlT"/>
-                                                <constraint firstItem="4QY-YB-o90" firstAttribute="top" secondItem="Sos-O0-Ckg" secondAttribute="topMargin" constant="12" id="7dh-fQ-Sfj"/>
-                                                <constraint firstItem="foL-uF-Avr" firstAttribute="leading" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="25" id="8Qg-0M-9eQ"/>
                                                 <constraint firstAttribute="centerY" secondItem="foL-uF-Avr" secondAttribute="centerY" constant="-1" id="AO2-02-PQx"/>
-                                                <constraint firstItem="4QY-YB-o90" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" constant="33" id="CLq-Fj-Ez8"/>
-                                                <constraint firstItem="foL-uF-Avr" firstAttribute="leading" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="40" id="HO3-Px-U0R"/>
-                                                <constraint firstItem="foL-uF-Avr" firstAttribute="top" secondItem="4QY-YB-o90" secondAttribute="bottom" constant="-17" id="KOW-LS-QlL"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="91" id="O3A-jW-fiN"/>
-                                                <constraint firstItem="SHf-3p-UR2" firstAttribute="top" secondItem="4QY-YB-o90" secondAttribute="bottom" id="PmO-iW-Khh"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="foL-uF-Avr" secondAttribute="trailing" constant="9" id="X3K-5S-jKz"/>
-                                                <constraint firstItem="SHf-3p-UR2" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" constant="43" id="XLa-6D-2io"/>
                                                 <constraint firstItem="4QY-YB-o90" firstAttribute="top" secondItem="Sos-O0-Ckg" secondAttribute="topMargin" constant="19" id="afl-xK-Bzw"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="foL-uF-Avr" secondAttribute="trailing" constant="9" id="b4E-WT-k50"/>
-                                                <constraint firstItem="4QY-YB-o90" firstAttribute="top" secondItem="Sos-O0-Ckg" secondAttribute="topMargin" constant="11" id="bpT-H2-yCw"/>
-                                                <constraint firstItem="foL-uF-Avr" firstAttribute="leading" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="10" id="eVa-CA-sVq"/>
                                                 <constraint firstItem="foL-uF-Avr" firstAttribute="leading" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="52" id="foO-Jd-T4c"/>
                                                 <constraint firstItem="SHf-3p-UR2" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" id="khd-DW-Qxe"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="SHf-3p-UR2" secondAttribute="bottom" constant="7" id="xxd-gw-GYy"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="7dh-fQ-Sfj"/>
-                                                    <exclude reference="CLq-Fj-Ez8"/>
-                                                    <exclude reference="O3A-jW-fiN"/>
-                                                    <exclude reference="bpT-H2-yCw"/>
-                                                    <exclude reference="PmO-iW-Khh"/>
-                                                    <exclude reference="XLa-6D-2io"/>
-                                                    <exclude reference="xxd-gw-GYy"/>
-                                                    <exclude reference="8Qg-0M-9eQ"/>
-                                                    <exclude reference="HO3-Px-U0R"/>
-                                                    <exclude reference="KOW-LS-QlL"/>
-                                                    <exclude reference="X3K-5S-jKz"/>
-                                                    <exclude reference="b4E-WT-k50"/>
-                                                    <exclude reference="eVa-CA-sVq"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>

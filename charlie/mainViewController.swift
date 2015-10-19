@@ -385,6 +385,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     func changeTransactionType(type: TransactionType) {
+        inboxType = type
         charlieGroupListFiltered = groupBy(type, sortFilter: self.filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
         blackView?.removeFromSuperview()
@@ -478,7 +479,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .FlaggedTransaction
         dividerView.backgroundColor = listRed
-        moneyCountSubSubHeadLabel.text = "Not Worth it!"
+        moneyCountSubSubHeadLabel.text = "Archive"
         moneyCountSubSubHeadLabel.textColor = listRed
         
         topSeperator.backgroundColor = listRed
