@@ -61,17 +61,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewCell!
-    let checkImage = UIImage(named: "happy_on")
-    let flagImage = UIImage(named: "sad_on")
     
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
-    let users = realm.objects(User)
     let accounts = realm.objects(Account)
     var timer = NSTimer()
     var timerCount:Int = 0
-    var DynamicView = UIView(frame: UIScreen.mainScreen().bounds)
-    var pinApproved = false
     var filterType : SortFilterType! = .FilterByName
     var inboxType : TransactionType! = .ApprovedAndFlaggedTransaction
     var blackView : UIView?
@@ -81,7 +76,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             presentViewController(resultController, animated: false, completion: { () -> Void in
-                self.pinApproved = true
                 self.cHelp.removeSpashImageView(self.view)
             })
         }
@@ -239,7 +233,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
     }
     
- 
     func showReward() {
         let rewardVC = RewardViewController()
         self.addChildViewController(rewardVC)
@@ -248,7 +241,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
         rewardView.hidden = false
     }
-    
     
     func setPredicates(hasAccounts:Bool) {
         if hasAccounts {
@@ -276,7 +268,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     func hideReward() {
         rewardView.hidden = true
     }
-    
     
     func updateTrans() -> Void {
         print("looking for records")
@@ -567,8 +558,8 @@ extension mainViewController : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         cell.nameCellLabel.text = transactionItems[indexPath.row].name
         if (inboxType == .InboxTransaction) {
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happy_on")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sad_on")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             
             cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
             cell.amountCellLabel.textColor = listBlue

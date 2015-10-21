@@ -1749,21 +1749,21 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71d-0f-Vcl">
-                                <rect key="frame" x="20" y="247.5" width="34" height="17.5"/>
+                                <rect key="frame" x="20" y="251.5" width="34" height="17.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
                                 <color key="textColor" red="0.46274509803921571" green="0.46274509803921571" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzS-dt-C0f">
-                                <rect key="frame" x="522.5" y="247.5" width="57.5" height="17.5"/>
+                                <rect key="frame" x="522.5" y="251.5" width="57.5" height="17.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
                                 <color key="textColor" red="0.46274509800000002" green="0.46274509800000002" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D66-Ny-b9O">
-                                <rect key="frame" x="20" y="275" width="560" height="1"/>
+                                <rect key="frame" x="20" y="279" width="560" height="1"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -1830,7 +1830,7 @@
                             <constraint firstItem="OOw-EN-0XC" firstAttribute="leading" secondItem="Z1Z-fc-5e0" secondAttribute="leading" id="V9C-hN-DO4"/>
                             <constraint firstItem="Fz0-S7-Riw" firstAttribute="top" secondItem="OOw-EN-0XC" secondAttribute="bottom" constant="40" id="cft-bi-5bI"/>
                             <constraint firstItem="Fz0-S7-Riw" firstAttribute="leading" secondItem="Z1Z-fc-5e0" secondAttribute="leading" id="lQx-1h-m12"/>
-                            <constraint firstItem="Fz0-S7-Riw" firstAttribute="top" secondItem="71d-0f-Vcl" secondAttribute="bottom" constant="15" id="mzd-PZ-qYF"/>
+                            <constraint firstItem="Fz0-S7-Riw" firstAttribute="top" secondItem="71d-0f-Vcl" secondAttribute="bottom" constant="11" id="mzd-PZ-qYF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LzS-dt-C0f" secondAttribute="trailing" id="on3-FR-WDd"/>
                             <constraint firstItem="LzS-dt-C0f" firstAttribute="centerY" secondItem="71d-0f-Vcl" secondAttribute="centerY" id="t72-sh-bD6"/>
                             <constraint firstItem="OOw-EN-0XC" firstAttribute="top" secondItem="Z1Z-fc-5e0" secondAttribute="top" id="wkN-oA-7Nb"/>
