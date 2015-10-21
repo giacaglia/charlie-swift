@@ -109,44 +109,17 @@
                         <constraint firstAttribute="width" constant="240" id="SYN-4f-BQ2"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utJ-Y6-Pht">
-                    <rect key="frame" x="285" y="102" width="30" height="30"/>
-                    <animations/>
-                    <state key="normal" title="All"/>
-                    <connections>
-                        <action selector="allPressed:" destination="-1" eventType="touchUpInside" id="mrH-eG-TXs"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dp1-g8-NIe">
-                    <rect key="frame" x="154" y="102" width="69" height="30"/>
-                    <animations/>
-                    <state key="normal" title="Not worth"/>
-                    <connections>
-                        <action selector="notWorthPressed:" destination="-1" eventType="touchUpInside" id="sxU-B9-xar"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayp-qJ-OVf">
-                    <rect key="frame" x="376" y="102" width="42" height="30"/>
-                    <animations/>
-                    <state key="normal" title="Worth"/>
-                    <connections>
-                        <action selector="worthPressed:" destination="-1" eventType="touchUpInside" id="50q-Kr-PrF"/>
-                    </connections>
-                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gbS-1S-QeL" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="23h-Bc-9fO"/>
                 <constraint firstItem="HEo-86-vcf" firstAttribute="top" secondItem="0RJ-xC-Iv6" secondAttribute="bottom" constant="54.5" id="35e-ix-KPn"/>
-                <constraint firstItem="utJ-Y6-Pht" firstAttribute="top" secondItem="0RJ-xC-Iv6" secondAttribute="bottom" constant="1.5" id="6Xl-Pz-sfz"/>
                 <constraint firstItem="tbJ-wC-ivL" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="25" id="7BI-TR-Qm8"/>
-                <constraint firstItem="ayp-qJ-OVf" firstAttribute="centerY" secondItem="utJ-Y6-Pht" secondAttribute="centerY" id="8Ic-WM-aWw"/>
                 <constraint firstItem="9rg-RK-YqT" firstAttribute="leading" secondItem="h0a-0Z-2hc" secondAttribute="leading" id="BgY-V3-pgD"/>
                 <constraint firstItem="0RJ-xC-Iv6" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="73" id="IAN-8p-2VZ"/>
                 <constraint firstItem="HEo-86-vcf" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="KCe-9i-Axe"/>
                 <constraint firstAttribute="trailing" secondItem="tbJ-wC-ivL" secondAttribute="trailing" constant="15" id="Ohw-WJ-9Pg"/>
-                <constraint firstItem="utJ-Y6-Pht" firstAttribute="leading" secondItem="Dp1-g8-NIe" secondAttribute="trailing" constant="62" id="SGB-hc-Jxj"/>
                 <constraint firstItem="vsN-Pj-ZnK" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="SL7-9z-RNs"/>
                 <constraint firstItem="0RJ-xC-Iv6" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="Xvh-jU-gk0"/>
                 <constraint firstItem="vsN-Pj-ZnK" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="29" id="YHf-2F-5MJ"/>
@@ -155,18 +128,15 @@
                 <constraint firstItem="gbS-1S-QeL" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="31" id="gZW-mZ-CvC"/>
                 <constraint firstItem="9rg-RK-YqT" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="8" symbolic="YES" id="gl1-vh-FcI"/>
                 <constraint firstItem="3ck-R6-7Ql" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="goH-vS-ssU"/>
-                <constraint firstItem="utJ-Y6-Pht" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="l0L-0n-ZGe"/>
-                <constraint firstItem="ayp-qJ-OVf" firstAttribute="leading" secondItem="utJ-Y6-Pht" secondAttribute="trailing" constant="61" id="lhZ-8b-j09"/>
                 <constraint firstItem="djJ-Wl-1dr" firstAttribute="top" secondItem="HEo-86-vcf" secondAttribute="bottom" constant="37" id="m5U-rN-pSn"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="8" id="pu8-QV-AZZ"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="268" id="sOJ-rA-Gup"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="leading" secondItem="3ck-R6-7Ql" secondAttribute="leading" id="vZc-y0-coc"/>
-                <constraint firstItem="Dp1-g8-NIe" firstAttribute="centerY" secondItem="utJ-Y6-Pht" secondAttribute="centerY" id="zdb-pv-CCa"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="8" symbolic="YES" id="zpJ-va-mMT"/>
             </constraints>
         </view>
     </objects>
     <resources>
-        <image name="close" width="24" height="24"/>
+        <image name="close" width="23" height="22"/>
     </resources>
 </document>

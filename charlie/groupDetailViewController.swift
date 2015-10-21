@@ -191,13 +191,8 @@ extension groupDetailViewController {
         let currencyString = cHelp.formatCurrency(trans.amount)
         cell.transactionDate.text = dateString
         cell.transactionAmount.text = currencyString
-        if trans.status == 2 {
-            cell.transactionAmount.textColor = listRed
-        }
-        else {
-            cell.transactionAmount.textColor = listGreen
-        }
-        
+        if trans.status == 2 { cell.transactionAmount.textColor = listRed }
+        else { cell.transactionAmount.textColor = listGreen }
         return cell
     }
     

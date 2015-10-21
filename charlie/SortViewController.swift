@@ -54,28 +54,7 @@ class SortViewController : UIViewController {
         self.closePressed(self.amountButton)
         self.delegate?.changeFilter(.FilterByAmount)
     }
-    
-    @IBAction func allPressed(sender: AnyObject) {
-        self.allButtonsGrayExcept(1)
-        leastRecentButton.titleLabel?.textColor = listBlue
-        self.closePressed(self.leastRecentButton)
-        self.delegate?.changeTransactionType(.ApprovedAndFlaggedTransaction)
-    }
-    
-    @IBAction func worthPressed(sender: AnyObject) {
-        self.allButtonsGrayExcept(1)
-        leastRecentButton.titleLabel?.textColor = listBlue
-        self.closePressed(self.leastRecentButton)
-        self.delegate?.changeTransactionType(.ApprovedTransaction)
-    }
-    
-    @IBAction func notWorthPressed(sender: AnyObject) {
-        self.allButtonsGrayExcept(1)
-        leastRecentButton.titleLabel?.textColor = listBlue
-        self.closePressed(self.leastRecentButton)
-        self.delegate?.changeTransactionType(.FlaggedTransaction)
-    }
-    
+      
     private func allButtonsGrayExcept(buttonIndex: Int) {
 //        if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
 //        if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}

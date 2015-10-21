@@ -28,7 +28,7 @@ var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
-    case FlaggedTransaction, ApprovedTransaction, ApprovedAndFlaggedTransaction, InboxTransaction
+    case ApprovedAndFlaggedTransaction, InboxTransaction
 }
 
 enum SortFilterType {
@@ -73,7 +73,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var DynamicView = UIView(frame: UIScreen.mainScreen().bounds)
     var pinApproved = false
     var filterType : SortFilterType! = .FilterByName
-    var inboxType : TransactionType! = .FlaggedTransaction
+    var inboxType : TransactionType! = .ApprovedAndFlaggedTransaction
     var blackView : UIView?
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
@@ -180,7 +180,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         self.inboxType = .InboxTransaction //set inbox to default
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if self.inboxType == .InboxTransaction || self.inboxType == .FlaggedTransaction {
+            if self.inboxType == .ApprovedAndFlaggedTransaction {
                 if defaults.stringForKey("firstSwipeRight") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
@@ -204,7 +204,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if  self.inboxType == .InboxTransaction || self.inboxType == .ApprovedTransaction{
+            if  self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeLeft") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
@@ -323,14 +323,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         else if (segue.identifier == "groupDetail") {
             let indexPath = self.transactionsTable.indexPathForSelectedRow
             let viewController = segue.destinationViewController as! groupDetailViewController
-            
-            if inboxType == .FlaggedTransaction {
-                viewController.comingFromSad = true
-            }
-            else if inboxType == .ApprovedTransaction {
-                viewController.comingFromSad = false
-            }
-            
             viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
         }
     }
@@ -372,27 +364,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.reloadData()
         blackView?.removeFromSuperview()
     }
-    
-    // TODO: Clear approved
-    @IBAction func approvedListButtonress(sender: UIButton) {
-        charlieAnalytics.track("Worth It Button")
-        transactionsTable.backgroundColor = UIColor.clearColor();
-        self.view.backgroundColor = lightGreen
-        hideReward()
-        
-        transactionItems = realm.objects(Transaction).filter(approvedPredicate).sorted("name", ascending: true)
-        
-        self.inboxType = .ApprovedTransaction
-        dividerView.backgroundColor = listGreen
-        
-        topSeperator.backgroundColor = listGreen
-        moneyCountSubSubHeadLabel.text = "Worth"
-        moneyCountSubSubHeadLabel.textColor = listGreen
-        
-        inboxType = .ApprovedTransaction
-        charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
-        transactionsTable.reloadData()
-    }
+
     
     func makeOnlyFirstNElementsVisible() {
         areThereMoreItemsToLoad = false
@@ -442,7 +414,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
-        moneyCountSubSubHeadLabel.textColor = listBlue
 
         topSeperator.backgroundColor = listBlue
 
@@ -458,9 +429,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         
-        inboxType = .FlaggedTransaction
         moneyCountSubSubHeadLabel.text = "My Results"
-        
         inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
@@ -514,13 +483,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             current_name = trans.name
         }
         
-        if type == .FlaggedTransaction {
-            return charlieGroupList.filter({$0.notWorthValue > 0})
-        }
-        else if type == .ApprovedTransaction {
-            return charlieGroupList.filter({$0.worthValue > 0})
-        }
-        else if type == .ApprovedAndFlaggedTransaction {
+        if type == .ApprovedAndFlaggedTransaction {
             return charlieGroupList.filter( { (trans) in trans.worthValue > 0 || trans.notWorthValue > 0 } )
         }
         else {
@@ -566,23 +529,19 @@ extension mainViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction {
-            return charlieGroupListFiltered.count
+       
+        if transactionItems.count > 0 {
+            transactionsTable.hidden = false
+            addAccountButton.hidden = true
+            accountAddView.hidden = true
         }
-        else {
-            if transactionItems.count > 0 {
-                transactionsTable.hidden = false
-                addAccountButton.hidden = true
-                accountAddView.hidden = true
-            }
-            return transactionItems.count + Int(areThereMoreItemsToLoad)
-        }
+        return transactionItems.count + Int(areThereMoreItemsToLoad)
+        
     }
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction ||
-        inboxType == .ApprovedAndFlaggedTransaction {
+        if inboxType == .ApprovedAndFlaggedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
@@ -632,7 +591,6 @@ extension mainViewController : UITableViewDataSource {
             cell.smallAmountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
         }
        
-        
         return cell
     }
 }
