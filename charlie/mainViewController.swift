@@ -28,7 +28,7 @@ var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
 
 enum TransactionType {
-    case FlaggedTransaction, ApprovedTransaction, ApprovedAndFlaggedTransaction,InboxTransaction
+    case FlaggedTransaction, ApprovedTransaction, ApprovedAndFlaggedTransaction, InboxTransaction
 }
 
 enum SortFilterType {
@@ -405,6 +405,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         topSeperator.backgroundColor = listGreen
         moneyCountSubSubHeadLabel.text = "Worth"
+        moneyCountSubSubHeadLabel.font = UIFont(name: "Montserrat-Bold", size: 30.0)
         moneyCountSubSubHeadLabel.textColor = listGreen
         
         inboxType = .ApprovedTransaction
@@ -471,20 +472,16 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
-        self.view.backgroundColor = lightRed
         transactionsTable.backgroundColor = UIColor.clearColor();
         hideReward()
         
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         
         inboxType = .FlaggedTransaction
-        dividerView.backgroundColor = listRed
-        moneyCountSubSubHeadLabel.text = "Archive"
-        moneyCountSubSubHeadLabel.textColor = listRed
+        moneyCountSubSubHeadLabel.text = "My Results"
+        moneyCountSubSubHeadLabel.font = UIFont(name: "Montserrat-Bold", size: 22.0)
         
-        topSeperator.backgroundColor = listRed
-        
-        inboxType = .FlaggedTransaction
+        inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
@@ -604,7 +601,8 @@ extension mainViewController : UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction {
+        if inboxType == .FlaggedTransaction || inboxType == .ApprovedTransaction ||
+        inboxType == .ApprovedAndFlaggedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }
         else {
@@ -626,52 +624,59 @@ extension mainViewController : UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier("addMoreCell", forIndexPath: indexPath)  as! AddMoreCell
             return cell
         }
-
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         
-        if inboxType == .FlaggedTransaction {
-            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].notWorthValue)
-            cell.amountCellLabel.textColor = listRed
-            if charlieGroupListFiltered[indexPath.row].notWorthCount == 1 {
-                 cell.dateCellLabel.text = "1 transaction"
-            }
-            else {
-                cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].notWorthCount) transactions"
-            }
-            
-            cell.firstLeftAction = nil
-            cell.firstRightAction = nil
-        }
-        else if inboxType == .ApprovedTransaction {
-            cell.nameCellLabel.text = charlieGroupListFiltered[indexPath.row].name
-            cell.amountCellLabel.text = cHelp.formatCurrency(charlieGroupListFiltered[indexPath.row].worthValue)
-            cell.amountCellLabel.textColor = listGreen
-            if charlieGroupListFiltered[indexPath.row].worthCount == 1 {
-                cell.dateCellLabel.text = "1 transaction"
-            }
-            else {
-                cell.dateCellLabel.text = "\(charlieGroupListFiltered[indexPath.row].worthValue) transactions"
-            }
-            cell.firstLeftAction = nil
-            cell.firstRightAction = nil
-        }
-        else {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
+        cell.nameCellLabel.text = transactionItems[indexPath.row].name
+        if (inboxType == .InboxTransaction) {
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-            cell.nameCellLabel.text = transactionItems[indexPath.row].name
+            
             cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
             cell.amountCellLabel.textColor = listBlue
+            cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
+
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
             let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
             cell.dateCellLabel.text = dateString
+            cell.smallAmountCellLabel.hidden = true
         }
+        else if (inboxType == .ApprovedAndFlaggedTransaction){
+            cell.dateCellLabel.text = "39 transactions"
+            cell.amountCellLabel.textColor = listGreen
+            cell.amountCellLabel.font = UIFont.systemFontOfSize(14.0)
+            cell.amountCellLabel.text = "30%"
+            cell.smallAmountCellLabel.font = UIFont.systemFontOfSize(12.0)
+            cell.smallAmountCellLabel.textColor = mediumGray
+            cell.smallAmountCellLabel.hidden = false
+            cell.smallAmountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
+        }
+       
         
         return cell
     }
 }
 
+
+class HeaderCell : UIView {
+    static func cellIdentifier() -> String {
+        return "header-cell"
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    private func setup() {
+        self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+    }
+}
 
 class AddMoreCell : UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -684,7 +689,7 @@ class AddMoreCell : UITableViewCell {
         self.setup()
     }
     
-    func setup() {
+    private func setup() {
         self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
         let centralSetup = UILabel(frame: CGRectMake(0, 0, 100, 30))
         centralSetup.textAlignment = .Center

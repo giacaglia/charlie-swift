@@ -748,7 +748,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="foL-uF-Avr" userLabel="Amount">
-                                                    <rect key="frame" x="452" y="23.5" width="130" height="27.5"/>
+                                                    <rect key="frame" x="452" y="18" width="130" height="27.5"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="130" id="3mS-5n-vnb"/>
@@ -772,15 +772,24 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBt-xV-iU4">
+                                                    <rect key="frame" x="540" y="45.5" width="42" height="20.5"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="SHf-3p-UR2" firstAttribute="top" secondItem="4QY-YB-o90" secondAttribute="bottom" id="3a5-kw-8gZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="foL-uF-Avr" secondAttribute="trailing" constant="18" id="3nW-yU-wSM"/>
                                                 <constraint firstItem="4QY-YB-o90" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" id="7Ar-HP-nlT"/>
-                                                <constraint firstAttribute="centerY" secondItem="foL-uF-Avr" secondAttribute="centerY" constant="-1" id="AO2-02-PQx"/>
+                                                <constraint firstAttribute="centerY" secondItem="foL-uF-Avr" secondAttribute="centerY" constant="5" id="AO2-02-PQx"/>
+                                                <constraint firstItem="OBt-xV-iU4" firstAttribute="trailing" secondItem="foL-uF-Avr" secondAttribute="trailing" id="YeV-65-9lf"/>
                                                 <constraint firstItem="4QY-YB-o90" firstAttribute="top" secondItem="Sos-O0-Ckg" secondAttribute="topMargin" constant="19" id="afl-xK-Bzw"/>
                                                 <constraint firstItem="foL-uF-Avr" firstAttribute="leading" secondItem="4QY-YB-o90" secondAttribute="trailing" constant="52" id="foO-Jd-T4c"/>
+                                                <constraint firstItem="OBt-xV-iU4" firstAttribute="top" secondItem="foL-uF-Avr" secondAttribute="bottom" id="hah-rn-21j"/>
                                                 <constraint firstItem="SHf-3p-UR2" firstAttribute="leading" secondItem="Sos-O0-Ckg" secondAttribute="leadingMargin" id="khd-DW-Qxe"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -789,6 +798,7 @@
                                             <outlet property="amountCellLabel" destination="foL-uF-Avr" id="fmW-Tj-N9O"/>
                                             <outlet property="dateCellLabel" destination="SHf-3p-UR2" id="7X3-Vh-uXx"/>
                                             <outlet property="nameCellLabel" destination="4QY-YB-o90" id="RQR-9Q-yvn"/>
+                                            <outlet property="smallAmountCellLabel" destination="OBt-xV-iU4" id="B3C-Dt-sG0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1870,8 +1880,8 @@
         <image name="second_btn" width="42" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="swt-fH-1dv"/>
         <segue reference="MIk-q3-hAj"/>
         <segue reference="DF7-7D-dxJ"/>
+        <segue reference="swt-fH-1dv"/>
     </inferredMetricsTieBreakers>
 </document>

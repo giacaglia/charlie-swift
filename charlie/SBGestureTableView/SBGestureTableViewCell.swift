@@ -75,10 +75,7 @@ class SBGestureTableViewCell: UITableViewCell {
     @IBOutlet weak var nameCellLabel: UILabel!
     @IBOutlet weak var amountCellLabel: UILabel!
     @IBOutlet weak var dateCellLabel: UILabel!
-   
-   
-
-    
+    @IBOutlet weak var smallAmountCellLabel: UILabel!
   
     
     func setup() {
