@@ -160,8 +160,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 spinner.startAnimating()
                 print("DAYS \(dateToSychTo)")
                 cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
-                    self.view.backgroundColor = lightBlue
-                    self.transactionsTable.backgroundColor = UIColor.clearColor()
                     self.transactionsTable.reloadData()
                     self.spinner.stopAnimating()
                     if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
@@ -231,6 +229,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         else {
             inboxListButton.setTitle("", forState: .Normal)
         }
+        self.view.backgroundColor = lightBlue
+        transactionsTable.backgroundColor = UIColor.clearColor()
     }
     
     func showReward() {
@@ -301,7 +301,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
         else if (segue.identifier == "showTypePicker") {
             let viewController = segue.destinationViewController as! showTypePickerViewController
-            //let indexPath = self.transactionsTable.indexPathForSelectedRow()
             viewController.transactionID = currentTransactionSwipeID
             viewController.transactionCell = currentTransactionCell
             viewController.mainVC = self
@@ -379,7 +378,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
         self.view.backgroundColor = lightBlue
-        transactionsTable.backgroundColor = UIColor.clearColor()
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         
         if transactionItems.count == 0 && allTransactionItems.count > 0 {
@@ -585,7 +583,7 @@ extension mainViewController : UITableViewDataSource {
             }
             cell.amountCellLabel.font = UIFont.systemFontOfSize(14.0)
             cell.amountCellLabel.text = "\(charlieGroup.happyPercentage)%"
-            cell.smallAmountCellLabel.text = "$\(charlieGroup.worthValue + charlieGroup.notWorthValue)"
+            cell.smallAmountCellLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue))"
             cell.smallAmountCellLabel.font = UIFont.systemFontOfSize(12.0)
             cell.smallAmountCellLabel.textColor = mediumGray
             cell.smallAmountCellLabel.hidden = false
