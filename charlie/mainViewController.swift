@@ -64,24 +64,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     let checkImage = UIImage(named: "happy_on")
     let flagImage = UIImage(named: "sad_on")
     
-    let inboxUnSelectedSadButtonImage = UIImage(named: "neutral_off_red")
-    let inboxUnSelectedHappyButtonImage = UIImage(named: "neutral_off_green")
-    
-    let inboxSelectedButtonImage = UIImage(named: "neutral_on")
-    let flagUnSelectedHappyButtonImage = UIImage(named: "sad_off_green")
-    let flagUnSelectedInboxButtonImage = UIImage(named: "sad_off_blue")
-    let flagSelectedButtonImage = UIImage(named: "sad_on")
-    let approvedUnSelectedInboxButtonImage = UIImage(named: "happy_off_blue")
-    let approvedUnSelectedSadButtonImage = UIImage(named: "happy_off_red")
-    let approvedSelectedButtonImage = UIImage(named: "happy_on")
-    let menuButtonBlueImage = UIImage(named: "btn-menu-blue.png")
-    let menuButtonGreenImage = UIImage(named: "btn-menu-green.png")
-    let menuButtonRedImage = UIImage(named: "btn-menu-red.png")
-    
-    let cardButtonBlueImage = UIImage(named: "btn-card-blue.png")
-    let cardButtonGreenImage = UIImage(named: "btn-card-green.png")
-    let cardButtonRedImage = UIImage(named: "btn-card-red.png")
-    
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     let users = realm.objects(User)
@@ -405,7 +387,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         topSeperator.backgroundColor = listGreen
         moneyCountSubSubHeadLabel.text = "Worth"
-        moneyCountSubSubHeadLabel.font = UIFont(name: "Montserrat-Bold", size: 30.0)
         moneyCountSubSubHeadLabel.textColor = listGreen
         
         inboxType = .ApprovedTransaction
@@ -479,7 +460,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .FlaggedTransaction
         moneyCountSubSubHeadLabel.text = "My Results"
-        moneyCountSubSubHeadLabel.font = UIFont(name: "Montserrat-Bold", size: 22.0)
         
         inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]

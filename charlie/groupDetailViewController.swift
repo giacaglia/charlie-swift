@@ -10,8 +10,6 @@ import UIKit
 
 class groupDetailViewController: UIViewController, UITableViewDataSource {
     
-    @IBOutlet weak var sadButton: UIButton!
-    @IBOutlet weak var happyButton: UIButton!
     @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!
@@ -20,7 +18,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     var transactionName:String = ""
     var transactionItems = realm.objects(Transaction)
     var happyItems = realm.objects(Transaction)
-    var sadItems = realm.objects(Transaction)
     var comingFromSad = false
     
     var happyAmount = 0.0
@@ -33,11 +30,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     
     var removeCellBlockLeft: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
-   
-    enum TypeOfTable {
-        case NotWorthTable, WorthTable
-    }
-    var stateOfTable : TypeOfTable! = .NotWorthTable
+
    
     
     override func viewDidLoad() {
@@ -47,13 +40,13 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         groupTableView.tableFooterView = UIView();
+        groupTableView.separatorStyle = .None
         self.name.text = transactionName
         let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
         
-        happyItems = transactionItems.filter("status = 1").sorted("date", ascending: true)
-        sadItems = transactionItems.filter("status = 2").sorted("date", ascending: true)
+        happyItems = transactionItems.sorted("date", ascending: true)
         
         if transactionItems.count == 1 {
             self.transactionCount.text = "\(transactionItems.count) transaction"
@@ -61,41 +54,33 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         else {
             self.transactionCount.text = "\(transactionItems.count) transactions"
         }
-        self.happyPercentage.text = "\(calculateHappy())%"
-        
-        sadAmount = sadItems.sum("amount")
-        happyAmount = happyItems.sum("amount")
-        
-        removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            if self.stateOfTable == .WorthTable {
-                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-            }
-            else {
-                self.finishSwipe(tableView, cell: cell, direction: 1)
-            }
-        }
-        
-        removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-            if self.stateOfTable == .NotWorthTable {
-                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-            }
-            else {
-                self.finishSwipe(tableView, cell: cell, direction: 2)
-            }
-        }
-        
-        if comingFromSad {
-            stateOfTable = .NotWorthTable
-            
-            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
-            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
+        let happyPercentage = calculateHappy()
+        if (happyPercentage >= 50) {
+            self.happyPercentage.textColor = listGreen
         }
         else {
-            stateOfTable = .WorthTable
-            
-            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
-            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
+            self.happyPercentage.textColor = listRed
         }
+        self.happyPercentage.text = "\(happyPercentage)%"
+        
+        happyAmount = happyItems.sum("amount")
+//        removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
+//            if self.stateOfTable == .WorthTable {
+//                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+//            }
+//            else {
+//                self.finishSwipe(tableView, cell: cell, direction: 1)
+//            }
+//        }
+//        
+//        removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
+//            if self.stateOfTable == .NotWorthTable {
+//                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
+//            }
+//            else {
+//                self.finishSwipe(tableView, cell: cell, direction: 2)
+//            }
+//        }
     }
     
     func willEnterForeground(notification: NSNotification!) {
@@ -116,32 +101,14 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         currentTransactionCell = cell
         print("Direction \(direction)")
         
-        if stateOfTable == .WorthTable {
-            currentTransactionSwipeID = happyItems[indexPath!.row]._id
-            realm.beginWrite()
-            happyItems[indexPath!.row].status = direction
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-            try! realm.commitWrite()
-            
-            sadAmount = sadItems.sum("amount")
-            happyAmount = happyItems.sum("amount")
-            
-            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT" , button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
-            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(), textColor2: UIColor.whiteColor())
-        }
-        else {
-            currentTransactionSwipeID = sadItems[indexPath!.row]._id
-            realm.beginWrite()
-            sadItems[indexPath!.row].status = direction
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-            try! realm.commitWrite()
-            
-            sadAmount = sadItems.sum("amount")
-            happyAmount = happyItems.sum("amount")
-            
-            setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
-            setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
-        }
+        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+        realm.beginWrite()
+        transactionItems[indexPath!.row].status = direction
+        tableView.removeCell(cell, duration: 0.3, completion: nil)
+        try! realm.commitWrite()
+        
+        happyAmount = happyItems.sum("amount")
+      
         self.happyPercentage.text = "\(calculateHappy())%"
     }
     
@@ -196,34 +163,10 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             let indexPath = groupTableView.indexPathForSelectedRow
-            if stateOfTable == .WorthTable {
-                viewController.transactionID = happyItems[indexPath!.row]._id
-                viewController.sourceVC = "happy"
-            }
-            else {
-                viewController.transactionID = sadItems[indexPath!.row]._id
-                viewController.sourceVC = "sad"
-            }
+            viewController.transactionID = transactionItems[indexPath!.row]._id
+            viewController.sourceVC = "happy"
+            
         }
-    }
-    
-    @IBAction func notWorthButtonPress(sender: UIButton) {
-        stateOfTable = .NotWorthTable
-        
-        setAttribText("$\(sadAmount)", message2: "NOT WORTH IT" , button: sadButton, backGroundColor: listRed, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
-        setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: UIColor.whiteColor(), textColor: listGreen, textColor2: UIColor.lightGrayColor())
-        
-        groupTableView.reloadData()
-    }
-    
-    
-    @IBAction func worthButtonPress(sender: UIButton) {
-        stateOfTable = .WorthTable
-        
-        setAttribText("$\(sadAmount)", message2: "NOT WORTH IT", button: sadButton,  backGroundColor: UIColor.whiteColor(), textColor: listRed, textColor2: UIColor.lightGrayColor())
-        setAttribText("$\(happyAmount)", message2: "WORTH IT", button: happyButton, backGroundColor: listGreen, textColor: UIColor.whiteColor(),textColor2: UIColor.whiteColor())
-        
-        groupTableView.reloadData()
     }
     
     //actions
@@ -235,31 +178,26 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
 // TableView Methods
 extension groupDetailViewController {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if stateOfTable == .NotWorthTable {
-            return sadItems.count
-        }
-        else {
-            return happyItems.count
-        }
+        return transactionItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
-        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-        
-        if stateOfTable == .NotWorthTable {
-            let dateString = cHelp.convertDateGroup(sadItems[indexPath.row].date)
-            let currencyString = cHelp.formatCurrency(sadItems[indexPath.row].amount)
-            cell.transactionDate.text = dateString
-            cell.transactionAmount.text =  currencyString
+//        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+//        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+    
+        let trans = transactionItems[indexPath.row]
+        let dateString = cHelp.convertDateGroup(trans.date)
+        let currencyString = cHelp.formatCurrency(trans.amount)
+        cell.transactionDate.text = dateString
+        cell.transactionAmount.text = currencyString
+        if trans.status == 2 {
+            cell.transactionAmount.textColor = listRed
         }
         else {
-            let dateString = cHelp.convertDateGroup(happyItems[indexPath.row].date)
-            let currencyString = cHelp.formatCurrency(happyItems[indexPath.row].amount)
-            cell.transactionDate.text = dateString
-            cell.transactionAmount.text = currencyString
+            cell.transactionAmount.textColor = listGreen
         }
+        
         return cell
     }
     
