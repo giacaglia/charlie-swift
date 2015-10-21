@@ -174,7 +174,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         self.inboxType = .InboxTransaction //set inbox to default
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if self.inboxType == .ApprovedAndFlaggedTransaction {
+            if self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeRight") == nil {
                     let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
@@ -415,11 +415,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
-        transactionsTable.backgroundColor = UIColor.clearColor();
         hideReward()
-        
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
-        
         moneyCountSubSubHeadLabel.text = "My Results"
         inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
@@ -448,38 +445,34 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         var current_index = 0
         for trans in actedUponItems {
             if trans.name == current_name {
+                // Approved items
                 if trans.status == 1 {
                     charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
                     charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue + trans.amount
                 }
+                // Flagged items
                 else if trans.status == 2 {
                     charlieGroupList[current_index].notWorthCount =   charlieGroupList[current_index].notWorthCount + 1
                     charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
                 }
             }
             else {
-                print("create new \(trans.name)")
+                print("create new group: \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name)
                 if trans.status == 1 {
-                    cGroup.worthCount = 1
-                    cGroup.worthValue = trans.amount
+                    cGroup.worthCount += 1
+                    cGroup.worthValue += trans.amount
                 }
                 else if trans.status == 2 {
-                    cGroup.notWorthCount = 1
-                    cGroup.notWorthValue = trans.amount
+                    cGroup.notWorthCount += 1
+                    cGroup.notWorthValue += trans.amount
                 }
                 charlieGroupList.append((cGroup))
                 current_index = charlieGroupList.count - 1
             }
             current_name = trans.name
         }
-        
-        if type == .ApprovedAndFlaggedTransaction {
-            return charlieGroupList.filter( { (trans) in trans.worthValue > 0 || trans.notWorthValue > 0 } )
-        }
-        else {
-            return charlieGroupList.filter({$0.worthValue > 0})
-        }
+        return charlieGroupList
     }
 }
 
@@ -520,7 +513,9 @@ extension mainViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
+        if (inboxType == .ApprovedAndFlaggedTransaction) {
+            return charlieGroupListFiltered.count
+        }
         if transactionItems.count > 0 {
             transactionsTable.hidden = false
             addAccountButton.hidden = true
@@ -556,30 +551,44 @@ extension mainViewController : UITableViewDataSource {
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
-        cell.nameCellLabel.text = transactionItems[indexPath.row].name
         if (inboxType == .InboxTransaction) {
+            let trans = transactionItems[indexPath.row]
+            cell.nameCellLabel.text = trans.name
+
             cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happy_on")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
             cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sad_on")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             
-            cell.amountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
+            cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
             cell.amountCellLabel.textColor = listBlue
             cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
 
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            let dateString = dateFormatter.stringFromDate(transactionItems[indexPath.row].date)
+            let dateString = dateFormatter.stringFromDate(trans.date)
             cell.dateCellLabel.text = dateString
             cell.smallAmountCellLabel.hidden = true
         }
         else if (inboxType == .ApprovedAndFlaggedTransaction){
-            cell.dateCellLabel.text = "39 transactions"
-            cell.amountCellLabel.textColor = listGreen
+            let charlieGroup = charlieGroupListFiltered[indexPath.row]
+            cell.nameCellLabel.text = charlieGroup.name
+            if charlieGroup.transactions == 0 || charlieGroup.transactions == 1 {
+                cell.dateCellLabel.text = "\(charlieGroup.transactions) transaction"
+            }
+            else {
+                cell.dateCellLabel.text = "\(charlieGroup.transactions) transactions"
+            }
+            if charlieGroup.happyPercentage < 50 {
+                cell.amountCellLabel.textColor = listRed
+            }
+            else {
+                cell.amountCellLabel.textColor = listGreen
+            }
             cell.amountCellLabel.font = UIFont.systemFontOfSize(14.0)
-            cell.amountCellLabel.text = "30%"
+            cell.amountCellLabel.text = "\(charlieGroup.happyPercentage)%"
+            cell.smallAmountCellLabel.text = "$\(charlieGroup.worthValue + charlieGroup.notWorthValue)"
             cell.smallAmountCellLabel.font = UIFont.systemFontOfSize(12.0)
             cell.smallAmountCellLabel.textColor = mediumGray
             cell.smallAmountCellLabel.hidden = false
-            cell.smallAmountCellLabel.text = cHelp.formatCurrency(transactionItems[indexPath.row].amount)
         }
        
         return cell

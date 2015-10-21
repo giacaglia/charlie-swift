@@ -10,17 +10,35 @@ import Foundation
 
 
 class charlieGroup {
-    var name:String
-    var worthCount:Int = 0
-    var notWorthCount:Int = 0
-    var worthValue:Double = 0
-    var notWorthValue:Double = 0
-
+    var name:          String
+    var worthCount:    Int    = 0
+    var notWorthCount: Int    = 0
+    var worthValue:    Double = 0
+    var notWorthValue: Double = 0
     
     init(name:String) {
        self.name = name
     }
-
+    
+    
+    var transactions : Int {
+        get {
+            return worthCount + notWorthCount
+        }
+    }
+    
+    var happyPercentage : Int {
+        get {
+            if transactions == 0 {
+              return 0
+            }
+            else {
+                return Int((Double(worthCount) / Double((transactions)) * 100))
+            }
+        }
+    }
+    
+   
 }
 
 

@@ -30,8 +30,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     
     var removeCellBlockLeft: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> Void)!
-
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,6 +152,9 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
             if trans.status == 2 {
                 sad += 1
             }
+        }
+        if happy + sad == 0 {
+            return 0
         }
         return Int((Double(happy) / Double((happy + sad)) * 100))
     }
