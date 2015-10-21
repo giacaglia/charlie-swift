@@ -36,6 +36,7 @@ enum SortFilterType {
 }
 
 protocol ChangeFilterProtocol {
+    func removeBlackView()
     func changeFilter( filterType: SortFilterType )
     func changeTransactionType( type : TransactionType)
 }
@@ -69,7 +70,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     var timerCount:Int = 0
     var filterType : SortFilterType! = .FilterByName
     var inboxType : TransactionType! = .ApprovedAndFlaggedTransaction
-    var blackView : UIView?
+    static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
     
@@ -326,9 +327,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     @IBAction func refreshAccounts(sender: UIButton) {
-        blackView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-        blackView!.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
-        self.view .addSubview(blackView!)
+        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
+        self.view .addSubview(mainViewController.blackView)
         let sortVC = SortViewController()
         sortVC.initialFilterType = self.filterType
         sortVC.delegate = self
@@ -341,18 +341,22 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
     }
     
-     func changeFilter(filterType:SortFilterType){
+    func removeBlackView() {
+        mainViewController.blackView.removeFromSuperview()
+    }
+    
+    func changeFilter(filterType:SortFilterType){
         self.filterType = filterType
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
-        blackView?.removeFromSuperview()
+        mainViewController.blackView.removeFromSuperview()
     }
     
     func changeTransactionType(type: TransactionType) {
         inboxType = type
         charlieGroupListFiltered = groupBy(type, sortFilter: self.filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
-        blackView?.removeFromSuperview()
+        mainViewController.blackView.removeFromSuperview()
     }
 
     

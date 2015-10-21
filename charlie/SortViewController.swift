@@ -66,7 +66,7 @@ class SortViewController : UIViewController {
         self.willMoveToParentViewController(nil)
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.view.frame = CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)
-//            self.delegate?.changeFilter(self.initialFilterType!)
+            self.delegate?.removeBlackView()
         })
         { (success) -> Void in
             self.view.removeFromSuperview()
