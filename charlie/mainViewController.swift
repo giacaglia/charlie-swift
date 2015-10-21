@@ -455,18 +455,24 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 }
             }
             else {
+                // Dont include the ones that were received/came to the account
                 print("create new group: \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name)
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
+                    charlieGroupList.append((cGroup))
+                    current_index = charlieGroupList.count - 1
                 }
                 else if trans.status == 2 {
                     cGroup.notWorthCount += 1
                     cGroup.notWorthValue += trans.amount
+                    charlieGroupList.append((cGroup))
+                    current_index = charlieGroupList.count - 1
                 }
-                charlieGroupList.append((cGroup))
-                current_index = charlieGroupList.count - 1
+                else {
+                    // not added to the list
+                }
             }
             current_name = trans.name
         }
@@ -569,18 +575,13 @@ extension mainViewController : UITableViewDataSource {
         else if (inboxType == .ApprovedAndFlaggedTransaction){
             let charlieGroup = charlieGroupListFiltered[indexPath.row]
             cell.nameCellLabel.text = charlieGroup.name
-            if charlieGroup.transactions == 0 || charlieGroup.transactions == 1 {
-                cell.dateCellLabel.text = "\(charlieGroup.transactions) transaction"
-            }
-            else {
-                cell.dateCellLabel.text = "\(charlieGroup.transactions) transactions"
-            }
-            if charlieGroup.happyPercentage < 50 {
-                cell.amountCellLabel.textColor = listRed
-            }
-            else {
-                cell.amountCellLabel.textColor = listGreen
-            }
+           
+            if charlieGroup.transactions == 1 { cell.dateCellLabel.text = "1 transaction" }
+            else { cell.dateCellLabel.text = "\(charlieGroup.transactions) transactions" }
+            
+            if charlieGroup.happyPercentage < 50 { cell.amountCellLabel.textColor = listRed }
+            else { cell.amountCellLabel.textColor = listGreen }
+            
             cell.amountCellLabel.font = UIFont.systemFontOfSize(14.0)
             cell.amountCellLabel.text = "\(charlieGroup.happyPercentage)%"
             cell.smallAmountCellLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue))"
