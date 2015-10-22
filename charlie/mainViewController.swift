@@ -552,7 +552,7 @@ extension mainViewController : UITableViewDataSource {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
             else {
-                numItemsToLoad += 10
+                numItemsToLoad += 20
                 makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 self.setInboxTitle(true)
