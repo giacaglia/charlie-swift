@@ -84,11 +84,9 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
     }
     
-    
     func didEnterBackgroundNotification(notification: NSNotification) {
         cHelp.splashImageView(self.view)
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
