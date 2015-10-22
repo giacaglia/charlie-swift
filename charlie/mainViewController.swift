@@ -593,7 +593,7 @@ extension mainViewController : UITableViewDataSource {
             if charlieGroup.happyPercentage < 50 { cell.amountCellLabel.textColor = listRed }
             else { cell.amountCellLabel.textColor = listGreen }
             
-            cell.amountCellLabel.font = UIFont.systemFontOfSize(14.0)
+            cell.amountCellLabel.font = UIFont.systemFontOfSize(20.0)
             cell.amountCellLabel.text = "\(charlieGroup.happyPercentage)%"
             cell.smallAmountCellLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue))"
             cell.smallAmountCellLabel.font = UIFont.systemFontOfSize(12.0)

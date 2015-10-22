@@ -41,7 +41,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         groupTableView.separatorStyle = .None
         self.name.text = transactionName
         let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
-        let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
         
         happyItems = transactionItems.sorted("date", ascending: true)
