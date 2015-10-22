@@ -589,14 +589,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97i-Pg-dNr" userLabel="Inbox">
-                                        <rect key="frame" x="85" y="14" width="36" height="36"/>
+                                        <rect key="frame" x="80" y="16" width="46" height="32"/>
                                         <animations/>
-                                        <color key="backgroundColor" red="0.5568627451" green="0.74509803919999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="1fM-oT-pIl"/>
-                                            <constraint firstAttribute="width" constant="36" id="ePe-3f-jGd"/>
+                                            <constraint firstAttribute="height" constant="32" id="1fM-oT-pIl"/>
+                                            <constraint firstAttribute="width" constant="46" id="ePe-3f-jGd"/>
                                         </constraints>
-                                        <state key="normal">
+                                        <state key="normal" image="selectedFirstTab">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -610,7 +609,7 @@
                                     <constraint firstItem="J2c-VM-doh" firstAttribute="top" secondItem="0Eh-dx-Cok" secondAttribute="top" id="ACz-AS-SoV"/>
                                     <constraint firstAttribute="centerY" secondItem="oOe-bS-V5E" secondAttribute="centerY" id="AL4-D6-ukf"/>
                                     <constraint firstAttribute="trailing" secondItem="J2c-VM-doh" secondAttribute="trailing" id="QY0-t2-F5J"/>
-                                    <constraint firstItem="97i-Pg-dNr" firstAttribute="leading" secondItem="0Eh-dx-Cok" secondAttribute="leading" constant="85" id="Vhd-vT-f0U"/>
+                                    <constraint firstItem="97i-Pg-dNr" firstAttribute="leading" secondItem="0Eh-dx-Cok" secondAttribute="leading" constant="80" id="Vhd-vT-f0U"/>
                                     <constraint firstAttribute="height" constant="64" id="d4c-hU-7cm"/>
                                     <constraint firstAttribute="centerY" secondItem="97i-Pg-dNr" secondAttribute="centerY" id="fms-rg-sHh"/>
                                     <constraint firstItem="J2c-VM-doh" firstAttribute="leading" secondItem="0Eh-dx-Cok" secondAttribute="leading" id="rOz-ka-7Dj"/>
@@ -1865,10 +1864,11 @@
         <image name="menu" width="27" height="30"/>
         <image name="sad_on" width="36" height="36"/>
         <image name="second_btn" width="42" height="26"/>
+        <image name="selectedFirstTab" width="46" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MIk-q3-hAj"/>
-        <segue reference="90x-Hi-7no"/>
-        <segue reference="dvs-V3-jSh"/>
+        <segue reference="DF7-7D-dxJ"/>
+        <segue reference="swt-fH-1dv"/>
     </inferredMetricsTieBreakers>
 </document>

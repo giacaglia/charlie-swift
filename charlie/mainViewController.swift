@@ -73,6 +73,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
+    let inboxLabel = UILabel(frame: CGRectMake(0,0,40,40))
+
     
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
@@ -220,16 +222,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
         }
         
-        inboxListButton.layer.borderColor = UIColor.clearColor().CGColor
-        inboxListButton.layer.borderWidth = 1.0
-        inboxListButton.layer.cornerRadius = inboxListButton.frame.size.width/2.0
-        inboxListButton.clipsToBounds = true
-        if transactionItems.count > 0 {
-            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
-        }
-        else {
-            inboxListButton.setTitle("", forState: .Normal)
-        }
+
+        self.setInboxTitle(true)
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
     }
@@ -283,8 +277,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
-                if transactionItems.count > 0 { self.inboxListButton.setTitle(String(transactionItems.count), forState: .Normal) }
-                else { self.inboxListButton.setTitle("", forState: .Normal) }
+                self.setInboxTitle(true)
                 self.spinner.stopAnimating()
                 self.toastView.hidden = true
                 
@@ -379,11 +372,34 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         try! realm.commitWrite()
     }
     
+    private func setInboxTitle(active :Bool) {
+        if inboxLabel.superview != nil {
+            inboxLabel.removeFromSuperview()
+        }
+        
+        if (transactionItems.count == 0) {
+            if (active) {
+                inboxListButton.setImage(UIImage(named: "active_done_btn"), forState: .Normal)
+            }
+            else {
+                inboxListButton.setImage(UIImage(named: "done_btn"), forState: .Normal)
+            }
+            return
+        }
+        inboxLabel.text = String(transactionItems.count)
+        inboxLabel.frame = CGRectMake(inboxListButton.frame.size.width/2 - inboxLabel.frame.size.width/2, inboxListButton.frame.size.height/2 - inboxLabel.frame.size.height/2, inboxLabel.frame.size.width, inboxLabel.frame.size.height)
+        inboxLabel.textAlignment = .Center
+        if (active) { inboxLabel.textColor = UIColor.whiteColor() }
+        else { inboxLabel.textColor = listBlue }
+        inboxListButton.addSubview(inboxLabel)
+    }
+    
     @IBAction func inboxListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Inbox Button")
-        self.view.backgroundColor = lightBlue
+        inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
+        flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        
+        self.setInboxTitle(true)
         if transactionItems.count == 0 && allTransactionItems.count > 0 {
             showReward()
         }
@@ -399,12 +415,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-        if transactionItems.count > 0 {
-            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
-        }
-        else {
-            inboxListButton.setTitle("", forState: .Normal)
-        }
+
         
         moneyCountSubSubHeadLabel.text = "Worth it?"
 
@@ -418,6 +429,9 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
         hideReward()
+        inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
+        flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
+        self.setInboxTitle(false)
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         moneyCountSubSubHeadLabel.text = "My Results"
         inboxType = .ApprovedAndFlaggedTransaction
@@ -495,12 +509,7 @@ extension mainViewController : UITableViewDataSource {
         transactionItems[indexPath!.row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
-        if transactionItems.count > 0 {
-            inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
-        }
-        else {
-            inboxListButton.setTitle("", forState: .Normal)
-        }
+        self.setInboxTitle(true)
 
         let rowCount = Int(tableView.numberOfRowsInSection(0).value)
         
@@ -546,7 +555,7 @@ extension mainViewController : UITableViewDataSource {
                 numItemsToLoad += 10
                 makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                inboxListButton.setTitle(String(transactionItems.count), forState: .Normal)
+                self.setInboxTitle(true)
                 transactionsTable.reloadData()
             }
         }
