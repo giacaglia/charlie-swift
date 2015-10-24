@@ -21,10 +21,18 @@ class SortViewController : UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if self.initialFilterType == .FilterByName { self.mostRecentButton.titleLabel?.textColor = listBlue }
-        else if self.initialFilterType == .FilterByDescendingDate { self.leastRecentButton.titleLabel?.textColor = listBlue }
-        else if self.initialFilterType == .FilterByDate {self.alphabeticalButton.titleLabel?.textColor = listBlue}
-        else {self.amountButton.titleLabel?.textColor = listBlue}
+        if self.initialFilterType == .FilterByDescendingDate {
+            self.mostRecentButton.titleLabel?.textColor = listBlue
+        }
+        else if self.initialFilterType == .FilterByDate {
+            self.leastRecentButton.titleLabel?.textColor = listBlue
+        }
+        else if self.initialFilterType == .FilterByName {
+            self.alphabeticalButton.titleLabel?.textColor = listBlue
+        }
+        else {
+            self.amountButton.titleLabel?.textColor = listBlue
+        }
     }
     
     @IBAction func mostRecentPressed(sender: AnyObject) {
@@ -56,10 +64,10 @@ class SortViewController : UIViewController {
     }
       
     private func allButtonsGrayExcept(buttonIndex: Int) {
-//        if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
-//        if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}
-//        if buttonIndex != 2 {alphabeticalButton.titleLabel?.textColor = grayColor}
-//        if buttonIndex != 3 {amountButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 2 {alphabeticalButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 3 {amountButton.titleLabel?.textColor = grayColor}
     }
     
     @IBAction func closePressed(sender: AnyObject) {
