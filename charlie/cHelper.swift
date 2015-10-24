@@ -24,6 +24,8 @@ class cHelper {
     func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
         let users = realm.objects(User)
         
+        var transactionCount = 0
+        
         for _ in users {
             let user_access_token  = keyChainStore.get("access_token")
             cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
@@ -35,6 +37,7 @@ class cHelper {
                             //println("saved accounts")
                         }
                     }
+                    
                     let transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
                     for transaction in transactions {
@@ -49,32 +52,52 @@ class cHelper {
                             //check for deposits and remove
                             let dictAmount = transaction.valueForKey("amount") as? Double
                             //add category
+                            
                             let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                            if dictAmount < 0 {
-                                //handle if no categorized this all need to be refactored
-                                newTrans.status = 86 //sets status to ignore from totals
-                            }
+                            
+                            //add category
                             if let category_id = transaction.valueForKey("category_id") as? String {
                                 let predicate = NSPredicate(format: "id = %@", category_id)
                                 let categoryToAdd = realm.objects(Category).filter(predicate)
                                 newTrans.categories = categoryToAdd[0]
                                 
+                                //if category is one we don't want to count or amount is too small or negative
                                 if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1) {
                                     newTrans.status = 86 //sets status to ignore from totals
                                 }
-                                else {
-                                    if type == 99 {
-                                        //if type passed to this function is 99 then user wants to reset the data
-                                        newTrans.status = 0
-                                    }
-                                }
-                            }
-                            else {
-                                let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                                if type == 99 {
+                                else if (transactionCount < 20)
+                                {
                                     newTrans.status = 0
+                                    transactionCount += 1
                                 }
+                                else
+                                {
+                                     newTrans.status = -1
+                                }
+                            
+                                
                             }
+                            else //doesn't have a cateogry
+                            {
+                                // set first twenty transations to status of 
+                                
+                                
+                                if (dictAmount < 1)
+                                {  newTrans.status = 86 }
+                                else if (transactionCount < 20)
+                                {
+                                    newTrans.status = 0
+                                    transactionCount += 1
+
+                                }
+                                else
+                                {
+                                    newTrans.status = -1
+                                }
+                                
+                                
+                            }
+                            
                         }
                     }
                     let transactions_count = transactions.count

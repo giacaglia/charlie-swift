@@ -19,6 +19,7 @@ var inboxPredicate = NSPredicate() //items yet to be processed
 var approvedPredicate = NSPredicate() // items marked as worth it
 var flaggedPredicate = NSPredicate() // items makes as not worth it
 var actedUponPredicate = NSPredicate() // items marked as either worth it or not worth it
+var waitingToProcessPredicate = NSPredicate() // items set to -1 and could be processed if users chooses to load more
 var groupedPredicate = NSPredicate()
 var charlieGroupList = [charlieGroup]()
 var charlieGroupListFiltered = [charlieGroup]()
@@ -117,6 +118,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
@@ -132,21 +135,32 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             access_token = keyStore.stringForKey("access_token")!
             keyChainStore.set(access_token, key: "access_token")
         }
-        
+    
         if accounts.count == 0 {
             //&& access_token == "" //show add user
             setPredicates(false)
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
-            makeOnlyFirstNElementsVisible()
+            //makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
             setPredicates(true)
-            makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+            areThereMoreItemsToLoad = moreTransactionforLoading()
+            
+            
+//            if transactionItems.count == 0
+//            {
+//                
+//                areThereMoreItemsToLoad = true
+//                // print ("OUT OF TRANSACTIONS")
+//                //makeOnlyFirstNElementsVisible()
+//               
+//                
+//            }
             addAccountButton.hidden = true
             accountAddView.hidden = true
             //refresh accounts
@@ -235,27 +249,51 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.hidden = false
     }
     
+    
+    
+    func moreTransactionforLoading() -> Bool {
+        
+        
+        let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
+        if moreItems.count > 0
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+        
+        
+    }
+    
     func setPredicates(hasAccounts:Bool) {
-        if hasAccounts {
-            if accounts[0].institution_type == "fake_institution" {
-                inboxPredicate = NSPredicate(format: "status = 0")
-                approvedPredicate = NSPredicate(format: "status = 1")
-                flaggedPredicate = NSPredicate(format: "status = 2")
-                actedUponPredicate = NSPredicate(format: "status > 0", showTransactionDays)
-            }
-            else {
-                inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
-                approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
-                flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
-                actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
-            }
-        }
-        else {
-            inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
-            approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
-            flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
-            actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
-        }
+        inboxPredicate = NSPredicate(format: "status = 0")
+        approvedPredicate = NSPredicate(format: "status = 1")
+        flaggedPredicate = NSPredicate(format: "status = 2")
+        actedUponPredicate = NSPredicate(format: "status > 0")
+        waitingToProcessPredicate = NSPredicate(format: "status = -1")
+        
+//        if hasAccounts {
+//            if accounts[0].institution_type == "fake_institution" {
+//                inboxPredicate = NSPredicate(format: "status = 0")
+//                approvedPredicate = NSPredicate(format: "status = 1")
+//                flaggedPredicate = NSPredicate(format: "status = 2")
+//                actedUponPredicate = NSPredicate(format: "status > 0", showTransactionDays)
+//            }
+//            else {
+//                inboxPredicate = NSPredicate(format: "status = 0")
+//                approvedPredicate = NSPredicate(format: "status = 1")
+//                flaggedPredicate = NSPredicate(format: "status = 2")
+//                actedUponPredicate = NSPredicate(format: "status > 0")
+//            }
+//        }
+//        else {
+//            inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
+//            approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
+//            flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
+//            actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
+//        }
     }
     
     func hideReward() {
@@ -353,21 +391,24 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     func makeOnlyFirstNElementsVisible() {
         areThereMoreItemsToLoad = false
+        //numItemsToLoad
+        var loadCount = 0
         realm.beginWrite()
         for i in 0..<allTransactionItems.count {
-            if i > numItemsToLoad + 2  && i < allTransactionItems.count {
-                let trans = allTransactionItems[i]
-                trans.status = -1
-                areThereMoreItemsToLoad = true
-            }
-            else if i < allTransactionItems.count {
+            if i < allTransactionItems.count && loadCount < numItemsToLoad {
                 let trans = allTransactionItems[i]
                 if (trans.status == -1) {
                     trans.status = 0
+                    loadCount += 1
                 }
             }
         }
         try! realm.commitWrite()
+        if loadCount > 0
+        {
+            areThereMoreItemsToLoad =  true
+        }
+        
     }
     
     private func setInboxTitle(active :Bool) {
@@ -384,9 +425,22 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
             return
         }
+        if (active)
+        {
+             inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
+            
+        }
+        else
+        {
+             inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
+        }
+        
+        
         inboxLabel.text = String(transactionItems.count)
         inboxLabel.frame = CGRectMake(inboxListButton.frame.size.width/2 - inboxLabel.frame.size.width/2, inboxListButton.frame.size.height/2 - inboxLabel.frame.size.height/2, inboxLabel.frame.size.width, inboxLabel.frame.size.height)
         inboxLabel.textAlignment = .Center
+        
+
         if (active) { inboxLabel.textColor = UIColor.whiteColor() }
         else { inboxLabel.textColor = listBlue }
         inboxListButton.addSubview(inboxLabel)
@@ -458,6 +512,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         var current_index = 0
         for trans in actedUponItems {
+            print(trans.name)
             if trans.name == current_name {
                 // Approved items
                 if trans.status == 1 {
@@ -515,14 +570,19 @@ extension mainViewController : UITableViewDataSource {
             charlieAnalytics.track("Worth It Swipe")
             if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
+                
                 self.showReward()
+                
             }
         }
         else {
             charlieAnalytics.track("Not Worth It Swipe")
             if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
+                
                 self.showReward()
+                
+                
             }
         }
     }
@@ -550,7 +610,7 @@ extension mainViewController : UITableViewDataSource {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
             else {
-                numItemsToLoad += 20
+                numItemsToLoad = 20
                 makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 self.setInboxTitle(true)

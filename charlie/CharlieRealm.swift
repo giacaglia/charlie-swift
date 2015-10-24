@@ -59,7 +59,7 @@ class Transaction: Object {
     dynamic var categories = Category?()
     dynamic var date =  NSDate()
     dynamic var name = ""
-    dynamic var status = 0
+    dynamic var status = -1
     dynamic var meta = Meta?()
     dynamic var ctype = 0
     dynamic var note = ""
