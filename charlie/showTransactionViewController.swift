@@ -19,11 +19,9 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
-    var transactionIndex:Int = 0
     var mainVC:mainViewController!
-    var transactionID:String = ""
-    let regionRadius: CLLocationDistance = 1000
-    var transactionItems = realm.objects(Transaction)
+    var transaction : Transaction?
+    var transactionIndex  = 0
     var sourceVC = "main"
     
     func willEnterForeground(notification: NSNotification!) {
@@ -45,44 +43,47 @@ class showTransactionViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     
 
-        let account = realm.objects(Account).filter("_id = '\(transactionItems[transactionIndex]._account)'")
-        
-        self.transactionItems = realm.objects(Transaction).filter("_id = '\(self.transactionID)'")
+        var transactionItems = realm.objects(Transaction)
+        guard let usedTransaction = transaction else {
+            return
+        }
+        let account = realm.objects(Account).filter("_id = '\(transactionItems[0]._account)'")
+        transactionItems = realm.objects(Transaction).filter("_id = '\(usedTransaction._id)'")
         
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
+        let trans = transactionItems[0]
         if sourceVC == "main" {
-            let amount = self.transactionItems[transactionIndex].amount
-            let myString = "Was $\(amount) at \(self.transactionItems[transactionIndex].name)\nworth it?"
+            let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
             let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
-            attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(amount).characters.count) + 1))
+            attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
 
             descriptionLabel.attributedText = attString
         }
         else if sourceVC == "happy" {
-            descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas worth it"
+            descriptionLabel.text = "\(trans.name)\nwas worth it"
         }
         else if sourceVC == "sad" {
-            descriptionLabel.text = "\(self.transactionItems[transactionIndex].name)\nwas not worth it"
+            descriptionLabel.text = "\(trans.name)\nwas not worth it"
         }
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
-        let dateString = dateFormatter.stringFromDate(self.transactionItems[transactionIndex].date)
+        let dateString = dateFormatter.stringFromDate(trans.date)
         dateLabel.text = dateString
 
         // Fix name: Terrible name
-        if let categories = self.transactionItems[transactionIndex].categories {
+        if let categories = trans.categories {
             categoryLabel.text = categories.categories
         }
-        guard let location = self.transactionItems[transactionIndex].meta?.location else {
+        guard let location = trans.meta?.location else {
             mapView.hidden = true
             return
         }
         
         addressLabel.text = "\(location.address) \n  \(location.city) \(location.state) \(location.zip)"
         
-        guard let coordinates = self.transactionItems[transactionIndex].meta?.location!.coordinates else {
+        guard let coordinates = trans.meta?.location!.coordinates else {
             mapView.hidden = true
             return
         }
@@ -96,20 +97,26 @@ class showTransactionViewController: UIViewController {
     }
     
     func centerMapOnLocation(location: CLLocation) {
+        let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
             regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
     @IBAction func notWorth(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.mainVC.swipeCellAtIndex(self.transactionIndex, toLeft: true)
+        })
     }
     
     @IBAction func worth(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.mainVC.swipeCellAtIndex(self.transactionIndex, toLeft: false)
+        })
     }
     
-    
     @IBAction func closeButtonPress(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion:nil)
     }
 
 }

@@ -32,7 +32,7 @@ enum TransactionType {
 }
 
 enum SortFilterType {
-    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount
+    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount, FilterByHappyPercentage
 }
 
 protocol ChangeFilterProtocol {
@@ -288,7 +288,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             let viewController = segue.destinationViewController as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            viewController.transactionID = transactionItems[indexPath!.row]._id
+            viewController.transaction = transactionItems[indexPath!.row]
+            viewController.transactionIndex = indexPath!.row
             viewController.sourceVC = "main"
         }
         else if (segue.identifier == "showTypePicker") {
@@ -500,16 +501,21 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
 extension mainViewController : UITableViewDataSource {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
-        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+        self.updateTableAt(indexPath: indexPath!, direction: direction)
+    }
+    
+    private func updateTableAt(indexPath indexPath: NSIndexPath, direction: Int) {
+        currentTransactionSwipeID = transactionItems[indexPath.row]._id
+        let cell = transactionsTable.cellForRowAtIndexPath(indexPath) as? SBGestureTableViewCell
         currentTransactionCell = cell
         
         realm.beginWrite()
-        transactionItems[indexPath!.row].status = direction
-        tableView.removeCell(cell, duration: 0.3, completion: nil)
+        transactionItems[indexPath.row].status = direction
+        transactionsTable.removeCell(cell!, duration: 0.3, completion: nil)
         try! realm.commitWrite()
         self.setInboxTitle(true)
-
-        let rowCount = Int(tableView.numberOfRowsInSection(0).value)
+        
+        let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
         
         if direction == 1 {
             charlieAnalytics.track("Worth It Swipe")
@@ -586,7 +592,8 @@ extension mainViewController : UITableViewDataSource {
         else if (inboxType == .ApprovedAndFlaggedTransaction){
             let charlieGroup = charlieGroupListFiltered[indexPath.row]
             cell.nameCellLabel.text = charlieGroup.name
-           
+            cell.firstLeftAction = nil
+            cell.firstRightAction = nil
             if charlieGroup.transactions == 1 { cell.dateCellLabel.text = "1 transaction" }
             else { cell.dateCellLabel.text = "\(charlieGroup.transactions) transactions" }
             
@@ -602,6 +609,18 @@ extension mainViewController : UITableViewDataSource {
         }
        
         return cell
+    }
+    
+    func swipeCellAtIndex(transactionIndex: Int, toLeft: Bool) {
+        let indexPath = NSIndexPath(forRow: transactionIndex, inSection: 0)
+        if toLeft {
+            self.updateTableAt(indexPath: indexPath, direction: 2)
+        }
+        else {
+            let cell = self.transactionsTable.cellForRowAtIndexPath(indexPath)
+            cell!.center = CGPointMake(cell!.center.x + 10, cell!.center.y)
+            self.updateTableAt(indexPath: indexPath, direction: 1)
+        }
     }
 }
 
@@ -656,11 +675,10 @@ extension mainViewController : UIViewControllerPreviewingDelegate {
         guard let indexPath = transactionsTable.indexPathForRowAtPoint(location) else { return nil }
         
         guard let showTransactionViewController = storyboard?.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else { return nil }
-        
-        showTransactionViewController.transactionID = transactionItems[indexPath.row]._id
+        showTransactionViewController.transaction = transactionItems[indexPath.row]
+        showTransactionViewController.transactionIndex = indexPath.row
+        showTransactionViewController.mainVC = self
         showTransactionViewController.sourceVC = "main"
-
-        
         return showTransactionViewController
     }
     

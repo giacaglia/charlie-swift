@@ -164,9 +164,9 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             let indexPath = groupTableView.indexPathForSelectedRow
-            viewController.transactionID = transactionItems[indexPath!.row]._id
+            viewController.transaction = transactionItems[indexPath!.row]
+            viewController.transactionIndex = indexPath!.row
             viewController.sourceVC = "happy"
-            
         }
     }
     
