@@ -45,30 +45,6 @@ class showTypePickerViewController: UIViewController {
         }
         transactionItems = realm.objects(Transaction).filter(inboxPredicate)
         mainVC.transactionsTable.reloadData()
-        
-        //        let predicate = NSPredicate(format: "name = %@ and ctype = %d", transactionToUpdate[0].name, 0 )
-        //
-        //       var sameTransactions = realm.objects(Transaction).filter(predicate)
-        //
-        //       if sameTransactions.count > 0
-        //        {
-        //
-        //          for trans in sameTransactions
-        //            {
-        //                realm.beginWrite()
-        //                    trans.ctype = Int(sender.tag)
-        //                if sameTransactions.count > 1
-        //                {
-        //
-        //                    trans.status = 1
-        //                }
-        //                realm.commitWrite()
-        //            }
-        //
-        //            transactionItems = realm.objects(Transaction).filter(inboxPredicate)
-        //            mainVC.transactionsTable.reloadData()
-        //       
-        //        }
     }
     
 }

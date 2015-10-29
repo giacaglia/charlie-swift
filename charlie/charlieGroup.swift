@@ -7,38 +7,23 @@
 //
 
 import Foundation
+import RealmSwift
 
-
-class charlieGroup {
-    var name:          String
-    var worthCount:    Int    = 0
-    var notWorthCount: Int    = 0
-    var worthValue:    Double = 0
-    var notWorthValue: Double = 0
-    
-    init(name:String) {
-       self.name = name
-    }
-    
+class charlieGroup : Object {
+    dynamic var name:            String = ""
+    dynamic var worthCount:      Int    = 0
+    dynamic var notWorthCount:   Int    = 0
+    dynamic var worthValue:      Double = 0
+    dynamic var notWorthValue:   Double = 0
+    dynamic var happyPercentage: Int    = 0
+    dynamic var date:            NSDate = NSDate()
     
     var transactions : Int {
         get {
             return worthCount + notWorthCount
         }
     }
-    
-    var happyPercentage : Int {
-        get {
-            if transactions == 0 {
-              return 0
-            }
-            else {
-                return Int((Double(worthCount) / Double((transactions)) * 100))
-            }
-        }
+    override static func primaryKey() -> String? {
+        return "name"
     }
-    
-   
 }
-
-

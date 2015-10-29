@@ -411,15 +411,10 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
         }
         
-        
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-
-        
         moneyCountSubSubHeadLabel.text = "Worth it?"
-
         topSeperator.backgroundColor = listBlue
-
         inboxType == .InboxTransaction
         transactionsTable.reloadData()
     }
@@ -438,10 +433,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.reloadData()
     }
     
-    
     func groupBy(type: TransactionType, sortFilter: SortFilterType) -> NSArray {
         charlieGroupList = []
-        var current_name = ""
         let sortProperties : Array<SortDescriptor>!
         if sortFilter == .FilterByName {
             sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
@@ -452,12 +445,16 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         else if sortFilter == .FilterByDate {
             sortProperties = [SortDescriptor(property: "date", ascending: true)]
         }
-        else {
+        else if sortFilter == .FilterByAmount {
             sortProperties = [SortDescriptor(property: "amount", ascending: false)]
         }
-        
-        let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
+        else {
+            sortProperties = [SortDescriptor(property: "happyPercentage", ascending: false)]
+        }
         var current_index = 0
+
+        var current_name = ""
+        let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         for trans in actedUponItems {
             if trans.name == current_name {
                 // Approved items
@@ -465,7 +462,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     charlieGroupList[current_index].worthCount = charlieGroupList[current_index].worthCount + 1
                     charlieGroupList[current_index].worthValue = charlieGroupList[current_index].worthValue + trans.amount
                 }
-                // Flagged items
+                    // Flagged items
                 else if trans.status == 2 {
                     charlieGroupList[current_index].notWorthCount =   charlieGroupList[current_index].notWorthCount + 1
                     charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
@@ -474,7 +471,10 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             else {
                 // Dont include the ones that were received/came to the account
                 print("create new group: \(trans.name)")
-                let cGroup = charlieGroup(name: trans.name)
+                realm.beginWrite()
+                let cGroup = charlieGroup()
+                cGroup.name = trans.name
+                cGroup.date = trans.date
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
@@ -490,10 +490,25 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 else {
                     // not added to the list
                 }
+                
+                if cGroup.transactions == 0 {
+                    cGroup.happyPercentage = 0
+                }
+                else {
+                    cGroup.happyPercentage = Int((Double(cGroup.worthCount) / Double((cGroup.transactions)) * 100))
+                }
+                realm.add(cGroup, update: true)
+                try! realm.commitWrite()
             }
             current_name = trans.name
         }
-        return charlieGroupList
+        var newCharlieGroupList = [charlieGroup]()
+        let newItems = realm.objects(charlieGroup)
+        for cGroup in newItems {
+            newCharlieGroupList.append((cGroup))
+        }
+
+        return newCharlieGroupList
     }
 }
 
