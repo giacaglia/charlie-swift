@@ -6,9 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CLSAttributes.h"
+#import <Fabric/FABAttributes.h>
 
-NS_ASSUME_NONNULL_BEGIN
+FAB_START_NONNULL
 
 /**
  * The CLSCrashReport protocol is deprecated. See the CLSReport class and the CrashyticsDelegate changes for details.
@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CLSReport : NSObject <CLSCrashReport>
 
 - (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
 
 /**
  * Returns the session identifier for the report.
@@ -71,7 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *OSBuildVersion;
 
 /**
- * Returns YES if the report contains any crash information, otherwise returns NO.
+ * Returns YES if the report contains any crash information. If the report
+ * contains only NSErrors, this will return NO.
  **/
 @property (nonatomic, assign, readonly) BOOL isCrash;
 
@@ -81,23 +81,23 @@ NS_ASSUME_NONNULL_BEGIN
  * that the maximum size and count of custom keys is still enforced, and you can overwrite keys
  * and/or cause excess keys to be deleted by using this method.
  **/
-- (void)setObjectValue:(nullable id)value forKey:(NSString *)key;
+- (void)setObjectValue:(id FAB_NULLABLE)value forKey:(NSString *)key;
 
 /**
  * Record an application-specific user identifier. See Crashlytics.h for details.
  **/
-@property (nonatomic, copy, nullable) NSString * userIdentifier;
+@property (nonatomic, copy) NSString * FAB_NULLABLE userIdentifier;
 
 /**
  * Record a user name. See Crashlytics.h for details.
  **/
-@property (nonatomic, copy, nullable) NSString * userName;
+@property (nonatomic, copy) NSString * FAB_NULLABLE userName;
 
 /**
  * Record a user email. See Crashlytics.h for details.
  **/
-@property (nonatomic, copy, nullable) NSString * userEmail;
+@property (nonatomic, copy) NSString * FAB_NULLABLE userEmail;
 
 @end
 
-NS_ASSUME_NONNULL_END
+FAB_END_NONNULL

@@ -19,6 +19,7 @@ class User: Object {
     override static func primaryKey() -> String? {
         return "email"
     }
+    
 }
 
 class Account: Object {
@@ -43,22 +44,26 @@ class Meta: Object {
 }
 
 class Balance: Object {
-    dynamic var current:Double   = 0.0
+    dynamic var current:Double  = 0.0
     dynamic var available:Double = 0.0
 }
 
+
+
+
 class Transaction: Object {
-    dynamic var _id           = ""
-    dynamic var _account      = ""
-    dynamic var amount:Double = 0.0
-    dynamic var pending       = true
-    dynamic var categories    = Category?()
-    dynamic var date          =  NSDate()
-    dynamic var name          = ""
-    dynamic var status        = 0
-    dynamic var meta          = Meta?()
-    dynamic var ctype         = 0
-    dynamic var note          = ""
+    dynamic var _id = ""
+    dynamic var _account = ""
+    dynamic var amount:Double  = 0.0
+    dynamic var pending = true
+    dynamic var categories = Category?()
+    dynamic var date =  NSDate()
+    dynamic var name = ""
+    dynamic var status = 0
+    dynamic var meta = Meta?()
+    dynamic var ctype = 0
+    dynamic var note = ""
+    
     
     override static func indexedProperties() -> [String] {
         return ["name"]
@@ -66,10 +71,15 @@ class Transaction: Object {
     
     override static func primaryKey() -> String? {
         return "_id"
+        
     }
+    
 }
 
+
+
 class Category: Object {
+    
     dynamic var id = ""
     dynamic var type = ""
     dynamic var categories = ""
@@ -77,6 +87,7 @@ class Category: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+    
 }
 
 class Location: Object {
@@ -85,9 +96,16 @@ class Location: Object {
     dynamic var city = ""
     dynamic var zip = ""
     dynamic var address = ""
+    
 }
 
 class Coordinates: Object {
+    
     dynamic var lat = 0.0
     dynamic var lon = 0.0
+    
 }
+
+
+
+

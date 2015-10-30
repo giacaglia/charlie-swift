@@ -7,13 +7,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CLSAttributes.h"
+#import <Fabric/FABAttributes.h>
 #import "CLSLogging.h"
 #import "CLSReport.h"
 #import "CLSStackFrame.h"
 #import "Answers.h"
 
-NS_ASSUME_NONNULL_BEGIN
+#define CLS_DEPRECATED(x)  __attribute__ ((deprecated(x)))
+
+FAB_START_NONNULL
 
 @protocol CrashlyticsDelegate;
 
@@ -22,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface Crashlytics : NSObject
 
-@property (nonatomic, readonly, copy) NSString *APIKey;
+@property (nonatomic, readonly, copy) NSString *apiKey;
 @property (nonatomic, readonly, copy) NSString *version;
 @property (nonatomic, assign)         BOOL      debugMode;
 
@@ -36,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  * synchronously during start.
  *
  **/
-@property (nonatomic, assign, nullable) id <CrashlyticsDelegate> delegate;
+@property (nonatomic, assign)         id <CrashlyticsDelegate> FAB_NULLABLE delegate;
 
 /**
  *  The recommended way to install Crashlytics into your application is to place a call to +startWithAPIKey: 
@@ -62,8 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return The singleton Crashlytics instance
  */
-+ (Crashlytics *)startWithAPIKey:(NSString *)apiKey delegate:(nullable id<CrashlyticsDelegate>)delegate;
-+ (Crashlytics *)startWithAPIKey:(NSString *)apiKey delegate:(nullable id<CrashlyticsDelegate>)delegate afterDelay:(NSTimeInterval)delay CLS_DEPRECATED("Crashlytics no longer needs or uses the delay parameter.  Please use +startWithAPIKey:delegate: instead.");
++ (Crashlytics *)startWithAPIKey:(NSString *)apiKey delegate:(id<CrashlyticsDelegate> FAB_NULLABLE)delegate;
++ (Crashlytics *)startWithAPIKey:(NSString *)apiKey delegate:(id<CrashlyticsDelegate> FAB_NULLABLE)delegate afterDelay:(NSTimeInterval)delay CLS_DEPRECATED("Crashlytics no longer needs or uses the delay parameter.  Please use +startWithAPIKey:delegate: instead.");
 
 /**
  *  Access the singleton Crashlytics instance.
@@ -104,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param identifier An arbitrary user identifier string which ties an end-user to a record in your system.
  */
-- (void)setUserIdentifier:(nullable NSString *)identifier;
+- (void)setUserIdentifier:(NSString * FAB_NULLABLE)identifier;
 
 /**
  *  Specify a user name which will be visible in the Crashlytics UI.
@@ -113,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param name An end user's name.
  */
-- (void)setUserName:(nullable NSString *)name;
+- (void)setUserName:(NSString * FAB_NULLABLE)name;
 
 /**
  *  Specify a user email which will be visible in the Crashlytics UI.
@@ -123,11 +125,11 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param email An end user's email address.
  */
-- (void)setUserEmail:(nullable NSString *)email;
+- (void)setUserEmail:(NSString * FAB_NULLABLE)email;
 
-+ (void)setUserIdentifier:(nullable NSString *)identifier CLS_DEPRECATED("Please access this method via +sharedInstance");
-+ (void)setUserName:(nullable NSString *)name CLS_DEPRECATED("Please access this method via +sharedInstance");
-+ (void)setUserEmail:(nullable NSString *)email CLS_DEPRECATED("Please access this method via +sharedInstance");
++ (void)setUserIdentifier:(NSString * FAB_NULLABLE)identifier CLS_DEPRECATED("Please access this method via +sharedInstance");
++ (void)setUserName:(NSString * FAB_NULLABLE)name CLS_DEPRECATED("Please access this method via +sharedInstance");
++ (void)setUserEmail:(NSString * FAB_NULLABLE)email CLS_DEPRECATED("Please access this method via +sharedInstance");
 
 /**
  *  Set a value for a for a key to be associated with your crash data which will be visible in the Crashlytics UI.
@@ -137,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param value The object to be associated with the key
  *  @param key   The key with which to associate the value
  */
-- (void)setObjectValue:(nullable id)value forKey:(NSString *)key;
+- (void)setObjectValue:(id FAB_NULLABLE)value forKey:(NSString *)key;
 
 /**
  *  Set an int value for a key to be associated with your crash data which will be visible in the Crashlytics UI.
@@ -163,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setFloatValue:(float)value forKey:(NSString *)key;
 
-+ (void)setObjectValue:(nullable id)value forKey:(NSString *)key CLS_DEPRECATED("Please access this method via +sharedInstance");
++ (void)setObjectValue:(id FAB_NULLABLE)value forKey:(NSString *)key CLS_DEPRECATED("Please access this method via +sharedInstance");
 + (void)setIntValue:(int)value forKey:(NSString *)key CLS_DEPRECATED("Please access this method via +sharedInstance");
 + (void)setBoolValue:(BOOL)value forKey:(NSString *)key CLS_DEPRECATED("Please access this method via +sharedInstance");
 + (void)setFloatValue:(float)value forKey:(NSString *)key CLS_DEPRECATED("Please access this method via +sharedInstance");
@@ -179,13 +181,15 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param reason     The reason this exception occured
  *  @param frameArray An array of CLSStackFrame objects
  */
-- (void)recordCustomExceptionName:(NSString *)name reason:(nullable NSString *)reason frameArray:(CLS_GENERIC_NSARRAY(CLSStackFrame *) *)frameArray;
+- (void)recordCustomExceptionName:(NSString *)name reason:(NSString * FAB_NULLABLE)reason frameArray:(NSArray *)frameArray;
+
+
+
 
 - (void)logEvent:(NSString *)eventName CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
-- (void)logEvent:(NSString *)eventName attributes:(nullable NSDictionary *) attributes CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
+- (void)logEvent:(NSString *)eventName attributes:(NSDictionary * FAB_NULLABLE) attributes CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
 + (void)logEvent:(NSString *)eventName CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
-+ (void)logEvent:(NSString *)eventName attributes:(nullable NSDictionary *) attributes CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
-
++ (void)logEvent:(NSString *)eventName attributes:(NSDictionary * FAB_NULLABLE) attributes CLS_DEPRECATED("Please refer to Answers +logCustomEventWithName:");
 @end
 
 /**
@@ -245,4 +249,4 @@ NS_ASSUME_NONNULL_BEGIN
  */
 #define CrashlyticsKit [Crashlytics sharedInstance]
 
-NS_ASSUME_NONNULL_END
+FAB_END_NONNULL
