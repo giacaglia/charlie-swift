@@ -104,33 +104,15 @@ class showTransactionViewController: UIViewController {
     }
     
     @IBAction func notWorth(sender: AnyObject) {
-        if let vc = mainVC {
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                vc.swipeCellAtIndex(self.transactionIndex, toLeft: true)
-            })
-        }
-        else {
-            realm.beginWrite()
-            transaction!.status = 2
-            try! realm.commitWrite()
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
-
-        }
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.mainVC.swipeCellAtIndex(self.transactionIndex, toLeft: true)
+        })
     }
     
     @IBAction func worth(sender: AnyObject) {
-        if let vc = mainVC {
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                vc.swipeCellAtIndex(self.transactionIndex, toLeft: false)
-            })
-        }
-        else {
-            realm.beginWrite()
-            transaction!.status = 1
-            try! realm.commitWrite()
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
-        }
-    
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.mainVC.swipeCellAtIndex(self.transactionIndex, toLeft: false)
+        })
     }
     
     @IBAction func closeButtonPress(sender: AnyObject) {
