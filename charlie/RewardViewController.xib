@@ -48,7 +48,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="20" y="280" width="560" height="280"/>
+                    <rect key="frame" x="20" y="260" width="560" height="300"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -63,7 +63,7 @@
                 <constraint firstItem="RUc-E2-MP5" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="YCb-SI-cOa"/>
                 <constraint firstItem="RUc-E2-MP5" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="120" id="ZsK-8H-S9G"/>
                 <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="RUc-E2-MP5" secondAttribute="bottom" constant="100" id="qfJ-ju-fsz"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="RUc-E2-MP5" secondAttribute="bottom" constant="80" id="qfJ-ju-fsz"/>
             </constraints>
         </view>
     </objects>

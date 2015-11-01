@@ -10,13 +10,19 @@ import Foundation
 
 class SortViewController : UIViewController {
 
+    @IBOutlet weak var howShouldISortLabel: UILabel!
     @IBOutlet weak var mostRecentButton: UIButton!
     @IBOutlet weak var amountButton: UIButton!
     @IBOutlet weak var alphabeticalButton: UIButton!
     @IBOutlet weak var leastRecentButton: UIButton!
+    @IBOutlet weak var mostWorthButton: UIButton!
+    @IBOutlet weak var LeastWorthButton: UIButton!
+    @IBOutlet weak var dividerWorthView: UIView!
+    
     let grayColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
     var delegate:ChangeFilterProtocol? = nil
     var initialFilterType : SortFilterType? = nil
+    var transactionType : TransactionType = .InboxTransaction
     
     
     override func viewDidAppear(animated: Bool) {
@@ -32,6 +38,20 @@ class SortViewController : UIViewController {
         }
         else {
             self.amountButton.titleLabel?.textColor = listBlue
+        }
+        
+        
+        if (transactionType == .InboxTransaction) {
+            self.howShouldISortLabel.text = "How should I sort your inbox?"
+            self.mostWorthButton.hidden = true
+            self.LeastWorthButton.hidden = true
+            self.dividerWorthView.hidden = true
+        }
+        else {
+            self.howShouldISortLabel.text = "How should I sort your archive?"
+            self.mostWorthButton.hidden = false
+            self.LeastWorthButton.hidden = false
+            self.dividerWorthView.hidden = false
         }
     }
     
@@ -63,11 +83,27 @@ class SortViewController : UIViewController {
         self.delegate?.changeFilter(.FilterByAmount)
     }
       
+    @IBAction func mostWorthPressed(sender: AnyObject) {
+        self.allButtonsGrayExcept(4)
+        mostWorthButton.titleLabel?.textColor = listBlue
+        self.closePressed(mostWorthButton)
+        self.delegate?.changeFilter(.FilterByAmount)
+    }
+    
+    @IBAction func leastWorthPressed(sender: AnyObject) {
+        self.allButtonsGrayExcept(5)
+        LeastWorthButton.titleLabel?.textColor = listBlue
+        self.closePressed(LeastWorthButton)
+        self.delegate?.changeFilter(.FilterByAmount)
+    }
+    
     private func allButtonsGrayExcept(buttonIndex: Int) {
         if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
         if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}
         if buttonIndex != 2 {alphabeticalButton.titleLabel?.textColor = grayColor}
         if buttonIndex != 3 {amountButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 4 {mostWorthButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 5 {LeastWorthButton.titleLabel?.textColor = grayColor}
     }
     
     @IBAction func closePressed(sender: AnyObject) {

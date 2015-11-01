@@ -361,6 +361,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         self.view .addSubview(mainViewController.blackView)
         let sortVC = SortViewController()
         sortVC.initialFilterType = self.filterType
+        sortVC.transactionType = self.inboxType
         sortVC.delegate = self
         let height = self.view.frame.size.height*0.8
         sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
@@ -468,10 +469,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         inboxType = .InboxTransaction
         dividerView.backgroundColor = listBlue
-
-        
         moneyCountSubSubHeadLabel.text = "Worth it?"
-
         topSeperator.backgroundColor = listBlue
 
         inboxType == .InboxTransaction

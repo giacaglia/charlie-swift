@@ -35,7 +35,6 @@
         <!--Passcode View Controller-->
         <scene sceneID="cyk-f1-V2x">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O6k-is-dPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="passcodeViewController" id="Vhb-CB-Mm8" customClass="passcodeViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YOo-E3-2Rh"/>
@@ -47,6 +46,7 @@
                         <animations/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O6k-is-dPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-935" y="513"/>
         </scene>
