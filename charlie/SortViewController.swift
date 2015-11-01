@@ -16,7 +16,7 @@ class SortViewController : UIViewController {
     @IBOutlet weak var alphabeticalButton: UIButton!
     @IBOutlet weak var leastRecentButton: UIButton!
     @IBOutlet weak var mostWorthButton: UIButton!
-    @IBOutlet weak var LeastWorthButton: UIButton!
+    @IBOutlet weak var leastWorthButton: UIButton!
     @IBOutlet weak var dividerWorthView: UIView!
     
     let grayColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
@@ -27,83 +27,88 @@ class SortViewController : UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if self.initialFilterType == .FilterByDescendingDate {
-            self.mostRecentButton.titleLabel?.textColor = listBlue
+        if initialFilterType == .FilterByDescendingDate {
+            mostRecentButton.setTitleColor(listBlue, forState: .Normal)
         }
-        else if self.initialFilterType == .FilterByDate {
-            self.leastRecentButton.titleLabel?.textColor = listBlue
+        else if initialFilterType == .FilterByDate {
+            leastRecentButton.setTitleColor(listBlue, forState: .Normal)
         }
-        else if self.initialFilterType == .FilterByName {
-            self.alphabeticalButton.titleLabel?.textColor = listBlue
+        else if initialFilterType == .FilterByName {
+            alphabeticalButton.setTitleColor(listBlue, forState: .Normal)
         }
-        else {
-            self.amountButton.titleLabel?.textColor = listBlue
+        else if initialFilterType == .FilterByAmount {
+            amountButton.setTitleColor(listBlue, forState: .Normal)
         }
-        
+        else if initialFilterType == .FilterByMostWorth {
+            mostWorthButton.setTitleColor(listBlue, forState: .Normal)
+        }
+        else if initialFilterType == .FilterByLeastWorth {
+            leastWorthButton.setTitleColor(listBlue, forState: .Normal)
+        }
         
         if (transactionType == .InboxTransaction) {
             self.howShouldISortLabel.text = "How should I sort your inbox?"
             self.mostWorthButton.hidden = true
-            self.LeastWorthButton.hidden = true
+            self.leastWorthButton.hidden = true
             self.dividerWorthView.hidden = true
         }
         else {
             self.howShouldISortLabel.text = "How should I sort your archive?"
             self.mostWorthButton.hidden = false
-            self.LeastWorthButton.hidden = false
+            self.leastWorthButton.hidden = false
             self.dividerWorthView.hidden = false
         }
     }
     
     @IBAction func mostRecentPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(0)
-        mostRecentButton.titleLabel?.textColor = listBlue
+        mostRecentButton.setTitleColor(listBlue, forState: .Normal)
         self.closePressed(self.mostRecentButton)
         self.delegate?.changeFilter(.FilterByDescendingDate)
     }
     
     @IBAction func leastRecentPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(1)
-        leastRecentButton.titleLabel?.textColor = listBlue
+        leastRecentButton.setTitleColor(listBlue, forState: .Normal)
         self.closePressed(self.leastRecentButton)
         self.delegate?.changeFilter(.FilterByDate)
     }
     
     @IBAction func alphabeticalPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(2)
-        alphabeticalButton.titleLabel?.textColor = listBlue
+        alphabeticalButton.setTitleColor(listBlue, forState: .Normal)
         self.closePressed(self.alphabeticalButton)
         self.delegate?.changeFilter(.FilterByName)
     }
 
     @IBAction func amountPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(3)
-        amountButton.titleLabel?.textColor = listBlue
+        amountButton.setTitleColor(listBlue, forState: .Normal)
         self.closePressed(self.amountButton)
         self.delegate?.changeFilter(.FilterByAmount)
     }
       
     @IBAction func mostWorthPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(4)
-        mostWorthButton.titleLabel?.textColor = listBlue
+        mostWorthButton.setTitleColor(listBlue, forState: .Normal)
         self.closePressed(mostWorthButton)
         self.delegate?.changeFilter(.FilterByMostWorth)
     }
     
     @IBAction func leastWorthPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(5)
-        LeastWorthButton.titleLabel?.textColor = listBlue
-        self.closePressed(LeastWorthButton)
+        leastRecentButton.setTitleColor(listBlue, forState: .Normal)
+        self.closePressed(leastWorthButton)
         self.delegate?.changeFilter(.FilterByLeastWorth)
     }
     
     private func allButtonsGrayExcept(buttonIndex: Int) {
-        if buttonIndex != 0 {mostRecentButton.titleLabel?.textColor = grayColor}
-        if buttonIndex != 1 {leastRecentButton.titleLabel?.textColor = grayColor}
-        if buttonIndex != 2 {alphabeticalButton.titleLabel?.textColor = grayColor}
-        if buttonIndex != 3 {amountButton.titleLabel?.textColor = grayColor}
-        if buttonIndex != 4 {mostWorthButton.titleLabel?.textColor = grayColor}
-        if buttonIndex != 5 {LeastWorthButton.titleLabel?.textColor = grayColor}
+        if buttonIndex != 0 {mostRecentButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 1 {leastRecentButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 2 {alphabeticalButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 3 {amountButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 4 {mostWorthButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 5 {leastWorthButton.setTitleColor(grayColor, forState: .Normal)}
     }
     
     @IBAction func closePressed(sender: AnyObject) {

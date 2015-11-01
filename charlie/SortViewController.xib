@@ -7,12 +7,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SortViewController">
             <connections>
-                <outlet property="LeastWorthButton" destination="38d-rt-zvK" id="HR6-rK-N41"/>
                 <outlet property="alphabeticalButton" destination="gbS-1S-QeL" id="XCn-Rw-gcJ"/>
                 <outlet property="amountButton" destination="vsN-Pj-ZnK" id="vUY-kT-Hbs"/>
                 <outlet property="dividerWorthView" destination="qpr-zj-ga2" id="kpy-xs-6Xr"/>
                 <outlet property="howShouldISortLabel" destination="0RJ-xC-Iv6" id="IHM-Bc-4Uy"/>
                 <outlet property="leastRecentButton" destination="djJ-Wl-1dr" id="eQx-wf-NhL"/>
+                <outlet property="leastWorthButton" destination="38d-rt-zvK" id="VK9-oW-ilk"/>
                 <outlet property="mostRecentButton" destination="HEo-86-vcf" id="8TF-tK-ASE"/>
                 <outlet property="mostWorthButton" destination="Y3K-RD-P53" id="YDl-WM-Zcb"/>
                 <outlet property="view" destination="D6X-BM-Bnh" id="j5w-Ht-im1"/>
