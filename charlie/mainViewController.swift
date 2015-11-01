@@ -586,7 +586,6 @@ extension mainViewController : UITableViewDataSource {
         transactionsTable.removeCell(cell!, duration: 0.3, completion: nil)
         try! realm.commitWrite()
         self.setInboxTitle(true)
-        
         let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
         
         if direction == 1 {
