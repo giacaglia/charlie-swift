@@ -114,7 +114,6 @@
                         <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="amountPressed:" destination="-1" eventType="touchUpInside" id="wTc-LI-7DN"/>
                         <action selector="mostWorthPressed:" destination="-1" eventType="touchUpInside" id="1uw-Cp-0Y3"/>
                     </connections>
                 </button>
@@ -146,7 +145,6 @@
                         <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="amountPressed:" destination="-1" eventType="touchUpInside" id="2t8-FL-a8S"/>
                         <action selector="leastWorthPressed:" destination="-1" eventType="touchUpInside" id="bZk-6o-EFc"/>
                     </connections>
                 </button>

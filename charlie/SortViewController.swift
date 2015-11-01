@@ -87,14 +87,14 @@ class SortViewController : UIViewController {
         self.allButtonsGrayExcept(4)
         mostWorthButton.titleLabel?.textColor = listBlue
         self.closePressed(mostWorthButton)
-        self.delegate?.changeFilter(.FilterByAmount)
+        self.delegate?.changeFilter(.FilterByMostWorth)
     }
     
     @IBAction func leastWorthPressed(sender: AnyObject) {
         self.allButtonsGrayExcept(5)
         LeastWorthButton.titleLabel?.textColor = listBlue
         self.closePressed(LeastWorthButton)
-        self.delegate?.changeFilter(.FilterByAmount)
+        self.delegate?.changeFilter(.FilterByLeastWorth)
     }
     
     private func allButtonsGrayExcept(buttonIndex: Int) {

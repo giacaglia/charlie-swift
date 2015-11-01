@@ -33,7 +33,7 @@ enum TransactionType {
 }
 
 enum SortFilterType {
-    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount, FilterByHappyPercentage
+    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount, FilterByMostWorth, FilterByLeastWorth
 }
 
 protocol ChangeFilterProtocol {
@@ -490,7 +490,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         transactionsTable.reloadData()
     }
     
-    
     func groupBy(type: TransactionType, sortFilter: SortFilterType) -> NSArray {
         charlieGroupList = []
         var current_name = ""
@@ -520,7 +519,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 }
                 // Flagged items
                 else if trans.status == 2 {
-                    charlieGroupList[current_index].notWorthCount =   charlieGroupList[current_index].notWorthCount + 1
+                    charlieGroupList[current_index].notWorthCount = charlieGroupList[current_index].notWorthCount + 1
                     charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
                 }
             }
@@ -543,8 +542,28 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 else {
                     // not added to the list
                 }
+                if cGroup.transactions == 0 {
+                    cGroup.happyPercentage = 0
+                }
+                else {
+                    cGroup.happyPercentage = Int((Double(cGroup.worthCount) / Double((cGroup.transactions)) * 100))
+                }
+                
             }
             current_name = trans.name
+            
+        }
+        if (inboxType == .ApprovedAndFlaggedTransaction) {
+            if (sortFilter == .FilterByMostWorth) {
+                charlieGroupList.sortInPlace {
+                    return $0.happyPercentage > $1.happyPercentage
+                }
+            }
+            else if (sortFilter == .FilterByLeastWorth) {
+                charlieGroupList.sortInPlace {
+                    return $0.happyPercentage < $1.happyPercentage
+                }
+            }
         }
         return charlieGroupList
     }
