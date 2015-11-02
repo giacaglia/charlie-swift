@@ -36,6 +36,10 @@ enum SortFilterType {
     case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount, FilterByMostWorth, FilterByLeastWorth
 }
 
+enum ReportCardType : Int {
+    case HappyFlowType, CashFlowType, LocationType
+}
+
 protocol ChangeFilterProtocol {
     func removeBlackView()
     func changeFilter( filterType: SortFilterType )
@@ -74,7 +78,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
-    let inboxLabel = UILabel(frame: CGRectMake(0,0,40,40))
+    let inboxLabel = UILabel(frame: CGRectMake(0, 0, 40, 40))
 
     
     func willEnterForeground(notification: NSNotification!) {
@@ -110,7 +114,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
-        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: "addMoreCell")
+        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
+        transactionsTable.registerClass(ReportCardCell.self, forCellReuseIdentifier:ReportCardCell.cellIdentifier())
         transactionsTable.tableFooterView = UIView()
         transactionsTable.reloadData()
     }
@@ -393,7 +398,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     func makeOnlyFirstNElementsVisible() {
         areThereMoreItemsToLoad = false
-        //numItemsToLoad
         var loadCount = 0
         realm.beginWrite()
         for i in 0..<allTransactionItems.count {
@@ -601,10 +605,7 @@ extension mainViewController : UITableViewDataSource {
             charlieAnalytics.track("Not Worth It Swipe")
             if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
-                
                 self.showReward()
-                
-                
             }
         }
     }
@@ -618,8 +619,8 @@ extension mainViewController : UITableViewDataSource {
             addAccountButton.hidden = true
             accountAddView.hidden = true
         }
+//        return transactionItems.count + 3
         return transactionItems.count + Int(areThereMoreItemsToLoad)
-        
     }
     
     
@@ -632,18 +633,27 @@ extension mainViewController : UITableViewDataSource {
                 performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
             }
             else {
-                numItemsToLoad = 20
-                makeOnlyFirstNElementsVisible()
-                transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                self.setInboxTitle(true)
-                transactionsTable.reloadData()
+                if indexPath.row == transactionItems.count {
+                    numItemsToLoad = 10
+                    makeOnlyFirstNElementsVisible()
+                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                    self.setInboxTitle(true)
+                    transactionsTable.reloadData()
+                }
+//                else {
+//                    let rewardVC = RewardViewController()
+//                    rewardVC.view.backgroundColor = lightBlue
+//                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
+//                }
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if inboxType == .InboxTransaction && indexPath.row == transactionItems.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier("addMoreCell", forIndexPath: indexPath)  as! AddMoreCell
+        if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
+            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
+//            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
+//            cell.setupByType(ReportCardType(rawValue: (indexPath.row - transactionItems.count) )!)
             return cell
         }
         
@@ -687,6 +697,7 @@ extension mainViewController : UITableViewDataSource {
         return cell
     }
     
+    
     func swipeCellAtIndex(transactionIndex: Int, toLeft: Bool) {
         let indexPath = NSIndexPath(forRow: transactionIndex, inSection: 0)
         if toLeft {
@@ -722,6 +733,10 @@ class HeaderCell : UIView {
 }
 
 class AddMoreCell : UITableViewCell {
+    class func cellIdentifier() -> String {
+        return "addMoreCell"
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setup()
@@ -734,11 +749,80 @@ class AddMoreCell : UITableViewCell {
     
     private func setup() {
         self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
-        let centralSetup = UILabel(frame: CGRectMake(0, 0, 100, 30))
-        centralSetup.textAlignment = .Center
-        centralSetup.center = self.contentView.center
-        centralSetup.text = "Add More"
-        self.contentView.addSubview(centralSetup)
+        let centralLabel = UILabel(frame: CGRectMake(0, 0, 200, 30))
+        centralLabel.textAlignment = .Center
+        centralLabel.center = self.contentView.center
+        centralLabel.text = "show more transactions"
+        self.contentView.addSubview(centralLabel)
+    }
+}
+
+class ReportCardCell : UITableViewCell {
+    var leftIcon = UIImageView()
+    var nameLabel = UILabel()
+    var priceLabel = UILabel()
+    var rightArrow = UIImageView()
+    
+    class func cellIdentifier() -> String {
+        return "reportCardCell"
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    private func setup() {
+        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+        
+        leftIcon = UIImageView(frame: CGRectMake(5, 0, 20, 20))
+        leftIcon.center = CGPointMake(leftIcon.center.x, self.contentView.center.y)
+        leftIcon.contentMode = .ScaleAspectFit
+        self.contentView.addSubview(leftIcon)
+        
+        nameLabel = UILabel(frame: CGRectMake(30, 0, 200, 20))
+        nameLabel.center = CGPointMake(nameLabel.center.x, self.contentView.center.y)
+        nameLabel.textColor = RGB(75, green: 75, blue: 75)
+        nameLabel.font = UIFont.boldSystemFontOfSize(14.0)
+        self.contentView.addSubview(nameLabel)
+        
+        priceLabel = UILabel(frame: CGRectMake(self.contentView.frame.size.width - 15 - 15 - 5 - 200, 30, 200, 30))
+        priceLabel.center = CGPointMake(priceLabel.center.x, self.contentView.center.y)
+        priceLabel.textColor = listBlue
+        priceLabel.textAlignment = .Right
+        priceLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+        self.contentView.addSubview(priceLabel)
+        
+        rightArrow = UIImageView(frame: CGRectMake(self.contentView.frame.size.width - 15 - 15, 0, 15, 15))
+        rightArrow.center = CGPointMake(rightArrow.center.x, self.contentView.center.y)
+        rightArrow.contentMode = .ScaleAspectFit
+        rightArrow.image = UIImage(named: "rightArrow")
+        self.contentView.addSubview(rightArrow)
+    }
+    
+    private func setupByType(type: ReportCardType) {
+        if type == .HappyFlowType {
+            self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
+            self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
+            rightArrow.hidden = true
+        }
+        else if type == .CashFlowType {
+            nameLabel.text = "CASH FLOW"
+            leftIcon.image = UIImage(named: "cashFlow")
+            priceLabel.text = "$4,000"
+            rightArrow.hidden = false
+        }
+        else if type == .LocationType {
+            nameLabel.text = "POPULAR LOCATIONS"
+            leftIcon.image = UIImage(named: "location")
+            priceLabel.text = nil
+            rightArrow.hidden = false
+        }
     }
 }
 

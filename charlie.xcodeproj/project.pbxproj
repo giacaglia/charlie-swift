@@ -465,11 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				88E6209F1BB476330060ED28 /* SignUp */,
-				090BD3441B25089300F26E78 /* mainViewController.swift */,
-				88B41F0A1BC4614E0038483F /* RewardViewController.xib */,
-				88B41F0D1BC461610038483F /* RewardViewController.swift */,
-				8816CCB01BBDB596001F6F31 /* SortViewController.xib */,
-				8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */,
+				880B116A1BE68BB800BB2064 /* MainViewController */,
 				099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */,
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
@@ -837,6 +833,18 @@
 				88A2951E1BB598AC0091A36B /* ABPinSelectionView.m */,
 			);
 			name = ABPin;
+			sourceTree = "<group>";
+		};
+		880B116A1BE68BB800BB2064 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				090BD3441B25089300F26E78 /* mainViewController.swift */,
+				88B41F0A1BC4614E0038483F /* RewardViewController.xib */,
+				88B41F0D1BC461610038483F /* RewardViewController.swift */,
+				8816CCB01BBDB596001F6F31 /* SortViewController.xib */,
+				8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */,
+			);
+			name = MainViewController;
 			sourceTree = "<group>";
 		};
 		88E6209F1BB476330060ED28 /* SignUp */ = {

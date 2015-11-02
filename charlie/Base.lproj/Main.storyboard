@@ -1867,8 +1867,8 @@
         <image name="unselected_second_btn" width="42" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MIk-q3-hAj"/>
-        <segue reference="DF7-7D-dxJ"/>
+        <segue reference="NZC-ff-rSb"/>
         <segue reference="swt-fH-1dv"/>
+        <segue reference="DF7-7D-dxJ"/>
     </inferredMetricsTieBreakers>
 </document>
