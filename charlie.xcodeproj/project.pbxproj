@@ -180,13 +180,6 @@
 			remoteGlobalIDString = 91D3658A1ACDCFA800D018B2;
 			remoteInfo = BladeKit;
 		};
-		09C2A75B1B21F0AD005A40DA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09C2A73A1B21F0AC005A40DA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 09C2A7411B21F0AD005A40DA;
-			remoteInfo = charlie;
-		};
 		4596990C1BA9E50B00233C66 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 459698551BA9E50A00233C66 /* Charts.xcodeproj */;
@@ -256,7 +249,6 @@
 		09C2A74F1B21F0AD005A40DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09C2A7511B21F0AD005A40DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09C2A7541B21F0AD005A40DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		09C2A75A1B21F0AD005A40DA /* charlieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = charlieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09C2A75F1B21F0AD005A40DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		09CA4D711B71915300D4F63D /* persistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = persistenceStore.swift; sourceTree = "<group>"; };
@@ -451,13 +443,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		09C2A7571B21F0AD005A40DA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -582,7 +567,6 @@
 			isa = PBXGroup;
 			children = (
 				09C2A7421B21F0AD005A40DA /* charlie.app */,
-				09C2A75A1B21F0AD005A40DA /* charlieTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -884,24 +868,6 @@
 			productReference = 09C2A7421B21F0AD005A40DA /* charlie.app */;
 			productType = "com.apple.product-type.application";
 		};
-		09C2A7591B21F0AD005A40DA /* charlieTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 09C2A7671B21F0AD005A40DA /* Build configuration list for PBXNativeTarget "charlieTests" */;
-			buildPhases = (
-				09C2A7561B21F0AD005A40DA /* Sources */,
-				09C2A7571B21F0AD005A40DA /* Frameworks */,
-				09C2A7581B21F0AD005A40DA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				09C2A75C1B21F0AD005A40DA /* PBXTargetDependency */,
-			);
-			name = charlieTests;
-			productName = charlieTests;
-			productReference = 09C2A75A1B21F0AD005A40DA /* charlieTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -924,10 +890,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					09C2A7591B21F0AD005A40DA = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 09C2A7411B21F0AD005A40DA;
 					};
 				};
 			};
@@ -955,7 +917,6 @@
 			projectRoot = "";
 			targets = (
 				09C2A7411B21F0AD005A40DA /* charlie */,
-				09C2A7591B21F0AD005A40DA /* charlieTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1008,13 +969,6 @@
 				091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */,
 				09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */,
 				45604A0B1B71183200C37B9D /* test_variant.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		09C2A7581B21F0AD005A40DA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,13 +1115,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		09C2A7561B21F0AD005A40DA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1180,11 +1127,6 @@
 			isa = PBXTargetDependency;
 			name = BladeKit;
 			targetProxy = 090BD3571B250D2D00F26E78 /* PBXContainerItemProxy */;
-		};
-		09C2A75C1B21F0AD005A40DA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 09C2A7411B21F0AD005A40DA /* charlie */;
-			targetProxy = 09C2A75B1B21F0AD005A40DA /* PBXContainerItemProxy */;
 		};
 		459699111BA9E5DC00233C66 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1349,46 +1291,6 @@
 			};
 			name = Release;
 		};
-		09C2A7681B21F0AD005A40DA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = charlieTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/charlie.app/charlie";
-			};
-			name = Debug;
-		};
-		09C2A7691B21F0AD005A40DA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = charlieTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/charlie.app/charlie";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1406,15 +1308,6 @@
 			buildConfigurations = (
 				09C2A7651B21F0AD005A40DA /* Debug */,
 				09C2A7661B21F0AD005A40DA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		09C2A7671B21F0AD005A40DA /* Build configuration list for PBXNativeTarget "charlieTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				09C2A7681B21F0AD005A40DA /* Debug */,
-				09C2A7691B21F0AD005A40DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
