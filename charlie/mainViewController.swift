@@ -276,7 +276,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
         flaggedPredicate = NSPredicate(format: "status = 2")
-        actedUponPredicate = NSPredicate(format: "status > 0")
+        actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
         waitingToProcessPredicate = NSPredicate(format: "status = -1")
         
 //        if hasAccounts {
@@ -498,21 +498,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         charlieGroupList = []
         var current_name = ""
         let sortProperties : Array<SortDescriptor>!
-        if sortFilter == .FilterByName {
-            sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        }
-        else if sortFilter == .FilterByDescendingDate {
-            sortProperties = [SortDescriptor(property: "date", ascending: false)]
-        }
-        else if sortFilter == .FilterByDate {
-            sortProperties = [SortDescriptor(property: "date", ascending: true)]
-        }
-        else {
-            sortProperties = [SortDescriptor(property: "amount", ascending: false)]
-        }
+     
+        sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         
         let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
         var current_index = 0
+        
         for trans in actedUponItems {
             print(trans.name)
             if trans.name == current_name {
@@ -526,9 +517,15 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     charlieGroupList[current_index].notWorthCount = charlieGroupList[current_index].notWorthCount + 1
                     charlieGroupList[current_index].notWorthValue = charlieGroupList[current_index].notWorthValue + trans.amount
                 }
+                
+               charlieGroupList[current_index].happyPercentage = Int((Double(charlieGroupList[current_index].worthCount) / Double((charlieGroupList[current_index].transactions)) * 100))
+               
+                charlieGroupList[current_index].totalAmount +=  trans.amount
+                
             }
             else {
-                // Dont include the ones that were received/came to the account
+               
+                
                 print("create new group: \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name)
                 if trans.status == 1 {
@@ -551,6 +548,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                 }
                 else {
                     cGroup.happyPercentage = Int((Double(cGroup.worthCount) / Double((cGroup.transactions)) * 100))
+                    cGroup.totalAmount = cGroup.totalAmount + trans.amount
                 }
                 
             }
@@ -568,7 +566,17 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     return $0.happyPercentage < $1.happyPercentage
                 }
             }
+        
+            else if (sortFilter == .FilterByAmount) {
+                charlieGroupList.sortInPlace {
+                    return $0.totalAmount > $1.totalAmount
+                }
+            }
+
+        
         }
+        
+        
         return charlieGroupList
     }
 }

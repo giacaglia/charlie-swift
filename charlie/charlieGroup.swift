@@ -16,6 +16,7 @@ class charlieGroup {
     var worthValue:      Double = 0
     var notWorthValue:   Double = 0
     var happyPercentage: Int    = 0
+    var totalAmount:     Double = 0
     init(name:String) {
        self.name = name
     }

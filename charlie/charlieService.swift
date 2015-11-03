@@ -17,6 +17,9 @@ var httpStatusCode:Int = 0
 //var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
 //var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
 //var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
+//var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+//var apiKey = "jj859i3mfp230p34"
+//
 
 ////production
 var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
