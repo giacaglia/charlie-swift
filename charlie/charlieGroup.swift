@@ -11,16 +11,18 @@ import Foundation
 
 class charlieGroup {
     var name:            String
+    var lastDate:        String
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0
     var worthValue:      Double = 0
     var notWorthValue:   Double = 0
     var happyPercentage: Int    = 0
     var totalAmount:     Double = 0
-    init(name:String) {
-       self.name = name
+
+    init(name:String, lastDate:String) {
+        self.name = name
+        self.lastDate = lastDate
     }
-    
     
     var transactions : Int {
         get {

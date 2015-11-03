@@ -527,7 +527,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                
                 
                 print("create new group: \(trans.name)")
-                let cGroup = charlieGroup(name: trans.name)
+                let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
@@ -570,6 +570,17 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             else if (sortFilter == .FilterByAmount) {
                 charlieGroupList.sortInPlace {
                     return $0.totalAmount > $1.totalAmount
+                }
+            }
+            
+            else if (sortFilter == .FilterByDescendingDate) {
+                charlieGroupList.sortInPlace {
+                    return $0.lastDate > $1.lastDate
+                }
+            }
+            else if (sortFilter == .FilterByDate) {
+                charlieGroupList.sortInPlace {
+                    return $0.lastDate < $1.lastDate
                 }
             }
 
