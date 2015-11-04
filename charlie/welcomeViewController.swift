@@ -22,7 +22,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     //PRODCHANGE
     //var realm = try! Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())
-    var realm = try! Realm()
+    //var realm = try! Realm()
     
     
     func didFinishLaunching(notification: NSNotification!) {

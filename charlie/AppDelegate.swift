@@ -37,12 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //let cHelp = cHelper()
        
+        let configs = Realm.Configuration(encryptionKey: cHelper().getKey())
+        var realm = try! Realm(configuration: configs)
+        
+        
         //filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
         Fabric.with([Crashlytics()])
 
         //PRODCHANGE
-        Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
-        //Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328")
+        //Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
+        Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328")
         
         Mixpanel.sharedInstance().identify(Mixpanel.sharedInstance().distinctId)
         charlieAnalytics.track("App Launched")
