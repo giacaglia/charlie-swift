@@ -194,7 +194,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             if self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeRight") == nil {
-                    let refreshAlert = UIAlertController(title: "Swipe Right", message: "This transaction will be placed on the worth it tab (the smiley face on the bottom right)", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "Swipe Right", message: "To see your transactions that were worth it, select the tab on the bottom right.)", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 1)
                         defaults.setObject("yes", forKey: "firstSwipeRight")
@@ -218,7 +218,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             if  self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeLeft") == nil {
-                    let refreshAlert = UIAlertController(title: "Swipe Left", message: "This transaction will be placed on the not worth it tab (the sad face on the bottom left)", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "Swipe Left", message: "To see your transactions that were not worth it, select the tab on the bottom right.", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 2)
                         defaults.setObject("yes", forKey: "firstSwipeLeft")
