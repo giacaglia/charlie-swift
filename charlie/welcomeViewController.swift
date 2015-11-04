@@ -46,19 +46,19 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         
-        let key = NSMutableData(length: 64)!
-        SecRandomCopyBytes(kSecRandomDefault, key.length,
-            UnsafeMutablePointer<UInt8>(key.mutableBytes))
-        
-        // Open the encrypted Realm file
-        let config = Realm.Configuration(encryptionKey: key)
-        do {
-            realm = try Realm(configuration: config)
-            // Use the Realm as normal
-        } catch let error as NSError {
-            // If the encryption key is wrong, `error` will say that it's an invalid database
-            fatalError("Error opening realm: \(error)")
-        }
+//        let key = NSMutableData(length: 64)!
+//        SecRandomCopyBytes(kSecRandomDefault, key.length,
+//            UnsafeMutablePointer<UInt8>(key.mutableBytes))
+//        
+//        // Open the encrypted Realm file
+//        let config = Realm.Configuration(encryptionKey: key)
+//        do {
+//            realm = try Realm(configuration: config)
+//            // Use the Realm as normal
+//        } catch let error as NSError {
+//            // If the encryption key is wrong, `error` will say that it's an invalid database
+//            fatalError("Error opening realm: \(error)")
+//        }
 
         
         
