@@ -21,8 +21,11 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     var pageTitles = [String()]
     var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
     //PRODCHANGE
-    //var realm = try! Realm(path: Realm.defaultPath, readOnly: false, encryptionKey: cHelper().getKey())
+
     //var realm = try! Realm()
+
+    var realm = try! Realm(configuration: config)
+
     
     
     func didFinishLaunching(notification: NSNotification!) {
@@ -39,6 +42,12 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+
+        //var realm = try! Realm()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
         
         // If it's not connected to the internet
