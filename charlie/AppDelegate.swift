@@ -26,7 +26,7 @@ let mediumGray = UIColor(red: 154/255, green: 154/255, blue: 154/255, alpha: 1.0
 var cService = charlieService()
 var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
 let defaults = NSUserDefaults.standardUserDefaults()
-let config = Realm.Configuration(encryptionKey: cHelper().getKey())
+//let config = Realm.Configuration(encryptionKey: cHelper().getKey())
 
 
 @UIApplicationMain

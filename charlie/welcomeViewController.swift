@@ -24,7 +24,7 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
 
     //var realm = try! Realm()
 
-    var realm = try! Realm(configuration: config)
+    var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
 
     
     
