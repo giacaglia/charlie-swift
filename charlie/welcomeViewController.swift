@@ -24,8 +24,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
 
     //var realm = try! Realm()
 
-    var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
+   // var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
 
+    
+    var realm:Realm
     
     
     func didFinishLaunching(notification: NSNotification!) {
@@ -43,6 +45,21 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        let key = NSMutableData(length: 64)!
+        SecRandomCopyBytes(kSecRandomDefault, key.length,
+            UnsafeMutablePointer<UInt8>(key.mutableBytes))
+        
+        // Open the encrypted Realm file
+        let config = Realm.Configuration(encryptionKey: key)
+        do {
+            realm = try Realm(configuration: config)
+            // Use the Realm as normal
+        } catch let error as NSError {
+            // If the encryption key is wrong, `error` will say that it's an invalid database
+            fatalError("Error opening realm: \(error)")
+        }
+
         
         
 
