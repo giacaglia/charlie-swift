@@ -23,7 +23,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     //PRODCHANGE
    // var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
     
-    var realm: Realm!
+    //var realm: Realm!
+    
+    var realm = try! Realm(path: Realm().path, readOnly: false, encryptionKey: cHelper().getKey())
+
     
     func didFinishLaunching(notification: NSNotification!) {
         if defaults.stringForKey("firstLoad") != nil {
@@ -40,10 +43,10 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var encriptionKey = cHelper().getKey()
-       
-        let config = Realm.Configuration(encryptionKey: encriptionKey)
-        realm = try! Realm(configuration: config)
+//        var encriptionKey = cHelper().getKey()
+//       
+//        let config = Realm.Configuration(encryptionKey: encriptionKey)
+//        realm = try! Realm(configuration: config)
 
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
