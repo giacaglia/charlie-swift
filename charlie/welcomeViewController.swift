@@ -40,16 +40,11 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        var encriptionKey = 
-        //run a migration to encrypt data
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            encryptionKey: cHelper().getKey(),
-            migrationBlock: { migration, oldSchemaVersion in
-        })
-        
-        Realm.Configuration.defaultConfiguration = config
-        realm = try! Realm()
+        var encriptionKey = cHelper().getKey()
+       
+        let config = Realm.Configuration(encryptionKey: encriptionKey)
+        realm = try! Realm(configuration: config)
+
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
         
