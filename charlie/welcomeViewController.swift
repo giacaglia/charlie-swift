@@ -45,8 +45,14 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let config = Realm.Configuration(encryptionKey: cHelper().getKey())
-        
+        var encriptionKey = cHelper().getKey()
+       
+        if Realm.Configuration().encryptionKey != nil {
+            encriptionKey = Realm.Configuration().encryptionKey!
+        }
+     
+//        if let config = Realm.Configuration().encryptionKey {
+        let config = Realm.Configuration(encryptionKey: encriptionKey)
         realm = try! Realm(configuration: config)
 
         
