@@ -42,8 +42,6 @@ RLM_ASSUME_NONNULL_BEGIN
 // returns a cached or new schema for a given object class
 + (instancetype)schemaForObjectClass:(Class)objectClass;
 
-- (void)sortPropertiesByColumn;
-
 @end
 
 @interface RLMObjectSchema (Dynamic)

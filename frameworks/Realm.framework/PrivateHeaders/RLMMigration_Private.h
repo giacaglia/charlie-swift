@@ -27,7 +27,7 @@ typedef void (^RLMObjectBaseMigrationBlock)(RLMObjectBase *oldObject, RLMObjectB
 @property (nonatomic, strong) RLMRealm *oldRealm;
 @property (nonatomic, strong) RLMRealm *realm;
 
-- (instancetype)initWithRealm:(RLMRealm *)realm oldRealm:(RLMRealm *)oldRealm;
+- (instancetype)initWithRealm:(RLMRealm *)realm key:(NSData *)key error:(NSError **)error;
 
 - (void)execute:(RLMMigrationBlock)block;
 

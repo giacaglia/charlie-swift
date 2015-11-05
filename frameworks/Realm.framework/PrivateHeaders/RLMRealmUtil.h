@@ -17,26 +17,28 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
-#import <memory>
-#import <string>
 
 @class RLMRealm;
 
-namespace realm {
-    class RealmDelegate;
-}
-
 // Add a Realm to the weak cache
-void RLMCacheRealm(std::string const& path, RLMRealm *realm);
+FOUNDATION_EXPORT void RLMCacheRealm(RLMRealm *realm);
 // Get a Realm for the given path which can be used on the current thread
-RLMRealm *RLMGetThreadLocalCachedRealmForPath(std::string const& path);
+FOUNDATION_EXPORT RLMRealm *RLMGetThreadLocalCachedRealmForPath(NSString *path);
 // Get a Realm for the given path
-RLMRealm *RLMGetAnyCachedRealmForPath(std::string const& path);
+FOUNDATION_EXPORT RLMRealm *RLMGetAnyCachedRealmForPath(NSString *path);
 // Clear the weak cache of Realms
-void RLMClearRealmCache();
+FOUNDATION_EXPORT void RLMClearRealmCache();
 
 // Install an uncaught exception handler that cancels write transactions
 // for all cached realms on the current thread
-void RLMInstallUncaughtExceptionHandler();
+FOUNDATION_EXPORT void RLMInstallUncaughtExceptionHandler();
 
-std::unique_ptr<realm::RealmDelegate> RLMCreateRealmDelegate(RLMRealm *realm);
+@interface RLMNotifier : NSObject
+// listens to changes to the realm's file and notifies it when they occur
+// does not retain the Realm
+- (instancetype)initWithRealm:(RLMRealm *)realm error:(NSError **)error;
+// stop listening for changes
+- (void)stop;
+// notify other Realm instances for the same path that a change has occurred
+- (void)notifyOtherRealms;
+@end

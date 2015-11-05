@@ -135,10 +135,6 @@
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
-		88242D3A1BDBF89400AC7AFB /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88242D371BDBF87200AC7AFB /* RealmSwift.framework */; };
-		88242D3B1BDBF89400AC7AFB /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88242D371BDBF87200AC7AFB /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88242D3C1BDBF89800AC7AFB /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88242D361BDBF87200AC7AFB /* Realm.framework */; };
-		88242D3D1BDBF89800AC7AFB /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88242D361BDBF87200AC7AFB /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295141BB598AC0091A36B /* ABPadButton.m */; };
 		88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */; };
 		88A295211BB598AC0091A36B /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */; };
@@ -149,6 +145,8 @@
 		88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD39B81BB337CB003AE420 /* libicucore.tbd */; };
 		88B41F0B1BC4614E0038483F /* RewardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B41F0A1BC4614E0038483F /* RewardViewController.xib */; };
 		88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B41F0D1BC461610038483F /* RewardViewController.swift */; };
+		88B7F0711BEB0F4F00E6EFEE /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88B7F06D1BEB0EB100E6EFEE /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88B7F0721BEB0F5300E6EFEE /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,10 +201,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				88242D3D1BDBF89800AC7AFB /* Realm.framework in Embed Frameworks */,
+				88B7F0721BEB0F5300E6EFEE /* RealmSwift.framework in Embed Frameworks */,
+				88B7F0711BEB0F4F00E6EFEE /* Realm.framework in Embed Frameworks */,
 				4596990F1BA9E5DC00233C66 /* Charts.framework in Embed Frameworks */,
 				090BD3561B250D2D00F26E78 /* BladeKit.framework in Embed Frameworks */,
-				88242D3B1BDBF89400AC7AFB /* RealmSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,8 +397,6 @@
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
-		88242D361BDBF87200AC7AFB /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		88242D371BDBF87200AC7AFB /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		88A295131BB598AC0091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
 		88A295141BB598AC0091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
 		88A295151BB598AC0091A36B /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
@@ -417,6 +413,8 @@
 		88AD39B81BB337CB003AE420 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		88B41F0A1BC4614E0038483F /* RewardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardViewController.xib; sourceTree = "<group>"; };
 		88B41F0D1BC461610038483F /* RewardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardViewController.swift; sourceTree = "<group>"; };
+		88B7F06D1BEB0EB100E6EFEE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,8 +433,6 @@
 				456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */,
 				456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */,
 				090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */,
-				88242D3A1BDBF89400AC7AFB /* RealmSwift.framework in Frameworks */,
-				88242D3C1BDBF89800AC7AFB /* Realm.framework in Frameworks */,
 				091E008E1B7959AB0014012D /* CloudKit.framework in Frameworks */,
 				45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */,
 				45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */,
@@ -468,8 +464,8 @@
 			children = (
 				88A53B221BB38B0300D5A1F0 /* libz.tbd */,
 				88AD39B81BB337CB003AE420 /* libicucore.tbd */,
-				88242D361BDBF87200AC7AFB /* Realm.framework */,
-				88242D371BDBF87200AC7AFB /* RealmSwift.framework */,
+				88B7F06D1BEB0EB100E6EFEE /* Realm.framework */,
+				88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */,
 				091E008D1B7959AB0014012D /* CloudKit.framework */,
 				4560494F1B71183200C37B9D /* Mixpanel */,
 				4560494D1B7115AE00C37B9D /* SystemConfiguration.framework */,
