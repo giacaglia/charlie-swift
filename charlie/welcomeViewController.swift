@@ -23,9 +23,9 @@ class welcomeViewController: UIViewController, UIScrollViewDelegate {
     //PRODCHANGE
    // var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
     
-    //var realm: Realm!
+    var realm =  try! Realm()
     
-    var realm = try! Realm(path: Realm().path, readOnly: false, encryptionKey: cHelper().getKey())
+    //var realm = try! Realm(path: Realm().path, readOnly: false, encryptionKey: cHelper().getKey())
 
     
     func didFinishLaunching(notification: NSNotification!) {
