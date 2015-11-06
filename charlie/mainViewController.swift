@@ -589,7 +589,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
 }
 
 // Swipe part of the main view controller
-extension mainViewController : UITableViewDataSource {
+extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
         self.updateTableAt(indexPath: indexPath!, direction: direction)
@@ -718,6 +718,13 @@ extension mainViewController : UITableViewDataSource {
        
         return cell
     }
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (inboxType == .InboxTransaction && indexPath.row == transactionItems.count) {
+            return 200
+        }
+        return 74
+    }
     
     
     func swipeCellAtIndex(transactionIndex: Int, toLeft: Bool) {
@@ -784,6 +791,8 @@ class ReportCardCell : UITableViewCell {
     var nameLabel = UILabel()
     var priceLabel = UILabel()
     var rightArrow = UIImageView()
+    var happyFlowNumber = UILabel()
+    var happyLabel = UILabel()
     
     class func cellIdentifier() -> String {
         return "reportCardCell"
@@ -800,7 +809,7 @@ class ReportCardCell : UITableViewCell {
     }
     
     private func setup() {
-        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 74)
         
         leftIcon = UIImageView(frame: CGRectMake(5, 0, 20, 20))
         leftIcon.center = CGPointMake(leftIcon.center.x, self.contentView.center.y)
@@ -825,13 +834,33 @@ class ReportCardCell : UITableViewCell {
         rightArrow.contentMode = .ScaleAspectFit
         rightArrow.image = UIImage(named: "rightArrow")
         self.contentView.addSubview(rightArrow)
+        
+        happyFlowNumber = UILabel(frame: CGRectMake(0, 0, 200, 50))
+        happyFlowNumber.center = CGPointMake(self.contentView.center.x, 80)
+        happyFlowNumber.textColor = listBlue
+        happyFlowNumber.textAlignment = .Center
+        happyFlowNumber.font = UIFont(name: "HelveticaNeue-Medium", size: 60)
+        self.contentView.addSubview(happyFlowNumber)
+        
+        happyLabel = UILabel(frame: CGRectMake(0, 0, 200, 50))
+        happyLabel.center = CGPointMake(self.contentView.center.x, 120)
+        happyLabel.textColor = listBlue
+        happyLabel.textAlignment = .Center
+        happyLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+        happyLabel.text = "HAPPY FLOW"
+        self.contentView.addSubview(happyLabel)
     }
     
     private func setupByType(type: ReportCardType) {
+        happyFlowNumber.hidden = true
+        happyLabel.hidden = true
         if type == .HappyFlowType {
             self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
             self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
             rightArrow.hidden = true
+            happyFlowNumber.hidden = false
+            happyFlowNumber.text = "50%"
+            happyLabel.hidden = false
         }
         else if type == .CashFlowType {
             nameLabel.text = "CASH FLOW"

@@ -67,11 +67,9 @@ class SBGestureTableViewCell: UITableViewCell {
             updateSideViews()
         }
     }
+    
     private var gestureTableView: SBGestureTableView!
     private let panGestureRecognizer = UIPanGestureRecognizer()
-    
-    
-    
     @IBOutlet weak var nameCellLabel: UILabel!
     @IBOutlet weak var amountCellLabel: UILabel!
     @IBOutlet weak var dateCellLabel: UILabel!
