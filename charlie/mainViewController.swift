@@ -684,8 +684,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             let trans = transactionItems[indexPath.row]
             cell.nameCellLabel.text = trans.name
 
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happy_on")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sad_on")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             
             cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
             cell.amountCellLabel.textColor = listBlue
