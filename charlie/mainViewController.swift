@@ -638,8 +638,8 @@ extension mainViewController : UITableViewDataSource {
             addAccountButton.hidden = true
             accountAddView.hidden = true
         }
-//        return transactionItems.count + 3
-        return transactionItems.count + Int(areThereMoreItemsToLoad)
+        return transactionItems.count + 3
+//        return transactionItems.count + Int(areThereMoreItemsToLoad)
     }
     
     
@@ -659,20 +659,27 @@ extension mainViewController : UITableViewDataSource {
                     self.setInboxTitle(true)
                     transactionsTable.reloadData()
                 }
-//                else {
-//                    let rewardVC = RewardViewController()
-//                    rewardVC.view.backgroundColor = lightBlue
-//                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
-//                }
+                else {
+                    let rewardVC = RewardViewController()
+                    if indexPath.row == transactionItems.count + 1 {
+                        rewardVC.typeOfView = .HappyFlowType
+                    }
+                    else {
+                        rewardVC.typeOfView = .CashFlowType
+                    }
+                    rewardVC.view.backgroundColor = lightBlue
+                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
+                }
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
-//            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
-//            cell.setupByType(ReportCardType(rawValue: (indexPath.row - transactionItems.count) )!)
+//            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
+            let indexOfReportCard = indexPath.row - transactionItems.count
+            cell.setupByType(ReportCardType(rawValue: indexOfReportCard )!)
             return cell
         }
         
@@ -846,7 +853,6 @@ class ReportCardCell : UITableViewCell {
 }
 
 extension mainViewController : UIViewControllerPreviewingDelegate {
-    
     /// Called when the user has pressed a source view in a previewing view controller (Peek).
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
