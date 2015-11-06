@@ -31,7 +31,7 @@ class RewardViewController : UIViewController {
             self.fillUpWithHappyPercentage()
         }
         else {
-            self.fillUpWithCashFlow()
+            fillUpWithCashFlow(self.chartView!)
         }
     }
     
@@ -41,8 +41,8 @@ class RewardViewController : UIViewController {
     }
     
     
-    private func setChart(dataPoints: [String], values: [Double]) {
-        chartView!.noDataText = "You need to provide data for the chart."
+    private func setChart(chart: LineChartView!, dataPoints: [String], values: [Double]) {
+        chart.noDataText = "You need to provide data for the chart."
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
@@ -58,30 +58,30 @@ class RewardViewController : UIViewController {
         lineChartDataSet.drawCubicEnabled = true
         
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-        chartView!.gridBackgroundColor = lightBlue
-        chartView!.backgroundColor = lightBlue
-        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.leftAxis.labelTextColor = UIColor.whiteColor()
-        chartView!.leftAxis.labelCount = 4
-        chartView!.leftAxis.axisLineWidth = 10
-        chartView!.leftAxis.valueFormatter = NSNumberFormatter()
-        chartView!.leftAxis.valueFormatter!.minimumFractionDigits = 0
-        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
-        chartView!.leftAxis.axisLineColor = lightBlue
-        chartView!.pinchZoomEnabled = true
-        chartView!.rightAxis.enabled = false
-        chartView!.rightAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.labelPosition = .Bottom
-        chartView!.xAxis.enabled = true
-        chartView!.xAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.axisLineColor = lightBlue
-        chartView!.xAxis.labelTextColor = UIColor.whiteColor()
-        chartView!.xAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
-        chartView!.legend.enabled = false
-        chartView!.descriptionText = ""
-        chartView!.data = lineChartData
-        chartView!.maxVisibleValueCount = 3
+        chart!.gridBackgroundColor = lightBlue
+        chart!.backgroundColor = lightBlue
+        chart!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        chart!.leftAxis.drawGridLinesEnabled = false
+        chart!.leftAxis.labelTextColor = UIColor.whiteColor()
+        chart!.leftAxis.labelCount = 4
+        chart!.leftAxis.axisLineWidth = 10
+        chart!.leftAxis.valueFormatter = NSNumberFormatter()
+        chart!.leftAxis.valueFormatter!.minimumFractionDigits = 0
+        chart!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chart!.leftAxis.axisLineColor = lightBlue
+        chart!.pinchZoomEnabled = true
+        chart!.rightAxis.enabled = false
+        chart!.rightAxis.drawGridLinesEnabled = false
+        chart!.xAxis.labelPosition = .Bottom
+        chart!.xAxis.enabled = true
+        chart!.xAxis.drawGridLinesEnabled = false
+        chart!.xAxis.axisLineColor = lightBlue
+        chart!.xAxis.labelTextColor = UIColor.whiteColor()
+        chart!.xAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chart!.legend.enabled = false
+        chart!.descriptionText = ""
+        chart!.data = lineChartData
+        chart!.maxVisibleValueCount = 3
     }
     
     func stripCents(currency: String) -> String {
@@ -94,7 +94,7 @@ class RewardViewController : UIViewController {
 
 //Cash Flow Type
 extension RewardViewController {
-    private func fillUpWithCashFlow() {
+     func fillUpWithCashFlow(chart: LineChartView!) {
         print("Cash flow")
         let lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
@@ -123,7 +123,7 @@ extension RewardViewController {
                     }
                 
                 i -= 1
-                setChart(months, values: unitsSold)
+                setChart(chart, dataPoints: months, values: unitsSold)
             }
         }
         else {
@@ -144,7 +144,7 @@ extension RewardViewController {
                 i -= 1
                 week += 1
                 
-                setChart(months, values: unitsSold)
+                setChart(chart, dataPoints: months, values: unitsSold)
             }
         }
     }
@@ -247,7 +247,7 @@ extension RewardViewController {
                     }
                 }
                 i -= 1
-                setChart(months, values: unitsSold)
+                setChart(self.chartView!, dataPoints: months, values: unitsSold)
             }
         }
         else {
@@ -271,7 +271,7 @@ extension RewardViewController {
                 i -= 1
                 week += 1
                 
-                setChart(months, values: unitsSold)
+                setChart(self.chartView!, dataPoints: months, values: unitsSold)
             }
         }
     }

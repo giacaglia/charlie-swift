@@ -252,9 +252,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.addSubview(rewardVC.view)
         rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
         rewardView.hidden = false
-    }
-    
-    
+    }    
     
     func moreTransactionforLoading() -> Bool {
         

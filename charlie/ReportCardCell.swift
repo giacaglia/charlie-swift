@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Charts
 
 class ReportCardCell : UITableViewCell {
     var leftIcon = UIImageView()
@@ -15,6 +16,7 @@ class ReportCardCell : UITableViewCell {
     var rightArrow = UIImageView()
     var happyFlowNumber = UILabel()
     var happyLabel = UILabel()
+    var lineChart = LineChartView()
     
     class func cellIdentifier() -> String {
         return "reportCardCell"
@@ -71,6 +73,9 @@ class ReportCardCell : UITableViewCell {
         happyLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
         happyLabel.text = "HAPPY FLOW"
         self.contentView.addSubview(happyLabel)
+        
+        lineChart.frame = CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width, 100)
+        self.contentView.addSubview(lineChart)
     }
     
     func setupByType(type: ReportCardType) {
