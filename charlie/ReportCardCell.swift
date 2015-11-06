@@ -59,6 +59,20 @@ class ReportCardCell : UITableViewCell {
         rightArrow.image = UIImage(named: "rightArrow")
         self.contentView.addSubview(rightArrow)
         
+        let rewardVC = RewardViewController()
+        rewardVC.fillUpWithCashFlow(lineChart)
+        lineChart.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
+        lineChart.hidden = true
+        lineChart.gridBackgroundColor = UIColor.whiteColor()
+        lineChart.backgroundColor = UIColor.whiteColor()
+        lineChart.leftAxis.enabled = false
+        lineChart.pinchZoomEnabled = false
+        lineChart.xAxis.enabled = false
+        lineChart.xAxis.drawGridLinesEnabled = false
+        lineChart.xAxis.axisLineColor = UIColor.clearColor()
+        lineChart.xAxis.labelTextColor = UIColor.clearColor()
+        self.contentView.addSubview(lineChart)
+        
         happyFlowNumber = UILabel(frame: CGRectMake(0, 0, 200, 50))
         happyFlowNumber.center = CGPointMake(self.contentView.center.x, 80)
         happyFlowNumber.textColor = listBlue
@@ -73,9 +87,6 @@ class ReportCardCell : UITableViewCell {
         happyLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
         happyLabel.text = "HAPPY FLOW"
         self.contentView.addSubview(happyLabel)
-        
-        lineChart.frame = CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width, 100)
-        self.contentView.addSubview(lineChart)
     }
     
     func setupByType(type: ReportCardType) {
@@ -88,6 +99,7 @@ class ReportCardCell : UITableViewCell {
             happyFlowNumber.hidden = false
             happyFlowNumber.text = "50%"
             happyLabel.hidden = false
+            lineChart.hidden = false
         }
         else if type == .CashFlowType {
             nameLabel.text = "CASH FLOW"

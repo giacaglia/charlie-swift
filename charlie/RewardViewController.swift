@@ -12,7 +12,7 @@ import Charts
 class RewardViewController : UIViewController {
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
-    let transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
+    var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
     var typeOfView : RewardType = .HappyFlowType
     enum RewardType  {
        case HappyFlowType, CashFlowType, TripLocationsType
@@ -28,10 +28,11 @@ class RewardViewController : UIViewController {
         chartView.hidden = false
         
         if typeOfView == .HappyFlowType {
-            self.fillUpWithHappyPercentage()
+            fillUpWithHappyPercentage()
         }
         else {
-            fillUpWithCashFlow(self.chartView!)
+            let cashFlow = fillUpWithCashFlow(self.chartView!)
+            happyRewardPercentage.text = "$\(cashFlow)"
         }
     }
     
@@ -94,8 +95,8 @@ class RewardViewController : UIViewController {
 
 //Cash Flow Type
 extension RewardViewController {
-     func fillUpWithCashFlow(chart: LineChartView!) {
-        print("Cash flow")
+    func fillUpWithCashFlow(chart: LineChartView!) -> Int {
+        transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
         let lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
         let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
@@ -104,7 +105,7 @@ extension RewardViewController {
         var unitsSold = [Double()]
         
         let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
-        
+        let cashFlow : Double = 0.0
         if transactionsDateDifference >= 1 {
             var i = 2
             while i > -1 {
@@ -115,16 +116,12 @@ extension RewardViewController {
                 let dayTimePeriodFormatter = NSDateFormatter()
                 dayTimePeriodFormatter.dateFormat = "MMM"
                 let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
-                
-                    unitsSold.append(Double(cashFlow))
-                    months.append(dateString)
-                    if i == 0 {
-                        happyRewardPercentage.text = "$\(Int(cashFlow))"
-                    }
-                
+                unitsSold.append(Double(cashFlow))
+                months.append(dateString)
                 i -= 1
                 setChart(chart, dataPoints: months, values: unitsSold)
             }
+            return Int(cashFlow)
         }
         else {
             var i = 12
@@ -138,14 +135,11 @@ extension RewardViewController {
                 
                 unitsSold.append(Double(cashFlow))
                 months.append("\(endDateFormatted )")
-                if i == 0 {
-                    happyRewardPercentage.text = "$\(Int(cashFlow))"
-                }
                 i -= 1
                 week += 1
-                
                 setChart(chart, dataPoints: months, values: unitsSold)
             }
+            return Int(cashFlow)
         }
     }
     
