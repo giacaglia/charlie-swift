@@ -35,6 +35,11 @@ class RewardViewController : UIViewController {
         }
     }
     
+    @IBAction func closePressed(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
+    }
+    
     
     private func setChart(dataPoints: [String], values: [Double]) {
         chartView!.noDataText = "You need to provide data for the chart."
@@ -80,7 +85,7 @@ class RewardViewController : UIViewController {
     }
     
     func stripCents(currency: String) -> String {
-        let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
+        let stringLength = currency.characters.count
         let substringIndex = stringLength - 3
         return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
     }
@@ -90,6 +95,7 @@ class RewardViewController : UIViewController {
 //Cash Flow Type
 extension RewardViewController {
     private func fillUpWithCashFlow() {
+        print("Cash flow")
         let lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
         let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
@@ -110,10 +116,10 @@ extension RewardViewController {
                 dayTimePeriodFormatter.dateFormat = "MMM"
                 let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
                 
-                    unitsSold.append(Double(cashFlow * 100))
+                    unitsSold.append(Double(cashFlow))
                     months.append(dateString)
                     if i == 0 {
-                        happyRewardPercentage.text = "\(Int(cashFlow))%"
+                        happyRewardPercentage.text = "$\(Int(cashFlow))"
                     }
                 
                 i -= 1
@@ -124,19 +130,16 @@ extension RewardViewController {
             var i = 12
             var week = 1
             while i > -1 {
-                let (happyPer, endDate) = getCashFlow(lastTransaction, weeksFrom: i)
+                let (cashFlow, endDate) = getCashFlow(lastTransaction, weeksFrom: i)
                 let dateFormatter = NSDateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
                 let endDateFormatted = dateFormatter.stringFromDate(endDate)
                 
-                if happyPer >= 0 {
-                    unitsSold.append(Double(happyPer * 100))
-                    months.append("\(endDateFormatted )")
-                    if i == 0 {
-                        let happyPercentage = Int(happyPer * 100)
-                        happyRewardPercentage.text = "\(happyPercentage)%"
-                    }
+                unitsSold.append(Double(cashFlow))
+                months.append("\(endDateFormatted )")
+                if i == 0 {
+                    happyRewardPercentage.text = "$\(Int(cashFlow))"
                 }
                 i -= 1
                 week += 1
@@ -166,7 +169,6 @@ extension RewardViewController {
         let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
         let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
         let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
-        //let happySum = chartItems.sum("amount") as Int
         
         var chartCashFlowWeek1Percentage : Double = 0.0
         for trans in chartHappyWeek1Items {
@@ -175,9 +177,6 @@ extension RewardViewController {
         for trans in chartSadWeek1Items {
             chartCashFlowWeek1Percentage += trans.amount
         }
-        
-        print("First = \(startDate) and last \(endDate)")
-        print("Cash Flow % \(chartCashFlowWeek1Percentage)")
         return (chartCashFlowWeek1Percentage, startDate)
     }
     
@@ -190,12 +189,10 @@ extension RewardViewController {
         let first: NSDate = firstDayOfWeek(startDate)
         let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
         
-        //println("DATES: \(first), \(expirationDate)")
         let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
         let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
         let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
         let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
-        //let happySum = chartItems.sum("amount") as Int
         
         var chartCashFlowWeek1Percentage : Double = 0.0
         for trans in chartHappyWeek1Items {
@@ -204,9 +201,6 @@ extension RewardViewController {
         for trans in chartSadWeek1Items {
             chartCashFlowWeek1Percentage += trans.amount
         }
-        
-        print("First = \(first) and last \(expirationDate)")
-        print("Cash Flow % \(chartCashFlowWeek1Percentage)")
         return (chartCashFlowWeek1Percentage, expirationDate!)
     }
 
@@ -217,6 +211,7 @@ extension RewardViewController {
 //Happy Percentage Type
 extension RewardViewController {
     private func fillUpWithHappyPercentage() {
+        print("Happy Percentage")
         let happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         let lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1

@@ -583,11 +583,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     return $0.lastDate < $1.lastDate
                 }
             }
-
-        
         }
-        
-        
         return charlieGroupList
     }
 }
@@ -846,7 +842,7 @@ class ReportCardCell : UITableViewCell {
         else if type == .LocationType {
             nameLabel.text = "POPULAR LOCATIONS"
             leftIcon.image = UIImage(named: "location")
-            priceLabel.text = nil
+            priceLabel.text = "New York City"
             rightArrow.hidden = false
         }
     }
