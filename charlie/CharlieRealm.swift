@@ -44,8 +44,9 @@ class Meta: Object {
 }
 
 class Balance: Object {
-    dynamic var current:Double  = 0.0
-    dynamic var available:Double = 0.0
+    let current = RealmOptional<Double>()
+    let avaliable = RealmOptional<Double>()
+    //dynamic var picture: NSData? = nil
 }
 
 

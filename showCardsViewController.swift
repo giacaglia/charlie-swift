@@ -44,7 +44,14 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.cardView.layer.cornerRadius = 20
         cell.cardView.layer.borderColor = listBlue.CGColor
         cell.cardView.layer.borderWidth = 0.5
-        cell.cardBalance.text = String(stringInterpolationSegment: accounts[indexPath.row].balance!.available)
+        if let current = accounts[indexPath.row].balance!.current.value
+        {
+            cell.cardBalance.text = String(stringInterpolationSegment: current)
+        }
+        else
+        {
+            cell.cardBalance.text = "n/a"
+        }
         cell.cardName.text = accounts[indexPath.row].meta!.name
         cell.cardAccountNumber.text = accounts[indexPath.row].meta!.number
         cell.accountID.text = accounts[indexPath.row]._id

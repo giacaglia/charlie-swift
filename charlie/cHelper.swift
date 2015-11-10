@@ -33,8 +33,13 @@ class cHelper {
                     try! realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
+                           
                             realm.create(Account.self, value: account, update: true)
-                            //println("saved accounts")
+                           
+                            print("saved accounts")
+
+                            
+                            
                         }
                     }
                     

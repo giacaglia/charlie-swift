@@ -12,23 +12,23 @@ import CloudKit
 var httpStatusCode:Int = 0
 
 //dev
-//var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
-//var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
-//var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
-//var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
-//var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
-//var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
-//var apiKey = "jj859i3mfp230p34"
+var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
+var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
+var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
+var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
+var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
+var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+var apiKey = "jj859i3mfp230p34"
 //
 
 ////production
-var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
-var srConnect = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect"))
-var srCategory = ServerRequest(url: NSURL(string:  "https://api.plaid.com/categories"))
-var srConnectGet = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect/get"))
-var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/institutions"))
-var apiKey = "jj859i3mfp230p34"
-var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
+//var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
+//var srConnect = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect"))
+//var srCategory = ServerRequest(url: NSURL(string:  "https://api.plaid.com/categories"))
+//var srConnectGet = ServerRequest(url: NSURL(string:  "https://api.plaid.com/connect/get"))
+//var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/institutions"))
+//var apiKey = "jj859i3mfp230p34"
+//var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
 
 
 class charlieService {
@@ -42,7 +42,7 @@ class charlieService {
             "type": "token",
             "context": token,
         ]
-        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
+        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
         

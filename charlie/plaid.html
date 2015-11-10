@@ -7,10 +7,11 @@
         <script type="text/javascript">
             var publicKey = "f704cba1008df4ca69b468758a3f71";
             var options = {
-                env: "production",
+                env: "tartan",
                 clientName: "Charlie",
                 key: publicKey,
                 product: "connect",
+                longTail: true,
                 onLoad: function() {
                     linkHandler.open();
                      webkit.messageHandlers.callbackHandler.postMessage("loaded")

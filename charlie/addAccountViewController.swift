@@ -101,7 +101,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     Mixpanel.sharedInstance().people.set(["$email":email_address])
                     
                     self.keyChainStore.set(access_token, key: "access_token")
-                    
+                    print("ACCESS TOKEN\n")
+                    print(access_token)
                     cService.saveAccessToken(access_token) { (response) in
                         print("Access token saved to server")
                     }
@@ -128,8 +129,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                             try! realm.write {
                                 // Save one Venue object (and dependents) for each element of the array
                                 for account in accounts {
+                                  
                                     realm.create(Account.self, value: account, update: true)
-                                    print("saved accounts")
+                                  
                                 }
                             }
                             charlieAnalytics.track("Accounts Added")
