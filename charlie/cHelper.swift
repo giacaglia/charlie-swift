@@ -48,6 +48,11 @@ class cHelper {
                     for transaction in transactions {
                         // println("saved")
                         try!   realm.write {
+                            //get placeType
+                            let placeTypeO = transaction.valueForKey("type")
+                            let placeType = placeTypeO!.valueForKey("primary")
+                           
+                            transaction.setValue(placeType, forKeyPath: "placeType")
                             //clean up name
                             let dictName = transaction.valueForKey("name") as? String
                             transaction.setValue(self.cleanName(dictName!), forKey: "name")

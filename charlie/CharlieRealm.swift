@@ -22,6 +22,7 @@ class User: Object {
     
 }
 
+
 class Account: Object {
     dynamic var _id = ""
     dynamic var _item = ""
@@ -58,6 +59,7 @@ class Transaction: Object {
     dynamic var amount:Double  = 0.0
     dynamic var pending = true
     dynamic var categories = Category?()
+    dynamic var placeType = ""
     dynamic var date =  NSDate()
     dynamic var name = ""
     dynamic var status = -1
@@ -90,6 +92,9 @@ class Category: Object {
     }
     
 }
+
+
+
 
 class Location: Object {
     dynamic var coordinates = Coordinates?()
