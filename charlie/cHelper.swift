@@ -12,6 +12,29 @@ import CloudKit
 
 class cHelper {
     
+   
+    func getCashFlow() -> (Double)
+    {
+        //need to remove transfers as they shouldn't count
+        //need to add ablilty to perform based on date being passed in
+        //need to add ability to compare to previous month
+       
+        var cashFlowTotal: Double = 0
+        let cashFlows = realm.objects(Transaction).filter("status > 0")
+        for cashFlowItem in cashFlows
+        {
+            let convertedCF = cashFlowItem.amount * -1
+            cashFlowTotal += convertedCF
+            print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+        }
+        return cashFlowTotal
+        
+    }
+    
+    
+    
+    
+    
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
             dispatch_time(
