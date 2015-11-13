@@ -13,10 +13,16 @@ import CloudKit
 class cHelper {
     
    
+    
     func getCashFlow() -> (Double)
     {
         //need to remove transfers as they shouldn't count
+        
         //need to add ablilty to perform based on date being passed in
+        //if data available is less than 35 days old than get current cash flow for month
+        //else get cash flow for current month and cash flow for last month and calculate increase of decrease of cashflow
+        
+        
         //need to add ability to compare to previous month
        
         var cashFlowTotal: Double = 0
@@ -28,14 +34,18 @@ class cHelper {
             print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
         }
         return cashFlowTotal
-        
     }
     
    
     func getMoneySpent() -> (Double)
     {
         //need to remove transfers as they shouldn't count
-        //need to add ablilty to perform based on date being passed in
+       
+        //if data available is less than 35 days old than get current money spent for month
+        //else get money spent for current month and cash flow for last month and calculate increase of decrease of cashflow
+        
+        
+        
         //need to add ability to compare to previous month
         
         var moneySpentTotal: Double = 0
@@ -44,47 +54,78 @@ class cHelper {
         {
               moneySpentTotal += cashFlowItem.amount
               print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
-           
         }
         return moneySpentTotal
-        
     }
 
     
     func getTypeSpent() -> (Double, Double, Double)
     {
         //need to remove transfers as they shouldn't count
-        //need to add ablilty to perform based on date being passed in
+        
+        //if data available is less than 35 days old than get current least popular placeTyle
+        //else get least popular placeType for current month and least popular placeType for last month and calculate increase or decrease of least popular placeType
+        
+        
         //need to add ability to compare to previous month
-        
         var digitalSpentTotal: Double = 0
+        var digitalHappyTotal: Int = 0
+        var digitalSadTotal: Int = 0
         var specialSpentTotal: Double = 0
+        var specialHappyTotal: Int = 0
+        var specialSadTotal: Int = 0
         var placeSpentTotal: Double = 0
-        
+        var placeHappyTotal: Int = 0
+        var placeSadTotal: Int = 0
+
         let cashFlows = realm.objects(Transaction).filter("status > 0 and amount > 0")
         for cashFlowItem in cashFlows
         {
             if cashFlowItem.placeType == "digital"
             {
-            digitalSpentTotal += cashFlowItem.amount
+                digitalSpentTotal += cashFlowItem.amount
+                if cashFlowItem.status == 1
+                {
+                    digitalHappyTotal += 1
+                
+                }
+                if cashFlowItem.status == 2
+                {
+                    digitalSadTotal += 1
+                        
+                }
             print("Digital: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
-            
             if cashFlowItem.placeType == "special"
             {
                 specialSpentTotal += cashFlowItem.amount
+                if cashFlowItem.status == 1
+                {
+                     specialHappyTotal += 1
+                }
+                if cashFlowItem.status == 2
+                {
+                    specialSadTotal += 1
+                }
                 print("Special: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
             
             if cashFlowItem.placeType == "place"
             {
                 placeSpentTotal += cashFlowItem.amount
+                if cashFlowItem.status == 1
+                {
+                    placeHappyTotal += 1
+                }
+                if cashFlowItem.status == 2
+                {
+                    placeSadTotal += 1
+                }
                 print("Place: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
                 
         }
         return (digitalSpentTotal, placeSpentTotal, specialSpentTotal)
-        
     }
 
     
