@@ -130,7 +130,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
        let cashFlow =  cHelp.getCashFlow()
         print("CASHFLOW \(cashFlow)")
             
-        
+        let moneySpent =  cHelp.getMoneySpent()
+        print("MONEYSPENT \(moneySpent)")
             
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)

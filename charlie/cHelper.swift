@@ -31,6 +31,27 @@ class cHelper {
         
     }
     
+   
+    func getMoneySpent() -> (Double)
+    {
+        //need to remove transfers as they shouldn't count
+        //need to add ablilty to perform based on date being passed in
+        //need to add ability to compare to previous month
+        
+        var moneySpentTotal: Double = 0
+        let cashFlows = realm.objects(Transaction).filter("status > 0")
+        for cashFlowItem in cashFlows
+        {
+            
+           if cashFlowItem.amount > 0
+           {
+               moneySpentTotal += cashFlowItem.amount
+              print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+           }
+        }
+        return moneySpentTotal
+        
+    }
     
     
     
