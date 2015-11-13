@@ -632,8 +632,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             addAccountButton.hidden = true
             accountAddView.hidden = true
         }
-        return transactionItems.count + 3
-//        return transactionItems.count + Int(areThereMoreItemsToLoad)
+//        return transactionItems.count + 3
+        return transactionItems.count + Int(areThereMoreItemsToLoad)
     }
     
     
@@ -647,33 +647,33 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             }
             else {
                 if indexPath.row == transactionItems.count {
-                    numItemsToLoad = 10
+                    numItemsToLoad = 20
                     makeOnlyFirstNElementsVisible()
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                     self.setInboxTitle(true)
                     transactionsTable.reloadData()
                 }
-                else {
-                    let rewardVC = RewardViewController()
-                    if indexPath.row == transactionItems.count + 1 {
-                        rewardVC.typeOfView = .HappyFlowType
-                    }
-                    else {
-                        rewardVC.typeOfView = .CashFlowType
-                    }
-                    rewardVC.view.backgroundColor = lightBlue
-                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
-                }
+//                else {
+//                    let rewardVC = RewardViewController()
+//                    if indexPath.row == transactionItems.count + 1 {
+//                        rewardVC.typeOfView = .HappyFlowType
+//                    }
+//                    else {
+//                        rewardVC.typeOfView = .CashFlowType
+//                    }
+//                    rewardVC.view.backgroundColor = lightBlue
+//                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
+//                }
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
-//            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
-            let indexOfReportCard = indexPath.row - transactionItems.count
-            cell.setupByType(ReportCardType(rawValue: indexOfReportCard )!)
+            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
+//            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
+//            let indexOfReportCard = indexPath.row - transactionItems.count
+//            cell.setupByType(ReportCardType(rawValue: indexOfReportCard )!)
             return cell
         }
         
