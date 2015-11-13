@@ -12,11 +12,200 @@ import Charts
 class RewardViewController : UIViewController {
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
+    var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
+    var typeOfView : RewardType = .HappyFlowType
+    enum RewardType  {
+       case HappyFlowType, CashFlowType, TripLocationsType
+    }
     
     override func viewDidLoad() {
-        let transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
-        
         charlieAnalytics.track("Show Reward")
+        
+        if transactionItemsActedUpon.count == 0{
+            chartView.hidden = true
+            return
+        }
+        chartView.hidden = false
+        
+        if typeOfView == .HappyFlowType {
+            fillUpWithHappyPercentage()
+        }
+        else {
+            let cashFlow = fillUpWithCashFlow(self.chartView!)
+            happyRewardPercentage.text = "$\(cashFlow)"
+        }
+    }
+    
+    @IBAction func closePressed(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
+    }
+    
+    
+    private func setChart(chart: LineChartView!, dataPoints: [String], values: [Double]) {
+        chart.noDataText = "You need to provide data for the chart."
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        
+        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Weeks")
+        lineChartDataSet.drawFilledEnabled = true
+        lineChartDataSet.fillColor = listBlue
+        lineChartDataSet.drawValuesEnabled = true
+        lineChartDataSet.drawCirclesEnabled = true
+        lineChartDataSet.drawCubicEnabled = true
+        
+        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+        chart!.gridBackgroundColor = lightBlue
+        chart!.backgroundColor = lightBlue
+        chart!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        chart!.leftAxis.drawGridLinesEnabled = false
+        chart!.leftAxis.labelTextColor = UIColor.whiteColor()
+        chart!.leftAxis.labelCount = 4
+        chart!.leftAxis.axisLineWidth = 10
+        chart!.leftAxis.valueFormatter = NSNumberFormatter()
+        chart!.leftAxis.valueFormatter!.minimumFractionDigits = 0
+        chart!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chart!.leftAxis.axisLineColor = lightBlue
+        chart!.pinchZoomEnabled = true
+        chart!.rightAxis.enabled = false
+        chart!.rightAxis.drawGridLinesEnabled = false
+        chart!.xAxis.labelPosition = .Bottom
+        chart!.xAxis.enabled = true
+        chart!.xAxis.drawGridLinesEnabled = false
+        chart!.xAxis.axisLineColor = lightBlue
+        chart!.xAxis.labelTextColor = UIColor.whiteColor()
+        chart!.xAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
+        chart!.legend.enabled = false
+        chart!.descriptionText = ""
+        chart!.data = lineChartData
+        chart!.maxVisibleValueCount = 3
+    }
+    
+    func stripCents(currency: String) -> String {
+        let stringLength = currency.characters.count
+        let substringIndex = stringLength - 3
+        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
+    }
+}
+
+
+//Cash Flow Type
+extension RewardViewController {
+    func fillUpWithCashFlow(chart: LineChartView!) -> Int {
+        transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
+        let lastTransaction = transactionItemsActedUpon[0].date as NSDate
+        let transactionCount = transactionItemsActedUpon.count - 1
+        let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
+        
+        var months = [String()]
+        var unitsSold = [Double()]
+        
+        let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
+        let cashFlow : Double = 0.0
+        if transactionsDateDifference >= 1 {
+            var i = 2
+            while i > -1 {
+                let (cashFlow, beginDate) = getCashFlowMonthly(lastTransaction, monthsFrom: i)
+                let dateFormatter = NSDateFormatter()
+                //the "M/d/yy, H:mm" is put together from the Symbol Table
+                dateFormatter.dateFormat = "M/d"
+                let dayTimePeriodFormatter = NSDateFormatter()
+                dayTimePeriodFormatter.dateFormat = "MMM"
+                let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
+                unitsSold.append(Double(cashFlow))
+                months.append(dateString)
+                i -= 1
+                setChart(chart, dataPoints: months, values: unitsSold)
+            }
+            return Int(cashFlow)
+        }
+        else {
+            var i = 12
+            var week = 1
+            while i > -1 {
+                let (cashFlow, endDate) = getCashFlow(lastTransaction, weeksFrom: i)
+                let dateFormatter = NSDateFormatter()
+                //the "M/d/yy, H:mm" is put together from the Symbol Table
+                dateFormatter.dateFormat = "M/d"
+                let endDateFormatted = dateFormatter.stringFromDate(endDate)
+                
+                unitsSold.append(Double(cashFlow))
+                months.append("\(endDateFormatted )")
+                i -= 1
+                week += 1
+                setChart(chart, dataPoints: months, values: unitsSold)
+            }
+            return Int(cashFlow)
+        }
+    }
+    
+    private func getCashFlowMonthly(date: NSDate, monthsFrom: Int) -> (cashFlow: Double, beginDate: NSDate) {
+        var newDate = NSDate()
+        var startDate = NSDate()
+        var endDate = NSDate()
+        
+        if monthsFrom > 0 {
+            newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
+            
+            startDate = startOfMonth(newDate)!
+            endDate = endOfMonth(newDate)!
+        }
+        else {
+            startDate = startOfMonth(date)!
+            endDate = endOfMonth(date)!
+        }
+        
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        
+        var chartCashFlowWeek1Percentage : Double = 0.0
+        for trans in chartHappyWeek1Items {
+            chartCashFlowWeek1Percentage += trans.amount
+        }
+        for trans in chartSadWeek1Items {
+            chartCashFlowWeek1Percentage += trans.amount
+        }
+        return (chartCashFlowWeek1Percentage, startDate)
+    }
+    
+    private func getCashFlow(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, endDate: NSDate) {
+        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
+        
+        let components: NSDateComponents = NSDateComponents()
+        components.setValue(6, forComponent: NSCalendarUnit.Day)
+        
+        let first: NSDate = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
+        let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
+        let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
+        
+        var chartCashFlowWeek1Percentage : Double = 0.0
+        for trans in chartHappyWeek1Items {
+            chartCashFlowWeek1Percentage += trans.amount
+        }
+        for trans in chartSadWeek1Items {
+            chartCashFlowWeek1Percentage += trans.amount
+        }
+        return (chartCashFlowWeek1Percentage, expirationDate!)
+    }
+
+
+}
+
+
+//Happy Percentage Type
+extension RewardViewController {
+    private func fillUpWithHappyPercentage() {
+        print("Happy Percentage")
         let happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
         let lastTransaction = transactionItemsActedUpon[0].date as NSDate
         let transactionCount = transactionItemsActedUpon.count - 1
@@ -28,10 +217,8 @@ class RewardViewController : UIViewController {
         let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
         
         if happyScoreViewed == "0"  {
-            //user hasn't compared what they thought their score was to what it is
             defaults.setValue("1", forKey: "happyScoreViewed")
             defaults.synchronize()
-//            performSegueWithIdentifier("showReveal", sender: self)
         }
         
         if transactionsDateDifference >= 1 {
@@ -54,7 +241,7 @@ class RewardViewController : UIViewController {
                     }
                 }
                 i -= 1
-                setChart(months, values: unitsSold)
+                setChart(self.chartView!, dataPoints: months, values: unitsSold)
             }
         }
         else {
@@ -78,56 +265,12 @@ class RewardViewController : UIViewController {
                 i -= 1
                 week += 1
                 
-                setChart(months, values: unitsSold)
+                setChart(self.chartView!, dataPoints: months, values: unitsSold)
             }
         }
     }
-    
-    
-    func setChart(dataPoints: [String], values: [Double]) {
-        chartView!.noDataText = "You need to provide data for the chart."
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-            dataEntries.append(dataEntry)
-        }
-        
-        let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Weeks")
-        lineChartDataSet.drawFilledEnabled = true
-        lineChartDataSet.fillColor = listBlue
-        lineChartDataSet.drawValuesEnabled = true
-        lineChartDataSet.drawCirclesEnabled = true
-        lineChartDataSet.drawCubicEnabled = true
-        
-        let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-        chartView!.gridBackgroundColor = lightBlue
-        chartView!.backgroundColor = lightBlue
-        chartView!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        chartView!.leftAxis.drawGridLinesEnabled = false
-        chartView!.leftAxis.labelTextColor = UIColor.whiteColor()
-        chartView!.leftAxis.labelCount = 4
-        chartView!.leftAxis.axisLineWidth = 10
-        chartView!.leftAxis.valueFormatter = NSNumberFormatter()
-        chartView!.leftAxis.valueFormatter!.minimumFractionDigits = 0
-        chartView!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
-        chartView!.leftAxis.axisLineColor = lightBlue
-        chartView!.pinchZoomEnabled = true
-        chartView!.rightAxis.enabled = false
-        chartView!.rightAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.labelPosition = .Bottom
-        chartView!.xAxis.enabled = true
-        chartView!.xAxis.drawGridLinesEnabled = false
-        chartView!.xAxis.axisLineColor = lightBlue
-        chartView!.xAxis.labelTextColor = UIColor.whiteColor()
-        chartView!.xAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
-        chartView!.legend.enabled = false
-        chartView!.descriptionText = ""
-        chartView!.data = lineChartData
-        chartView!.maxVisibleValueCount = 3
-    }
 
-    func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
+    private func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
         var newDate = NSDate()
         var startDate = NSDate()
         var endDate = NSDate()
@@ -156,7 +299,7 @@ class RewardViewController : UIViewController {
         return (chartHappyWeek1Percentage, startDate, endDate)
     }
     
-    func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
+    private func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
         let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
         
         let components: NSDateComponents = NSDateComponents()
@@ -178,12 +321,7 @@ class RewardViewController : UIViewController {
         print("Happy % \(chartHappyWeek1Percentage)")
         return (chartHappyWeek1Percentage, first, expirationDate!)
     }
-    
-    func stripCents(currency: String) -> String {
-        let stringLength = currency.characters.count // Since swift1.2 `countElements` became `count`
-        let substringIndex = stringLength - 3
-        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
-    }
+
 }
 
 // NSDate helpers

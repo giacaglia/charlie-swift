@@ -8,9 +8,6 @@
         <mutableArray key="Montserrat-Bold.ttf">
             <string>Montserrat-Bold</string>
         </mutableArray>
-        <mutableArray key="Montserrat-Regular.ttf">
-            <string>Montserrat-Regular</string>
-        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RewardViewController" customModule="charlie" customModuleProvider="target">
@@ -25,19 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow Score is currently at:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUc-E2-MP5">
-                    <rect key="frame" x="20" y="120" width="180" height="60"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="Apu-hi-Hdo"/>
-                        <constraint firstAttribute="width" constant="180" id="aGc-BF-RP6"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
-                    <rect key="frame" x="210" y="117" width="140" height="65"/>
+                    <rect key="frame" x="230" y="117" width="140" height="65"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="140" id="YAW-iC-ARf"/>
@@ -52,19 +38,35 @@
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gu-Rh-V4K">
+                    <rect key="frame" x="545" y="25" width="40" height="40"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="WTf-Ym-lQ7"/>
+                        <constraint firstAttribute="width" constant="40" id="j4P-2d-qUz"/>
+                    </constraints>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" image="close"/>
+                    <connections>
+                        <action selector="closePressed:" destination="-1" eventType="touchUpInside" id="0tB-ho-5DO"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="AAU-ef-60g" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="117" id="2Xh-2C-pWE"/>
                 <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
-                <constraint firstItem="AAU-ef-60g" firstAttribute="centerY" secondItem="RUc-E2-MP5" secondAttribute="centerY" id="FP9-VX-XLg"/>
-                <constraint firstItem="AAU-ef-60g" firstAttribute="leading" secondItem="RUc-E2-MP5" secondAttribute="trailing" constant="10" id="Kdo-4l-paM"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="U5L-Zo-fy7"/>
-                <constraint firstItem="RUc-E2-MP5" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="YCb-SI-cOa"/>
-                <constraint firstItem="RUc-E2-MP5" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="120" id="ZsK-8H-S9G"/>
+                <constraint firstAttribute="trailing" secondItem="0gu-Rh-V4K" secondAttribute="trailing" constant="15" id="aWT-2N-u28"/>
+                <constraint firstItem="0gu-Rh-V4K" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="25" id="d2I-PA-PBG"/>
                 <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="RUc-E2-MP5" secondAttribute="bottom" constant="80" id="qfJ-ju-fsz"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="AAU-ef-60g" secondAttribute="bottom" constant="78" id="heq-5R-Ajh"/>
+                <constraint firstItem="AAU-ef-60g" firstAttribute="centerX" secondItem="bEm-Xn-24m" secondAttribute="centerX" id="sKc-tf-60w"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="close" width="23" height="22"/>
+    </resources>
 </document>

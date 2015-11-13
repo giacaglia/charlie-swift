@@ -261,9 +261,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.addSubview(rewardVC.view)
         rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
         rewardView.hidden = false
-    }
-    
-    
+    }    
     
     func moreTransactionforLoading() -> Bool {
         
@@ -592,17 +590,13 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
                     return $0.lastDate < $1.lastDate
                 }
             }
-
-        
         }
-        
-        
         return charlieGroupList
     }
 }
 
 // Swipe part of the main view controller
-extension mainViewController : UITableViewDataSource {
+extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
         self.updateTableAt(indexPath: indexPath!, direction: direction)
@@ -662,7 +656,7 @@ extension mainViewController : UITableViewDataSource {
             }
             else {
                 if indexPath.row == transactionItems.count {
-                    numItemsToLoad = 10
+                    numItemsToLoad = 20
                     makeOnlyFirstNElementsVisible()
                     transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                     self.setInboxTitle(true)
@@ -670,6 +664,12 @@ extension mainViewController : UITableViewDataSource {
                 }
 //                else {
 //                    let rewardVC = RewardViewController()
+//                    if indexPath.row == transactionItems.count + 1 {
+//                        rewardVC.typeOfView = .HappyFlowType
+//                    }
+//                    else {
+//                        rewardVC.typeOfView = .CashFlowType
+//                    }
 //                    rewardVC.view.backgroundColor = lightBlue
 //                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
 //                }
@@ -681,7 +681,8 @@ extension mainViewController : UITableViewDataSource {
         if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
             let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
 //            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
-//            cell.setupByType(ReportCardType(rawValue: (indexPath.row - transactionItems.count) )!)
+//            let indexOfReportCard = indexPath.row - transactionItems.count
+//            cell.setupByType(ReportCardType(rawValue: indexOfReportCard )!)
             return cell
         }
         
@@ -690,8 +691,8 @@ extension mainViewController : UITableViewDataSource {
             let trans = transactionItems[indexPath.row]
             cell.nameCellLabel.text = trans.name
 
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happy_on")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sad_on")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
             
             cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
             cell.amountCellLabel.textColor = listBlue
@@ -723,6 +724,13 @@ extension mainViewController : UITableViewDataSource {
         }
        
         return cell
+    }
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (inboxType == .InboxTransaction && indexPath.row == transactionItems.count) {
+            return 200
+        }
+        return 74
     }
     
     
@@ -785,77 +793,7 @@ class AddMoreCell : UITableViewCell {
     }
 }
 
-class ReportCardCell : UITableViewCell {
-    var leftIcon = UIImageView()
-    var nameLabel = UILabel()
-    var priceLabel = UILabel()
-    var rightArrow = UIImageView()
-    
-    class func cellIdentifier() -> String {
-        return "reportCardCell"
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-    }
-    
-    private func setup() {
-        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
-        
-        leftIcon = UIImageView(frame: CGRectMake(5, 0, 20, 20))
-        leftIcon.center = CGPointMake(leftIcon.center.x, self.contentView.center.y)
-        leftIcon.contentMode = .ScaleAspectFit
-        self.contentView.addSubview(leftIcon)
-        
-        nameLabel = UILabel(frame: CGRectMake(30, 0, 200, 20))
-        nameLabel.center = CGPointMake(nameLabel.center.x, self.contentView.center.y)
-        nameLabel.textColor = RGB(75, green: 75, blue: 75)
-        nameLabel.font = UIFont.boldSystemFontOfSize(14.0)
-        self.contentView.addSubview(nameLabel)
-        
-        priceLabel = UILabel(frame: CGRectMake(self.contentView.frame.size.width - 15 - 15 - 5 - 200, 30, 200, 30))
-        priceLabel.center = CGPointMake(priceLabel.center.x, self.contentView.center.y)
-        priceLabel.textColor = listBlue
-        priceLabel.textAlignment = .Right
-        priceLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
-        self.contentView.addSubview(priceLabel)
-        
-        rightArrow = UIImageView(frame: CGRectMake(self.contentView.frame.size.width - 15 - 15, 0, 15, 15))
-        rightArrow.center = CGPointMake(rightArrow.center.x, self.contentView.center.y)
-        rightArrow.contentMode = .ScaleAspectFit
-        rightArrow.image = UIImage(named: "rightArrow")
-        self.contentView.addSubview(rightArrow)
-    }
-    
-    private func setupByType(type: ReportCardType) {
-        if type == .HappyFlowType {
-            self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
-            self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 200)
-            rightArrow.hidden = true
-        }
-        else if type == .CashFlowType {
-            nameLabel.text = "CASH FLOW"
-            leftIcon.image = UIImage(named: "cashFlow")
-            priceLabel.text = "$4,000"
-            rightArrow.hidden = false
-        }
-        else if type == .LocationType {
-            nameLabel.text = "POPULAR LOCATIONS"
-            leftIcon.image = UIImage(named: "location")
-            priceLabel.text = nil
-            rightArrow.hidden = false
-        }
-    }
-}
-
 extension mainViewController : UIViewControllerPreviewingDelegate {
-    
     /// Called when the user has pressed a source view in a previewing view controller (Peek).
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         

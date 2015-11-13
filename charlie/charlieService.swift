@@ -19,7 +19,6 @@ var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/c
 var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
 var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
 var apiKey = "jj859i3mfp230p34"
-//
 
 ////production
 //var srGetToken = ServerRequest(url: NSURL(string:  "https://api.plaid.com/exchange_token"))
@@ -42,7 +41,9 @@ class charlieService {
             "type": "token",
             "context": token,
         ]
-        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+        
+//        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track")) // DEV
+        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track")) // PROD
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
         

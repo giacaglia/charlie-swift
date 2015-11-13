@@ -135,6 +135,7 @@
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
+		889DF01E1BED3DF600BBB77B /* ReportCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889DF01D1BED3DF600BBB77B /* ReportCardCell.swift */; };
 		88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295141BB598AC0091A36B /* ABPadButton.m */; };
 		88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */; };
 		88A295211BB598AC0091A36B /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295181BB598AC0091A36B /* ABPadLockScreenSetupViewController.m */; };
@@ -397,6 +398,7 @@
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		889DF01D1BED3DF600BBB77B /* ReportCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportCardCell.swift; sourceTree = "<group>"; };
 		88A295131BB598AC0091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
 		88A295141BB598AC0091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
 		88A295151BB598AC0091A36B /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
@@ -818,6 +820,7 @@
 		880B116A1BE68BB800BB2064 /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
+				889DF01D1BED3DF600BBB77B /* ReportCardCell.swift */,
 				090BD3441B25089300F26E78 /* mainViewController.swift */,
 				88B41F0A1BC4614E0038483F /* RewardViewController.xib */,
 				88B41F0D1BC461610038483F /* RewardViewController.swift */,
@@ -1042,6 +1045,7 @@
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
 				09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */,
 				45604A0C1B71183200C37B9D /* UIColor+MPColor.m in Sources */,
+				889DF01E1BED3DF600BBB77B /* ReportCardCell.swift in Sources */,
 				456049D01B71183200C37B9D /* MPABTestDesignerChangeResponseMessage.m in Sources */,
 				456049F21B71183200C37B9D /* MPObjectSerializerContext.m in Sources */,
 				45604A141B712EEE00C37B9D /* charlieAnalytics.swift in Sources */,
