@@ -39,20 +39,54 @@ class cHelper {
         //need to add ability to compare to previous month
         
         var moneySpentTotal: Double = 0
-        let cashFlows = realm.objects(Transaction).filter("status > 0")
+        let cashFlows = realm.objects(Transaction).filter("status > 0 AND amount > 0")
         for cashFlowItem in cashFlows
         {
-            
-           if cashFlowItem.amount > 0
-           {
-               moneySpentTotal += cashFlowItem.amount
+              moneySpentTotal += cashFlowItem.amount
               print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
-           }
+           
         }
         return moneySpentTotal
         
     }
+
     
+    func getTypeSpent() -> (Double, Double, Double)
+    {
+        //need to remove transfers as they shouldn't count
+        //need to add ablilty to perform based on date being passed in
+        //need to add ability to compare to previous month
+        
+        var digitalSpentTotal: Double = 0
+        var specialSpentTotal: Double = 0
+        var placeSpentTotal: Double = 0
+        
+        let cashFlows = realm.objects(Transaction).filter("status > 0 and amount > 0")
+        for cashFlowItem in cashFlows
+        {
+            if cashFlowItem.placeType == "digital"
+            {
+            digitalSpentTotal += cashFlowItem.amount
+            print("Digital: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+            }
+            
+            if cashFlowItem.placeType == "special"
+            {
+                specialSpentTotal += cashFlowItem.amount
+                print("Special: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+            }
+            
+            if cashFlowItem.placeType == "place"
+            {
+                placeSpentTotal += cashFlowItem.amount
+                print("Place: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+            }
+                
+        }
+        return (digitalSpentTotal, placeSpentTotal, specialSpentTotal)
+        
+    }
+
     
     
     

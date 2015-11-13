@@ -97,8 +97,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         super.viewWillAppear(true)
         
         
-        
-        
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
         if accounts.count > 0 && allTransactionItems.count == 0 {
             if timerCount == 0 {
@@ -132,7 +130,9 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             
         let moneySpent =  cHelp.getMoneySpent()
         print("MONEYSPENT \(moneySpent)")
-            
+        
+        let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
