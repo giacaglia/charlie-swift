@@ -71,13 +71,16 @@ class cHelper {
         var digitalSpentTotal: Double = 0
         var digitalHappyTotal: Int = 0
         var digitalSadTotal: Int = 0
+        var digitalHappyFlow: Double = 0.0
         var specialSpentTotal: Double = 0
         var specialHappyTotal: Int = 0
         var specialSadTotal: Int = 0
+        var specialHappyFlow: Double = 0.0
         var placeSpentTotal: Double = 0
         var placeHappyTotal: Int = 0
         var placeSadTotal: Int = 0
-
+        var placeHappyFlow: Double = 0.0
+        
         let cashFlows = realm.objects(Transaction).filter("status > 0 and amount > 0")
         for cashFlowItem in cashFlows
         {
@@ -125,6 +128,17 @@ class cHelper {
             }
                 
         }
+        
+        digitalHappyFlow = Double(digitalHappyTotal) / Double((digitalHappyTotal + digitalSadTotal)) as Double
+        print("DIGITAL HAPPY FLOW: \(digitalHappyFlow)")
+        
+        specialHappyFlow = Double(specialHappyTotal) / Double((specialHappyTotal + specialSadTotal)) as Double
+        print("SPECIAL HAPPY FLOW: \(specialHappyFlow)")
+
+        placeHappyFlow = Double(placeHappyTotal) / Double((placeHappyTotal + placeSadTotal)) as Double
+        print("SPECIAL HAPPY FLOW: \(placeHappyFlow)")
+
+        
         return (digitalSpentTotal, placeSpentTotal, specialSpentTotal)
     }
 
