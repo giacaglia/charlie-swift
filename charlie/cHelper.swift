@@ -12,7 +12,21 @@ import CloudKit
 
 class cHelper {
     
-   
+    func startOfMonth(date: NSDate) -> NSDate? {
+        let calendar = NSCalendar.currentCalendar()
+        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
+        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
+        return startOfMonth
+    }
+    
+    func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
+        let calendar = NSCalendar.currentCalendar()
+        let months = NSDateComponents()
+        months.month = monthsToAdd
+        return calendar.dateByAddingComponents(months, toDate: date, options: [])
+    }
+    
+    
     
     func getCashFlow() -> (Double)
     {
@@ -26,7 +40,26 @@ class cHelper {
         //need to add ability to compare to previous month
        
         var cashFlowTotal: Double = 0
-        let cashFlows = realm.objects(Transaction).filter("status > 0")
+        let cashFlows = realm.objects(Transaction).filter("status > 0").sorted("date", ascending: true)
+        
+        let oldestDate = cashFlows[0].date
+        let today = NSDate()
+        
+        
+        let beginingThisMonth = startOfMonth(today)
+        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+        if beginingLastMonth.compare(oldestDate) == .OrderedDescending
+        {
+            //we can compare
+            print("COMPARE")
+        }
+        else
+        {
+            print("DON'T COMPARE")
+        
+        }
+        
+        print("OLDEST DATES: \(cashFlows[0].date)")
         for cashFlowItem in cashFlows
         {
             let convertedCF = cashFlowItem.amount * -1
