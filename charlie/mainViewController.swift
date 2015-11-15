@@ -647,6 +647,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
+//        return
         if inboxType == .ApprovedAndFlaggedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }

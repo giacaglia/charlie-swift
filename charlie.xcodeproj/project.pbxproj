@@ -135,6 +135,8 @@
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
+		888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888CA1B91BF5A15700381E84 /* CardsViewController.xib */; };
+		888CA1BD1BF5A16300381E84 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CA1BC1BF5A16300381E84 /* CardsViewController.swift */; };
 		889DF01E1BED3DF600BBB77B /* ReportCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889DF01D1BED3DF600BBB77B /* ReportCardCell.swift */; };
 		88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295141BB598AC0091A36B /* ABPadButton.m */; };
 		88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A295161BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m */; };
@@ -398,6 +400,8 @@
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		888CA1B91BF5A15700381E84 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
+		888CA1BC1BF5A16300381E84 /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		889DF01D1BED3DF600BBB77B /* ReportCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportCardCell.swift; sourceTree = "<group>"; };
 		88A295131BB598AC0091A36B /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
 		88A295141BB598AC0091A36B /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
@@ -826,6 +830,8 @@
 				88B41F0D1BC461610038483F /* RewardViewController.swift */,
 				8816CCB01BBDB596001F6F31 /* SortViewController.xib */,
 				8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */,
+				888CA1BC1BF5A16300381E84 /* CardsViewController.swift */,
+				888CA1B91BF5A15700381E84 /* CardsViewController.xib */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -967,6 +973,7 @@
 				09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */,
 				091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */,
 				09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */,
+				888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */,
 				45604A0B1B71183200C37B9D /* test_variant.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1100,6 +1107,7 @@
 				456049E11B71183200C37B9D /* MPCGRectToNSDictionaryValueTransformer.m in Sources */,
 				45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */,
 				456049CE1B71183200C37B9D /* MPAbstractABTestDesignerMessage.m in Sources */,
+				888CA1BD1BF5A16300381E84 /* CardsViewController.swift in Sources */,
 				456049F01B71183200C37B9D /* MPObjectSerializer.m in Sources */,
 				091620271B2DA2330004C781 /* SBGestureTableViewCellAction.swift in Sources */,
 				456049FC1B71183200C37B9D /* MPTweak.m in Sources */,
