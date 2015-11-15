@@ -14,16 +14,23 @@ class CardsViewController : UIViewController {
     @IBOutlet weak var reportLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     let titleArray = ["My Happy Flow", "My Cash Flow", "My Spending", "My Locations", "My Habits"]
-    func genSubtitleArray(happyFlow :String, cashFlow: String, spent: String, city: String, online: String) -> [String] {
-        return [
-            "Your Happy Flow is currently at \(happyFlow) which is slightly above average.  You’re off to a great start!",
-            "Your Cash Flow is currently at \(cashFlow) which is 22% lower then your three month average.",
-            "You spent \(spent) in the last 12 days.",
-            "You spent most of your money in \(city) and it was worth it 70% of the time. Your spending in Gloucester is generally worth it, but try to avoid spending in Worcester.",
-            "Most of the money you spent \(online) was not worth it."
-        ]
+    
+    private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
+        let range = (string as NSString).rangeOfString(coloredString)
+        let attributedString = NSMutableAttributedString(string:string)
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: color , range: range)
+        return attributedString
     }
-    var subtitleArray : [String] = []
+    
+    func genSubtitleArray(happyFlow :String, cashFlow: String, spent: String, city: String, online: String) -> [NSAttributedString] {
+        let attributedString = genAttributedString("Your Happy Flow is currently at \(happyFlow) which is slightly above average.  You’re off to a great start!", coloredString: "\(happyFlow)", color: listGreen)
+        let attributedString2 = genAttributedString("Your Cash Flow is currently at \(cashFlow) which is 22% lower then your three month average.", coloredString: "\(cashFlow)", color: listGreen)
+        let attributedString3 = genAttributedString("You spent \(spent) in the last 12 days.", coloredString: "\(spent)", color: listGreen)
+        let attributedString4 = genAttributedString("You spent most of your money in \(city) and it was worth it 70% of the time. Your spending in Gloucester is generally worth it, but try to avoid spending in Worcester.", coloredString: "\(city)", color: listGreen)
+        let attributedString5 = genAttributedString("Most of the money you spent \(online) was not worth it.", coloredString: "\(online)", color: listRed)
+        return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
+    }
+    var subtitleArray : [NSAttributedString] = []
     
     
     override func viewDidLoad() {
@@ -44,7 +51,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView .dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
         cell.titleLabel.text = titleArray[indexPath.row]
-        cell.subtitleLabel.text = subtitleArray[indexPath.row]
+        cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
         return cell
     }
 }
