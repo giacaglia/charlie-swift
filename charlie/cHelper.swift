@@ -28,8 +28,8 @@ class cHelper {
     
     
     func getHappyFlow() -> Double {
-        let sadTrans = realm.objects(Transaction).filter("status = 1")
-        let happyTrans = realm.objects(Transaction).filter("status = 2")
+        let happyTrans = realm.objects(Transaction).filter("status = 1")
+        let sadTrans = realm.objects(Transaction).filter("status = 2")
         let totalTransactions =  Double(sadTrans.count + happyTrans.count)
         if totalTransactions == 0 {
             return 0

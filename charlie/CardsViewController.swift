@@ -22,8 +22,14 @@ class CardsViewController : UIViewController {
         return attributedString
     }
     
-    func genSubtitleArray(happyFlow :String, cashFlow: String, spent: String, city: String, online: String) -> [NSAttributedString] {
-        let attributedString = genAttributedString("Your Happy Flow is currently at \(happyFlow) which is slightly above average.  You’re off to a great start!", coloredString: "\(happyFlow)", color: listGreen)
+    func genSubtitleArray(happyFlow :Double, cashFlow: String, spent: String, city: String, online: String) -> [NSAttributedString] {
+        let colorHappyFlow : UIColor
+        if happyFlow >= 0.5 {
+            colorHappyFlow = listGreen }
+        else {
+            colorHappyFlow = listRed
+        }
+        let attributedString = genAttributedString("Your Happy Flow is currently at \(happyFlow * 100)% which is slightly above average.  You’re off to a great start!", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
         let attributedString2 = genAttributedString("Your Cash Flow is currently at \(cashFlow) which is 22% lower then your three month average.", coloredString: "\(cashFlow)", color: listGreen)
         let attributedString3 = genAttributedString("You spent \(spent) in the last 12 days.", coloredString: "\(spent)", color: listGreen)
         let attributedString4 = genAttributedString("You spent most of your money in \(city) and it was worth it 70% of the time. Your spending in Gloucester is generally worth it, but try to avoid spending in Worcester.", coloredString: "\(city)", color: listGreen)
@@ -42,7 +48,7 @@ class CardsViewController : UIViewController {
         let happyFlow = cHelp.getHappyFlow()
         print("happy flow: \(happyFlow * 100)")
         
-        subtitleArray = genSubtitleArray("\(happyFlow * 100)%", cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
+        subtitleArray = genSubtitleArray(happyFlow, cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
