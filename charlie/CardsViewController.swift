@@ -34,13 +34,15 @@ class CardsViewController : UIViewController {
     
     
     override func viewDidLoad() {
+//        let happyFlow = cHelp.
         let cashFlow =  cHelp.getCashFlow()
         let moneySpent =  cHelp.getMoneySpent()
         let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
         let cityMostSpent = cHelp.getCityMostSpentMoney()
-        print(String(cityMostSpent))
-        print("\(digitalSpentTotal), \(placeSpentTotal), \(specialSpentTotal)")
-        subtitleArray = genSubtitleArray("78%", cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
+        let happyFlow = cHelp.getHappyFlow()
+        print("happy flow: \(happyFlow * 100)")
+        
+        subtitleArray = genSubtitleArray("\(happyFlow * 100)%", cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
