@@ -29,9 +29,9 @@ class CardsViewController : UIViewController {
         else {
             colorHappyFlow = listRed
         }
-        let attributedString = genAttributedString("Your Happy Flow is currently at \(happyFlow * 100)% which is slightly above average.  You’re off to a great start!", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
-        let attributedString2 = genAttributedString("Your Cash Flow is currently at \(cashFlow) which is 22% lower then your three month average.", coloredString: "\(cashFlow)", color: listGreen)
-        let attributedString3 = genAttributedString("You spent \(spent) in the last 12 days.", coloredString: "\(spent)", color: listGreen)
+        let attributedString = genAttributedString("\(happyFlow * 100)% \n up 5% points from this time last month", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
+        let attributedString2 = genAttributedString("\(cashFlow) \n up 5% from this time last month", coloredString: "\(cashFlow)", color: listGreen)
+        let attributedString3 = genAttributedString("\(spent) \n up $34.00 from this time last month", coloredString: "\(spent)", color: listGreen)
         let attributedString4 = genAttributedString("You spent most of your money in \(city) and it was worth it 70% of the time. Your spending in Gloucester is generally worth it, but try to avoid spending in Worcester.", coloredString: "\(city)", color: listGreen)
         let attributedString5 = genAttributedString("Most of the money you spent \(online) was not worth it.", coloredString: "\(online)", color: listRed)
         return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
