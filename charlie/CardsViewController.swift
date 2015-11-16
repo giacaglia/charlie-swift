@@ -34,7 +34,13 @@ class CardsViewController : UIViewController {
     
     
     override func viewDidLoad() {
-        subtitleArray = genSubtitleArray("78%", cashFlow: "+$450", spent: "$1,200", city: "Boston", online: "online")
+        let cashFlow =  cHelp.getCashFlow()
+        let moneySpent =  cHelp.getMoneySpent()
+        let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
+        let cityMostSpent = cHelp.getCityMostSpentMoney()
+        print(String(cityMostSpent))
+        print("\(digitalSpentTotal), \(placeSpentTotal), \(specialSpentTotal)")
+        subtitleArray = genSubtitleArray("78%", cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
@@ -90,7 +96,7 @@ class CardCell : UICollectionViewCell {
         lineView.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         self.contentView.addSubview(lineView)
         
-        subtitleLabel.frame = CGRectMake(0, 52, UIScreen.mainScreen().bounds.size.width - 70, 80)
+        subtitleLabel.frame = CGRectMake(0, 52, UIScreen.mainScreen().bounds.size.width - 70, 100)
         subtitleLabel.center = CGPointMake(self.center.x, subtitleLabel.center.y)
         subtitleLabel.textColor = UIColor(red: 77/255.0, green: 77/255.0, blue: 77/255.0, alpha: 1.0)
         subtitleLabel.textAlignment = .Center
@@ -111,7 +117,7 @@ class CardLayout : UICollectionViewFlowLayout {
     }
   
     private func setup() {
-        self.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 140)
+        self.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
         self.scrollDirection = .Vertical
     }
 }

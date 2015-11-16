@@ -90,6 +90,34 @@ class cHelper {
         }
         return moneySpentTotal
     }
+    
+    func getCityMostSpentMoney() -> String {
+        let transactions = realm.objects(Transaction).filter("status > 0")
+        var mapCity : [String: Int] = [String: Int]()
+        for trans in transactions {
+            if let location = trans.meta?.location {
+                let city = location.city
+                if !city.isEmpty {
+                    if mapCity.keys.contains(city) {
+                        mapCity[city] = mapCity[city]! + 1
+                    }
+                    else {
+                        mapCity[city] = 1
+                    }
+                }
+            }
+        }
+        if mapCity.keys.count == 0 {
+            return ""
+        }
+        var maxCity = mapCity.keys.first
+        for city in mapCity.keys {
+            if mapCity[city]! > mapCity[maxCity!]! {
+                maxCity = city
+            }
+        }
+        return maxCity!
+    }
 
     
     func getTypeSpent() -> (Double, Double, Double)
