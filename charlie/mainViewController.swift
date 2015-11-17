@@ -369,19 +369,23 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     @IBAction func refreshAccounts(sender: UIButton) {
-        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
-        self.view .addSubview(mainViewController.blackView)
-        let sortVC = SortViewController()
-        sortVC.initialFilterType = self.filterType
-        sortVC.transactionType = self.inboxType
-        sortVC.delegate = self
-        let height = self.view.frame.size.height*0.8
-        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
-        self.addChildViewController(sortVC)
-        self.view.addSubview(sortVC.view)
-        UIView.animateWithDuration(0.5) { () -> Void in
-            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
-        }
+        self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
+
+
+        
+        //        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
+//        self.view .addSubview(mainViewController.blackView)
+//        let sortVC = SortViewController()
+//        sortVC.initialFilterType = self.filterType
+//        sortVC.transactionType = self.inboxType
+//        sortVC.delegate = self
+//        let height = self.view.frame.size.height*0.8
+//        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+//        self.addChildViewController(sortVC)
+//        self.view.addSubview(sortVC.view)
+//        UIView.animateWithDuration(0.5) { () -> Void in
+//            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
+//        }
     }
     
     func removeBlackView() {
@@ -647,8 +651,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
-        return
         if inboxType == .ApprovedAndFlaggedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }

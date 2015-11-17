@@ -22,6 +22,10 @@ class CardsViewController : UIViewController {
         return attributedString
     }
     
+    @IBAction func closeView(sender: UIButton) {
+        dismissViewControllerAnimated(false, completion: nil)
+        
+    }
     func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, typeSpent: String, typeSpendFlow: Double) -> [NSAttributedString] {
         
         var attributedString2:NSAttributedString!
