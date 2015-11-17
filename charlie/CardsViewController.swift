@@ -22,7 +22,10 @@ class CardsViewController : UIViewController {
         return attributedString
     }
     
-    func genSubtitleArray(happyFlow :Double, cashFlow: String, spent: String, city: String, online: String) -> [NSAttributedString] {
+    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, cfCompareStatus: Bool, cfCompareType: Int, spent: Double, spent2: Double, city: String, online: String) -> [NSAttributedString] {
+        
+        var attributedString2:NSAttributedString!
+        
         let colorHappyFlow : UIColor
         if happyFlow >= 0.5 {
             colorHappyFlow = listGreen }
@@ -30,8 +33,18 @@ class CardsViewController : UIViewController {
             colorHappyFlow = listRed
         }
         let attributedString = genAttributedString("\(happyFlow * 100)% \n up 5% points from this time last month", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
-        let attributedString2 = genAttributedString("\(cashFlow) \n up 5% from this time last month", coloredString: "\(cashFlow)", color: listGreen)
-        let attributedString3 = genAttributedString("\(spent) \n up $34.00 from this time last month", coloredString: "\(spent)", color: listGreen)
+        
+        if cfCompareStatus
+        {
+            attributedString2 = genAttributedString("$\(cashFlow.format(".2")) \n vs \n $\(cashFlow2.format(".2")) \n from this time last month", coloredString: "\(cashFlow)", color: listGreen)
+            
+        }
+        else
+        {
+            attributedString2 = genAttributedString("\(cashFlow.format(".2")) \n If you swipe more transaction we can compare this to last month!", coloredString: "\(cashFlow)", color: listGreen)
+        }
+        
+        let attributedString3 = genAttributedString("$\(spent.format(".2")) \n vs \n  $\(spent2.format(".2")) \n from this time last month", coloredString: "\(spent)", color: listGreen)
         let attributedString4 = genAttributedString("You spent most of your money in \(city) and it was worth it 70% of the time. Your spending in Gloucester is generally worth it, but try to avoid spending in Worcester.", coloredString: "\(city)", color: listGreen)
         let attributedString5 = genAttributedString("Most of the money you spent \(online) was not worth it.", coloredString: "\(online)", color: listRed)
         return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
@@ -41,14 +54,14 @@ class CardsViewController : UIViewController {
     
     override func viewDidLoad() {
 //        let happyFlow = cHelp.
-        let cashFlow =  cHelp.getCashFlow()
-        let moneySpent =  cHelp.getMoneySpent()
+        let (cashFlow, cashFlow2, cfCompareStatus, cfCompareType) =  cHelp.getCashFlow()
+        let (moneySpent, moneySpent2) =  cHelp.getMoneySpent()
         let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
         let cityMostSpent = cHelp.getCityMostSpentMoney()
         let happyFlow = cHelp.getHappyFlow()
         print("happy flow: \(happyFlow * 100)")
         
-        subtitleArray = genSubtitleArray(happyFlow, cashFlow: "$\(cashFlow)", spent:"$\(moneySpent)", city: cityMostSpent, online: "online")
+        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, cfCompareStatus: cfCompareStatus, cfCompareType:  cfCompareType, spent: moneySpent, spent2: moneySpent2, city: cityMostSpent, online: "online")
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
@@ -110,6 +123,12 @@ class CardCell : UICollectionViewCell {
         subtitleLabel.textAlignment = .Center
         subtitleLabel.numberOfLines = 0
         self.contentView.addSubview(subtitleLabel)
+    }
+}
+
+extension Double {
+    func format(f: String) -> String {
+        return NSString(format: "%\(f)f", self) as String
     }
 }
 

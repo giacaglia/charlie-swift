@@ -125,14 +125,14 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         super.viewDidLoad()
         
 
-       let cashFlow =  cHelp.getCashFlow()
-        print("CASHFLOW \(cashFlow)")
-            
-        let moneySpent =  cHelp.getMoneySpent()
-        print("MONEYSPENT \(moneySpent)")
-        
-        let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
-        
+//       let cashFlow =  cHelp.getCashFlow()
+//        print("CASHFLOW \(cashFlow)")
+//            
+//        let moneySpent =  cHelp.getMoneySpent()
+//        print("MONEYSPENT \(moneySpent)")
+//        
+//        let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
+//        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -647,8 +647,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
-//        return
+       self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
+        return
         if inboxType == .ApprovedAndFlaggedTransaction {
             performSegueWithIdentifier("groupDetail", sender: indexPath)
         }

@@ -39,7 +39,16 @@ class cHelper {
         return happyFlow
     }
     
-    func getCashFlow() -> Double {
+    
+    func getWorthPeriod()
+    {
+        
+    }
+    
+
+    
+    func getCashFlow() -> (Double, Double, Bool, Int)   
+    {
         //need to remove transfers as they shouldn't count
         
         //need to add ablilty to perform based on date being passed in
@@ -48,39 +57,73 @@ class cHelper {
         
         
         //need to add ability to compare to previous month
-       
-        var cashFlowTotal: Double = 0
-        let cashFlows = realm.objects(Transaction).filter("status > 0").sorted("date", ascending: true)
         
+        var compareStatus = false
+        var cashFlowTotal: Double = 0
+        let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
+        var cashFlows1Predicate: NSPredicate = NSPredicate()
+        var cashFlows2Predicate: NSPredicate = NSPredicate()
+        var cashFlows1 = realm.objects(Transaction)
+        var cashFlows2 = realm.objects(Transaction)
+        var cashFlowTotal2: Double = 0
         let oldestDate = cashFlows[0].date
         let today = NSDate()
+        var compareType:Int = 0
+        
         
         
         let beginingThisMonth = startOfMonth(today)
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+        let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
+        
+        cashFlows1Predicate = NSPredicate(format:"date >= %@ ", beginingThisMonth!)
+        cashFlows1 = realm.objects(Transaction).filter(cashFlows1Predicate)
+        
         if beginingLastMonth.compare(oldestDate) == .OrderedDescending
         {
             //we can compare
             print("COMPARE")
+            
+            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth)
+            cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
+            if cashFlows2.count > 0
+            {
+                for cashFlowItem in cashFlows2
+                {
+                    let convertedCF = cashFlowItem.amount * -1
+                    cashFlowTotal2 += convertedCF
+                }
+            }
+            compareStatus = true
         }
         else
         {
-            print("DON'T COMPARE")
-        
+            compareStatus = false
         }
         
-        print("OLDEST DATES: \(cashFlows[0].date)")
-        for cashFlowItem in cashFlows
+       
+        for cashFlowItem in cashFlows1
         {
             let convertedCF = cashFlowItem.amount * -1
             cashFlowTotal += convertedCF
-            print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
         }
-        return cashFlowTotal
+        
+        //need to return two cash flow totals
+        
+        if cashFlowTotal < cashFlowTotal2
+        {
+            compareType = 2
+        }
+        else if cashFlowTotal > cashFlowTotal2
+        {
+            compareType = 1
+   }
+        
+        return (cashFlowTotal, cashFlowTotal2, compareStatus, compareType)
     }
     
    
-    func getMoneySpent() -> (Double)
+    func getMoneySpent() -> (Double, Double)
     {
         //need to remove transfers as they shouldn't count
        
@@ -91,14 +134,36 @@ class cHelper {
         
         //need to add ability to compare to previous month
         
+        var cashFlowsPredicate: NSPredicate = NSPredicate()
+        var cashFlows2Predicate: NSPredicate = NSPredicate()
+        let today = NSDate()
+        
+        
+        let beginingThisMonth = startOfMonth(today)
+        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+        let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
         var moneySpentTotal: Double = 0
-        let cashFlows = realm.objects(Transaction).filter("status > 0 AND amount > 0")
+        var moneySpentTotal2: Double = 0
+        
+        cashFlowsPredicate = NSPredicate(format: "date >= %@ and amount > 0", beginingThisMonth!)
+        cashFlows2Predicate = NSPredicate(format: "date >= %@ and date <=  %@  and amount > 0", beginingLastMonth, compareEndLastMonth)
+        let cashFlows = realm.objects(Transaction).filter(cashFlowsPredicate)
+        let cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
+
+
         for cashFlowItem in cashFlows
         {
               moneySpentTotal += cashFlowItem.amount
               print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
         }
-        return moneySpentTotal
+        for cashFlowItem in cashFlows2
+        {
+            moneySpentTotal2 += cashFlowItem.amount
+            print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+        }
+        
+        
+        return (moneySpentTotal, moneySpentTotal2)
     }
     
     func getCityMostSpentMoney() -> String {
@@ -479,6 +544,7 @@ class cHelper {
     }
     
 }
+
 
 
 
