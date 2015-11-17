@@ -47,7 +47,7 @@ class cHelper {
     
 
     
-    func getCashFlow() -> (Double, Double, Bool, Int)   
+    func getCashFlow() -> (Double, Double, Double, Double, Double, Double)
     {
         //need to remove transfers as they shouldn't count
         
@@ -58,7 +58,7 @@ class cHelper {
         
         //need to add ability to compare to previous month
         
-        var compareStatus = false
+        
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -68,7 +68,11 @@ class cHelper {
         var cashFlowTotal2: Double = 0
         let oldestDate = cashFlows[0].date
         let today = NSDate()
-        var compareType:Int = 0
+        
+        var moneySpent1:Double = 0
+        var moneySpent2:Double = 0
+        var income1:Double = 0
+        var income2:Double = 0
         
         
         
@@ -92,82 +96,63 @@ class cHelper {
                 {
                     let convertedCF = cashFlowItem.amount * -1
                     cashFlowTotal2 += convertedCF
+                
+                    if cashFlowItem.amount > 0
+                    {
+                        moneySpent2 += cashFlowItem.amount
+                        
+                    }
+                    
+                    if cashFlowItem.amount < 0
+                    {
+                        income2 += cashFlowItem.amount
+                        
+                    }
+                
+                
                 }
+                
+                
             }
-            compareStatus = true
+           
         }
-        else
-        {
-            compareStatus = false
-        }
-        
-       
         for cashFlowItem in cashFlows1
         {
+            
             let convertedCF = cashFlowItem.amount * -1
             cashFlowTotal += convertedCF
-        }
+        
+            if cashFlowItem.amount > 0
+            {
+               moneySpent1 += cashFlowItem.amount
+            
+            }
+
+            if cashFlowItem.amount < 0
+            {
+                income1 += cashFlowItem.amount
+                
+            }
+
+            
         
         //need to return two cash flow totals
+      }
         
-        if cashFlowTotal < cashFlowTotal2
-        {
-            compareType = 2
-        }
-        else if cashFlowTotal > cashFlowTotal2
-        {
-            compareType = 1
-   }
-        
-        return (cashFlowTotal, cashFlowTotal2, compareStatus, compareType)
+        return (cashFlowTotal, cashFlowTotal2, moneySpent1, moneySpent2, income1 * -1, income2 * -1)
     }
     
    
-    func getMoneySpent() -> (Double, Double)
-    {
-        //need to remove transfers as they shouldn't count
-       
-        //if data available is less than 35 days old than get current money spent for month
-        //else get money spent for current month and cash flow for last month and calculate increase of decrease of cashflow
-        
-        
-        
-        //need to add ability to compare to previous month
-        
-        var cashFlowsPredicate: NSPredicate = NSPredicate()
-        var cashFlows2Predicate: NSPredicate = NSPredicate()
-        let today = NSDate()
-        
-        
-        let beginingThisMonth = startOfMonth(today)
-        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
-        let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
-        var moneySpentTotal: Double = 0
-        var moneySpentTotal2: Double = 0
-        
-        cashFlowsPredicate = NSPredicate(format: "date >= %@ and amount > 0", beginingThisMonth!)
-        cashFlows2Predicate = NSPredicate(format: "date >= %@ and date <=  %@  and amount > 0", beginingLastMonth, compareEndLastMonth)
-        let cashFlows = realm.objects(Transaction).filter(cashFlowsPredicate)
-        let cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
-
-
-        for cashFlowItem in cashFlows
-        {
-              moneySpentTotal += cashFlowItem.amount
-              print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
-        }
-        for cashFlowItem in cashFlows2
-        {
-            moneySpentTotal2 += cashFlowItem.amount
-            print("\(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
-        }
-        
-        
-        return (moneySpentTotal, moneySpentTotal2)
-    }
     
     func getCityMostSpentMoney() -> String {
-        let transactions = realm.objects(Transaction).filter("status > 0")
+        
+        let today = NSDate()
+        let beginingThisMonth = startOfMonth(today)
+        let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
+        
+        
+        
+        let transactions = realm.objects(Transaction).filter(cityMostSpentPredicate)
         var mapCity : [String: Int] = [String: Int]()
         for trans in transactions {
             if let location = trans.meta?.location {
@@ -195,7 +180,7 @@ class cHelper {
     }
 
     
-    func getTypeSpent() -> (Double, Double, Double)
+    func getTypeSpent() -> (Double, String)
     {
         //need to remove transfers as they shouldn't count
         
@@ -205,19 +190,26 @@ class cHelper {
         
         //need to add ability to compare to previous month
         var digitalSpentTotal: Double = 0
-        var digitalHappyTotal: Int = 0
-        var digitalSadTotal: Int = 0
+        var digitalHappyTotal: Double = 0
+        var digitalSadTotal: Double = 0
         var digitalHappyFlow: Double = 0.0
         var specialSpentTotal: Double = 0
-        var specialHappyTotal: Int = 0
-        var specialSadTotal: Int = 0
+        var specialHappyTotal: Double = 0
+        var specialSadTotal: Double = 0
         var specialHappyFlow: Double = 0.0
         var placeSpentTotal: Double = 0
-        var placeHappyTotal: Int = 0
-        var placeSadTotal: Int = 0
+        var placeHappyTotal:Double = 0
+        var placeSadTotal: Double = 0
         var placeHappyFlow: Double = 0.0
         
-        let cashFlows = realm.objects(Transaction).filter("status > 0 and amount > 0")
+        
+        let today = NSDate()
+        let beginingThisMonth = startOfMonth(today)
+        let typeSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
+        
+
+        
+        let cashFlows = realm.objects(Transaction).filter(typeSpentPredicate)
         for cashFlowItem in cashFlows
         {
             if cashFlowItem.placeType == "digital"
@@ -246,7 +238,7 @@ class cHelper {
                 {
                     specialSadTotal += 1
                 }
-                print("Special: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+               
             }
             
             if cashFlowItem.placeType == "place"
@@ -272,10 +264,16 @@ class cHelper {
         print("SPECIAL HAPPY FLOW: \(specialHappyFlow)")
 
         placeHappyFlow = Double(placeHappyTotal) / Double((placeHappyTotal + placeSadTotal)) as Double
-        print("SPECIAL HAPPY FLOW: \(placeHappyFlow)")
+        print("Place HAPPY FLOW: \(placeHappyFlow)")
 
         
-        return (digitalSpentTotal, placeSpentTotal, specialSpentTotal)
+        if placeHappyTotal > specialHappyTotal && placeHappyTotal > digitalHappyTotal
+        {return (placeHappyFlow * 100, "Places")}
+        else if specialHappyTotal > placeHappyTotal && specialHappyTotal > digitalHappyTotal
+        {return (specialHappyFlow * 100, "Special")}
+        else
+        {return (digitalHappyFlow * 100, "Online")}
+        
     }
 
     
