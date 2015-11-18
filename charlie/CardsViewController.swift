@@ -26,7 +26,7 @@ class CardsViewController : UIViewController {
         dismissViewControllerAnimated(false, completion: nil)
         
     }
-    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, typeSpent: String, typeSpendFlow: Double) -> [NSAttributedString] {
+    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double) -> [NSAttributedString] {
         
         var attributedString2:NSAttributedString!
         
@@ -36,7 +36,7 @@ class CardsViewController : UIViewController {
         else {
             colorHappyFlow = listRed
         }
-        let attributedString = genAttributedString("\(happyFlow * 100)% \n up 5% points from this time last month", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
+        let attributedString = genAttributedString("\(happyFlow.format(".2"))% ", coloredString: "\(happyFlow.format(".2"))%", color: colorHappyFlow)
         
         attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
         
@@ -46,7 +46,7 @@ class CardsViewController : UIViewController {
         let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
         
     
-        let attributedString5 = genAttributedString("Most of the money you spent \(typeSpent) and was worth it \(typeSpendFlow)% of the time. \n You spent most of your money in \(city).", coloredString: "\(typeSpent)", color: listRed)
+        let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
         return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
     }
     var subtitleArray : [NSAttributedString] = []
@@ -55,12 +55,12 @@ class CardsViewController : UIViewController {
     override func viewDidLoad() {
 //        let happyFlow = cHelp.
         let (cashFlow, cashFlow2, moneySpent1, moneySpent2, income1, income2) =  cHelp.getCashFlow()
-        let (typeSpentFlow, typeSpent) = cHelp.getTypeSpent()
+        let (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
         let cityMostSpent = cHelp.getCityMostSpentMoney()
         let happyFlow = cHelp.getHappyFlow()
         print("happy flow: \(happyFlow * 100)")
         
-        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2,  city: cityMostSpent, typeSpent:  typeSpent, typeSpendFlow: typeSpentFlow)
+        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2, city: cityMostSpent, digitalHappyFlow:  digitalHappyFlow, digitalSpentPercentage: digitalSpentPercentage)
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self

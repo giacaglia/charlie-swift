@@ -36,28 +36,13 @@ class cHelper {
         }
         let happyFlow = Double(happyTrans.count)/totalTransactions as Double
 
-        return happyFlow
+        return happyFlow * 100
     }
     
     
-    func getWorthPeriod()
-    {
-        
-    }
-    
-
     
     func getCashFlow() -> (Double, Double, Double, Double, Double, Double)
     {
-        //need to remove transfers as they shouldn't count
-        
-        //need to add ablilty to perform based on date being passed in
-        //if data available is less than 35 days old than get current cash flow for month
-        //else get cash flow for current month and cash flow for last month and calculate increase of decrease of cashflow
-        
-        
-        //need to add ability to compare to previous month
-        
         
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
@@ -74,8 +59,6 @@ class cHelper {
         var income1:Double = 0
         var income2:Double = 0
         
-        
-        
         let beginingThisMonth = startOfMonth(today)
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
         let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
@@ -85,9 +68,6 @@ class cHelper {
         
         if beginingLastMonth.compare(oldestDate) == .OrderedDescending
         {
-            //we can compare
-            print("COMPARE")
-            
             cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth)
             cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
             if cashFlows2.count > 0
@@ -100,22 +80,16 @@ class cHelper {
                     if cashFlowItem.amount > 0
                     {
                         moneySpent2 += cashFlowItem.amount
-                        
                     }
                     
                     if cashFlowItem.amount < 0
                     {
                         income2 += cashFlowItem.amount
-                        
                     }
-                
-                
                 }
-                
-                
             }
-           
         }
+  
         for cashFlowItem in cashFlows1
         {
             
@@ -125,29 +99,17 @@ class cHelper {
             if cashFlowItem.amount > 0
             {
                moneySpent1 += cashFlowItem.amount
-            
             }
 
             if cashFlowItem.amount < 0
             {
                 income1 += cashFlowItem.amount
-                
             }
-
-            
-        
-        //need to return two cash flow totals
-            
-            
-            
-      }
+        }
     
-       var moneySpentChange = ((moneySpent1 - moneySpent2) / moneySpent2) * 100
-        
-       var cashFlowChange = ((cashFlowTotal - cashFlowTotal2) / cashFlowTotal2) * 100
-        
-        
-       var incomeChange = (((income1 * -1) -  (income2 * -1)) / (income2 * -1)) * 100
+        let moneySpentChange = ((moneySpent1 - moneySpent2) / moneySpent2) * 100
+        let cashFlowChange = ((cashFlowTotal - cashFlowTotal2) / cashFlowTotal2) * 100
+        let incomeChange = (((income1 * -1) -  (income2 * -1)) / (income2 * -1)) * 100
         
         return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
@@ -159,8 +121,6 @@ class cHelper {
         let today = NSDate()
         let beginingThisMonth = startOfMonth(today)
         let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
-        
-        
         
         let transactions = realm.objects(Transaction).filter(cityMostSpentPredicate)
         var mapCity : [String: Int] = [String: Int]()
@@ -190,7 +150,7 @@ class cHelper {
     }
 
     
-    func getTypeSpent() -> (Double, String)
+    func getTypeSpent() -> (Double, Double, Double, Double, Double, Double)
     {
         //need to remove transfers as they shouldn't count
         
@@ -202,15 +162,15 @@ class cHelper {
         var digitalSpentTotal: Double = 0
         var digitalHappyTotal: Double = 0
         var digitalSadTotal: Double = 0
-        var digitalHappyFlow: Double = 0.0
+        
         var specialSpentTotal: Double = 0
         var specialHappyTotal: Double = 0
         var specialSadTotal: Double = 0
-        var specialHappyFlow: Double = 0.0
+        
         var placeSpentTotal: Double = 0
         var placeHappyTotal:Double = 0
         var placeSadTotal: Double = 0
-        var placeHappyFlow: Double = 0.0
+        
         
         
         let today = NSDate()
@@ -267,27 +227,19 @@ class cHelper {
                 
         }
         
-        digitalHappyFlow = Double(digitalHappyTotal) / Double((digitalHappyTotal + digitalSadTotal)) as Double
-        print("DIGITAL HAPPY FLOW: \(digitalHappyFlow)")
+        let digitalHappyFlow = Double(digitalHappyTotal) / Double((digitalHappyTotal + digitalSadTotal)) * 100 as Double
+        let digitalSpentPercentage = digitalSpentTotal/(specialSpentTotal + digitalSpentTotal + placeSpentTotal) * 100 as Double
         
-        specialHappyFlow = Double(specialHappyTotal) / Double((specialHappyTotal + specialSadTotal)) as Double
-        print("SPECIAL HAPPY FLOW: \(specialHappyFlow)")
-
-        placeHappyFlow = Double(placeHappyTotal) / Double((placeHappyTotal + placeSadTotal)) as Double
-        print("Place HAPPY FLOW: \(placeHappyFlow)")
+        let specialHappyFlow = Double(specialHappyTotal) / Double((specialHappyTotal + specialSadTotal)) * 100 as Double
+        let specialSpentPercentage = specialSpentTotal/(specialSpentTotal + digitalSpentTotal + placeSpentTotal) * 100 as Double
+        
+        let placeHappyFlow = Double(placeHappyTotal) / Double((placeHappyTotal + placeSadTotal)) * 100 as Double
+        let placeSpentPercentage = placeSpentTotal/(specialSpentTotal + digitalSpentTotal + placeSpentTotal) * 100 as Double
 
         
-        if placeHappyTotal > specialHappyTotal && placeHappyTotal > digitalHappyTotal
-        {return (placeHappyFlow * 100, "Places")}
-        else if specialHappyTotal > placeHappyTotal && specialHappyTotal > digitalHappyTotal
-        {return (specialHappyFlow * 100, "Special")}
-        else
-        {return (digitalHappyFlow * 100, "Online")}
+        return (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage)
         
     }
-
-    
-    
     
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
@@ -310,15 +262,10 @@ class cHelper {
                     try! realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
-                           
                             realm.create(Account.self, value: account, update: true)
-                           
                             print("saved accounts")
-
-                            
-                            
-                        }
                     }
+                }
                     
                     let transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
