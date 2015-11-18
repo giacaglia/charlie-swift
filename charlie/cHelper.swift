@@ -137,9 +137,19 @@ class cHelper {
             
         
         //need to return two cash flow totals
+            
+            
+            
       }
+    
+       var moneySpentChange = ((moneySpent1 - moneySpent2) / moneySpent2) * 100
         
-        return (cashFlowTotal, cashFlowTotal2, moneySpent1, moneySpent2, income1 * -1, income2 * -1)
+       var cashFlowChange = ((cashFlowTotal - cashFlowTotal2) / cashFlowTotal2) * 100
+        
+        
+       var incomeChange = (((income1 * -1) -  (income2 * -1)) / (income2 * -1)) * 100
+        
+        return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
     
    

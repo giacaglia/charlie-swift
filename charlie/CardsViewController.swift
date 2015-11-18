@@ -38,11 +38,12 @@ class CardsViewController : UIViewController {
         }
         let attributedString = genAttributedString("\(happyFlow * 100)% \n up 5% points from this time last month", coloredString: "\(happyFlow * 100)%", color: colorHappyFlow)
         
-        attributedString2 = genAttributedString("\(income1) \n vs \n \(income2) \n from this time last month", coloredString: "\(spent)", color: listGreen)
+        attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
         
         
-        let attributedString3 = genAttributedString("$\(spent.format(".2")) \n vs \n  $\(spent2.format(".2")) \n from this time last month", coloredString: "\(spent)", color: listGreen)
-        let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n vs \n $\(cashFlow2.format(".2")) \n from this time last month", coloredString: "\(cashFlow)", color: listGreen)
+        let attributedString3 = genAttributedString("$\(spent.format(".2")) \n \(spent2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
+        
+        let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
         
     
         let attributedString5 = genAttributedString("Most of the money you spent \(typeSpent) and was worth it \(typeSpendFlow)% of the time. \n You spent most of your money in \(city).", coloredString: "\(typeSpent)", color: listRed)
