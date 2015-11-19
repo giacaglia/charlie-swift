@@ -26,7 +26,7 @@ class CardsViewController : UIViewController {
         dismissViewControllerAnimated(false, completion: nil)
         
     }
-    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double) -> [NSAttributedString] {
+    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double, placeHappyFlow: Double, placeSpentPercentage: Double) -> [NSAttributedString] {
         
         var attributedString2:NSAttributedString!
         
@@ -46,7 +46,7 @@ class CardsViewController : UIViewController {
         let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
         
     
-        let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
+        let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
         return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
     }
     var subtitleArray : [NSAttributedString] = []
@@ -60,7 +60,7 @@ class CardsViewController : UIViewController {
         let happyFlow = cHelp.getHappyFlow()
         print("happy flow: \(happyFlow * 100)")
         
-        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2, city: cityMostSpent, digitalHappyFlow:  digitalHappyFlow, digitalSpentPercentage: digitalSpentPercentage)
+        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2, city: cityMostSpent, digitalHappyFlow:  digitalHappyFlow, digitalSpentPercentage: digitalSpentPercentage, placeHappyFlow: placeHappyFlow, placeSpentPercentage: placeSpentPercentage)
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self

@@ -195,10 +195,12 @@ class cHelper {
                     digitalSadTotal += 1
                         
                 }
-            print("Digital: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+            //print("Digital: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
             if cashFlowItem.placeType == "special"
             {
+                print("Special: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+                
                 specialSpentTotal += cashFlowItem.amount
                 if cashFlowItem.status == 1
                 {
@@ -222,7 +224,7 @@ class cHelper {
                 {
                     placeSadTotal += 1
                 }
-                print("Place: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
+               // print("Place: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
                 
         }
@@ -263,7 +265,7 @@ class cHelper {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
                             realm.create(Account.self, value: account, update: true)
-                            print("saved accounts")
+                           // print("saved accounts")
                     }
                 }
                     
