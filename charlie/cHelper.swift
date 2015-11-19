@@ -392,11 +392,22 @@ class cHelper {
         let stringlength = name.characters.count
         // var ierror: NSError?
         let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
-        let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
+        let regex3:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
+        let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "P.*TERMINAL ", options: NSRegularExpressionOptions.CaseInsensitive)
+        
         let modString = regex.stringByReplacingMatchesInString(name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
         let stringlength2 = modString.characters.count
+        
+        
         let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
-        var trimmedStr = modString2.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let stringlength3 = modString2.characters.count
+        
+        
+        
+        let modString3 = regex3.stringByReplacingMatchesInString(modString2, options: [], range: NSMakeRange(0, stringlength3), withTemplate: "")
+        
+        
+        var trimmedStr = modString3.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         if trimmedStr.characters.count == 0 {
             trimmedStr = "Missing Name"
