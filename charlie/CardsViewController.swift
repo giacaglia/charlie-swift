@@ -11,9 +11,8 @@ import Foundation
 
 class CardsViewController : UIViewController {
     
-    @IBOutlet weak var reportLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    let titleArray = ["My Happy Flow", "My Earnings", "My Spending", "My CashFlow", "My Habits"]
+    let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW", "MY HABITS"]
     
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
@@ -30,13 +29,7 @@ class CardsViewController : UIViewController {
         
         var attributedString2:NSAttributedString!
         
-        let colorHappyFlow : UIColor
-        if happyFlow >= 0.5 {
-            colorHappyFlow = listGreen }
-        else {
-            colorHappyFlow = listRed
-        }
-        let attributedString = genAttributedString("\(happyFlow.format(".2"))% ", coloredString: "\(happyFlow.format(".2"))%", color: colorHappyFlow)
+//        let attributedString = genAttributedString("\(happyFlow.format(".2"))% ", coloredString: "\(happyFlow.format(".2"))%", color: UIColor.whiteColor())
         
         attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
         
@@ -47,13 +40,12 @@ class CardsViewController : UIViewController {
         
     
         let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
-        return [attributedString, attributedString2, attributedString3, attributedString4, attributedString5]
+        return [attributedString2, attributedString3, attributedString4, attributedString5]
     }
     var subtitleArray : [NSAttributedString] = []
     
     
     override func viewDidLoad() {
-//        let happyFlow = cHelp.
         let (cashFlow, cashFlow2, moneySpent1, moneySpent2, income1, income2) =  cHelp.getCashFlow()
         let (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
         let cityMostSpent = cHelp.getCityMostSpentMoney()
@@ -101,11 +93,23 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
         }
         else {
             let cell = collectionView .dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
+            if (indexPath.row == 0) {
+                cell.backgroundColor = lightGreen
+            }
+            else {
+                cell.backgroundColor = lightRed
+            }
+            
             cell.titleLabel.text = titleArray[indexPath.row]
             cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
             return cell
         }
-
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 {
+            
+        }
     }
 }
 
@@ -150,6 +154,7 @@ class TotalTransactionCell : UICollectionViewCell {
 }
 
 class CardCell : UICollectionViewCell {
+    let bigTitleLabel = UILabel()
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let string1 : String = ""
@@ -174,16 +179,26 @@ class CardCell : UICollectionViewCell {
         
         titleLabel.frame = CGRectMake(0, 11, self.frame.size.width, 30)
         titleLabel.font = UIFont.boldSystemFontOfSize(15.0)
+        titleLabel.textColor = UIColor.whiteColor()
         titleLabel.textAlignment = .Center
         titleLabel.center = CGPointMake(self.center.x, titleLabel.center.y)
         self.contentView.addSubview(titleLabel)
         
         let lineView = UIView(frame: CGRectMake(0, 46, 40, 5))
         lineView.center = CGPointMake(self.center.x, lineView.center.y)
-        lineView.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        lineView.backgroundColor = UIColor.whiteColor()
+        lineView.alpha = 0.6
         self.contentView.addSubview(lineView)
         
-        subtitleLabel.frame = CGRectMake(0, 52, UIScreen.mainScreen().bounds.size.width - 70, 100)
+        bigTitleLabel.frame = CGRectMake(0, 62, self.frame.size.width, 35)
+        bigTitleLabel.center = CGPointMake(self.center.x, bigTitleLabel.center.y)
+        bigTitleLabel.font = UIFont.boldSystemFontOfSize(42.0)
+        bigTitleLabel.textColor = UIColor.whiteColor()
+        bigTitleLabel.textAlignment = .Center
+        bigTitleLabel.text = "$2,107"
+        self.contentView.addSubview(bigTitleLabel)
+        
+        subtitleLabel.frame = CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width - 70, 30)
         subtitleLabel.center = CGPointMake(self.center.x, subtitleLabel.center.y)
         subtitleLabel.textColor = UIColor(red: 77/255.0, green: 77/255.0, blue: 77/255.0, alpha: 1.0)
         subtitleLabel.textAlignment = .Center
@@ -192,9 +207,40 @@ class CardCell : UICollectionViewCell {
     }
 }
 
-extension Double {
-    func format(f: String) -> String {
-        return NSString(format: "%\(f)f", self) as String
+class HabitsCell : UICollectionViewCell {
+    let happiestCityLabel = UILabel()
+    let spendOnline = UILabel()
+    let happyFlow = UILabel()
+    let mostExpensiveCiy = UILabel()
+    
+    static func cellIdentifier() -> String {
+        return "habitsCell"
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    private func setup() {
+        self.setLabel(happiestCityLabel, atPosition: 11)
+        self.setLabel(spendOnline, atPosition: 41)
+        self.setLabel(happyFlow, atPosition: 71)
+        self.setLabel(mostExpensiveCiy, atPosition: 101)
+    }
+    
+    private func setLabel(label: UILabel,atPosition y: CGFloat) {
+        label.frame = CGRectMake(0, y, self.frame.size.width, 30)
+        label.font = UIFont.boldSystemFontOfSize(15.0)
+        label.textColor = UIColor.blackColor()
+        label.textAlignment = .Center
+        label.center = CGPointMake(self.center.x, label.center.y)
+        self.contentView.addSubview(label)
     }
 }
 
@@ -213,5 +259,11 @@ class CardLayout : UICollectionViewFlowLayout {
         self.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         self.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
         self.scrollDirection = .Vertical
+    }
+}
+
+extension Double {
+    func format(f: String) -> String {
+        return NSString(format: "%\(f)f", self) as String
     }
 }
