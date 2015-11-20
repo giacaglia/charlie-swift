@@ -12,7 +12,7 @@ import Foundation
 class CardsViewController : UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW", "MY HABITS"]
+    let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
     
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
@@ -21,40 +21,13 @@ class CardsViewController : UIViewController {
         return attributedString
     }
     
-    @IBAction func closeView(sender: UIButton) {
-        dismissViewControllerAnimated(false, completion: nil)
-        
-    }
-    func genSubtitleArray(happyFlow :Double, cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double, placeHappyFlow: Double, placeSpentPercentage: Double) -> [NSAttributedString] {
-        
-        var attributedString2:NSAttributedString!
-        
-//        let attributedString = genAttributedString("\(happyFlow.format(".2"))% ", coloredString: "\(happyFlow.format(".2"))%", color: UIColor.whiteColor())
-        
-        attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
-        
-        
-        let attributedString3 = genAttributedString("$\(spent.format(".2")) \n \(spent2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
-        
-        let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
-        
-    
-        let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
-        return [attributedString2, attributedString3, attributedString4, attributedString5]
-    }
-    var subtitleArray : [NSAttributedString] = []
-    
-    
     override func viewDidLoad() {
-        let (cashFlow, cashFlow2, moneySpent1, moneySpent2, income1, income2) =  cHelp.getCashFlow()
-        let (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
-        let cityMostSpent = cHelp.getCityMostSpentMoney()
         let happyFlow = cHelp.getHappyFlow()
         print("happy flow: \(happyFlow * 100)")
-        
-        subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2, city: cityMostSpent, digitalHappyFlow:  digitalHappyFlow, digitalSpentPercentage: digitalSpentPercentage, placeHappyFlow: placeHappyFlow, placeSpentPercentage: placeSpentPercentage)
+
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
+        self.collectionView.registerClass(HabitsCell.self, forCellWithReuseIdentifier: HabitsCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -68,22 +41,29 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
         if indexPath.section == 0 {
             return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 70)
         }
-        else {
+        else if indexPath.section == 1 {
             return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
+        }
+        else {
+            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 200)
         }
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         }
-        else {
+        else if section == 1 {
             return titleArray.count
         }
+        else {
+            return 1
+        }
+
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -91,8 +71,8 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             let totalTransactionCell = collectionView.dequeueReusableCellWithReuseIdentifier(TotalTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! TotalTransactionCell
             return totalTransactionCell
         }
-        else {
-            let cell = collectionView .dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
+        else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
             if (indexPath.row == 0) {
                 cell.backgroundColor = lightGreen
             }
@@ -101,7 +81,11 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             }
             
             cell.titleLabel.text = titleArray[indexPath.row]
-            cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
+//            cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
+            return cell
+        }
+        else {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(HabitsCell.cellIdentifier(), forIndexPath: indexPath)
             return cell
         }
     }
@@ -228,10 +212,40 @@ class HabitsCell : UICollectionViewCell {
     }
     
     private func setup() {
-        self.setLabel(happiestCityLabel, atPosition: 11)
-        self.setLabel(spendOnline, atPosition: 41)
-        self.setLabel(happyFlow, atPosition: 71)
-        self.setLabel(mostExpensiveCiy, atPosition: 101)
+        self.backgroundColor = UIColor.whiteColor()
+      
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor(red: 226/255.0, green: 226/255.0, blue: 226/255.0, alpha: 1.0).CGColor
+        self.layer.cornerRadius = 1
+        
+        let titleLabel = UILabel()
+        titleLabel.frame = CGRectMake(0, 11, self.frame.size.width, 30)
+        titleLabel.font = UIFont.boldSystemFontOfSize(15.0)
+        titleLabel.textColor = UIColor(red: 163/255.0, green: 163/255.0, blue: 163/255.0, alpha: 1.0)
+        titleLabel.textAlignment = .Center
+        titleLabel.center = CGPointMake(self.center.x, titleLabel.center.y)
+        titleLabel.text = "MY HABITS"
+        self.contentView.addSubview(titleLabel)
+        
+        let lineView = UIView(frame: CGRectMake(0, 46, 40, 5))
+        lineView.center = CGPointMake(self.center.x, lineView.center.y)
+        lineView.backgroundColor = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1.0)
+        lineView.alpha = 0.6
+        self.contentView.addSubview(lineView)
+        
+        self.setLabel(happiestCityLabel, atPosition: 41)
+        self.setLabel(spendOnline, atPosition: 71)
+        self.setLabel(happyFlow, atPosition: 101)
+        self.setLabel(mostExpensiveCiy, atPosition: 131)
+        
+        let (cashFlow, cashFlow2, moneySpent1, moneySpent2, income1, income2) =  cHelp.getCashFlow()
+        let (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
+        let cityMostSpent = cHelp.getCityMostSpentMoney()
+        
+        happiestCityLabel.text = "$\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month"
+        spendOnline.text = "$\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month"
+        happyFlow.text = "$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month"
+        mostExpensiveCiy.text = "\(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(cityMostSpent) is where you spent most."
     }
     
     private func setLabel(label: UILabel,atPosition y: CGFloat) {
@@ -267,3 +281,18 @@ extension Double {
         return NSString(format: "%\(f)f", self) as String
     }
 }
+
+
+//func genSubtitleArray(cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double, placeHappyFlow: Double, placeSpentPercentage: Double) -> [NSAttributedString] {
+//    
+//    var attributedString2:NSAttributedString!
+//    
+//    attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
+//    
+//    let attributedString3 = genAttributedString("$\(spent.format(".2")) \n \(spent2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
+//    
+//    let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
+//    
+//    let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
+//    return [attributedString2, attributedString3, attributedString4, attributedString5]
+//}
