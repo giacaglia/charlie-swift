@@ -22,51 +22,58 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
-                    <rect key="frame" x="230" y="117" width="140" height="65"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="140" id="YAW-iC-ARf"/>
-                        <constraint firstAttribute="height" constant="65" id="iqv-TB-EFB"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="52"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="20" y="260" width="560" height="300"/>
+                    <rect key="frame" x="20" y="305" width="560" height="255"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gu-Rh-V4K">
-                    <rect key="frame" x="545" y="25" width="40" height="40"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFo-nh-kMo">
+                    <rect key="frame" x="150" y="70" width="300" height="200"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow is currently at:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccC-Bg-ZCq">
+                            <rect key="frame" x="17" y="65" width="160" height="70"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="160" id="Gyl-qA-lOU"/>
+                                <constraint firstAttribute="height" constant="70" id="nJ4-94-jNG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
+                            <rect key="frame" x="172" y="67" width="130" height="65"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="YAW-iC-ARf"/>
+                                <constraint firstAttribute="height" constant="65" id="iqv-TB-EFB"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="52"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="WTf-Ym-lQ7"/>
-                        <constraint firstAttribute="width" constant="40" id="j4P-2d-qUz"/>
+                        <constraint firstItem="AAU-ef-60g" firstAttribute="centerY" secondItem="ccC-Bg-ZCq" secondAttribute="centerY" id="XdQ-2W-xDr"/>
+                        <constraint firstItem="AAU-ef-60g" firstAttribute="leading" secondItem="ccC-Bg-ZCq" secondAttribute="trailing" constant="-5" id="ZR2-7J-2o6"/>
+                        <constraint firstAttribute="width" constant="300" id="ch2-RQ-rhy"/>
+                        <constraint firstItem="ccC-Bg-ZCq" firstAttribute="centerY" secondItem="TFo-nh-kMo" secondAttribute="centerY" id="dbY-fI-xqQ"/>
+                        <constraint firstItem="ccC-Bg-ZCq" firstAttribute="leading" secondItem="TFo-nh-kMo" secondAttribute="leading" constant="17" id="hD7-Lo-Ilo"/>
+                        <constraint firstAttribute="height" constant="200" id="ikY-6V-wZe"/>
                     </constraints>
-                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" image="close"/>
-                    <connections>
-                        <action selector="closePressed:" destination="-1" eventType="touchUpInside" id="0tB-ho-5DO"/>
-                    </connections>
-                </button>
+                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="AAU-ef-60g" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="117" id="2Xh-2C-pWE"/>
+                <constraint firstItem="TFo-nh-kMo" firstAttribute="centerX" secondItem="bEm-Xn-24m" secondAttribute="centerX" id="8CG-Z4-nwt"/>
                 <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="U5L-Zo-fy7"/>
-                <constraint firstAttribute="trailing" secondItem="0gu-Rh-V4K" secondAttribute="trailing" constant="15" id="aWT-2N-u28"/>
-                <constraint firstItem="0gu-Rh-V4K" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="25" id="d2I-PA-PBG"/>
                 <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="AAU-ef-60g" secondAttribute="bottom" constant="78" id="heq-5R-Ajh"/>
-                <constraint firstItem="AAU-ef-60g" firstAttribute="centerX" secondItem="bEm-Xn-24m" secondAttribute="centerX" id="sKc-tf-60w"/>
+                <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="70" id="jZo-vC-bfH"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="35" id="zrs-AU-lqz"/>
             </constraints>
         </view>
     </objects>
-    <resources>
-        <image name="close" width="23" height="22"/>
-    </resources>
 </document>
