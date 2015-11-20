@@ -273,6 +273,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.hidden = false
     }
     
+    
     func moreTransactionforLoading() -> Bool {
         let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
         if moreItems.count > 0 {
@@ -464,6 +465,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     @IBAction func inboxListButtonPress(sender: UIButton) {
+        self.hideReward()
         charlieAnalytics.track("Inbox Button")
         inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
@@ -490,7 +492,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxType == .InboxTransaction
         transactionsTable.reloadData()
     }
-    
     
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")

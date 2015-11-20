@@ -9,11 +9,12 @@
 
 import Foundation
 
-class CardsViewController : UIViewController {
-    
+class CardsViewController : UIViewController {    
     @IBOutlet weak var collectionView: UICollectionView!
     let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
-    
+    let (cashFlow, _, _, _, income, incomeChange) = cHelp.getCashFlow()
+    var subtitleArray = [String]()
+
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
         let attributedString = NSMutableAttributedString(string:string)
@@ -22,9 +23,9 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        let happyFlow = cHelp.getHappyFlow()
-        print("happy flow: \(happyFlow * 100)")
-
+        let cashFlowTotal = (cHelp.getHappyFlow() * 100).format(".2")
+        let spending = income - Double(cashFlowTotal)!
+        subtitleArray = ["$\(income.format(".2"))", "$\(spending.format(".2"))", "$\(cashFlowTotal)"]
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
         self.collectionView.registerClass(HabitsCell.self, forCellWithReuseIdentifier: HabitsCell.cellIdentifier())
@@ -79,9 +80,9 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             else {
                 cell.backgroundColor = lightRed
             }
-            
             cell.titleLabel.text = titleArray[indexPath.row]
-//            cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
+            cell.bigTitleLabel.text = subtitleArray[indexPath.row]
+            cell.subtitleLabel.text = subtitleArray[indexPath.row]
             return cell
         }
         else {
@@ -92,7 +93,6 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            
         }
     }
 }
@@ -184,7 +184,7 @@ class CardCell : UICollectionViewCell {
         
         subtitleLabel.frame = CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width - 70, 30)
         subtitleLabel.center = CGPointMake(self.center.x, subtitleLabel.center.y)
-        subtitleLabel.textColor = UIColor(red: 77/255.0, green: 77/255.0, blue: 77/255.0, alpha: 1.0)
+        subtitleLabel.textColor = UIColor.whiteColor()
         subtitleLabel.textAlignment = .Center
         subtitleLabel.numberOfLines = 0
         self.contentView.addSubview(subtitleLabel)

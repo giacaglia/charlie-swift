@@ -41,8 +41,7 @@ class cHelper {
     
     
     
-    func getCashFlow() -> (Double, Double, Double, Double, Double, Double)
-    {
+    func getCashFlow() -> (Double, Double, Double, Double, Double, Double) {
         
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
