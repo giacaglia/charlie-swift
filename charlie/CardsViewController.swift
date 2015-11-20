@@ -46,7 +46,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
         }
         else {
-            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 200)
+            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 250)
         }
     }
 
@@ -234,25 +234,22 @@ class HabitsCell : UICollectionViewCell {
         self.contentView.addSubview(lineView)
         
         self.setLabel(happiestCityLabel, atPosition: 41)
-        self.setLabel(spendOnline, atPosition: 71)
-        self.setLabel(happyFlow, atPosition: 101)
-        self.setLabel(mostExpensiveCiy, atPosition: 131)
+        self.setLabel(spendOnline, atPosition: 91)
+        self.setLabel(happyFlow, atPosition: 141)
+        self.setLabel(mostExpensiveCiy, atPosition: 191)
         
-        let (cashFlow, cashFlow2, moneySpent1, moneySpent2, income1, income2) =  cHelp.getCashFlow()
-        let (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
-        let cityMostSpent = cHelp.getCityMostSpentMoney()
-        
-        happiestCityLabel.text = "$\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month"
-        spendOnline.text = "$\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month"
-        happyFlow.text = "$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month"
-        mostExpensiveCiy.text = "\(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(cityMostSpent) is where you spent most."
+        happiestCityLabel.text = "My happiest city is Boston"
+        spendOnline.text = "I spend more offline than online"
+        happyFlow.text = "My happiness flow for offline is 85% which is 12% higher than last month"
+        mostExpensiveCiy.text = "I shouldnt spend so much money in Worcester, Massachusetts"
     }
     
     private func setLabel(label: UILabel,atPosition y: CGFloat) {
-        label.frame = CGRectMake(0, y, self.frame.size.width, 30)
+        label.frame = CGRectMake(0, y, self.frame.size.width, 50)
         label.font = UIFont.boldSystemFontOfSize(15.0)
         label.textColor = UIColor.blackColor()
         label.textAlignment = .Center
+        label.numberOfLines = 0
         label.center = CGPointMake(self.center.x, label.center.y)
         self.contentView.addSubview(label)
     }
@@ -281,18 +278,3 @@ extension Double {
         return NSString(format: "%\(f)f", self) as String
     }
 }
-
-
-//func genSubtitleArray(cashFlow: Double, cashFlow2: Double, spent: Double, spent2: Double, income1: Double, income2: Double, city: String, digitalHappyFlow: Double, digitalSpentPercentage: Double, placeHappyFlow: Double, placeSpentPercentage: Double) -> [NSAttributedString] {
-//    
-//    var attributedString2:NSAttributedString!
-//    
-//    attributedString2 = genAttributedString(" $\(income1.format(".2")) \n \(income2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
-//    
-//    let attributedString3 = genAttributedString("$\(spent.format(".2")) \n \(spent2.format(".2"))%  \n from  this time last month", coloredString: "\(spent)", color: listGreen)
-//    
-//    let attributedString4 = genAttributedString("$\(cashFlow.format(".2")) \n \(cashFlow2.format(".2"))%  \n from  this time last month", coloredString: "\(cashFlow)", color: listGreen)
-//    
-//    let attributedString5 = genAttributedString(" \(digitalSpentPercentage.format(".2"))% was spent online \n \(placeSpentPercentage.format(".2"))% was spent at physical locations \n \(city) is where you spent most.", coloredString: "\(digitalSpentPercentage)", color: listRed)
-//    return [attributedString2, attributedString3, attributedString4, attributedString5]
-//}
