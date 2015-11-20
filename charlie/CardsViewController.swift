@@ -62,6 +62,7 @@ class CardsViewController : UIViewController {
         
         subtitleArray = genSubtitleArray(happyFlow, cashFlow: cashFlow, cashFlow2: cashFlow2, spent: moneySpent1, spent2: moneySpent2, income1: income1, income2: income2, city: cityMostSpent, digitalHappyFlow:  digitalHappyFlow, digitalSpentPercentage: digitalSpentPercentage, placeHappyFlow: placeHappyFlow, placeSpentPercentage: placeSpentPercentage)
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
+        self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
         self.collectionView.collectionViewLayout = CardLayout()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -69,16 +70,82 @@ class CardsViewController : UIViewController {
 }
 
 
-extension CardsViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension CardsViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 70)
+        }
+        else {
+            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
+        }
+    }
+
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return titleArray.count
+        if section == 0 {
+            return 1
+        }
+        else {
+            return titleArray.count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView .dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
-        cell.titleLabel.text = titleArray[indexPath.row]
-        cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
-        return cell
+        if indexPath.section == 0 {
+            let totalTransactionCell = collectionView.dequeueReusableCellWithReuseIdentifier(TotalTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! TotalTransactionCell
+            return totalTransactionCell
+        }
+        else {
+            let cell = collectionView .dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
+            cell.titleLabel.text = titleArray[indexPath.row]
+            cell.subtitleLabel.attributedText = subtitleArray[indexPath.row]
+            return cell
+        }
+
+    }
+}
+
+class TotalTransactionCell : UICollectionViewCell {
+    let titleLabel = UILabel()
+    let rightArrow = UIImageView()
+    
+    static func cellIdentifier() -> String {
+        return "totalTransactionCell"
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    private func setup() {
+        self.backgroundColor = UIColor.whiteColor()
+        
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor(red: 226/255.0, green: 226/255.0, blue: 226/255.0, alpha: 1.0).CGColor
+        self.layer.cornerRadius = 1
+        
+        titleLabel.frame = CGRectMake(20, 11, self.frame.size.width, 30)
+        titleLabel.center = CGPointMake(titleLabel.center.x, self.contentView.center.y)
+        titleLabel.font = UIFont.boldSystemFontOfSize(15.0)
+        titleLabel.textAlignment = .Left
+        titleLabel.text = "87 transactions"
+        self.contentView.addSubview(titleLabel)
+
+        rightArrow.frame = CGRectMake(self.frame.size.width - 20 - 20, 11, 20, 20)
+        rightArrow.center = CGPointMake(rightArrow.center.x, self.contentView.center.y)
+        rightArrow.image = UIImage(named: "rightArrow")
+        rightArrow.contentMode = .ScaleAspectFit
+        self.contentView.addSubview(rightArrow)
     }
 }
 
@@ -143,6 +210,7 @@ class CardLayout : UICollectionViewFlowLayout {
     }
   
     private func setup() {
+        self.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         self.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
         self.scrollDirection = .Vertical
     }

@@ -113,11 +113,8 @@ class cHelper {
         
         return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
-    
-   
-    
-    func getCityMostSpentMoney() -> String {
         
+    func getCityMostSpentMoney() -> String {
         let today = NSDate()
         let beginingThisMonth = startOfMonth(today)
         let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)

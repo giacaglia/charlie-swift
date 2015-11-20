@@ -255,28 +255,32 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     func showReward() {
+        rewardView.subviews.forEach({ $0.removeFromSuperview() })
         let rewardVC = RewardViewController()
         self.addChildViewController(rewardVC)
         rewardVC.view.backgroundColor = lightBlue
         rewardView.addSubview(rewardVC.view)
         rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
         rewardView.hidden = false
-    }    
+    }
+    
+    func showCards() {
+        rewardView.subviews.forEach({ $0.removeFromSuperview() })
+        let cardsVC = CardsViewController()
+        self.addChildViewController(cardsVC)
+        rewardView.addSubview(cardsVC.view)
+        cardsVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
+        rewardView.hidden = false
+    }
     
     func moreTransactionforLoading() -> Bool {
-        
-        
         let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
-        if moreItems.count > 0
-        {
+        if moreItems.count > 0 {
             return true
         }
-        else
-        {
+        else {
             return false
         }
-        
-        
     }
     
     func setPredicates(hasAccounts:Bool) {
@@ -369,23 +373,19 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     }
     
     @IBAction func refreshAccounts(sender: UIButton) {
-        self.presentViewController(CardsViewController(), animated: true) { () -> Void in }
-
-
-        
-        //        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
-//        self.view .addSubview(mainViewController.blackView)
-//        let sortVC = SortViewController()
-//        sortVC.initialFilterType = self.filterType
-//        sortVC.transactionType = self.inboxType
-//        sortVC.delegate = self
-//        let height = self.view.frame.size.height*0.8
-//        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
-//        self.addChildViewController(sortVC)
-//        self.view.addSubview(sortVC.view)
-//        UIView.animateWithDuration(0.5) { () -> Void in
-//            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
-//        }
+        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
+        self.view .addSubview(mainViewController.blackView)
+        let sortVC = SortViewController()
+        sortVC.initialFilterType = self.filterType
+        sortVC.transactionType = self.inboxType
+        sortVC.delegate = self
+        let height = self.view.frame.size.height*0.8
+        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        self.addChildViewController(sortVC)
+        self.view.addSubview(sortVC.view)
+        UIView.animateWithDuration(0.5) { () -> Void in
+            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
+        }
     }
     
     func removeBlackView() {
@@ -498,6 +498,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
         self.setInboxTitle(false)
+        transactionsTable.hidden = true
+        self.showCards()
+    }
+    
+    func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         moneyCountSubSubHeadLabel.text = "My Results"
         inboxType = .ApprovedAndFlaggedTransaction
@@ -684,9 +689,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
             let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
-//            let cell = tableView.dequeueReusableCellWithIdentifier(ReportCardCell.cellIdentifier(), forIndexPath: indexPath) as! ReportCardCell
-//            let indexOfReportCard = indexPath.row - transactionItems.count
-//            cell.setupByType(ReportCardType(rawValue: indexOfReportCard )!)
             return cell
         }
         
