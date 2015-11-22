@@ -42,7 +42,6 @@ class cHelper {
     
     
     func getCashFlow() -> (Double, Double, Double, Double, Double, Double) {
-        
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -112,47 +111,82 @@ class cHelper {
         
         return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
-        
-    func getCityMostSpentMoney() -> String {
+    
+    private func getMapLocationToTransactions() -> [String: [Transaction]] {
         let today = NSDate()
         let beginingThisMonth = startOfMonth(today)
         let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
         
         let transactions = realm.objects(Transaction).filter(cityMostSpentPredicate)
-        var mapCity : [String: Int] = [String: Int]()
+        var mapCity : [String: [Transaction]] = [String: [Transaction]]()
         for trans in transactions {
             if let location = trans.meta?.location {
                 let city = location.city
                 if !city.isEmpty {
                     if mapCity.keys.contains(city) {
-                        mapCity[city] = mapCity[city]! + 1
+                        mapCity[city]?.append(trans)
                     }
                     else {
-                        mapCity[city] = 1
+                        mapCity[city] = [trans]
                     }
                 }
             }
         }
-        if mapCity.keys.count == 0 {
+        return mapCity
+    }
+    
+    func getCityMostSpentMoney() -> String {
+        let locationToTransactions = getMapLocationToTransactions()
+        if locationToTransactions.keys.count == 0 {
             return ""
         }
-        var maxCity = mapCity.keys.first
-        for city in mapCity.keys {
-            if mapCity[city]! > mapCity[maxCity!]! {
+        var maxCity = locationToTransactions.keys.first
+        for city in locationToTransactions.keys {
+            if locationToTransactions[city]?.count  > locationToTransactions[maxCity!]?.count {
                 maxCity = city
             }
         }
         return maxCity!
     }
 
+    func getMostHappyCity() -> String {
+        let locationToTransactions = getMapLocationToTransactions()
+        if locationToTransactions.keys.count == 0 {
+            return ""
+        }
+        var mostHappy = locationToTransactions.keys.first
+        for city in locationToTransactions.keys {
+            let transactions = locationToTransactions[city]
+            let happyFlow = getHappyFlowForTransactions(transactions!)
+            if happyFlow > getHappyFlowForTransactions(locationToTransactions[city]!) {
+                mostHappy = city
+            }
+        }
+        return mostHappy!
+    }
     
-    func getTypeSpent() -> (Double, Double, Double, Double, Double, Double)
-    {
+    private func getHappyFlowForTransactions(transactions : [Transaction]) -> Double {
+        let happyTrans = transactions.filter { (trans) -> Bool in
+            return trans.status == 1
+        }
+        let sadTrans = transactions.filter { (trans) -> Bool in
+            return trans.status == 2
+        }
+
+        let totalTransactions =  Double(sadTrans.count + happyTrans.count)
+        if totalTransactions == 0 {
+            return 0
+        }
+        let happyFlow = Double(happyTrans.count)/totalTransactions as Double
+        
+        return happyFlow * 100
+    }
+    
+    func getTypeSpent() -> (Double, Double, Double, Double, Double, Double) {
         //need to remove transfers as they shouldn't count
         
         //if data available is less than 35 days old than get current least popular placeTyle
         //else get least popular placeType for current month and least popular placeType for last month and calculate increase or decrease of least popular placeType
-        
         
         //need to add ability to compare to previous month
         var digitalSpentTotal: Double = 0
@@ -167,13 +201,9 @@ class cHelper {
         var placeHappyTotal:Double = 0
         var placeSadTotal: Double = 0
         
-        
-        
         let today = NSDate()
         let beginingThisMonth = startOfMonth(today)
         let typeSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
-        
-
         
         let cashFlows = realm.objects(Transaction).filter(typeSpentPredicate)
         for cashFlowItem in cashFlows

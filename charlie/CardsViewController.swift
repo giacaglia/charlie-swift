@@ -237,11 +237,16 @@ class HabitsCell : UICollectionViewCell {
         self.setLabel(spendOnline, atPosition: 91)
         self.setLabel(happyFlow, atPosition: 141)
         self.setLabel(mostExpensiveCiy, atPosition: 191)
-        
-        happiestCityLabel.text = "My happiest city is Boston"
+        let mostHappy = cHelp.getMostHappyCity()
+        if !mostHappy.isEmpty {
+             happiestCityLabel.text = "My happiest city is \(mostHappy)"
+        }
         spendOnline.text = "I spend more offline than online"
         happyFlow.text = "My happiness flow for offline is 85% which is 12% higher than last month"
-        mostExpensiveCiy.text = "I shouldnt spend so much money in Worcester, Massachusetts"
+        let mostSpentCity = cHelp.getCityMostSpentMoney()
+        if !mostSpentCity.isEmpty {
+            mostExpensiveCiy.text = "I shouldnt spend so much money in \(mostSpentCity)"
+        }
     }
     
     private func setLabel(label: UILabel,atPosition y: CGFloat) {
