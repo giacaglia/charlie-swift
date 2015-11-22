@@ -496,6 +496,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
         hideReward()
+        let date = cHelp.getFirstSwipedTransaction()
+
+        let flags = NSCalendarUnit.Day
+        let components = NSCalendar.currentCalendar().components(flags, fromDate: date, toDate: NSDate(), options: [])
+        print("first swiped trns: \(components.day)")
+//        moneyCountSubSubHeadLabel.text = "Last \(components.day) days"
         inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
         self.setInboxTitle(false)

@@ -26,7 +26,6 @@ class CardsViewController : UIViewController {
     
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.whiteColor()
-        
         let income = cHelp.getIncome()
         let spending = cHelp.getSpending()
         var cashFlow = income - spending

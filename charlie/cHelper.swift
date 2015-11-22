@@ -128,12 +128,10 @@ class cHelper {
     }
     
     private func getMapLocationToTransactions() -> [String: [Transaction]] {
-        let today = NSDate()
-        let cityMostSpentPredicate =  NSPredicate(format: "status > 0 and status < 5")
+//        let today = NSDate()
 //        let beginingThisMonth = startOfMonth(today)
 //        let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
-        
-        let transactions = realm.objects(Transaction).filter(cityMostSpentPredicate)
+        let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
         var mapCity : [String: [Transaction]] = [String: [Transaction]]()
         for trans in transactions {
             if let location = trans.meta?.location {
@@ -555,13 +553,25 @@ class cHelper {
         return keyData
     }
     
+    func getFirstSwipedTransaction() -> NSDate {
+        let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
+        if (transactions.count == 0) {
+            return NSDate()
+        }
+        var firstSwipedTrans = transactions.first
+        for trans in transactions {
+            if trans.date.compare((firstSwipedTrans?.date)!) == .OrderedAscending {
+                firstSwipedTrans = trans
+            }
+        }
+        return firstSwipedTrans!.date
+    }
 }
 
 
 
 
 extension NSDate {
-    
     func startOfMonth() -> NSDate? {
         let calendar = NSCalendar.currentCalendar()
         let currentDateComponents = calendar.components([.Year, .Month], fromDate: self)
