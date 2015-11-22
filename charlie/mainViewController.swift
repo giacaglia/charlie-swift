@@ -66,6 +66,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var cardButton: UIButton!
+    @IBOutlet weak var dateRangeLabel: UILabel!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -253,6 +254,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func showCards() {
+        dateRangeLabel.hidden = false
         rewardView.subviews.forEach({ $0.removeFromSuperview() })
         let cardsVC = CardsViewController()
         self.addChildViewController(cardsVC)
@@ -304,6 +306,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     
     func hideReward() {
         rewardView.hidden = true
+        dateRangeLabel.hidden = true
     }
     
     func hideCardsAndShowTransactions() {
@@ -477,7 +480,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         
         inboxType = .InboxTransaction
         titleLabel.text = "Worth it?"
-        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 26.0)
+        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 29.0)
         topSeperator.backgroundColor = listBlue
 
         inboxType == .InboxTransaction
@@ -491,9 +494,13 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
 
         let flags = NSCalendarUnit.Day
         let components = NSCalendar.currentCalendar().components(flags, fromDate: date, toDate: NSDate(), options: [])
-        print("first swiped trns: \(components.day)")
-        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 17.0)
+        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
         titleLabel.text = "Last \(components.day) days"
+        dateRangeLabel.hidden = false
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/yy"
+        dateRangeLabel.text = "\(formatter.stringFromDate(date)) - \(formatter.stringFromDate(NSDate()))"
+
         inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
         self.setInboxTitle(false)

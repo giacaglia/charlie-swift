@@ -62,7 +62,12 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 3
+        if (transactions.count > 0) {
+            return 3
+        }
+        else {
+            return 0   
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
