@@ -25,6 +25,25 @@ class cHelper {
         return calendar.dateByAddingComponents(months, toDate: date, options: [])
     }
     
+    
+    func getIncome() -> Double {
+        let incomeTransactions = realm.objects(Transaction).filter("status = -86")
+        var totalAmount = 0.0
+        for trans in incomeTransactions {
+            totalAmount += trans.amount
+        }
+        return totalAmount
+    }
+    
+    func getSpending() -> Double {
+        let incomeTransactions = realm.objects(Transaction).filter("status > 0 and status < 5")
+        var totalAmount = 0.0
+        for trans in incomeTransactions {
+            totalAmount += trans.amount
+        }
+        return totalAmount
+    }
+    
     func getHappyFlow() -> Double {
         let happyTrans = realm.objects(Transaction).filter("status = 1")
         let sadTrans = realm.objects(Transaction).filter("status = 2")
@@ -37,7 +56,7 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getCashFlow() -> (Double, Double, Double, Double, Double, Double) {
+    func getCashFlow() -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()

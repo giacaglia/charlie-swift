@@ -14,6 +14,8 @@ class CardsViewController : UIViewController {
     let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
     let (cashFlow, _, _, _, income, incomeChange) = cHelp.getCashFlow()
     var subtitleArray = [String]()
+    let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
+    let incomeTransactions = realm.objects(Transaction).filter(NSPredicate(format: "status < 0"))
 
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
@@ -24,9 +26,17 @@ class CardsViewController : UIViewController {
     
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.whiteColor()
-        let cashFlowTotal = (cHelp.getHappyFlow() * 100).format(".2")
-        let spending = income - Double(cashFlowTotal)!
-        subtitleArray = ["$\(income.format(".2"))", "$\(spending.format(".2"))", "$\(cashFlowTotal)"]
+        
+        let income = cHelp.getIncome()
+        let spending = cHelp.getSpending()
+        var cashFlow = income - spending
+        if (cashFlow < 0) {
+            cashFlow = -cashFlow
+            subtitleArray = ["$\(income.format(".2"))", "$\(spending.format(".2"))", "-$\(cashFlow.format(".2"))"]
+        }
+        else {
+            subtitleArray = ["$\(income.format(".2"))", "$\(spending.format(".2"))", "$\(cashFlow.format(".2"))"]
+        }
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
         self.collectionView.registerClass(HabitsCell.self, forCellWithReuseIdentifier: HabitsCell.cellIdentifier())
@@ -71,6 +81,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let totalTransactionCell = collectionView.dequeueReusableCellWithReuseIdentifier(TotalTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! TotalTransactionCell
+            totalTransactionCell.titleLabel.text = "\(transactions.count) transactions"
             return totalTransactionCell
         }
         else if indexPath.section == 1 {
@@ -127,7 +138,6 @@ class TotalTransactionCell : UICollectionViewCell {
         titleLabel.center = CGPointMake(titleLabel.center.x, self.contentView.center.y)
         titleLabel.font = UIFont.boldSystemFontOfSize(15.0)
         titleLabel.textAlignment = .Left
-        titleLabel.text = "87 transactions"
         self.contentView.addSubview(titleLabel)
 
         rightArrow.frame = CGRectMake(self.frame.size.width - 20 - 20, 11, 20, 20)
