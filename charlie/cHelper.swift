@@ -11,7 +11,6 @@ import RealmSwift
 import CloudKit
 
 class cHelper {
-    
     func startOfMonth(date: NSDate) -> NSDate? {
         let calendar = NSCalendar.currentCalendar()
         let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
@@ -26,7 +25,6 @@ class cHelper {
         return calendar.dateByAddingComponents(months, toDate: date, options: [])
     }
     
-    
     func getHappyFlow() -> Double {
         let happyTrans = realm.objects(Transaction).filter("status = 1")
         let sadTrans = realm.objects(Transaction).filter("status = 2")
@@ -38,8 +36,6 @@ class cHelper {
 
         return happyFlow * 100
     }
-    
-    
     
     func getCashFlow() -> (Double, Double, Double, Double, Double, Double) {
         var cashFlowTotal: Double = 0
@@ -114,8 +110,9 @@ class cHelper {
     
     private func getMapLocationToTransactions() -> [String: [Transaction]] {
         let today = NSDate()
-        let beginingThisMonth = startOfMonth(today)
-        let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
+        let cityMostSpentPredicate =  NSPredicate(format: "status > 0 and status < 5")
+//        let beginingThisMonth = startOfMonth(today)
+//        let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
         
         let transactions = realm.objects(Transaction).filter(cityMostSpentPredicate)
         var mapCity : [String: [Transaction]] = [String: [Transaction]]()
@@ -182,7 +179,9 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getTypeSpent() -> (Double, Double, Double, Double, Double, Double) {
+    
+//    (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage)
+    func getTypeSpent() -> (digitalHappyFlow: Double, digitalSpentPercentage: Double, specialHappyFlow:    Double, specialSpentPercentage: Double, placeHappyFlow: Double, placeSpentPercentage: Double) {
         //need to remove transfers as they shouldn't count
         
         //if data available is less than 35 days old than get current least popular placeTyle
@@ -201,9 +200,9 @@ class cHelper {
         var placeHappyTotal:Double = 0
         var placeSadTotal: Double = 0
         
-        let today = NSDate()
-        let beginingThisMonth = startOfMonth(today)
-        let typeSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
+//        let beginingThisMonth = startOfMonth(NSDate())
+//        let typeSpentPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
+        let typeSpentPredicate =  NSPredicate(format: "status > 0 and status < 5")
         
         let cashFlows = realm.objects(Transaction).filter(typeSpentPredicate)
         for cashFlowItem in cashFlows

@@ -23,6 +23,7 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.whiteColor()
         let cashFlowTotal = (cHelp.getHappyFlow() * 100).format(".2")
         let spending = income - Double(cashFlowTotal)!
         subtitleArray = ["$\(income.format(".2"))", "$\(spending.format(".2"))", "$\(cashFlowTotal)"]
@@ -219,7 +220,7 @@ class HabitsCell : UICollectionViewCell {
         self.layer.cornerRadius = 1
         
         let titleLabel = UILabel()
-        titleLabel.frame = CGRectMake(0, 11, self.frame.size.width, 30)
+        titleLabel.frame = CGRectMake(15, 11, self.frame.size.width - 30, 30)
         titleLabel.font = UIFont.boldSystemFontOfSize(15.0)
         titleLabel.textColor = UIColor(red: 163/255.0, green: 163/255.0, blue: 163/255.0, alpha: 1.0)
         titleLabel.textAlignment = .Center
@@ -241,8 +242,15 @@ class HabitsCell : UICollectionViewCell {
         if !mostHappy.isEmpty {
              happiestCityLabel.text = "My happiest city is \(mostHappy)"
         }
-        spendOnline.text = "I spend more offline than online"
-        happyFlow.text = "My happiness flow for offline is 85% which is 12% higher than last month"
+        let (digitalHappyFlow, digitalSpentPercentage, _, _, placeHappyFlow, placeSpentPercentage) = cHelp.getTypeSpent()
+        if (digitalHappyFlow > placeHappyFlow) {
+            spendOnline.text = "I should spend more online than offline. Currently I spend \(digitalSpentPercentage.format("0.2"))% online."
+        }
+        else {
+            spendOnline.text = "I should spend more offline than online. Currently I spend \(placeSpentPercentage.format("0.2"))% offline."
+        }
+        happyFlow.text = "My happiness flow for offline is \(placeHappyFlow.format(".2"))%."
+
         let mostSpentCity = cHelp.getCityMostSpentMoney()
         if !mostSpentCity.isEmpty {
             mostExpensiveCiy.text = "I shouldnt spend so much money in \(mostSpentCity)"
@@ -250,7 +258,7 @@ class HabitsCell : UICollectionViewCell {
     }
     
     private func setLabel(label: UILabel,atPosition y: CGFloat) {
-        label.frame = CGRectMake(0, y, self.frame.size.width, 50)
+        label.frame = CGRectMake(15, y, self.frame.size.width - 30, 50)
         label.font = UIFont.boldSystemFontOfSize(15.0)
         label.textColor = UIColor.blackColor()
         label.textAlignment = .Center
