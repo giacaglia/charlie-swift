@@ -46,7 +46,11 @@ protocol ChangeFilterProtocol {
     func changeTransactionType( type : TransactionType)
 }
 
-class mainViewController: UIViewController, ChangeFilterProtocol {
+protocol MainViewControllerDelegate {
+    func hideCardsAndShowTransactions()
+}
+
+class mainViewController: UIViewController, ChangeFilterProtocol, MainViewControllerDelegate {
     
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -54,12 +58,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     @IBOutlet weak var listNavBar: UIView!
     @IBOutlet weak var inboxListButton: UIButton!
     @IBOutlet weak var flagListButton: UIButton!
-    @IBOutlet weak var dividerView: UIView!
     @IBOutlet weak var accountAddView: UIView!
     @IBOutlet weak var rewardView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topSeperator: UIView!
-    @IBOutlet weak var moneyCountSubSubHeadLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var cardButton: UIButton!
@@ -96,7 +99,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
         if accounts.count > 0 && allTransactionItems.count == 0 {
             if timerCount == 0 {
@@ -124,16 +126,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-//       let cashFlow =  cHelp.getCashFlow()
-//        print("CASHFLOW \(cashFlow)")
-//            
-//        let moneySpent =  cHelp.getMoneySpent()
-//        print("MONEYSPENT \(moneySpent)")
-//        
-//        let (digitalSpentTotal, placeSpentTotal, specialSpentTotal) = cHelp.getTypeSpent()
-//        
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
@@ -151,7 +143,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         }
     
         if accounts.count == 0 {
-            //&& access_token == "" //show add user
             setPredicates(false)
             accountAddView.hidden = false
             addAccountButton.hidden = false
@@ -168,12 +159,10 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             
 //            if transactionItems.count == 0
 //            {
-//                
 //                areThereMoreItemsToLoad = true
 //                // print ("OUT OF TRANSACTIONS")
 //                //makeOnlyFirstNElementsVisible()
 //               
-//                
 //            }
             addAccountButton.hidden = true
             accountAddView.hidden = true
@@ -248,7 +237,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
         }
         
-
         self.setInboxTitle(true)
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
@@ -268,6 +256,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         rewardView.subviews.forEach({ $0.removeFromSuperview() })
         let cardsVC = CardsViewController()
         self.addChildViewController(cardsVC)
+        cardsVC.mainVC = self
         rewardView.addSubview(cardsVC.view)
         cardsVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
         rewardView.hidden = false
@@ -315,6 +304,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     func hideReward() {
         rewardView.hidden = true
+    }
+    
+    func hideCardsAndShowTransactions() {
+        hideReward()
+        transactionsTable.hidden = false
+        showPastTransactions()
     }
     
     func updateTrans() -> Void {
@@ -443,16 +438,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
             }
             return
         }
-        if (active)
-        {
+        if (active) {
              inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
-            
         }
-        else
-        {
+        else {
              inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         }
-        
         
         inboxLabel.text = String(transactionItems.count)
         inboxLabel.frame = CGRectMake(inboxListButton.frame.size.width/2 - inboxLabel.frame.size.width/2, inboxListButton.frame.size.height/2 - inboxLabel.frame.size.height/2, inboxLabel.frame.size.width, inboxLabel.frame.size.height)
@@ -485,8 +476,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         
         
         inboxType = .InboxTransaction
-        dividerView.backgroundColor = listBlue
-        moneyCountSubSubHeadLabel.text = "Worth it?"
+        titleLabel.text = "Worth it?"
+        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 26.0)
         topSeperator.backgroundColor = listBlue
 
         inboxType == .InboxTransaction
@@ -501,7 +492,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
         let flags = NSCalendarUnit.Day
         let components = NSCalendar.currentCalendar().components(flags, fromDate: date, toDate: NSDate(), options: [])
         print("first swiped trns: \(components.day)")
-//        moneyCountSubSubHeadLabel.text = "Last \(components.day) days"
+        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 17.0)
+        titleLabel.text = "Last \(components.day) days"
         inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
         self.setInboxTitle(false)
@@ -511,7 +503,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol {
     
     func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
-        moneyCountSubSubHeadLabel.text = "My Results"
+        titleLabel.text = "My Results"
         inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
@@ -657,7 +649,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             addAccountButton.hidden = true
             accountAddView.hidden = true
         }
-//        return transactionItems.count + 3
         return transactionItems.count + Int(areThereMoreItemsToLoad)
     }
     
@@ -678,17 +669,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     self.setInboxTitle(true)
                     transactionsTable.reloadData()
                 }
-//                else {
-//                    let rewardVC = RewardViewController()
-//                    if indexPath.row == transactionItems.count + 1 {
-//                        rewardVC.typeOfView = .HappyFlowType
-//                    }
-//                    else {
-//                        rewardVC.typeOfView = .CashFlowType
-//                    }
-//                    rewardVC.view.backgroundColor = lightBlue
-//                    self.presentViewController(rewardVC, animated: true, completion: { () -> Void in })
-//                }
             }
         }
     }

@@ -41,6 +41,7 @@ NSString * const kSessionVariantKey = @"session_variant";
     MPWebSocket *_webSocket;
     NSOperationQueue *_commandQueue;
     UIView *_recordingView;
+    
     void (^_connectCallback)();
     void (^_disconnectCallback)();
 }

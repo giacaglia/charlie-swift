@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="20" y="305" width="560" height="255"/>
+                    <rect key="frame" x="15" y="300" width="570" height="260"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -69,10 +69,10 @@
             <constraints>
                 <constraint firstItem="TFo-nh-kMo" firstAttribute="centerX" secondItem="bEm-Xn-24m" secondAttribute="centerX" id="8CG-Z4-nwt"/>
                 <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="20" id="U5L-Zo-fy7"/>
-                <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="20" id="h3p-ff-98P"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="15" id="U5L-Zo-fy7"/>
+                <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="15" id="h3p-ff-98P"/>
                 <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="70" id="jZo-vC-bfH"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="35" id="zrs-AU-lqz"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="30" id="zrs-AU-lqz"/>
             </constraints>
         </view>
     </objects>
