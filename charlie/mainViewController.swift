@@ -169,12 +169,27 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             accountAddView.hidden = true
             //refresh accounts
             if allTransactionItems.count > 0 {
+                let transCount = allTransactionItems.count
+                let firstTransaction = allTransactionItems[transCount - 1].date as NSDate
+
+                
                 let lastTransaction = allTransactionItems[0].date as NSDate
                 let calendar: NSCalendar = NSCalendar.currentCalendar()
                 let flags = NSCalendarUnit.Day
                 let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
                 
-                let dateToSychTo = components.day
+                let transDateRangeComp = calendar.components(flags, fromDate: firstTransaction, toDate: lastTransaction, options: [])
+                
+                
+                var dateToSychTo = components.day
+                
+                let transDateRange = transDateRangeComp.day
+                
+                if transDateRange <  31
+                {
+                    dateToSychTo = 0 // we may still have some old transactions so do a full sync
+                }
+               
                 
                 spinner.startAnimating()
                 print("DAYS \(dateToSychTo)")
