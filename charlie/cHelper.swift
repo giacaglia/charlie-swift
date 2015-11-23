@@ -48,9 +48,9 @@ class cHelper {
     func getSpending() -> Double {
         let beginingThisMonth = startOfMonth(NSDate())
 
-        //let incomeTransactions = realm.objects(Transaction).filter("status > 0 and status < 5")
+        //let incomeTransactions = realm.objects(Transaction).filter("status < 5")
         
-        let incomePredicate = NSPredicate(format: "date >= %@ and status > 0 and status < 5", beginingThisMonth!)
+        let incomePredicate = NSPredicate(format: "date >= %@ and status < 5", beginingThisMonth!)
         let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
         
         
@@ -360,15 +360,6 @@ class cHelper {
                                 if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1) {
                                     newTrans.status = 86 //sets status to ignore from totals
                                 }
-                                //                                else if (transactionCount < 20)
-                                //                                {
-                                //                                    newTrans.status = 0
-                                //                                    transactionCount += 1
-                                //                                }
-                                //                                else
-                                //                                {
-                                //                                     newTrans.status = -1
-                                //                                }
                                 
                                 
                             }
@@ -379,17 +370,6 @@ class cHelper {
                                 
                                 if (dictAmount < 1)
                                 {  newTrans.status = 86 }
-                                //                                else if (transactionCount < 20)
-                                //                                {
-                                //                                    newTrans.status = 0
-                                //                                    transactionCount += 1
-                                //
-                                //                                }
-                                //                                else
-                                //                                {
-                                //                                    newTrans.status = -1
-                                //                                }
-                                
                                 
                             }
                             
