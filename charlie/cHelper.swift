@@ -307,9 +307,9 @@ class cHelper {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
                             realm.create(Account.self, value: account, update: true)
-                           // print("saved accounts")
+                            // print("saved accounts")
+                        }
                     }
-                }
                     
                     let transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
@@ -319,7 +319,7 @@ class cHelper {
                             //get placeType
                             let placeTypeO = transaction.valueForKey("type")
                             let placeType = placeTypeO!.valueForKey("primary")
-                           
+                            
                             transaction.setValue(placeType, forKeyPath: "placeType")
                             //clean up name
                             let dictName = transaction.valueForKey("name") as? String
@@ -343,41 +343,63 @@ class cHelper {
                                 if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1) {
                                     newTrans.status = 86 //sets status to ignore from totals
                                 }
-                                else if (transactionCount < 20)
-                                {
-                                    newTrans.status = 0
-                                    transactionCount += 1
-                                }
-                                else
-                                {
-                                     newTrans.status = -1
-                                }
-                            
+                                //                                else if (transactionCount < 20)
+                                //                                {
+                                //                                    newTrans.status = 0
+                                //                                    transactionCount += 1
+                                //                                }
+                                //                                else
+                                //                                {
+                                //                                     newTrans.status = -1
+                                //                                }
+                                
                                 
                             }
                             else //doesn't have a cateogry
                             {
-                                // set first twenty transations to status of 
+                                // set first twenty transations to status of
                                 
                                 
                                 if (dictAmount < 1)
                                 {  newTrans.status = 86 }
-                                else if (transactionCount < 20)
-                                {
-                                    newTrans.status = 0
-                                    transactionCount += 1
-
-                                }
-                                else
-                                {
-                                    newTrans.status = -1
-                                }
+                                //                                else if (transactionCount < 20)
+                                //                                {
+                                //                                    newTrans.status = 0
+                                //                                    transactionCount += 1
+                                //
+                                //                                }
+                                //                                else
+                                //                                {
+                                //                                    newTrans.status = -1
+                                //                                }
                                 
                                 
                             }
                             
                         }
                     }
+                    
+                    if  realm.objects(Transaction).filter("status = 0").count == 0 && realm.objects(Transaction).filter("status = 1 or status = 2 ").count == 0
+                    {
+                        
+                        let nextUp = realm.objects(Transaction).filter("status = -1").sorted("date", ascending: false)
+                        let numItemsToLoad = 20
+                        var loadCount = 0
+                        realm.beginWrite()
+                        for i in 0..<nextUp.count {
+                            if i < nextUp.count && loadCount < numItemsToLoad {
+                                let trans = nextUp[i]
+                                if (trans.status == -1) {
+                                    trans.status = 0
+                                    loadCount += 1
+                                }
+                            }
+                        }
+                        try! realm.commitWrite()
+                        
+                        
+                    }
+                    
                     let transactions_count = transactions.count
                     callback(transactions_count)
                 }
