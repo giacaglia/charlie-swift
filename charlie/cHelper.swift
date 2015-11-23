@@ -27,16 +27,33 @@ class cHelper {
     
     
     func getIncome() -> Double {
-        let incomeTransactions = realm.objects(Transaction).filter("status = -86")
+        
+        
+        let beginingThisMonth = startOfMonth(NSDate())
+       // let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+       // let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
+        
+        //let incomeTransactions = realm.objects(Transaction).filter("status = 86")
+        
+        let incomePredicate = NSPredicate(format: "date >= %@ and status = 86", beginingThisMonth!)
+        let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
         var totalAmount = 0.0
         for trans in incomeTransactions {
             totalAmount += trans.amount
+            print("INCOME: \(trans.status) - \(trans.categories?.categories) \(trans.name) - \(trans.amount)")
         }
-        return totalAmount
+        return totalAmount * -1
     }
     
     func getSpending() -> Double {
-        let incomeTransactions = realm.objects(Transaction).filter("status > 0 and status < 5")
+        let beginingThisMonth = startOfMonth(NSDate())
+
+        //let incomeTransactions = realm.objects(Transaction).filter("status > 0 and status < 5")
+        
+        let incomePredicate = NSPredicate(format: "date >= %@ and status > 0 and status < 5", beginingThisMonth!)
+        let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
+        
+        
         var totalAmount = 0.0
         for trans in incomeTransactions {
             totalAmount += trans.amount

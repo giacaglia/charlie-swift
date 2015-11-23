@@ -490,16 +490,20 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
         hideReward()
-        let date = cHelp.getFirstSwipedTransaction()
+        //let date = cHelp.getFirstSwipedTransaction()
 
         let flags = NSCalendarUnit.Day
-        let components = NSCalendar.currentCalendar().components(flags, fromDate: date, toDate: NSDate(), options: [])
+        
+        let date = cHelp.startOfMonth(NSDate())
+
+        
+        let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
         titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
         titleLabel.text = "Last \(components.day) days"
         dateRangeLabel.hidden = false
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MM/dd/yy"
-        dateRangeLabel.text = "\(formatter.stringFromDate(date)) - \(formatter.stringFromDate(NSDate()))"
+        dateRangeLabel.text = "\(formatter.stringFromDate(date!)) - \(formatter.stringFromDate(NSDate()))"
 
         inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
