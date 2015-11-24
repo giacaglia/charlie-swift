@@ -937,8 +937,8 @@
                     <connections>
                         <outlet property="accountAddView" destination="Ssu-hU-syf" id="I2j-Nc-7zS"/>
                         <outlet property="addAccountButton" destination="pbA-n2-qga" id="U1c-Gd-u1U"/>
-                        <outlet property="cardButton" destination="JLJ-av-QVM" id="p21-ah-YzQ"/>
                         <outlet property="dateRangeLabel" destination="pu1-4O-Gd7" id="8sv-Os-7KF"/>
+                        <outlet property="filterButton" destination="JLJ-av-QVM" id="s56-N4-fNd"/>
                         <outlet property="flagListButton" destination="oOe-bS-V5E" id="eMe-pe-9hj"/>
                         <outlet property="inboxListButton" destination="97i-Pg-dNr" id="vz2-1z-nqH"/>
                         <outlet property="listNavBar" destination="0Eh-dx-Cok" id="l2D-Ht-6IC"/>

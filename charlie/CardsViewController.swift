@@ -113,6 +113,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             if indexPath.row == 0 {
                 if Double(percentageChangeIncome) >= 0 {
                     cell.backgroundColor = lightGreen
+                    cell.backgroundImageView.image = UIImage(named: "positiveIncome")
                 }
                 else {
                     cell.backgroundColor = lightRed
@@ -121,6 +122,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             else if indexPath.row == 1 {
                 if Double(percentageChangeSpending) >= 0 {
                     cell.backgroundColor = lightRed
+                    cell.backgroundImageView.image = UIImage(named: "negativeSpending")
                 }
                 else {
                     cell.backgroundColor = lightGreen
@@ -129,6 +131,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             else {
                 if Double(percentageCashFlow) >= 0 {
                     cell.backgroundColor = lightGreen
+                    cell.backgroundImageView.image = UIImage(named: "positiveCashFlow")
                 }
                 else {
                     cell.backgroundColor = lightRed
@@ -206,6 +209,7 @@ class TotalTransactionCell : UICollectionViewCell {
 }
 
 class CardCell : UICollectionViewCell {
+    let backgroundImageView = UIImageView()
     let dollarSignLabel = UILabel()
     let bigTitleLabel = UILabel()
     let titleLabel = UILabel()
@@ -231,6 +235,11 @@ class CardCell : UICollectionViewCell {
         self.backgroundColor = UIColor.whiteColor()
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor(red: 226/255.0, green: 226/255.0, blue: 226/255.0, alpha: 1.0).CGColor
+        self.clipsToBounds = true
+        
+        backgroundImageView.frame = CGRectMake(0,self.frame.size.height - 88, self.frame.size.width, 88)
+        backgroundImageView.contentMode = .ScaleAspectFill
+        self.contentView.addSubview(backgroundImageView)
         
         titleLabel.frame = CGRectMake(0, 11, self.frame.size.width, 30)
         titleLabel.font = UIFont.boldSystemFontOfSize(15.0)

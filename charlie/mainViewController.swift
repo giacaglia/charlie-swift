@@ -65,8 +65,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var addAccountButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
-    @IBOutlet weak var cardButton: UIButton!
     @IBOutlet weak var dateRangeLabel: UILabel!
+    @IBOutlet weak var filterButton: UIButton!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -344,7 +344,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 self.setInboxTitle(true)
                 self.spinner.stopAnimating()
                 self.toastView.hidden = true
-                
             }
         }
     }
@@ -474,6 +473,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBAction func inboxListButtonPress(sender: UIButton) {
         self.hideReward()
         charlieAnalytics.track("Inbox Button")
+        filterButton.hidden = false
         inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
         flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
@@ -503,12 +503,9 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBAction func flagListButtonPress(sender: UIButton) {
         charlieAnalytics.track("Not Worth It Button")
         hideReward()
-        //let date = cHelp.getFirstSwipedTransaction()
-
+        filterButton.hidden = true
         let flags = NSCalendarUnit.Day
-        
         let date = NSDate().startOfMonth()
-        
         let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
         titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
         titleLabel.text = "Last \(components.day) days"
