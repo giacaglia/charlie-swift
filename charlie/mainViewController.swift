@@ -649,9 +649,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             charlieAnalytics.track("Worth It Swipe")
             if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
                 print("show reward window")
-                
                 self.showReward()
-                
             }
         }
         else {

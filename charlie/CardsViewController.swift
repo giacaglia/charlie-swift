@@ -16,8 +16,10 @@ class CardsViewController : UIViewController {
     let (cashFlow, _, _, _, income, incomeChange) = cHelp.getCashFlow()
     var subtitleArray = [String]()
     let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
-    let incomeTransactions = realm.objects(Transaction).filter(NSPredicate(format: "status < 0"))
-
+    let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate: NSDate())
+    let totalSpending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
+    var percentageArray = ["+0 0.0%", "+0 0.0%", "+0 0.0%"]
+    
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
         let attributedString = NSMutableAttributedString(string:string)
@@ -26,16 +28,15 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        let income = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate: NSDate())
-        let spending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
-        var cashFlow = income - spending
-        if (cashFlow < 0) {
-            cashFlow = -cashFlow
-            subtitleArray = ["\(income.format(".2"))", "\(spending.format(".2"))", "\(cashFlow.format(".2"))"]
+        var totalCashFlow = totalIncome - totalSpending
+        if (totalCashFlow < 0) {
+            totalCashFlow = -totalCashFlow
+            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
         }
         else {
-            subtitleArray = ["\(income.format(".2"))", "\(spending.format(".2"))", "\(cashFlow.format(".2"))"]
+            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
         }
+        self.getPercentageChange()
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
         self.collectionView.registerClass(HabitsCell.self, forCellWithReuseIdentifier: HabitsCell.cellIdentifier())
@@ -44,6 +45,36 @@ class CardsViewController : UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
     }
+    
+    func getPercentageChange() {
+        let lastMonthDate = NSDate().dateByAddingMonths(-1)
+        
+        let lastMonthIncome = cHelp.getIncome(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
+        let changeIncome = totalIncome - lastMonthIncome
+        var percentageChangeIncome = "0.0"
+        if changeIncome != 0 {
+            percentageChangeIncome = (changeIncome/lastMonthIncome * 100).format(".2")
+        }
+        
+        
+        let lastMonthSpending = cHelp.getSpending(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
+        let changeSpending = totalSpending - lastMonthSpending
+        var percentageChangeSpending = "0.0"
+        if changeSpending != 0 {
+            percentageChangeSpending = (changeSpending/lastMonthSpending * 100).format(".2")
+        }
+        
+        let lastMonthCashFlow = lastMonthIncome - lastMonthSpending
+        let cashFlow = totalIncome - totalSpending
+        let changeCashFlow = cashFlow - lastMonthCashFlow
+        var percentageCashFlow = "0.0"
+        if changeCashFlow != 0 {
+            percentageCashFlow = (changeCashFlow/lastMonthCashFlow * 100).format(".2")
+        }
+        
+        percentageArray = ["\(changeIncome) \(percentageChangeIncome)%", "\(changeSpending)  \(percentageChangeSpending)%", "\(changeCashFlow) \(percentageCashFlow)%"]
+    }
+    
 }
 
 
@@ -99,6 +130,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             cell.dollarSignLabel.sizeToFit()
             let dollarFrame = cell.dollarSignLabel.frame
             cell.dollarSignLabel.frame = CGRectMake(cell.bigTitleLabel.frame.origin.x - dollarFrame.size.width, dollarFrame.origin.y, dollarFrame.size.width, dollarFrame.size.height)
+            cell.subtitleLabel.text = percentageArray[indexPath.row]
             return cell
         }
         else {
