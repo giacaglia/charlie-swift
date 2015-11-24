@@ -51,9 +51,6 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 70)
-        }
-        else if indexPath.section == 1 {
             return CGSizeMake(UIScreen.mainScreen().bounds.size.width - 20, 160)
         }
         else {
@@ -63,7 +60,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         if (transactions.count > 0) {
-            return 3
+            return 2
         }
         else {
             return 0   
@@ -72,24 +69,15 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
-        }
-        else if section == 1 {
             return titleArray.count
         }
         else {
             return 1
         }
-
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let totalTransactionCell = collectionView.dequeueReusableCellWithReuseIdentifier(TotalTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! TotalTransactionCell
-            totalTransactionCell.titleLabel.text = "\(transactions.count) transactions"
-            return totalTransactionCell
-        }
-        else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
             if (indexPath.row == 0) {
                 cell.backgroundColor = lightGreen

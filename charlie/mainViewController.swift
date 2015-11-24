@@ -279,7 +279,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         rewardView.hidden = false
     }
     
-    
     func moreTransactionforLoading() -> Bool {
         let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
         if moreItems.count > 0 {
@@ -746,9 +745,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (inboxType == .InboxTransaction && indexPath.row == transactionItems.count) {
-            return 200
-        }
+//        if (inboxType == .InboxTransaction && indexPath.row == transactionItems.count) {
+//            return 200
+//        }
         return 74
     }
     
