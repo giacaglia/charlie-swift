@@ -26,8 +26,8 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        let income = cHelp.getIncome()
-        let spending = cHelp.getSpending()
+        let income = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate: NSDate())
+        let spending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
         var cashFlow = income - spending
         if (cashFlow < 0) {
             cashFlow = -cashFlow

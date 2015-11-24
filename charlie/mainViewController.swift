@@ -189,7 +189,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 {
                     dateToSychTo = 0 // we may still have some old transactions so do a full sync
                 }
-               
                 
                 spinner.startAnimating()
                 print("DAYS \(dateToSychTo)")
@@ -508,8 +507,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
 
         let flags = NSCalendarUnit.Day
         
-        let date = cHelp.startOfMonth(NSDate())
-
+        let date = NSDate().startOfMonth()
         
         let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
         titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
@@ -745,9 +743,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if (inboxType == .InboxTransaction && indexPath.row == transactionItems.count) {
-//            return 200
-//        }
         return 74
     }
     

@@ -11,13 +11,6 @@ import RealmSwift
 import CloudKit
 
 class cHelper {
-    func startOfMonth(date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
-        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
-        return startOfMonth
-    }
-    
     func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
         let calendar = NSCalendar.currentCalendar()
         let months = NSDateComponents()
@@ -25,17 +18,9 @@ class cHelper {
         return calendar.dateByAddingComponents(months, toDate: date, options: [])
     }
     
-    
-    func getIncome() -> Double {
-        
-        
-        let beginingThisMonth = startOfMonth(NSDate())
-       // let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
-       // let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
-        
-        //let incomeTransactions = realm.objects(Transaction).filter("status = 86")
-        
-        let incomePredicate = NSPredicate(format: "date >= %@ and status = 86", beginingThisMonth!)
+    func getIncome(startDate startDate: NSDate, endDate: NSDate) -> Double {
+        let incomePredicate = NSPredicate(format: "status = 86 and date >= %@ and date <= %@", startDate, endDate)
+
         let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
         var totalAmount = 0.0
         for trans in incomeTransactions {
@@ -45,14 +30,9 @@ class cHelper {
         return totalAmount * -1
     }
     
-    func getSpending() -> Double {
-        let beginingThisMonth = startOfMonth(NSDate())
-
-        //let incomeTransactions = realm.objects(Transaction).filter("status < 5")
-        
-        let incomePredicate = NSPredicate(format: "date >= %@ and status < 5", beginingThisMonth!)
+    func getSpending(startDate startDate: NSDate, endDate: NSDate) -> Double {
+        let incomePredicate = NSPredicate(format: "status < 5 and date >= %@ and date <= %@", startDate, endDate)
         let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
-        
         
         var totalAmount = 0.0
         for trans in incomeTransactions {
@@ -89,7 +69,7 @@ class cHelper {
         var income1:Double = 0
         var income2:Double = 0
         
-        let beginingThisMonth = startOfMonth(today)
+        let beginingThisMonth = today.startOfMonth()
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
         let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
         
@@ -285,7 +265,6 @@ class cHelper {
                 }
                // print("Place: \(cashFlowItem.status): \(cashFlowItem.name) + \(cashFlowItem.amount)")
             }
-                
         }
         
         let digitalHappyFlow = Double(digitalHappyTotal) / Double((digitalHappyTotal + digitalSadTotal)) * 100 as Double
@@ -297,9 +276,7 @@ class cHelper {
         let placeHappyFlow = Double(placeHappyTotal) / Double((placeHappyTotal + placeSadTotal)) * 100 as Double
         let placeSpentPercentage = placeSpentTotal/(specialSpentTotal + digitalSpentTotal + placeSpentTotal) * 100 as Double
 
-        
         return (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage)
-        
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -314,8 +291,6 @@ class cHelper {
     func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
         let users = realm.objects(User)
         
-        var transactionCount = 0
-        
         for _ in users {
             let user_access_token  = keyChainStore.get("access_token")
             cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
@@ -324,15 +299,13 @@ class cHelper {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
                             realm.create(Account.self, value: account, update: true)
-                            // print("saved accounts")
                         }
                     }
                     
                     let transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
                     for transaction in transactions {
-                        // println("saved")
-                        try!   realm.write {
+                        try! realm.write {
                             //get placeType
                             let placeTypeO = transaction.valueForKey("type")
                             let placeType = placeTypeO!.valueForKey("primary")
@@ -366,19 +339,14 @@ class cHelper {
                             else //doesn't have a cateogry
                             {
                                 // set first twenty transations to status of
-                                
-                                
                                 if (dictAmount < 1)
                                 {  newTrans.status = 86 }
-                                
                             }
-                            
                         }
                     }
                     
-                    if  realm.objects(Transaction).filter("status = 0").count == 0 && realm.objects(Transaction).filter("status = 1 or status = 2 ").count == 0
+                    if realm.objects(Transaction).filter("status = 0").count == 0 && realm.objects(Transaction).filter("status = 1 or status = 2 ").count == 0
                     {
-                        
                         let nextUp = realm.objects(Transaction).filter("status = -1").sorted("date", ascending: false)
                         let numItemsToLoad = 20
                         var loadCount = 0
@@ -393,8 +361,6 @@ class cHelper {
                             }
                         }
                         try! realm.commitWrite()
-                        
-                        
                     }
                     
                     let transactions_count = transactions.count
@@ -475,32 +441,6 @@ class cHelper {
         }
         return trimmedStr
     }
-    
-    
-    //func pathForBuggyWKWebView(filePath: String?) -> String? {
-    //    let fileMgr = NSFileManager.defaultManager()
-    //    let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-    //    let error: NSErrorPointer = nil
-    //    do {
-    //        try fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true, attributes: nil)
-    //    } catch let error1 as NSError {
-    //        error.memory = error1
-    //        print("Couldn't create www subdirectory. \(error)")
-    //        return nil
-    //    }
-    //    let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-    //    if !fileMgr.fileExistsAtPath(dstPath) {
-    //        do {
-    //            try fileMgr.copyItemAtPath(filePath!, toPath: dstPath)
-    //        } catch let error1 as NSError {
-    //            error.memory = error1
-    //            print("Couldn't copy file to /tmp/www. \(error)")
-    //            return nil
-    //        }
-    //    }
-    //    return dstPath
-    //}
-    //
     
     func isiCloudAvalaible() -> Bool {
         let fileManager = NSFileManager.defaultManager()
@@ -586,8 +526,6 @@ class cHelper {
         return firstSwipedTrans!.date
     }
 }
-
-
 
 
 extension NSDate {
