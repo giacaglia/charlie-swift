@@ -19,6 +19,9 @@ class CardsViewController : UIViewController {
     let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate: NSDate())
     let totalSpending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
     var percentageArray = ["+0 0.0%", "+0 0.0%", "+0 0.0%"]
+    var percentageChangeIncome = "0.0"
+    var percentageChangeSpending = "0.0"
+    var percentageCashFlow = "0.0"
     
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
@@ -51,15 +54,13 @@ class CardsViewController : UIViewController {
         
         let lastMonthIncome = cHelp.getIncome(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
         let changeIncome = totalIncome - lastMonthIncome
-        var percentageChangeIncome = "0.0"
+        
         if changeIncome != 0 {
             percentageChangeIncome = (changeIncome/lastMonthIncome * 100).format(".2")
         }
         
-        
         let lastMonthSpending = cHelp.getSpending(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
         let changeSpending = totalSpending - lastMonthSpending
-        var percentageChangeSpending = "0.0"
         if changeSpending != 0 {
             percentageChangeSpending = (changeSpending/lastMonthSpending * 100).format(".2")
         }
@@ -67,7 +68,6 @@ class CardsViewController : UIViewController {
         let lastMonthCashFlow = lastMonthIncome - lastMonthSpending
         let cashFlow = totalIncome - totalSpending
         let changeCashFlow = cashFlow - lastMonthCashFlow
-        var percentageCashFlow = "0.0"
         if changeCashFlow != 0 {
             percentageCashFlow = (changeCashFlow/lastMonthCashFlow * 100).format(".2")
         }
@@ -110,11 +110,29 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
-            if (indexPath.row == 0) {
-                cell.backgroundColor = lightGreen
+            if indexPath.row == 0 {
+                if Double(percentageChangeIncome) >= 0 {
+                    cell.backgroundColor = lightGreen
+                }
+                else {
+                    cell.backgroundColor = lightRed
+                }
+            }
+            else if indexPath.row == 1 {
+                if Double(percentageChangeSpending) >= 0 {
+                    cell.backgroundColor = lightRed
+                }
+                else {
+                    cell.backgroundColor = lightGreen
+                }
             }
             else {
-                cell.backgroundColor = lightRed
+                if Double(percentageCashFlow) >= 0 {
+                    cell.backgroundColor = lightGreen
+                }
+                else {
+                    cell.backgroundColor = lightRed
+                }
             }
             
             cell.titleLabel.text = titleArray[indexPath.row]
