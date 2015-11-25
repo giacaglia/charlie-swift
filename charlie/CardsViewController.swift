@@ -161,7 +161,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && indexPath.row == 1 {
             if mainVC != nil {
                 mainVC?.hideCardsAndShowTransactions()
             }

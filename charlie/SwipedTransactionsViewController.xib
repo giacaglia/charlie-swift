@@ -4,9 +4,16 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Bold.ttf">
+            <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwipedTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="gvd-vj-BZV" id="cdL-rV-hqX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pxK-W6-7ib"/>
             </connections>
         </placeholder>
@@ -14,8 +21,72 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
+                    <rect key="frame" x="0.0" y="88" width="600" height="512"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vnf-c5-VAm">
+                    <rect key="frame" x="550" y="48" width="27" height="27"/>
+                    <animations/>
+                    <state key="normal" image="btn_filter"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
+                    <rect key="frame" x="246" y="33" width="107" height="24.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="20"/>
+                    <color key="textColor" red="0.55686274509803924" green="0.74509803921568629" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/1 - 11/3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbO-nT-ul8">
+                    <rect key="frame" x="268" y="59" width="63.5" height="16"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
+                    <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kF2-Y3-dvB">
+                    <rect key="frame" x="19" y="44" width="23" height="22"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" image="close"/>
+                    <connections>
+                        <action selector="closePressed:" destination="-1" eventType="touchUpInside" id="G0d-3D-wEO"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HH6-rr-piB">
+                    <rect key="frame" x="0.0" y="87" width="600" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ktj-YD-RVQ"/>
+                    </constraints>
+                </view>
+            </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Vnf-c5-VAm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="48" id="0Wy-lH-TT3"/>
+                <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="8ts-gg-xqT"/>
+                <constraint firstItem="kF2-Y3-dvB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="19" id="9dE-hZ-1e0"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="88" id="Cco-CU-4pB"/>
+                <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="E8c-Oj-6Ei"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="NYY-Za-uzi"/>
+                <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Y1Y-uo-A7A"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZSc-1x-T7c"/>
+                <constraint firstItem="gbO-nT-ul8" firstAttribute="top" secondItem="Bm5-Vj-4Ri" secondAttribute="bottom" constant="1" id="cjm-Q0-U7l"/>
+                <constraint firstItem="HH6-rr-piB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dQX-5Z-JqK"/>
+                <constraint firstAttribute="trailing" secondItem="HH6-rr-piB" secondAttribute="trailing" id="hNn-3Q-tUN"/>
+                <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="33" id="kPs-aD-4Pq"/>
+                <constraint firstItem="kF2-Y3-dvB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="r4m-aw-gb0"/>
+                <constraint firstItem="gbO-nT-ul8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r5v-Hg-Xv6"/>
+                <constraint firstAttribute="trailing" secondItem="Vnf-c5-VAm" secondAttribute="trailing" constant="23" id="rQw-kW-PxZ"/>
+            </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="btn_filter" width="27" height="27"/>
+        <image name="close" width="23" height="22"/>
+    </resources>
 </document>

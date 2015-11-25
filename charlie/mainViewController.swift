@@ -323,9 +323,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func hideCardsAndShowTransactions() {
-        hideReward()
-        transactionsTable.hidden = false
-        showPastTransactions()
+//        self.
+//        hideReward()
+//        transactionsTable.hidden = false
+//        showPastTransactions()
+        self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
     }
     
     func updateTrans() -> Void {
@@ -590,35 +592,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             current_name = trans.name
             
         }
-        if (inboxType == .ApprovedAndFlaggedTransaction) {
-            if (sortFilter == .FilterByMostWorth) {
-                charlieGroupList.sortInPlace {
-                    return $0.happyPercentage > $1.happyPercentage
-                }
-            }
-            else if (sortFilter == .FilterByLeastWorth) {
-                charlieGroupList.sortInPlace {
-                    return $0.happyPercentage < $1.happyPercentage
-                }
-            }
-        
-            else if (sortFilter == .FilterByAmount) {
-                charlieGroupList.sortInPlace {
-                    return $0.totalAmount > $1.totalAmount
-                }
-            }
-            
-            else if (sortFilter == .FilterByDescendingDate) {
-                charlieGroupList.sortInPlace {
-                    return $0.lastDate > $1.lastDate
-                }
-            }
-            else if (sortFilter == .FilterByDate) {
-                charlieGroupList.sortInPlace {
-                    return $0.lastDate < $1.lastDate
-                }
-            }
-        }
+ 
         return charlieGroupList
     }
 }
@@ -659,9 +633,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (inboxType == .ApprovedAndFlaggedTransaction) {
-            return charlieGroupListFiltered.count
-        }
         if transactionItems.count > 0 {
             transactionsTable.hidden = false
             addAccountButton.hidden = true
@@ -672,21 +643,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if inboxType == .ApprovedAndFlaggedTransaction {
-            performSegueWithIdentifier("groupDetail", sender: indexPath)
+        if indexPath.row < transactionItems.count {
+            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         }
         else {
-            if indexPath.row < transactionItems.count {
-                performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
-            }
-            else {
-                if indexPath.row == transactionItems.count {
-                    numItemsToLoad = 20
-                    makeOnlyFirstNElementsVisible()
-                    transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                    self.setInboxTitle(true)
-                    transactionsTable.reloadData()
-                }
+            if indexPath.row == transactionItems.count {
+                numItemsToLoad = 20
+                makeOnlyFirstNElementsVisible()
+                transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+                self.setInboxTitle(true)
+                transactionsTable.reloadData()
             }
         }
     }
@@ -698,42 +664,23 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
-        if (inboxType == .InboxTransaction) {
-            let trans = transactionItems[indexPath.row]
-            cell.nameCellLabel.text = trans.name
+        let trans = transactionItems[indexPath.row]
+        cell.nameCellLabel.text = trans.name
 
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-            
-            cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
-            cell.amountCellLabel.textColor = listBlue
-            cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
+        cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
+        cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
+        
+        cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
+        cell.amountCellLabel.textColor = listBlue
+        cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
 
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
-            let dateString = dateFormatter.stringFromDate(trans.date)
-            cell.dateCellLabel.text = dateString
-            cell.smallAmountCellLabel.hidden = true
-        }
-        else if (inboxType == .ApprovedAndFlaggedTransaction){
-            let charlieGroup = charlieGroupListFiltered[indexPath.row]
-            cell.nameCellLabel.text = charlieGroup.name
-            cell.firstLeftAction = nil
-            cell.firstRightAction = nil
-            if charlieGroup.transactions == 1 { cell.dateCellLabel.text = "1 transaction" }
-            else { cell.dateCellLabel.text = "\(charlieGroup.transactions) transactions" }
-            
-            if charlieGroup.happyPercentage < 50 { cell.amountCellLabel.textColor = listRed }
-            else { cell.amountCellLabel.textColor = listGreen }
-            
-            cell.amountCellLabel.font = UIFont.systemFontOfSize(20.0)
-            cell.amountCellLabel.text = "\(charlieGroup.happyPercentage)%"
-            cell.smallAmountCellLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue))"
-            cell.smallAmountCellLabel.font = UIFont.systemFontOfSize(12.0)
-            cell.smallAmountCellLabel.textColor = mediumGray
-            cell.smallAmountCellLabel.hidden = false
-        }
-       
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
+        let dateString = dateFormatter.stringFromDate(trans.date)
+        cell.dateCellLabel.text = dateString
+        cell.smallAmountCellLabel.hidden = true
+        
+                 
         return cell
     }
 
