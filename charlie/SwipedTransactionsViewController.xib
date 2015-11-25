@@ -13,6 +13,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwipedTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
+                <outlet property="dateRangeLabel" destination="gbO-nT-ul8" id="AW7-P4-zy9"/>
+                <outlet property="monthLabel" destination="Bm5-Vj-4Ri" id="5eQ-3g-IKR"/>
                 <outlet property="tableView" destination="gvd-vj-BZV" id="cdL-rV-hqX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pxK-W6-7ib"/>
             </connections>
@@ -32,15 +34,15 @@
                     <animations/>
                     <state key="normal" image="btn_filter"/>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
-                    <rect key="frame" x="246" y="33" width="107" height="24.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
+                    <rect key="frame" x="263" y="33" width="73" height="24.5"/>
                     <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="20"/>
                     <color key="textColor" red="0.55686274509803924" green="0.74509803921568629" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/1 - 11/3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbO-nT-ul8">
-                    <rect key="frame" x="268" y="59" width="63.5" height="16"/>
+                    <rect key="frame" x="268" y="58" width="63.5" height="16"/>
                     <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
                     <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>

@@ -11,11 +11,25 @@ import RealmSwift
 
 class SwipedTransactionsViewController : UIViewController {
     var charlieGroupListFiltered = [charlieGroup]()
-    
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/yy"
+        dateRangeLabel.text = "\(formatter.stringFromDate(NSDate().startOfMonth()!)) - \(formatter.stringFromDate(NSDate()))"
+
+        let monthFormatter = NSDateFormatter()
+        monthFormatter.dateFormat = "MM"
+        let stringMonth = monthFormatter.stringFromDate(NSDate())
+        monthLabel.text = months[Int(stringMonth)! - 1]
+        
         self.loadData()
+        tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
         tableView.dataSource = self
@@ -34,8 +48,8 @@ extension SwipedTransactionsViewController {
         let sortProperties : Array<SortDescriptor>!
         
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        
-        let actedUponItems = realm.objects(Transaction).filter(actedUponPredicate).sorted(sortProperties)
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@", NSDate().startOfMonth()!, NSDate())
+        let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 0
         
         for trans in actedUponItems {
@@ -46,7 +60,7 @@ extension SwipedTransactionsViewController {
                     charlieGroupListFiltered[current_index].worthCount = charlieGroupListFiltered[current_index].worthCount + 1
                     charlieGroupListFiltered[current_index].worthValue = charlieGroupListFiltered[current_index].worthValue + trans.amount
                 }
-                    // Flagged items
+                // Flagged items
                 else if trans.status == 2 {
                     charlieGroupListFiltered[current_index].notWorthCount = charlieGroupListFiltered[current_index].notWorthCount + 1
                     charlieGroupListFiltered[current_index].notWorthValue = charlieGroupListFiltered[current_index].notWorthValue + trans.amount
@@ -57,9 +71,7 @@ extension SwipedTransactionsViewController {
                 charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 
             }
-            else {
-                
-                
+            else {                
                 print("create new group: \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
                 if trans.status == 1 {
