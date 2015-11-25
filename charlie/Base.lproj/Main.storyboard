@@ -1690,7 +1690,7 @@
         <!--Group Detail View Controller-->
         <scene sceneID="gXC-nU-IIg">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="6HP-qy-ipb" customClass="groupDetailViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="groupDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="6HP-qy-ipb" customClass="groupDetailViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jUu-ja-NhM"/>
                         <viewControllerLayoutGuide type="bottom" id="qMF-em-sGl"/>
@@ -1878,8 +1878,8 @@
         <image name="unselected_second_btn" width="42" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DF7-7D-dxJ"/>
         <segue reference="MIk-q3-hAj"/>
         <segue reference="swt-fH-1dv"/>
+        <segue reference="dvs-V3-jSh"/>
     </inferredMetricsTieBreakers>
 </document>

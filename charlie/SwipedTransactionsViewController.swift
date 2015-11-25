@@ -164,7 +164,10 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        performSegueWithIdentifier("groupDetail", sender: indexPath)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController
+        viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
+        self.presentViewController(viewController!, animated: true) { () -> Void in }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94
