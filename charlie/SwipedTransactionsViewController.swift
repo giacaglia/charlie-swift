@@ -50,46 +50,89 @@ extension SwipedTransactionsViewController {
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@", NSDate().startOfMonth()!, NSDate())
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
-        var current_index = 0
+        var current_index = 1
         
         for trans in actedUponItems {
-            print(trans.name)
             if trans.name == current_name {
                 // Approved items
                 if trans.status == 1 {
+                    
+                    print("Worth IT \(current_index) - \(trans.name)")
                     charlieGroupListFiltered[current_index].worthCount = charlieGroupListFiltered[current_index].worthCount + 1
                     charlieGroupListFiltered[current_index].worthValue = charlieGroupListFiltered[current_index].worthValue + trans.amount
+                    
+                          charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
+                    
+                    
+                     charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
+                    
                 }
                 // Flagged items
                 else if trans.status == 2 {
+                    
+                     print("NOT Worth IT \(current_index) - \(trans.name)")
                     charlieGroupListFiltered[current_index].notWorthCount = charlieGroupListFiltered[current_index].notWorthCount + 1
                     charlieGroupListFiltered[current_index].notWorthValue = charlieGroupListFiltered[current_index].notWorthValue + trans.amount
+                    
+                          charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
+                    
+                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
+                    
+                    
                 }
                 
-                charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions)) * 100))
+               else if trans.status  ==  -1 || trans.status ==  0
+               {
+                
+                print("NOT SWIPED\(current_index) - \(trans.name)")
+
+                 charlieGroupListFiltered[current_index].notSwipedCount += 1
                 
                 charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 
+                }
+                
+          
+                
+              
+                
             }
             else {                
-                print("create new group: \(trans.name)")
+                
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
                 if trans.status == 1 {
+                
+                    
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
+                    
+                    print("create new group: WORTH IT \(current_index) - \(trans.name)")
+                    
                 }
                 else if trans.status == 2 {
+                   
                     cGroup.notWorthCount += 1
                     cGroup.notWorthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
+                     print("create new group: NOT WORTH IT \(current_index) - \(trans.name)")
+                }
+                else if trans.status ==  -1 || trans.status ==  0
+                {
+                    
+                    cGroup.notSwipedCount += 1
+                    cGroup.notSwipedValue += trans.amount
+                    charlieGroupListFiltered.append((cGroup))
+                    current_index = charlieGroupListFiltered.count - 1
+                    print("create new group: NOT SWIPED \(current_index) - \(trans.name)")
+
                 }
                 else {
                     // not added to the list
                 }
-                if cGroup.transactions == 0 {
+                if cGroup.transactions - cGroup.notSwipedCount < 1 {
                     cGroup.happyPercentage = 0
                 }
                 else {
@@ -147,15 +190,23 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
             cell.numberTransactionsLabel.text = "\(charlieGroup.transactions) transactions"
         }
 
-        cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
-        if charlieGroup.happyPercentage < 50 {
-            cell.amountLabel.textColor = listRed
+        if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0
+        {
+           cell.amountLabel.text = "?"
         }
-        else {
-            cell.amountLabel.textColor = listGreen
-        }
+        else
+        {
+        
+           cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
+           if charlieGroup.happyPercentage < 50 {
+               cell.amountLabel.textColor = listRed
+           }
+           else {
+                cell.amountLabel.textColor = listGreen
+            }
 
-        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue))"
+        }
+        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
         return cell
     }
     

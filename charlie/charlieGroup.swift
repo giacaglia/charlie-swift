@@ -14,7 +14,9 @@ class charlieGroup {
     var lastDate:        String
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0
+    var notSwipedCount:   Int    = 0
     var worthValue:      Double = 0
+    var notSwipedValue:      Double = 0
     var notWorthValue:   Double = 0
     var happyPercentage: Int    = 0
     var totalAmount:     Double = 0
@@ -26,7 +28,7 @@ class charlieGroup {
     
     var transactions : Int {
         get {
-            return worthCount + notWorthCount
+            return worthCount + notWorthCount + notSwipedCount
         }
     }
    
