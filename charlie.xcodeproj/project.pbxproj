@@ -44,6 +44,8 @@
 		09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7531B21F0AD005A40DA /* LaunchScreen.xib */; };
 		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
 		09CA4D721B71915300D4F63D /* persistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA4D711B71915300D4F63D /* persistenceStore.swift */; };
+		09ED67B51C15D935006F03AC /* incomeTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */; };
+		09ED67B71C15D9F6006F03AC /* incomeTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */; };
 		453E60001B8E241C00F4794E /* SBGestureTableViewGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E5FFF1B8E241C00F4794E /* SBGestureTableViewGroupCell.swift */; };
 		453E60031B8E242D00F4794E /* SBGestureTableViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E60021B8E242D00F4794E /* SBGestureTableViewGroup.swift */; };
 		453E60071B8E269C00F4794E /* SBGestureTableViewGroupCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E60061B8E269C00F4794E /* SBGestureTableViewGroupCellAction.swift */; };
@@ -259,6 +261,8 @@
 		09C2A75F1B21F0AD005A40DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		09CA4D711B71915300D4F63D /* persistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = persistenceStore.swift; sourceTree = "<group>"; };
+		09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = incomeTransactionsViewController.xib; sourceTree = "<group>"; };
+		09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = incomeTransactionsViewController.swift; sourceTree = "<group>"; };
 		453E5FFF1B8E241C00F4794E /* SBGestureTableViewGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewGroupCell.swift; sourceTree = "<group>"; };
 		453E60021B8E242D00F4794E /* SBGestureTableViewGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewGroup.swift; sourceTree = "<group>"; };
 		453E60061B8E269C00F4794E /* SBGestureTableViewGroupCellAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewGroupCellAction.swift; sourceTree = "<group>"; };
@@ -844,6 +848,8 @@
 				888CA1B91BF5A15700381E84 /* CardsViewController.xib */,
 				88B438331C04235900A0461B /* SwipedTransactionsViewController.swift */,
 				88B438381C0423FB00A0461B /* SwipedTransactionsViewController.xib */,
+				09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */,
+				09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -988,6 +994,7 @@
 				09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */,
 				888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */,
 				45604A0B1B71183200C37B9D /* test_variant.json in Resources */,
+				09ED67B51C15D935006F03AC /* incomeTransactionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1032,6 +1039,7 @@
 				456049D71B71183200C37B9D /* MPABTestDesignerSnapshotRequestMessage.m in Sources */,
 				456049DD1B71183200C37B9D /* MPCATransform3DToNSDictionaryValueTransformer.m in Sources */,
 				456049E31B71183200C37B9D /* MPClassDescription.m in Sources */,
+				09ED67B71C15D9F6006F03AC /* incomeTransactionsViewController.swift in Sources */,
 				094EDB761C0CCD68001462E4 /* happyTableViewCell.swift in Sources */,
 				456049FE1B71183200C37B9D /* MPTweakStore.m in Sources */,
 				456049E61B71183200C37B9D /* MPDesignerTrackMessage.m in Sources */,
