@@ -75,9 +75,56 @@ class CardsViewController : UIViewController {
             percentageCashFlow = (changeCashFlow/lastMonthCashFlow * 100).format(".2")
         }
         
+        var changeIncomeFormat = ""
+        
+        var changeSpendingFormat = ""
+        
+        var changeCashFlowFormat = ""
+
+        if changeIncome  < 0
+        {
+            changeIncomeFormat = "\(changeIncome.format("0.2"))% from last month"
+        }
+        else if changeIncome  > 0
+        {
+            changeIncomeFormat = "\(changeIncome.format("0.2"))% up from last month"
+        }
+        else
+        {
+            changeIncomeFormat = "\(changeIncome.format("0.2"))% same as last month"
+        }
         
         
-        percentageArray = ["\(changeIncome.format("0.2"))%", "\(changeSpending.format("0.2"))%", "\(changeCashFlow.format("0.2"))%"]
+        if changeSpending  < 0
+        {
+            changeSpendingFormat = "\(changeSpending.format("0.2"))% from last month"
+        }
+        else if changeSpending  > 0
+        {
+            changeSpendingFormat = "\(changeSpending.format("0.2"))% up from last month"
+        }
+        else
+        {
+            changeSpendingFormat = "\(changeSpending.format("0.2"))% same as last month"
+        }
+        
+        if changeCashFlow  < 0
+        {
+            changeCashFlowFormat = "\(changeCashFlow.format("0.2"))% from last month"
+        }
+        else if changeSpending  > 0
+        {
+            changeCashFlowFormat = "\(changeCashFlow.format("0.2"))% up from last month"
+        }
+        else
+        {
+            changeCashFlowFormat = "\(changeCashFlow.format("0.2"))% same as last month"
+        }
+
+        
+        
+        
+        percentageArray = ["\(changeIncomeFormat)", "\(changeSpendingFormat)", "\(changeCashFlowFormat)"]
     }
     
 }
@@ -156,6 +203,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             cell.dollarSignLabel.sizeToFit()
             let dollarFrame = cell.dollarSignLabel.frame
             cell.dollarSignLabel.frame = CGRectMake(cell.bigTitleLabel.frame.origin.x - dollarFrame.size.width, dollarFrame.origin.y, dollarFrame.size.width, dollarFrame.size.height)
+
             cell.subtitleLabel.text = percentageArray[indexPath.row]
             return cell
         }
