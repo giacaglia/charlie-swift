@@ -204,21 +204,22 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
 
         if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0
         {
-           cell.amountLabel.text = "?"
+           cell.dollarLabel.text = "?"
         }
         else
         {
         
-           cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
+           cell.dollarLabel.text = "\(charlieGroup.happyPercentage)%"
            if charlieGroup.happyPercentage < 50 {
-               cell.amountLabel.textColor = listRed
+               cell.dollarLabel.textColor = listRed
            }
            else {
-                cell.amountLabel.textColor = listGreen
+                cell.dollarLabel.textColor = listGreen
             }
 
         }
-        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
+        cell.amountLabel.textColor = UIColor.darkGrayColor()
+        cell.amountLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
         return cell
     }
     
@@ -271,13 +272,13 @@ class GroupTransactionCell : UITableViewCell {
         numberTransactionsLabel.textAlignment = .Left
         self.contentView.addSubview(numberTransactionsLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  40, 27, 40, 18)
-        amountLabel.font = UIFont(name: "Montserrat-Bold", size: 15.0)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  70, 27, 80, 18)
+        amountLabel.font = UIFont.systemFontOfSize(14.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
         
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  70, 49, 70, 18)
-        dollarLabel.font = UIFont.systemFontOfSize(14.0)
+        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  70, 49, 80, 18)
+        dollarLabel.font = UIFont(name: "Montserrat-Bold", size: 15.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right
         self.contentView.addSubview(dollarLabel)
