@@ -41,6 +41,38 @@ class cHelper {
         return totalAmount
     }
     
+    
+    func getHappyPercentageCompare(date: NSDate) -> (happyPerc: Double, happyComperePerc: Double) {
+        
+        let endCurrentDate = date
+        let startCurrentDate = endCurrentDate.startOfMonth()!
+        let endLastDate = dateByAddingMonths(-1, date: endCurrentDate)!
+        let startLastDate = endLastDate.startOfMonth()!
+       
+        let currentHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", startCurrentDate, endCurrentDate)
+        let currentSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startCurrentDate, endCurrentDate)
+        let lastHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", startLastDate, endLastDate)
+        let lastSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startLastDate, endLastDate)
+        
+        let currentHappyMonth = realm.objects(Transaction).filter(currentHappyMonthPrediate)
+        let currentSadMonth = realm.objects(Transaction).filter(currentSadMonthPrediate)
+        let lastHappyMonth = realm.objects(Transaction).filter(lastHappyMonthPrediate)
+        let lastSadMonth = realm.objects(Transaction).filter(lastSadMonthPrediate)
+        
+        let currentHappyMonthPercentage = Double(currentHappyMonth.count)  / Double((currentHappyMonth.count + currentSadMonth.count)) as Double
+        let lastHappyMonthPercentage = Double(lastHappyMonth.count)  / Double((lastHappyMonth.count + lastSadMonth.count)) as Double
+       
+        let happyFlowChange = ((currentHappyMonthPercentage - lastHappyMonthPercentage) / lastHappyMonthPercentage) * 100
+        
+        return (currentHappyMonthPercentage * 100, happyFlowChange)
+ 
+    }
+    
+    
+    
+    
+    
+    
     func getHappyFlow() -> Double {
         let happyTrans = realm.objects(Transaction).filter("status = 1")
         let sadTrans = realm.objects(Transaction).filter("status = 2")
@@ -553,3 +585,4 @@ extension NSDate {
         return nil
     }
 }
+

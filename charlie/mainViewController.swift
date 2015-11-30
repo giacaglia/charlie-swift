@@ -73,6 +73,16 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewCell!
     
+    var totalCashFlow:Double = 0
+    var changeCashFlow:Double = 0
+    var totalSpending:Double = 0
+    var changeSpending:Double = 0
+    var totalIncome:Double = 0
+    var changeIncome:Double = 0
+    
+    var currentMonthHappyPercentage: Double = 0
+    var happyFlowChange: Double = 0
+    
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     let accounts = realm.objects(Account)
@@ -125,6 +135,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow()
+        
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate())
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -298,27 +313,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         flaggedPredicate = NSPredicate(format: "status = 2")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
         waitingToProcessPredicate = NSPredicate(format: "status = -1")
-        
-//        if hasAccounts {
-//            if accounts[0].institution_type == "fake_institution" {
-//                inboxPredicate = NSPredicate(format: "status = 0")
-//                approvedPredicate = NSPredicate(format: "status = 1")
-//                flaggedPredicate = NSPredicate(format: "status = 2")
-//                actedUponPredicate = NSPredicate(format: "status > 0", showTransactionDays)
-//            }
-//            else {
-//                inboxPredicate = NSPredicate(format: "status = 0")
-//                approvedPredicate = NSPredicate(format: "status = 1")
-//                flaggedPredicate = NSPredicate(format: "status = 2")
-//                actedUponPredicate = NSPredicate(format: "status > 0")
-//            }
-//        }
-//        else {
-//            inboxPredicate = NSPredicate(format: "status = 0 AND date > %@", showTransactionDays)
-//            approvedPredicate = NSPredicate(format: "status = 1 AND date > %@", showTransactionDays)
-//            flaggedPredicate = NSPredicate(format: "status = 2 AND date > %@", showTransactionDays)
-//            actedUponPredicate = NSPredicate(format: "status > 0 AND date > %@", showTransactionDays)
-//        }
+
     }
     
     func hideReward() {
@@ -642,15 +637,19 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             addAccountButton.hidden = true
             accountAddView.hidden = true
         }
-        return transactionItems.count + Int(areThereMoreItemsToLoad)
+        return transactionItems.count + 5//Int(areThereMoreItemsToLoad)
+
     }
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        
         if indexPath.row < transactionItems.count {
             performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
         }
-        else {
+        else if indexPath.row == transactionItems.count {
             if indexPath.row == transactionItems.count {
                 numItemsToLoad = 20
                 makeOnlyFirstNElementsVisible()
@@ -659,14 +658,82 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 transactionsTable.reloadData()
             }
         }
+        else
+        {
+            
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
-            return cell
+//            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
+//            
+//        
+//            return cell
+           
+            let rewardIndex =  indexPath.row - transactionItems.count
+           
+            
+            var  rewardNames = ["Load More Transactions", "Happy Flow", "My Income", "My Spending", "My CashFlow"]
+            
+            var cellHappy:happyTableViewCell
+            var cellReward:rewardTableViewCell
+            
+            
+            
+            if rewardIndex == 0
+            {
+                cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
+                cellHappy.rewardName.text = rewardNames[rewardIndex]
+
+                return cellHappy
+                
+            }
+            else
+            {
+                cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
+                cellReward.rewardName.text = rewardNames[rewardIndex]
+                
+                
+                if rewardIndex == 1
+                {
+                    cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))"
+                    cellReward.prevAmount.text = "\(Int(happyFlowChange))%"
+                }
+            
+            
+                if rewardIndex == 2
+                {
+                    cellReward.currentAmount.text = "\(totalIncome)"
+                    cellReward.prevAmount.text = "\(Int(changeIncome))%"
+                    
+                }
+                
+                if rewardIndex == 3
+                {
+                    cellReward.currentAmount.text = "\(totalSpending)"
+                    cellReward.prevAmount.text = "\(Int(changeSpending))%"
+                }
+                
+                
+                
+                if rewardIndex == 4
+                {
+                    cellReward.currentAmount.text = "\(totalCashFlow.format("2"))"
+                    cellReward.prevAmount.text = "\(Int(changeCashFlow))%"
+                }
+                
+                return cellReward
+           }
+            
+            
+           
+            
+
+            
+            
         }
-        
+    
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         let trans = transactionItems[indexPath.row]
         cell.nameCellLabel.text = trans.name
@@ -689,7 +756,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 74
+        
+        let rewardIndex =  indexPath.row - transactionItems.count
+        if rewardIndex > 0
+        {
+            return 150
+        }
+        else
+        {
+            return 74
+        }
     }
     
     
@@ -772,4 +848,6 @@ extension mainViewController : UIViewControllerPreviewingDelegate {
         // Presents viewControllerToCommit in a primary context
         showViewController(viewControllerToCommit, sender: self)
     }
+
 }
+

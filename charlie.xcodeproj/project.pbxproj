@@ -26,8 +26,10 @@
 		09167F171B8B6CA30093BA53 /* groupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */; };
 		091E008C1B7937730014012D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091E008B1B7937730014012D /* Reachability.swift */; };
 		091E008E1B7959AB0014012D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091E008D1B7959AB0014012D /* CloudKit.framework */; };
+		09401F041C0E0918002DBBEB /* rewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */; };
 		09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D411B38B42F006E126B /* showCardsViewController.swift */; };
 		09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D441B38B43F006E126B /* cardTableViewCell.swift */; };
+		094EDB761C0CCD68001462E4 /* happyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */; };
 		095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414AE1B45E91D00682172 /* addAccountViewController.swift */; };
 		095414B11B46A68300682172 /* cHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414B01B46A68300682172 /* cHelper.swift */; };
 		095447601B268DBC005816F5 /* CharlieRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0954475F1B268DBC005816F5 /* CharlieRealm.swift */; };
@@ -235,8 +237,10 @@
 		09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = groupDetailViewController.swift; sourceTree = "<group>"; };
 		091E008B1B7937730014012D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		091E008D1B7959AB0014012D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rewardTableViewCell.swift; sourceTree = "<group>"; };
 		09435D411B38B42F006E126B /* showCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showCardsViewController.swift; path = ../showCardsViewController.swift; sourceTree = "<group>"; };
 		09435D441B38B43F006E126B /* cardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cardTableViewCell.swift; sourceTree = "<group>"; };
+		094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = happyTableViewCell.swift; sourceTree = "<group>"; };
 		095414AE1B45E91D00682172 /* addAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addAccountViewController.swift; sourceTree = "<group>"; };
 		095414B01B46A68300682172 /* cHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cHelper.swift; sourceTree = "<group>"; };
 		0954475F1B268DBC005816F5 /* CharlieRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharlieRealm.swift; sourceTree = "<group>"; };
@@ -459,7 +463,9 @@
 				880B116A1BE68BB800BB2064 /* MainViewController */,
 				099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */,
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
+				094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
+				09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */,
 				45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */,
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
 				45E0F2101B5E7E660005B234 /* revealViewController.swift */,
@@ -1026,6 +1032,7 @@
 				456049D71B71183200C37B9D /* MPABTestDesignerSnapshotRequestMessage.m in Sources */,
 				456049DD1B71183200C37B9D /* MPCATransform3DToNSDictionaryValueTransformer.m in Sources */,
 				456049E31B71183200C37B9D /* MPClassDescription.m in Sources */,
+				094EDB761C0CCD68001462E4 /* happyTableViewCell.swift in Sources */,
 				456049FE1B71183200C37B9D /* MPTweakStore.m in Sources */,
 				456049E61B71183200C37B9D /* MPDesignerTrackMessage.m in Sources */,
 				456049DE1B71183200C37B9D /* MPCGAffineTransformToNSDictionaryValueTransformer.m in Sources */,
@@ -1093,6 +1100,7 @@
 				45604A071B71183200C37B9D /* MPWebSocket.m in Sources */,
 				456049E51B71183200C37B9D /* MPDesignerEventBindingResponseMesssage.m in Sources */,
 				456049DB1B71183200C37B9D /* MPApplicationStateSerializer.m in Sources */,
+				09401F041C0E0918002DBBEB /* rewardTableViewCell.swift in Sources */,
 				456049EF1B71183200C37B9D /* MPObjectSelector.m in Sources */,
 				456049E81B71183200C37B9D /* MPEventBinding.m in Sources */,
 				88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */,

@@ -22,16 +22,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="15" y="300" width="570" height="260"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFo-nh-kMo">
-                    <rect key="frame" x="140" y="70" width="320" height="200"/>
+                    <rect key="frame" x="140" y="14" width="320" height="112"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow is currently at:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccC-Bg-ZCq">
-                            <rect key="frame" x="5" y="65" width="160" height="70"/>
+                            <rect key="frame" x="5" y="21" width="160" height="70"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="160" id="Gyl-qA-lOU"/>
@@ -42,7 +37,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-ef-60g">
-                            <rect key="frame" x="165" y="67" width="150" height="65"/>
+                            <rect key="frame" x="165" y="23" width="150" height="65"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="YAW-iC-ARf"/>
@@ -61,7 +56,7 @@
                         <constraint firstItem="ccC-Bg-ZCq" firstAttribute="centerY" secondItem="TFo-nh-kMo" secondAttribute="centerY" id="dbY-fI-xqQ"/>
                         <constraint firstAttribute="trailing" secondItem="AAU-ef-60g" secondAttribute="trailing" constant="5" id="gJJ-ju-BVd"/>
                         <constraint firstItem="ccC-Bg-ZCq" firstAttribute="leading" secondItem="TFo-nh-kMo" secondAttribute="leading" constant="5" id="hD7-Lo-Ilo"/>
-                        <constraint firstAttribute="height" constant="200" id="ikY-6V-wZe"/>
+                        <constraint firstAttribute="height" constant="112" id="ikY-6V-wZe"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -69,16 +64,21 @@
                         </mask>
                     </variation>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
+                    <rect key="frame" x="8" y="134" width="570" height="168"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="TFo-nh-kMo" firstAttribute="centerX" secondItem="bEm-Xn-24m" secondAttribute="centerX" id="8CG-Z4-nwt"/>
-                <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="40" id="B1k-If-zAT"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="15" id="U5L-Zo-fy7"/>
-                <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="15" id="h3p-ff-98P"/>
-                <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="70" id="jZo-vC-bfH"/>
-                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="30" id="zrs-AU-lqz"/>
+                <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="298" id="B1k-If-zAT"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="8" id="U5L-Zo-fy7"/>
+                <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="22" id="h3p-ff-98P"/>
+                <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="14" id="jZo-vC-bfH"/>
+                <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="8" id="zrs-AU-lqz"/>
             </constraints>
         </view>
     </objects>
