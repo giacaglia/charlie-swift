@@ -116,7 +116,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CardCell.cellIdentifier(), forIndexPath: indexPath) as! CardCell
             if indexPath.row == 0 {
-                if Double(percentageChangeIncome) >= 0 {
+                if Double(changeIncome) >= 0 {
                     cell.backgroundColor = lightGreen
                     cell.backgroundImageView.image = UIImage(named: "positiveIncome")
                 }
@@ -125,7 +125,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
                 }
             }
             else if indexPath.row == 1 {
-                if Double(percentageChangeSpending) >= 0 {
+                if Double(changeSpending) >= 0 {
                     cell.backgroundColor = lightRed
                     cell.backgroundImageView.image = UIImage(named: "negativeSpending")
                 }
@@ -134,7 +134,7 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
                 }
             }
             else {
-                if Double(percentageCashFlow) >= 0 {
+                if Double(changeCashFlow) >= 0 {
                     cell.backgroundColor = lightGreen
                     cell.backgroundImageView.image = UIImage(named: "positiveCashFlow")
                 }
@@ -147,12 +147,12 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
             cell.bigTitleLabel.text = subtitleArray[indexPath.row]
             cell.bigTitleLabel.sizeToFit()
             cell.bigTitleLabel.center = CGPointMake(cell.contentView.center.x + 10, cell.bigTitleLabel.center.y)
-            if (indexPath.row == 2) {
-                cell.dollarSignLabel.text = "-$"
-            }
-            else {
-                cell.dollarSignLabel.text = "$"
-            }
+//            if (indexPath.row == 2) {
+//                cell.dollarSignLabel.text = "-$"
+//            }
+//            else {
+//                cell.dollarSignLabel.text = "$"
+//            }
             cell.dollarSignLabel.sizeToFit()
             let dollarFrame = cell.dollarSignLabel.frame
             cell.dollarSignLabel.frame = CGRectMake(cell.bigTitleLabel.frame.origin.x - dollarFrame.size.width, dollarFrame.origin.y, dollarFrame.size.width, dollarFrame.size.height)

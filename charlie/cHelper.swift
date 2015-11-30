@@ -121,7 +121,7 @@ class cHelper {
         let cashFlowChange = ((cashFlowTotal - cashFlowTotal2) / cashFlowTotal2) * 100
         let incomeChange = (((income1 * -1) -  (income2 * -1)) / (income2 * -1)) * 100
         
-        return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
+        return (cashFlowTotal, cashFlowChange * -1, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
     
     private func getMapLocationToTransactions() -> [String: [Transaction]] {
