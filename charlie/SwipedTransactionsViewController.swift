@@ -16,6 +16,7 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.loadData()
@@ -23,9 +24,7 @@ class SwipedTransactionsViewController : UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
         }
-       
-       
-
+ 
     }
     
     override func viewDidLoad() {
@@ -50,6 +49,8 @@ class SwipedTransactionsViewController : UIViewController {
     @IBAction func closePressed(sender: AnyObject) {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
         })
+        
+        
     }
     
 }
@@ -273,7 +274,7 @@ class GroupTransactionCell : UITableViewCell {
         self.contentView.addSubview(numberTransactionsLabel)
         
         amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  70, 27, 80, 18)
-        amountLabel.font = UIFont.systemFontOfSize(14.0)
+        amountLabel.font = UIFont.systemFontOfSize(16.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
         

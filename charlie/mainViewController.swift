@@ -48,6 +48,7 @@ protocol ChangeFilterProtocol {
 
 protocol MainViewControllerDelegate {
     func hideCardsAndShowTransactions()
+      func showCards()
 }
 
 class mainViewController: UIViewController, ChangeFilterProtocol, MainViewControllerDelegate {
@@ -118,10 +119,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 //they finished tutorial and account has still not loaded - something until data is loaded
             }
         }
-        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
-        transactionsTable.registerClass(ReportCardCell.self, forCellReuseIdentifier:ReportCardCell.cellIdentifier())
-        transactionsTable.tableFooterView = UIView()
-        transactionsTable.reloadData()
+       
+       // transactionsTable.reloadData()
     }
     
     override func viewDidLoad() {
@@ -255,6 +254,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         self.setInboxTitle(true)
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
+        
+        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
+        transactionsTable.registerClass(ReportCardCell.self, forCellReuseIdentifier:ReportCardCell.cellIdentifier())
+        transactionsTable.tableFooterView = UIView()
+        
     }
     
     func showReward() {
@@ -503,7 +507,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     @IBAction func flagListButtonPress(sender: UIButton) {
-        charlieAnalytics.track("Not Worth It Button")
+        charlieAnalytics.track("Show Cards")
         hideReward()
         filterButton.hidden = true
         let flags = NSCalendarUnit.Day

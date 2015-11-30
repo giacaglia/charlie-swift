@@ -15,7 +15,7 @@ class CardsViewController : UIViewController {
     let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
     var (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow()
     var subtitleArray = [String]()
-    let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
+   // let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
     //let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate:   NSDate())
     //let totalSpending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
     var percentageArray = ["+0 0.0%", "+0 0.0%", "+0 0.0%"]
@@ -35,13 +35,7 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-       // var totalCashFlow = totalIncome - totalSpending
-        if (totalCashFlow < 0) {
-            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
-        }
-//        else {
-//            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
-//        }
+        subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
         self.getPercentageChange()
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
@@ -142,12 +136,12 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if (transactions.count > 0) {
+        //if (transactions.count > 0) {
             return 2
-        }
-        else {
-            return 0   
-        }
+//        }
+//        else {
+//            return 0   
+//        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -215,9 +209,11 @@ extension CardsViewController : UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 1 {
-            if mainVC != nil {
-                mainVC?.hideCardsAndShowTransactions()
-            }
+//            if mainVC != nil {
+//                mainVC?.hideCardsAndShowTransactions()
+//            }
+            self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+
         }
     }
 }
