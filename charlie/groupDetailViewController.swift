@@ -40,7 +40,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         groupTableView.tableFooterView = UIView();
         groupTableView.separatorStyle = .None
         self.name.text = transactionName
-        let groupDetailPredicate = NSPredicate(format: "status > 0 AND name = %@", transactionName)
+        let groupDetailPredicate = NSPredicate(format: "status < 3 AND name = %@", transactionName)
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
         transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
         
@@ -193,7 +193,9 @@ extension groupDetailViewController {
         cell.transactionDate.text = dateString
         cell.transactionAmount.text = currencyString
         if trans.status == 2 { cell.transactionAmount.textColor = listRed }
-        else { cell.transactionAmount.textColor = listGreen }
+        else if trans.status == 1 { cell.transactionAmount.textColor = listGreen }
+        else { cell.transactionAmount.textColor = mediumGray }
+        
         return cell
     }
     

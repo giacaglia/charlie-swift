@@ -16,8 +16,20 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.loadData()
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
+       
+       
+
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+       super.viewDidLoad()
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MM/dd/yy"
@@ -28,7 +40,7 @@ class SwipedTransactionsViewController : UIViewController {
         let stringMonth = monthFormatter.stringFromDate(NSDate())
         monthLabel.text = months[Int(stringMonth)! - 1]
         
-        self.loadData()
+        //self.loadData()
         tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self

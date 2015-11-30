@@ -110,9 +110,9 @@ class showTransactionViewController: UIViewController {
             })
         }
         else {
-            realm.beginWrite()
-            transaction!.status = 2
-            try! realm.commitWrite()
+           try! realm.write {
+            self.transaction!.status = 2
+            }
             self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
         }
     }
@@ -124,9 +124,10 @@ class showTransactionViewController: UIViewController {
             })
         }
         else {
-            realm.beginWrite()
-            transaction!.status = 1
-            try! realm.commitWrite()
+            try! realm.write {
+            self.transaction!.status = 1
+            }
+           
             self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
         }
     }

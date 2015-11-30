@@ -13,15 +13,19 @@ class CardsViewController : UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var mainVC : MainViewControllerDelegate?
     let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
-    let (cashFlow, _, _, _, income, incomeChange) = cHelp.getCashFlow()
+    var (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow()
     var subtitleArray = [String]()
     let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
-    let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate: NSDate())
-    let totalSpending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
+    //let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate:   NSDate())
+    //let totalSpending = cHelp.getSpending(startDate: NSDate().startOfMonth()!, endDate: NSDate())
     var percentageArray = ["+0 0.0%", "+0 0.0%", "+0 0.0%"]
     var percentageChangeIncome = "0.0"
     var percentageChangeSpending = "0.0"
     var percentageCashFlow = "0.0"
+    
+    
+    
+   // percentageArray = ["\(changeIncome)%", "\(changeSpending)%", "\(changeCashFlow)%"]
     
     private func genAttributedString(string: String, coloredString:String, color: UIColor) -> NSAttributedString {
         let range = (string as NSString).rangeOfString(coloredString)
@@ -31,14 +35,13 @@ class CardsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        var totalCashFlow = totalIncome - totalSpending
+       // var totalCashFlow = totalIncome - totalSpending
         if (totalCashFlow < 0) {
-            totalCashFlow = -totalCashFlow
             subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
         }
-        else {
-            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
-        }
+//        else {
+//            subtitleArray = ["\(totalIncome.format(".2"))", "\(totalSpending.format(".2"))", "\(totalCashFlow.format(".2"))"]
+//        }
         self.getPercentageChange()
         self.collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: CardCell.cellIdentifier())
         self.collectionView.registerClass(TotalTransactionCell.self, forCellWithReuseIdentifier: TotalTransactionCell.cellIdentifier())
@@ -52,27 +55,29 @@ class CardsViewController : UIViewController {
     func getPercentageChange() {
         let lastMonthDate = NSDate().dateByAddingMonths(-1)
         
-        let lastMonthIncome = cHelp.getIncome(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
-        let changeIncome = totalIncome - lastMonthIncome
+        let lastMonthIncome = cHelp.getIncome(startDate: lastMonthDate!.startOfMonth()!, endDate: cHelp.dateByAddingMonths(-1, date: NSDate())!)
+//        let changeIncome = totalIncome - lastMonthIncome
         
-        if changeIncome != 0 {
-            percentageChangeIncome = (changeIncome/lastMonthIncome * 100).format(".2")
-        }
+//        if changeIncome != 0 {
+//            percentageChangeIncome = (changeIncome/lastMonthIncome * 100).format(".2")
+//        }
         
         let lastMonthSpending = cHelp.getSpending(startDate: lastMonthDate!.startOfMonth()!, endDate: lastMonthDate!)
-        let changeSpending = totalSpending - lastMonthSpending
+       // let changeSpending = totalSpending - lastMonthSpending
         if changeSpending != 0 {
             percentageChangeSpending = (changeSpending/lastMonthSpending * 100).format(".2")
         }
         
         let lastMonthCashFlow = lastMonthIncome - lastMonthSpending
-        let cashFlow = totalIncome - totalSpending
-        let changeCashFlow = cashFlow - lastMonthCashFlow
+        //let cashFlow = totalIncome - totalSpending
+        ///let changeCashFlow = cashFlow - lastMonthCashFlow
         if changeCashFlow != 0 {
             percentageCashFlow = (changeCashFlow/lastMonthCashFlow * 100).format(".2")
         }
         
-        percentageArray = ["\(changeIncome) \(percentageChangeIncome)%", "\(changeSpending)  \(percentageChangeSpending)%", "\(changeCashFlow) \(percentageCashFlow)%"]
+        
+        
+        percentageArray = ["\(changeIncome.format("0.2"))%", "\(changeSpending.format("0.2"))%", "\(changeCashFlow.format("0.2"))%"]
     }
     
 }
