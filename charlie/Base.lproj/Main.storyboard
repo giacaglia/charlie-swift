@@ -120,7 +120,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDG-SX-5Te">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDG-SX-5Te">
                                 <rect key="frame" x="179" y="520" width="242" height="60"/>
                                 <animations/>
                                 <constraints>
@@ -483,14 +483,14 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nwy-Qt-sfK">
                                     <rect key="frame" x="147" y="201" width="300" height="250"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Let's see your actual Happy Flow for the last week." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2n-sM-NiR">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's see your actual Happy Flow for the last week." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2n-sM-NiR">
                                             <rect key="frame" x="20" y="121" width="260" height="37"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hih-Rs-0Cp">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hih-Rs-0Cp">
                                             <rect key="frame" x="20" y="179" width="260" height="42"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
@@ -517,7 +517,7 @@
                                         <constraint firstAttribute="bottom" secondItem="hih-Rs-0Cp" secondAttribute="bottom" constant="29" id="yjC-4I-els"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You guessed 67% " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhi-SX-llV">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You guessed 67% " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhi-SX-llV">
                                     <rect key="frame" x="220" y="239" width="161" height="22"/>
                                     <animations/>
                                     <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="18"/>
@@ -558,59 +558,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Eh-dx-Cok" userLabel="listNavBar">
-                                <rect key="frame" x="0.0" y="536" width="600" height="64"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2c-VM-doh" userLabel="dividerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="dka-Cc-TmA"/>
-                                        </constraints>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOe-bS-V5E" userLabel="Flag">
-                                        <rect key="frame" x="473" y="19" width="42" height="26"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="Ba2-Ga-hCS"/>
-                                            <constraint firstAttribute="height" constant="26" id="fWb-3A-cri"/>
-                                        </constraints>
-                                        <state key="normal" image="unselected_second_btn">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="flagListButtonPress:" destination="HbA-5y-1yC" eventType="touchUpInside" id="PiU-D6-xf2"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97i-Pg-dNr" userLabel="Inbox">
-                                        <rect key="frame" x="80" y="16" width="46" height="32"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="1fM-oT-pIl"/>
-                                            <constraint firstAttribute="width" constant="46" id="ePe-3f-jGd"/>
-                                        </constraints>
-                                        <state key="normal" image="selectedFirstTab">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="inboxListButtonPress:" destination="HbA-5y-1yC" eventType="touchUpInside" id="gmb-PU-8Ar"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="J2c-VM-doh" firstAttribute="top" secondItem="0Eh-dx-Cok" secondAttribute="top" id="ACz-AS-SoV"/>
-                                    <constraint firstAttribute="centerY" secondItem="oOe-bS-V5E" secondAttribute="centerY" id="AL4-D6-ukf"/>
-                                    <constraint firstAttribute="trailing" secondItem="J2c-VM-doh" secondAttribute="trailing" id="QY0-t2-F5J"/>
-                                    <constraint firstItem="97i-Pg-dNr" firstAttribute="leading" secondItem="0Eh-dx-Cok" secondAttribute="leading" constant="80" id="Vhd-vT-f0U"/>
-                                    <constraint firstAttribute="height" constant="64" id="d4c-hU-7cm"/>
-                                    <constraint firstAttribute="centerY" secondItem="97i-Pg-dNr" secondAttribute="centerY" id="fms-rg-sHh"/>
-                                    <constraint firstItem="J2c-VM-doh" firstAttribute="leading" secondItem="0Eh-dx-Cok" secondAttribute="leading" id="rOz-ka-7Dj"/>
-                                    <constraint firstAttribute="trailing" secondItem="oOe-bS-V5E" secondAttribute="trailing" constant="85" id="xAg-je-15P"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXV-7C-aiq" userLabel="Top Nav">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                 <subviews>
@@ -628,7 +575,7 @@
                                             <segue destination="cZc-PZ-f0A" kind="presentation" id="UA2-7Z-KOg"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Worth it?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuq-Ra-l3O" userLabel="Worth It Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Worth it?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuq-Ra-l3O" userLabel="Worth It Label">
                                         <rect key="frame" x="218" y="30" width="165" height="32"/>
                                         <animations/>
                                         <constraints>
@@ -660,7 +607,7 @@
                                             <action selector="refreshAccounts:" destination="HbA-5y-1yC" eventType="touchUpInside" id="jIr-Jf-jhc"/>
                                         </connections>
                                     </button>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="11/17 - 11/31" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pu1-4O-Gd7">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/17 - 11/31" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pu1-4O-Gd7">
                                         <rect key="frame" x="262.5" y="59" width="76" height="16"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
@@ -690,7 +637,7 @@
                             <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o08-Ym-LQO" userLabel="toast">
                                 <rect key="frame" x="200" y="325" width="200" height="100"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Charlie is downloading your transactions. This might take a couple of minutes. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlie is downloading your transactions. This might take a couple of minutes. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-kU-ihB" userLabel="toastMessage">
                                         <rect key="frame" x="10" y="18" width="180" height="63.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
@@ -730,21 +677,21 @@
                                 <animations/>
                                 <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QP3-Bt-gR0" userLabel="rewardView">
                                 <rect key="frame" x="0.0" y="80" width="600" height="456"/>
                                 <animations/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
                                 <rect key="frame" x="0.0" y="80" width="600" height="456"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8s-NF-Z6y">
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8s-NF-Z6y">
                                         <rect key="frame" x="0.0" y="356" width="600" height="100"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mcafee-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="mcafee-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
                                                 <rect key="frame" x="236" y="16" width="127" height="47"/>
                                                 <animations/>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charlies uses bank-level encryption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqp-cP-BbC">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Charlies uses bank-level encryption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqp-cP-BbC">
                                                 <rect key="frame" x="203" y="66" width="193.5" height="16.5"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
@@ -827,7 +774,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-hm-sg5" customClass="SBGestureTableView" customModule="charlie" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="80" width="600" height="456"/>
+                                <rect key="frame" x="0.0" y="80" width="600" height="520"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1017,8 +964,7 @@
                         <constraints>
                             <constraint firstItem="QP3-Bt-gR0" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="24J-Z2-UhG"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" id="9Do-gl-VNn"/>
-                            <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="QP3-Bt-gR0" secondAttribute="bottom" id="9kX-6w-6N0"/>
-                            <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="DzT-WG-1C6"/>
+                            <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="KMB-kM-PnN"/>
                             <constraint firstAttribute="trailing" secondItem="Ssu-hU-syf" secondAttribute="trailing" id="KR4-W5-jHn"/>
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
@@ -1028,11 +974,7 @@
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="cOI-9j-Uot"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" id="cPP-4C-dPR"/>
                             <constraint firstAttribute="centerX" secondItem="huO-nz-BFN" secondAttribute="centerX" id="dSh-Io-tu1"/>
-                            <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="0Eh-dx-Cok" secondAttribute="bottom" id="guX-Lu-HoI"/>
-                            <constraint firstAttribute="trailing" secondItem="0Eh-dx-Cok" secondAttribute="trailing" id="lN8-0k-bFI"/>
-                            <constraint firstItem="0Eh-dx-Cok" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="m6o-hz-eDZ"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="nj0-cQ-Ku5"/>
-                            <constraint firstItem="0Eh-dx-Cok" firstAttribute="top" secondItem="Ssu-hU-syf" secondAttribute="bottom" id="rUJ-qG-3Io"/>
                             <constraint firstAttribute="centerX" secondItem="o08-Ym-LQO" secondAttribute="centerX" id="rvG-mz-nVS"/>
                             <constraint firstItem="QP3-Bt-gR0" firstAttribute="top" secondItem="yXV-7C-aiq" secondAttribute="bottom" id="uBE-uX-3FA"/>
                             <constraint firstAttribute="trailing" secondItem="QP3-Bt-gR0" secondAttribute="trailing" id="v2K-hz-dRU"/>
@@ -1044,9 +986,6 @@
                         <outlet property="addAccountButton" destination="pbA-n2-qga" id="U1c-Gd-u1U"/>
                         <outlet property="dateRangeLabel" destination="pu1-4O-Gd7" id="8sv-Os-7KF"/>
                         <outlet property="filterButton" destination="JLJ-av-QVM" id="s56-N4-fNd"/>
-                        <outlet property="flagListButton" destination="oOe-bS-V5E" id="eMe-pe-9hj"/>
-                        <outlet property="inboxListButton" destination="97i-Pg-dNr" id="vz2-1z-nqH"/>
-                        <outlet property="listNavBar" destination="0Eh-dx-Cok" id="l2D-Ht-6IC"/>
                         <outlet property="menuButton" destination="cWc-mr-8Dg" id="h42-Nn-Q5U"/>
                         <outlet property="rewardView" destination="QP3-Bt-gR0" id="Ed0-fX-XVy"/>
                         <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
@@ -1104,14 +1043,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xHR-Yu-CGw">
                                                     <rect key="frame" x="200" y="20" width="200" height="110"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vA-Lo-eAo">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vA-Lo-eAo">
                                                             <rect key="frame" x="8" y="90" width="131" height="12"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" name="GothamRounded-Light" family="Gotham Rounded" pointSize="12"/>
                                                             <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDd-KT-I1a">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDd-KT-I1a">
                                                             <rect key="frame" x="159" y="90" width="33" height="12"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" name="GothamRounded-Light" family="Gotham Rounded" pointSize="12"/>
@@ -1131,7 +1070,7 @@
                                                         <constraint firstAttribute="width" constant="200" id="u7T-cr-1Ht"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$2,450" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5W-Z5-X3H" userLabel="Balance">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2,450" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5W-Z5-X3H" userLabel="Balance">
                                                     <rect key="frame" x="259" y="35" width="83" height="24"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="GothamRounded-Light" family="Gotham Rounded" pointSize="24"/>
@@ -1311,7 +1250,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r92-e2-MWu" userLabel="Nav">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zL0-XE-dLG">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zL0-XE-dLG">
                                         <rect key="frame" x="234" y="25" width="119" height="22"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
@@ -1694,7 +1633,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
                                 <rect key="frame" x="30" y="84" width="540" height="25"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
@@ -1710,7 +1649,7 @@
                                     <action selector="closeButtonPress:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="dSM-Ql-fqb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
                                 <rect key="frame" x="70" y="150" width="114" height="47"/>
                                 <animations/>
                                 <constraints>
@@ -1722,7 +1661,7 @@
                                     <action selector="notWorth:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="DvU-82-K2s"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
                                 <rect key="frame" x="416" y="150" width="114" height="47"/>
                                 <animations/>
                                 <constraints>
@@ -1863,14 +1802,14 @@
                                     <constraint firstItem="OvE-MX-Jhf" firstAttribute="leading" secondItem="OOw-EN-0XC" secondAttribute="leading" constant="45" id="vXE-GW-giu"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71d-0f-Vcl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71d-0f-Vcl">
                                 <rect key="frame" x="20" y="251" width="34" height="17.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
                                 <color key="textColor" red="0.46274509803921571" green="0.46274509803921571" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzS-dt-C0f">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzS-dt-C0f">
                                 <rect key="frame" x="522" y="251" width="57.5" height="17.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
@@ -1898,14 +1837,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSt-Xg-v3D">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSt-Xg-v3D">
                                                     <rect key="frame" x="18" y="24" width="46.5" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGk-Mk-vDS">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGk-Mk-vDS">
                                                     <rect key="frame" x="532" y="24" width="47" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="17"/>
@@ -1979,8 +1918,6 @@
         <image name="mcafee-1" width="127" height="47"/>
         <image name="menu" width="27" height="30"/>
         <image name="sad_on" width="36" height="36"/>
-        <image name="selectedFirstTab" width="46" height="32"/>
-        <image name="unselected_second_btn" width="42" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MIk-q3-hAj"/>

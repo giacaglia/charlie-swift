@@ -57,8 +57,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
     @IBOutlet weak var listNavBar: UIView!
-    @IBOutlet weak var inboxListButton: UIButton!
-    @IBOutlet weak var flagListButton: UIButton!
+  //  @IBOutlet weak var inboxListButton: UIButton!
+  //  @IBOutlet weak var flagListButton: UIButton!
     @IBOutlet weak var accountAddView: UIView!
     @IBOutlet weak var rewardView: UIView!
     @IBOutlet weak var topView: UIView!
@@ -266,7 +266,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             }
         }
         
-        self.setInboxTitle(true)
+       // self.setInboxTitle(true)
         self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
         
@@ -342,7 +342,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                 self.transactionsTable.reloadData()
-                self.setInboxTitle(true)
+            //    self.setInboxTitle(true)
                 self.spinner.stopAnimating()
                 self.toastView.hidden = true
             }
@@ -440,87 +440,58 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         
     }
     
-    private func setInboxTitle(active :Bool) {
-        if inboxLabel.superview != nil {
-            inboxLabel.removeFromSuperview()
-        }
-        
-        if (transactionItems.count == 0) {
-            if (active) {
-                inboxListButton.setImage(UIImage(named: "active_done_btn"), forState: .Normal)
-            }
-            else {
-                inboxListButton.setImage(UIImage(named: "done_btn"), forState: .Normal)
-            }
-            return
-        }
-        if (active) {
-             inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
-        }
-        else {
-             inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
-        }
-        
-        inboxLabel.text = String(transactionItems.count)
-        inboxLabel.frame = CGRectMake(inboxListButton.frame.size.width/2 - inboxLabel.frame.size.width/2, inboxListButton.frame.size.height/2 - inboxLabel.frame.size.height/2, inboxLabel.frame.size.width, inboxLabel.frame.size.height)
-        inboxLabel.textAlignment = .Center
-        
-
-        if (active) { inboxLabel.textColor = UIColor.whiteColor() }
-        else { inboxLabel.textColor = listBlue }
-        inboxListButton.addSubview(inboxLabel)
-    }
+   
     
-    @IBAction func inboxListButtonPress(sender: UIButton) {
-        self.hideReward()
-        charlieAnalytics.track("Inbox Button")
-        filterButton.hidden = false
-        inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
-        flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        self.setInboxTitle(true)
-        if transactionItems.count == 0 && allTransactionItems.count > 0 {
-            showReward()
-        }
-        else {
-            if accounts.count  == 1 && allTransactionItems.count == 1 {
-                addAccountButton.hidden = false
-                accountAddView.hidden = false
-                transactionsTable.hidden = true
-                charlieAnalytics.track("Find Bank Screen - Main")
-            }
-        }
-        
-        
-        inboxType = .InboxTransaction
-        titleLabel.text = "Worth it?"
-        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 29.0)
-        topSeperator.backgroundColor = listBlue
-
-        inboxType == .InboxTransaction
-        transactionsTable.reloadData()
-    }
-    
-    @IBAction func flagListButtonPress(sender: UIButton) {
-        charlieAnalytics.track("Show Cards")
-        hideReward()
-        filterButton.hidden = true
-        let flags = NSCalendarUnit.Day
-        let date = NSDate().startOfMonth()
-        let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
-        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
-        titleLabel.text = "Last \(components.day) days"
-        dateRangeLabel.hidden = false
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/yy"
-        dateRangeLabel.text = "\(formatter.stringFromDate(date!)) - \(formatter.stringFromDate(NSDate()))"
-
-        inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
-        flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
-        self.setInboxTitle(false)
-        transactionsTable.hidden = true
-        self.showCards()
-    }
+//    @IBAction func inboxListButtonPress(sender: UIButton) {
+//        self.hideReward()
+//        charlieAnalytics.track("Inbox Button")
+//        filterButton.hidden = false
+//        inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
+//        flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
+//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+//        self.setInboxTitle(true)
+//        if transactionItems.count == 0 && allTransactionItems.count > 0 {
+//            showReward()
+//        }
+//        else {
+//            if accounts.count  == 1 && allTransactionItems.count == 1 {
+//                addAccountButton.hidden = false
+//                accountAddView.hidden = false
+//                transactionsTable.hidden = true
+//                charlieAnalytics.track("Find Bank Screen - Main")
+//            }
+//        }
+//        
+//        
+//        inboxType = .InboxTransaction
+//        titleLabel.text = "Worth it?"
+//        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 29.0)
+//        topSeperator.backgroundColor = listBlue
+//
+//        inboxType == .InboxTransaction
+//        transactionsTable.reloadData()
+//    }
+//    
+//    @IBAction func flagListButtonPress(sender: UIButton) {
+//        charlieAnalytics.track("Show Cards")
+//        hideReward()
+//        filterButton.hidden = true
+//        let flags = NSCalendarUnit.Day
+//        let date = NSDate().startOfMonth()
+//        let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
+//        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
+//        titleLabel.text = "Last \(components.day) days"
+//        dateRangeLabel.hidden = false
+//        let formatter = NSDateFormatter()
+//        formatter.dateFormat = "MM/dd/yy"
+//        dateRangeLabel.text = "\(formatter.stringFromDate(date!)) - \(formatter.stringFromDate(NSDate()))"
+//
+//        inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
+//        flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
+//        self.setInboxTitle(false)
+//        transactionsTable.hidden = true
+//        self.showCards()
+//    }
     
     func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
@@ -612,7 +583,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         transactionItems[indexPath.row].status = direction
         transactionsTable.removeCell(cell!, duration: 0.3, completion: nil)
         try! realm.commitWrite()
-        self.setInboxTitle(true)
+      //  self.setInboxTitle(true)
         let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
         
         if direction == 1 {
@@ -654,9 +625,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 numItemsToLoad = 20
                 makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                self.setInboxTitle(true)
+             //   self.setInboxTitle(true)
                 transactionsTable.reloadData()
             }
+        }
+        else if indexPath.row == transactionItems.count + 3
+        {
+            print("SHOW SPENDING")
+            self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
         }
         else
         {
