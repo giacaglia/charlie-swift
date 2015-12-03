@@ -644,7 +644,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        
+        //change
         
         if indexPath.row < transactionItems.count {
             performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
