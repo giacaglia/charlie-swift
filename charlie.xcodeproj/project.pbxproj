@@ -898,6 +898,7 @@
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 38CJ735V37;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 0;
@@ -1282,7 +1283,7 @@
 				INFOPLIST_FILE = charlie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlie;
+				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
@@ -1306,7 +1307,7 @@
 				INFOPLIST_FILE = charlie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlie;
+				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";

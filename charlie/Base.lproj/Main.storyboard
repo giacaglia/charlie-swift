@@ -262,7 +262,6 @@
                         <outlet property="nextButton" destination="hDG-SX-5Te" id="2RW-FD-TXw"/>
                         <outlet property="slider" destination="UzW-Sw-AC4" id="uOC-Jc-kew"/>
                         <outlet property="sliderAmount" destination="sEk-C8-LRO" id="GFp-Cf-ZkU"/>
-                        <segue destination="HbA-5y-1yC" kind="showDetail" identifier="toMainfromTutorial" id="NZC-ff-rSb"/>
                         <segue destination="OSi-Zt-ur6" kind="show" identifier="happyFlowToLogin" id="ncg-qJ-bWB"/>
                     </connections>
                 </viewController>

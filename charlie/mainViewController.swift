@@ -641,64 +641,85 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count {
-//            let cell = tableView.dequeueReusableCellWithIdentifier(AddMoreCell.cellIdentifier(), forIndexPath: indexPath)  as! AddMoreCell
-//            
-//        
-//            return cell
-           
+        if inboxType == .InboxTransaction && indexPath.row >= transactionItems.count
+        {
             let rewardIndex =  indexPath.row - transactionItems.count
-           
-            
             var  rewardNames = ["Load More Transactions", "Happy Flow", "My Income", "My Spending", "My CashFlow"]
-            
             var cellHappy:happyTableViewCell
             var cellReward:rewardTableViewCell
-            
-            
             
             if rewardIndex == 0
             {
                 cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
                 cellHappy.rewardName.text = rewardNames[rewardIndex]
-
                 return cellHappy
-                
             }
             else
             {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
                 cellReward.rewardName.text = rewardNames[rewardIndex]
-                
-                
                 if rewardIndex == 1
                 {
-                    cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))"
-                    cellReward.prevAmount.text = "\(Int(happyFlowChange))%"
+                    if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite)
+                    {
+                        cellReward.currentAmount.text = "n/a"
+                    }
+                    else
+                    {
+                        cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))"
+                    }
+                    
+                    
+                    if (happyFlowChange.isNaN || happyFlowChange.isInfinite)
+                    {
+                     cellReward.prevAmount.text = "n/a"
+                    }
+                    else
+                    {
+                        cellReward.prevAmount.text = "\(Int(happyFlowChange))%"
+                    }
                 }
             
             
                 if rewardIndex == 2
                 {
                     cellReward.currentAmount.text = "\(totalIncome)"
-                    cellReward.prevAmount.text = "\(Int(changeIncome))%"
+                    if (changeIncome.isNaN || changeIncome.isInfinite)
+                    {
+                        cellReward.prevAmount.text = "n/a"
+                    }
+                    else
+                    {
+                        cellReward.prevAmount.text = "\(Int(changeIncome))%"
+                    }
                     
                 }
                 
                 if rewardIndex == 3
                 {
                     cellReward.currentAmount.text = "\(totalSpending)"
-                    cellReward.prevAmount.text = "\(Int(changeSpending))%"
+                    if (changeSpending.isNaN || changeSpending.isInfinite)
+                    {
+                        cellReward.prevAmount.text = "n/a"
+                    }
+                    else
+                    {
+                        cellReward.prevAmount.text = "\(Int(changeSpending))%"
+                    }
                 }
-                
-                
                 
                 if rewardIndex == 4
                 {
                     cellReward.currentAmount.text = "\(totalCashFlow.format("2"))"
-                    cellReward.prevAmount.text = "\(Int(changeCashFlow))%"
+                    if (changeCashFlow.isNaN || changeCashFlow.isInfinite)
+                    {
+                         cellReward.prevAmount.text = "n/a"
+                    }
+                    else
+                    {
+                        cellReward.prevAmount.text = "\(Int(changeCashFlow))%"
+                    }
                 }
-                
                 return cellReward
            }
             

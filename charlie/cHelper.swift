@@ -64,7 +64,10 @@ class cHelper {
        
         let happyFlowChange = ((currentHappyMonthPercentage - lastHappyMonthPercentage) / lastHappyMonthPercentage) * 100
         
-        return (currentHappyMonthPercentage * 100, happyFlowChange)
+        
+       return (currentHappyMonthPercentage * 100, happyFlowChange)
+        
+        
  
     }
     
