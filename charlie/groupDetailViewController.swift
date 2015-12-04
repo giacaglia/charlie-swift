@@ -40,13 +40,8 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         groupTableView.tableFooterView = UIView();
         groupTableView.separatorStyle = .None
         self.name.text = transactionName
-//        let groupDetailPredicate = NSPredicate(format: "status < 3 AND name = %@", transactionName)
+
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
- //       transactionItems = realm.objects(Transaction).filter(groupDetailPredicate).sorted(sortProperties)
-        
-        
-        
-        //let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", NSDate().startOfMonth()!, NSDate(), transactionName)
         transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         

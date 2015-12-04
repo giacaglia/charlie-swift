@@ -105,35 +105,39 @@ class showTransactionViewController: UIViewController {
     
     @IBAction func notWorth(sender: AnyObject) {
         if let vc = mainVC {
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                vc.swipeCellAtIndex(self.transactionIndex, toLeft: true)
-            })
+            self.navigationController!.popViewControllerAnimated(true)
+            //no completion for pop -  need better solution later
+            vc.swipeCellAtIndex(self.transactionIndex, toLeft: true)
+            
         }
         else {
            try! realm.write {
             self.transaction!.status = 2
             }
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
+
+            self.navigationController!.popViewControllerAnimated(true)
         }
     }
     
     @IBAction func worth(sender: AnyObject) {
         if let vc = mainVC {
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                vc.swipeCellAtIndex(self.transactionIndex, toLeft: false)
-            })
+            
+            self.navigationController!.popViewControllerAnimated(true)
+             //no completion for pop -  need better solution later
+            vc.swipeCellAtIndex(self.transactionIndex, toLeft: false)
         }
         else {
             try! realm.write {
             self.transaction!.status = 1
             }
            
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in })
+            self.navigationController!.popViewControllerAnimated(true)
         }
     }
     
     @IBAction func closeButtonPress(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion:nil)
+        self.navigationController?.dismissViewControllerAnimated(true, completion:nil)
+        //self.presentingViewController?.dismissViewControllerAnimated(true, completion:nil)
     }
 
 }

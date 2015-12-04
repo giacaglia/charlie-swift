@@ -19,9 +19,9 @@ class SwipedTransactionsViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        self.loadData()
         
         dispatch_async(dispatch_get_main_queue()) {
+            self.loadData()
             self.tableView.reloadData()
         }
  
@@ -61,7 +61,7 @@ extension SwipedTransactionsViewController {
         let sortProperties : Array<SortDescriptor>!
         
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@", NSDate().startOfMonth()!, NSDate())
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount > 0", NSDate().startOfMonth()!, NSDate())
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
         
@@ -191,10 +191,13 @@ extension SwipedTransactionsViewController {
 }
 
 extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func
+        tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView .dequeueReusableCellWithIdentifier(GroupTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! GroupTransactionCell
-        let charlieGroup = charlieGroupListFiltered[indexPath.row]
-        cell.nameLabel.text = charlieGroup.name
+        
+            let charlieGroup = charlieGroupListFiltered[indexPath.row]
+       
+            cell.nameLabel.text = charlieGroup.name
 
         if charlieGroup.transactions == 1 {
             cell.numberTransactionsLabel.text = "1 transaction"
@@ -232,7 +235,9 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController
         viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
-        self.presentViewController(viewController!, animated: true) { () -> Void in }
+        
+        self.navigationController?.pushViewController(viewController!, animated: true)
+        //self.presentViewController(viewController!, animated: true) { () -> Void in }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94

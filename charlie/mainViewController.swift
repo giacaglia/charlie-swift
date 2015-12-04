@@ -442,57 +442,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     
    
     
-//    @IBAction func inboxListButtonPress(sender: UIButton) {
-//        self.hideReward()
-//        charlieAnalytics.track("Inbox Button")
-//        filterButton.hidden = false
-//        inboxListButton.setImage(UIImage(named: "selectedFirstTab"), forState: .Normal)
-//        flagListButton.setImage(UIImage(named: "unselected_second_btn"), forState: .Normal)
-//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-//        self.setInboxTitle(true)
-//        if transactionItems.count == 0 && allTransactionItems.count > 0 {
-//            showReward()
-//        }
-//        else {
-//            if accounts.count  == 1 && allTransactionItems.count == 1 {
-//                addAccountButton.hidden = false
-//                accountAddView.hidden = false
-//                transactionsTable.hidden = true
-//                charlieAnalytics.track("Find Bank Screen - Main")
-//            }
-//        }
-//        
-//        
-//        inboxType = .InboxTransaction
-//        titleLabel.text = "Worth it?"
-//        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 29.0)
-//        topSeperator.backgroundColor = listBlue
-//
-//        inboxType == .InboxTransaction
-//        transactionsTable.reloadData()
-//    }
-//    
-//    @IBAction func flagListButtonPress(sender: UIButton) {
-//        charlieAnalytics.track("Show Cards")
-//        hideReward()
-//        filterButton.hidden = true
-//        let flags = NSCalendarUnit.Day
-//        let date = NSDate().startOfMonth()
-//        let components = NSCalendar.currentCalendar().components(flags, fromDate: date!, toDate: NSDate(), options: [])
-//        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 19.0)
-//        titleLabel.text = "Last \(components.day) days"
-//        dateRangeLabel.hidden = false
-//        let formatter = NSDateFormatter()
-//        formatter.dateFormat = "MM/dd/yy"
-//        dateRangeLabel.text = "\(formatter.stringFromDate(date!)) - \(formatter.stringFromDate(NSDate()))"
-//
-//        inboxListButton.setImage(UIImage(named: "unselectedFirstTab"), forState: .Normal)
-//        flagListButton.setImage(UIImage(named: "second_btn"), forState: .Normal)
-//        self.setInboxTitle(false)
-//        transactionsTable.hidden = true
-//        self.showCards()
-//    }
-    
     func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         titleLabel.text = "My Results"
@@ -632,7 +581,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         else if indexPath.row == transactionItems.count + 3
         {
             print("SHOW SPENDING")
-            self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+            //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+            self.navigationController?.pushViewController(SwipedTransactionsViewController(), animated: true)
         }
         else
         {
