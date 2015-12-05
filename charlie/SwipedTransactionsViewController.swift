@@ -44,6 +44,9 @@ class SwipedTransactionsViewController : UIViewController {
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
         tableView.dataSource = self
+        
+           self.automaticallyAdjustsScrollViewInsets = false
+        
     }
     
     @IBAction func closePressed(sender: AnyObject) {
