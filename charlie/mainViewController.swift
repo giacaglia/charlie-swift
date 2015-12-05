@@ -578,6 +578,13 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 transactionsTable.reloadData()
             }
         }
+        else if indexPath.row == transactionItems.count + 1
+        {
+            print("Show Happy")
+            //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+            self.navigationController?.pushViewController(RewardViewController(), animated: true)
+        }
+        
         else if indexPath.row == transactionItems.count + 3
         {
             print("SHOW SPENDING")
