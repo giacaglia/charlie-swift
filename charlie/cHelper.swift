@@ -88,7 +88,7 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getCashFlow() -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
+    func getCashFlow(startMonth: NSDate) -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -97,7 +97,8 @@ class cHelper {
         var cashFlows2 = realm.objects(Transaction)
         var cashFlowTotal2: Double = 0
         let oldestDate = cashFlows[0].date
-        let today = NSDate()
+        let today = startMonth
+        
         
         var moneySpent1:Double = 0
         var moneySpent2:Double = 0
@@ -106,14 +107,17 @@ class cHelper {
         
         let beginingThisMonth = today.startOfMonth()
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
-        let compareEndLastMonth = dateByAddingMonths(-1, date: NSDate())! as NSDate
+        let compareEndLastMonth = dateByAddingMonths(-1, date: today)
+    
         
-        cashFlows1Predicate = NSPredicate(format:"date >= %@ ", beginingThisMonth!)
+        cashFlows1Predicate = NSPredicate(format:"date >= %@ and date <= %@ ", beginingThisMonth!, today)
+        
+        
         cashFlows1 = realm.objects(Transaction).filter(cashFlows1Predicate)
         
         if beginingLastMonth.compare(oldestDate) == .OrderedDescending
         {
-            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth)
+            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth!)
             cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
             if cashFlows2.count > 0
             {
@@ -580,13 +584,16 @@ extension NSDate {
     }
     
     func endOfMonth() -> NSDate? {
+       
         let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1) {
             let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
-            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-1)
+            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-20)
             return endOfMonth
         }
         return nil
     }
+    
+ 
 }
 

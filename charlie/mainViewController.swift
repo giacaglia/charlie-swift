@@ -53,6 +53,8 @@ protocol MainViewControllerDelegate {
 
 class mainViewController: UIViewController, ChangeFilterProtocol, MainViewControllerDelegate {
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
@@ -60,14 +62,12 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
   //  @IBOutlet weak var inboxListButton: UIButton!
   //  @IBOutlet weak var flagListButton: UIButton!
     @IBOutlet weak var accountAddView: UIView!
-    @IBOutlet weak var rewardView: UIView!
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var topSeperator: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
+   // @IBOutlet weak var rewardView: UIView!
+   
     @IBOutlet weak var addAccountButton: UIButton!
-    @IBOutlet weak var menuButton: UIButton!
-    @IBOutlet weak var dateRangeLabel: UILabel!
-    @IBOutlet weak var filterButton: UIButton!
+   // @IBOutlet weak var menuButton: UIButton!
+   // @IBOutlet weak var dateRangeLabel: UILabel!
+   // @IBOutlet weak var filterButton: UIButton!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -137,7 +137,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         super.viewDidLoad()
         
        
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow()
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate())
         
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate())
         
@@ -147,7 +147,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         transactionsTable.contentInset = UIEdgeInsetsZero
         self.automaticallyAdjustsScrollViewInsets = false
         
-        rewardView.hidden = true
+       // rewardView.hidden = true
         transactionsTable.hidden = false
         inboxType = .InboxTransaction
         
@@ -158,7 +158,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         }
     
         if accounts.count == 0 {
-            setPredicates(false)
+            setPredicates(false, startMonth: NSDate())
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
@@ -167,7 +167,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
-            setPredicates(true)
+            setPredicates(true, startMonth: NSDate())
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             areThereMoreItemsToLoad = moreTransactionforLoading()
             
@@ -267,7 +267,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         }
         
        // self.setInboxTitle(true)
-        self.view.backgroundColor = lightBlue
+       // self.view.backgroundColor = lightBlue
         transactionsTable.backgroundColor = UIColor.clearColor()
         
         transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
@@ -277,24 +277,24 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func showReward() {
-        rewardView.subviews.forEach({ $0.removeFromSuperview() })
-        let rewardVC = RewardViewController()
-        self.addChildViewController(rewardVC)
-        rewardVC.view.backgroundColor = lightBlue
-        rewardView.addSubview(rewardVC.view)
-        rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
-        rewardView.hidden = false
+//        rewardView.subviews.forEach({ $0.removeFromSuperview() })
+//        let rewardVC = RewardViewController()
+//        self.addChildViewController(rewardVC)
+//        rewardVC.view.backgroundColor = lightBlue
+//        rewardView.addSubview(rewardVC.view)
+//        rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
+//        rewardView.hidden = false
     }
     
     func showCards() {
-        dateRangeLabel.hidden = false
-        rewardView.subviews.forEach({ $0.removeFromSuperview() })
-        let cardsVC = CardsViewController()
-        self.addChildViewController(cardsVC)
-        cardsVC.mainVC = self
-        rewardView.addSubview(cardsVC.view)
-        cardsVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
-        rewardView.hidden = false
+//        //dateRangeLabel.hidden = false
+//        rewardView.subviews.forEach({ $0.removeFromSuperview() })
+//        let cardsVC = CardsViewController()
+//        self.addChildViewController(cardsVC)
+//        cardsVC.mainVC = self
+//        rewardView.addSubview(cardsVC.view)
+//        cardsVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
+//        rewardView.hidden = false
     }
     
     func moreTransactionforLoading() -> Bool {
@@ -307,8 +307,27 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         }
     }
     
-    func setPredicates(hasAccounts:Bool) {
-        inboxPredicate = NSPredicate(format: "status = 0")
+    func setPredicates(hasAccounts:Bool, startMonth: NSDate) {
+        
+        
+        
+        let startDate = startMonth.startOfMonth()!
+        var endDate = NSDate()
+        
+        if startMonth == NSDate()
+        {
+            endDate = startMonth
+        }
+        else
+        {
+            endDate = startMonth.endOfMonth()!
+            
+        }
+        
+        
+        inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
+
+       // inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
         flaggedPredicate = NSPredicate(format: "status = 2")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
@@ -317,8 +336,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func hideReward() {
-        rewardView.hidden = true
-        dateRangeLabel.hidden = true
+     //   rewardView.hidden = true
+        //dateRangeLabel.hidden = true
     }
     
     func hideCardsAndShowTransactions() {
@@ -337,7 +356,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             print(response)
             if response > 0 {
                 self.timer.invalidate()
-                self.setPredicates(true)
+                self.setPredicates(true, startMonth: NSDate())
                 self.makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
@@ -444,7 +463,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     
     func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
-        titleLabel.text = "My Results"
+        //titleLabel.text = "My Results"
         inboxType = .ApprovedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
@@ -515,6 +534,52 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         return charlieGroupList
     }
 }
+
+extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! filterCell
+        
+       
+        cell.monthLabel.text = "Month"
+        
+        return cell
+        
+        
+    }
+    
+    
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    
+   
+        let startMonth = NSDate().dateByAddingMonths(-indexPath.row)!
+        setPredicates(true, startMonth: startMonth)
+         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+      
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth)
+        
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
+        
+        
+      dispatch_async(dispatch_get_main_queue()) {
+        self.transactionsTable.reloadData()
+        }
+    }
+    
+  
+    
+    
+    
+}
+
+
+
 
 // Swipe part of the main view controller
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {

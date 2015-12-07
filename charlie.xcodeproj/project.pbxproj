@@ -29,6 +29,7 @@
 		09401F041C0E0918002DBBEB /* rewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */; };
 		09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D411B38B42F006E126B /* showCardsViewController.swift */; };
 		09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09435D441B38B43F006E126B /* cardTableViewCell.swift */; };
+		094BAF5C1C16227E00B34B3A /* filterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094BAF5B1C16227E00B34B3A /* filterCell.swift */; };
 		094EDB761C0CCD68001462E4 /* happyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */; };
 		095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414AE1B45E91D00682172 /* addAccountViewController.swift */; };
 		095414B11B46A68300682172 /* cHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095414B01B46A68300682172 /* cHelper.swift */; };
@@ -242,6 +243,7 @@
 		09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rewardTableViewCell.swift; sourceTree = "<group>"; };
 		09435D411B38B42F006E126B /* showCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showCardsViewController.swift; path = ../showCardsViewController.swift; sourceTree = "<group>"; };
 		09435D441B38B43F006E126B /* cardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cardTableViewCell.swift; sourceTree = "<group>"; };
+		094BAF5B1C16227E00B34B3A /* filterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = filterCell.swift; sourceTree = "<group>"; };
 		094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = happyTableViewCell.swift; sourceTree = "<group>"; };
 		095414AE1B45E91D00682172 /* addAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addAccountViewController.swift; sourceTree = "<group>"; };
 		095414B01B46A68300682172 /* cHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cHelper.swift; sourceTree = "<group>"; };
@@ -850,6 +852,7 @@
 				88B438381C0423FB00A0461B /* SwipedTransactionsViewController.xib */,
 				09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */,
 				09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */,
+				094BAF5B1C16227E00B34B3A /* filterCell.swift */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -1064,6 +1067,7 @@
 				456049F61B71183200C37B9D /* MPSurvey.m in Sources */,
 				45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */,
 				456049FA1B71183200C37B9D /* MPSurveyQuestionViewController.m in Sources */,
+				094BAF5C1C16227E00B34B3A /* filterCell.swift in Sources */,
 				456049FF1B71183200C37B9D /* MPTypeDescription.m in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
