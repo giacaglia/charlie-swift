@@ -17,6 +17,9 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     
+    var startDate:NSDate = NSDate()
+    var endDate:NSDate = NSDate()
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
@@ -32,11 +35,11 @@ class SwipedTransactionsViewController : UIViewController {
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MM/dd/yy"
-        dateRangeLabel.text = "\(formatter.stringFromDate(NSDate().startOfMonth()!)) - \(formatter.stringFromDate(NSDate()))"
+        dateRangeLabel.text = "\(formatter.stringFromDate(self.startDate)) - \(formatter.stringFromDate(self.endDate))"
 
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
-        let stringMonth = monthFormatter.stringFromDate(NSDate())
+        let stringMonth = monthFormatter.stringFromDate(self.startDate)
         monthLabel.text = months[Int(stringMonth)! - 1]
         
         //self.loadData()
@@ -64,7 +67,7 @@ extension SwipedTransactionsViewController {
         let sortProperties : Array<SortDescriptor>!
         
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@", NSDate().startOfMonth()!, NSDate())
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
         
@@ -239,10 +242,13 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController
+        
+        viewController!.startDate = self.startDate
         viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
+        viewController!.endDate = self.endDate
         
         self.navigationController?.pushViewController(viewController!, animated: true)
-        //self.presentViewController(viewController!, animated: true) { () -> Void in }
+       
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94

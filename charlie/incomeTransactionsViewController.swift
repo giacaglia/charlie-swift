@@ -19,7 +19,8 @@ var charlieGroupListFiltered = [charlieGroup]()
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     
-    
+    var startDate:NSDate = NSDate()
+    var endDate:NSDate = NSDate()
     
 
     override func viewDidLoad() {
@@ -53,7 +54,7 @@ extension incomeTransactionsViewController {
         let sortProperties : Array<SortDescriptor>!
         
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -1.00", NSDate().startOfMonth()!, NSDate())
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -10.00", startDate, endDate)
         let incomeItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
         

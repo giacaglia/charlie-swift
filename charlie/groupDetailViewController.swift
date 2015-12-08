@@ -23,6 +23,10 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     var happyAmount = 0.0
     var sadAmount = 0.0
     
+    var startDate:NSDate = NSDate()
+    var endDate:NSDate = NSDate()
+    
+    
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewGroupCell!
     let checkImage = UIImage(named: "happy_on")
@@ -37,12 +41,12 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
-        groupTableView.tableFooterView = UIView();
-        groupTableView.separatorStyle = .None
+       groupTableView.tableFooterView = UIView();
+       groupTableView.separatorStyle = .None
         self.name.text = transactionName
 
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", NSDate().startOfMonth()!, NSDate(), transactionName)
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate, self.endDate, transactionName)
         transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         
         

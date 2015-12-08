@@ -623,6 +623,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var startDate:NSDate = NSDate()
+        var endDate:NSDate = NSDate()
         //change
         if indexPath.row < transactionItems.count {
             performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
@@ -649,14 +651,46 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
        
         else if indexPath.row == transactionItems.count + 2 {
             print("Show Income")
-            //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
-            self.navigationController?.pushViewController(incomeTransactionsViewController(), animated: true)
+            
+            if selectedCollectioncCellIndex == 0
+            {
+                startDate = NSDate().startOfMonth()!
+                endDate = NSDate()
+            }
+            else
+            {
+                startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+                endDate = startDate.endOfMonth()!
+            }
+            
+            let ITC = incomeTransactionsViewController()
+            ITC.startDate = startDate
+            ITC.endDate = endDate
+            
+            self.navigationController?.pushViewController(ITC, animated: true)
+            
+            
         }
             
         else if indexPath.row == transactionItems.count + 3 {
             print("SHOW SPENDING")
-            //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
-            self.navigationController?.pushViewController(SwipedTransactionsViewController(), animated: true)
+            
+            if selectedCollectioncCellIndex == 0
+            {
+            startDate = NSDate().startOfMonth()!
+            endDate = NSDate()
+            }
+            else
+            {
+            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+            endDate = startDate.endOfMonth()!
+            }
+        
+            let SVC = SwipedTransactionsViewController()
+            SVC.startDate = startDate
+            SVC.endDate = endDate
+
+            self.navigationController?.pushViewController(SVC, animated: true)
         }
         else
         {

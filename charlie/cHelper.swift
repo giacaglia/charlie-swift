@@ -126,12 +126,13 @@ class cHelper {
         
         cashFlows1Predicate = NSPredicate(format:"date >= %@ and date <= %@ ", beginingThisMonth!, today)
         
+
         
         cashFlows1 = realm.objects(Transaction).filter(cashFlows1Predicate)
         
         if beginingLastMonth.compare(oldestDate) == .OrderedDescending
         {
-            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth)
+            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date <= %@", beginingLastMonth, compareEndLastMonth)
             cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
             if cashFlows2.count > 0
             {
@@ -145,7 +146,7 @@ class cHelper {
                         moneySpent2 += cashFlowItem.amount
                     }
                     
-                    if cashFlowItem.amount < -5
+                    if cashFlowItem.amount < -10
                     {
                         income2 += cashFlowItem.amount
                         print("INCOME: \(cashFlowItem.name) - \(income2)")
@@ -165,7 +166,7 @@ class cHelper {
                moneySpent1 += cashFlowItem.amount
             }
 
-            if cashFlowItem.amount < -5 //get rid of small savings transfers keep the change...
+            if cashFlowItem.amount < -10 //get rid of small savings transfers keep the change...
             {
                 income1 += cashFlowItem.amount
             }
