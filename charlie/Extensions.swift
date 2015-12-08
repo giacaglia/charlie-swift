@@ -23,11 +23,21 @@ extension NSDate {
         return calendar.dateByAddingComponents(months, toDate: self, options: [])
     }
     
-    func endOfMonth() -> NSDate? {
+    func dateByAddingDays(daysToAdd: Int) -> NSDate? {
         let calendar = NSCalendar.currentCalendar()
+        let days = NSDateComponents()
+        days.day = daysToAdd
+        return calendar.dateByAddingComponents(days, toDate: self, options: [])
+    }
+    
+    func endOfMonth() -> NSDate? {
+        //let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1) {
-            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
-            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-20)
+            
+            let plusOneBegining = plusOneMonthDate.startOfMonth()
+            
+            let endOfMonth = plusOneBegining?.dateByAddingDays(-1)
+            
             return endOfMonth
         }
         return nil

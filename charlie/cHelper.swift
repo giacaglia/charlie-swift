@@ -88,7 +88,7 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getCashFlow(startMonth: NSDate) -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
+    func getCashFlow(startMonth: NSDate, isCurrentMonth:Bool) -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -97,7 +97,7 @@ class cHelper {
         var cashFlows2 = realm.objects(Transaction)
         var cashFlowTotal2: Double = 0
         let oldestDate = cashFlows[0].date
-        let today = startMonth
+        var today:NSDate = NSDate()
         
         
         var moneySpent1:Double = 0
@@ -105,9 +105,19 @@ class cHelper {
         var income1:Double = 0
         var income2:Double = 0
         
+        
+        if isCurrentMonth //if current month then compare month to day else month to month
+        {
+            today = startMonth
+        }
+        else
+        {
+            today = startMonth.endOfMonth()!
+        }
+        
         let beginingThisMonth = today.startOfMonth()
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
-        let compareEndLastMonth = dateByAddingMonths(-1, date: today)
+        let compareEndLastMonth = dateByAddingMonths(-1, date: today)?.endOfMonth()
     
         
         cashFlows1Predicate = NSPredicate(format:"date >= %@ and date <= %@ ", beginingThisMonth!, today)
@@ -394,16 +404,16 @@ class cHelper {
                         let numItemsToLoad = 20
                         var loadCount = 0
                         realm.beginWrite()
-                        for i in 0..<nextUp.count {
-                            if i < nextUp.count && loadCount < numItemsToLoad {
-                                let trans = nextUp[i]
-                                if (trans.status == -1) {
-                                    trans.status = 0
-                                    loadCount += 1
-                                }
+                        for item in nextUp
+                        {
+                            if loadCount < numItemsToLoad {
+                                let trans = item
+                                trans.status = 0
+                                loadCount += 1
                             }
                         }
                         try! realm.commitWrite()
+                        
                     }
                     
                     let transactions_count = transactions.count

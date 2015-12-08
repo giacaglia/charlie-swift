@@ -13,7 +13,7 @@ class CardsViewController : UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var mainVC : MainViewControllerDelegate?
     let titleArray = ["MY INCOME", "MY SPENDING", "MY CASH FLOW"]
-    var (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate())
+    var (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
     var subtitleArray = [String]()
    // let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
     //let totalIncome = cHelp.getIncome(startDate: NSDate().startOfMonth()!, endDate:   NSDate())

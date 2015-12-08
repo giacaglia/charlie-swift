@@ -27,6 +27,7 @@ var keyStore = NSUbiquitousKeyValueStore()
 var keyChainStore = KeychainHelper()
 var transactionItems = realm.objects(Transaction)
 var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
+var selectedCollectioncCellIndex  = 0
 
 enum TransactionType {
     case ApprovedAndFlaggedTransaction, InboxTransaction
@@ -127,7 +128,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate())
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate())
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
@@ -304,28 +305,23 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     
     func setPredicates(hasAccounts:Bool, startMonth: NSDate) {
         let startDate = startMonth.startOfMonth()!
-        var endDate = NSDate()
+        let endDate = startMonth.endOfMonth()!
         
-        if startMonth == NSDate() {
-            endDate = startMonth
-        }
-        else {
-            endDate = startMonth.endOfMonth()!
-        }
+        
         
         inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
 //        inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
         flaggedPredicate = NSPredicate(format: "status = 2")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
-        waitingToProcessPredicate = NSPredicate(format: "status = -1")
+        waitingToProcessPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = -1", startDate, endDate)
 
     }
     
     func hideReward() {
      //   rewardView.hidden = true
         //dateRangeLabel.hidden = true
-    }
+    }   
     
     func hideCardsAndShowTransactions() {
 //        self.
@@ -428,17 +424,21 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     func makeOnlyFirstNElementsVisible() {
         areThereMoreItemsToLoad = false
         var loadCount = 0
+        let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
+        
         realm.beginWrite()
-        for i in 0..<allTransactionItems.count {
-            if i < allTransactionItems.count && loadCount < numItemsToLoad {
-                let trans = allTransactionItems[i]
-                if (trans.status == -1) {
-                    trans.status = 0
-                    loadCount += 1
-                }
+
+        for item in moreItems
+         {
+           if loadCount < numItemsToLoad {
+                let trans = item
+                trans.status = 0
+                loadCount += 1
             }
         }
+        
         try! realm.commitWrite()
+        
         if loadCount > 0
         {
             areThereMoreItemsToLoad =  true
@@ -543,11 +543,28 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 //        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
 //        cell.selected = true
-        let startMonth = NSDate().dateByAddingMonths(-indexPath.row)!
+        
+        selectedCollectioncCellIndex = indexPath.row
+        
+        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
         setPredicates(true, startMonth: startMonth)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth)
+       
+        if selectedCollectioncCellIndex == 0 
+       {
+        
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
+        
+        }
+        else
+        {
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
+        }
+        
+        
+        
         dispatch_async(dispatch_get_main_queue()) {
             collectionView.reloadItemsAtIndexPaths([indexPath])
             self.transactionsTable.reloadData()
@@ -613,6 +630,11 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         else if indexPath.row == transactionItems.count {
             if indexPath.row == transactionItems.count {
                 numItemsToLoad = 20
+                
+                //get current selected filter date
+                let predicateDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)
+                
+                setPredicates(true, startMonth: predicateDate!)
                 makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
              //   self.setInboxTitle(true)
