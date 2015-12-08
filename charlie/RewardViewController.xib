@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFo-nh-kMo">
-                    <rect key="frame" x="140" y="14" width="320" height="112"/>
+                    <rect key="frame" x="140" y="60" width="320" height="112"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Happy Flow is currently at:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccC-Bg-ZCq">
                             <rect key="frame" x="5" y="21" width="160" height="70"/>
@@ -65,7 +65,7 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdc-xs-Ed6" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="8" y="134" width="570" height="168"/>
+                    <rect key="frame" x="8" y="180" width="570" height="122"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -77,7 +77,7 @@
                 <constraint firstAttribute="bottom" secondItem="Qdc-xs-Ed6" secondAttribute="bottom" constant="298" id="B1k-If-zAT"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="leading" secondItem="bEm-Xn-24m" secondAttribute="leading" constant="8" id="U5L-Zo-fy7"/>
                 <constraint firstAttribute="trailing" secondItem="Qdc-xs-Ed6" secondAttribute="trailing" constant="22" id="h3p-ff-98P"/>
-                <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="14" id="jZo-vC-bfH"/>
+                <constraint firstItem="TFo-nh-kMo" firstAttribute="top" secondItem="bEm-Xn-24m" secondAttribute="top" constant="60" id="jZo-vC-bfH"/>
                 <constraint firstItem="Qdc-xs-Ed6" firstAttribute="top" secondItem="TFo-nh-kMo" secondAttribute="bottom" constant="8" id="zrs-AU-lqz"/>
             </constraints>
         </view>

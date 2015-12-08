@@ -42,17 +42,32 @@ class cHelper {
     }
     
     
-    func getHappyPercentageCompare(date: NSDate) -> (happyPerc: Double, happyComperePerc: Double) {
+    func getHappyPercentageCompare(startMonth: NSDate, isCurrentMonth:Bool) -> (happyPerc: Double, happyComperePerc: Double) {
         
-        let endCurrentDate = date
-        let startCurrentDate = endCurrentDate.startOfMonth()!
-        let endLastDate = dateByAddingMonths(-1, date: endCurrentDate)!
-        let startLastDate = endLastDate.startOfMonth()!
+        var today:NSDate = NSDate()
+        var compareEndLastMonth:NSDate = NSDate()
+        var compareEndLastMonthTemp:NSDate = NSDate()
+
+        
+        if isCurrentMonth //if current month then compare month to day else month to month
+        {
+            today = startMonth
+            compareEndLastMonth = dateByAddingMonths(-1, date: today)!
+        }
+        else
+        {
+            today = startMonth.endOfMonth()!
+            compareEndLastMonthTemp = (dateByAddingMonths(-1, date: today))!
+            compareEndLastMonth = compareEndLastMonthTemp.endOfMonth()!
+        }
+        
+        let beginingThisMonth = today.startOfMonth()
+        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
        
-        let currentHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", startCurrentDate, endCurrentDate)
-        let currentSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startCurrentDate, endCurrentDate)
-        let lastHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", startLastDate, endLastDate)
-        let lastSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startLastDate, endLastDate)
+        let currentHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", beginingThisMonth!, today)
+        let currentSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", beginingThisMonth!, today)
+        let lastHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", beginingLastMonth, compareEndLastMonth)
+        let lastSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", beginingLastMonth, compareEndLastMonth)
         
         let currentHappyMonth = realm.objects(Transaction).filter(currentHappyMonthPrediate)
         let currentSadMonth = realm.objects(Transaction).filter(currentSadMonthPrediate)

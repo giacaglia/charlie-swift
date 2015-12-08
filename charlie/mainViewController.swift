@@ -129,7 +129,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         super.viewDidLoad()
        
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate())
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -554,13 +554,13 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
        {
         
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         
         }
         else
         {
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
         
         
@@ -646,7 +646,10 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         else if indexPath.row == transactionItems.count + 1 {
             print("Show Happy")
             //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
-            self.navigationController?.pushViewController(RewardViewController(), animated: true)
+            
+            let RVC = RewardViewController()
+            RVC.view.backgroundColor = lightBlue
+            self.navigationController?.pushViewController(RVC, animated: true)
         }
        
         else if indexPath.row == transactionItems.count + 2 {

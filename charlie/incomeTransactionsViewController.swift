@@ -15,12 +15,11 @@ class incomeTransactionsViewController : UIViewController {
 @IBOutlet weak var tableView: UITableView!
 
     
-var charlieGroupListFiltered = [charlieGroup]()
-let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
     
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
+    
+    var incomeItems = realm.objects(Transaction)
     
 
     override func viewDidLoad() {
@@ -35,11 +34,6 @@ let months = ["January", "February", "March", "April", "May", "June", "July", "A
         
         self.automaticallyAdjustsScrollViewInsets = false
         
-        
-        
-        
-        
-        
     }
     
     
@@ -50,29 +44,12 @@ let months = ["January", "February", "March", "April", "May", "June", "July", "A
 extension incomeTransactionsViewController {
    
     private func loadData() {
-        var current_name = ""
+       // var current_name = ""
         let sortProperties : Array<SortDescriptor>!
         
         sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -10.00", startDate, endDate)
-        let incomeItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
-        var current_index = 1
-        
-        for trans in incomeItems {
-            if trans.name == current_name {
-                charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
-            }
-            else {
-                
-                let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
-                charlieGroupListFiltered.append((cGroup))
-                current_index = charlieGroupListFiltered.count - 1
-                charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
-
-            }
-            current_name = trans.name
-            
-        }
+        incomeItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
     }
     
 }
@@ -86,10 +63,9 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
         
         let cell = tableView .dequeueReusableCellWithIdentifier(IncomeTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! IncomeTransactionCell
         
-        let charlieGroup = charlieGroupListFiltered[indexPath.row]
         
-        cell.nameLabel.text = charlieGroup.name
-        cell.amountLabel.text = "\(charlieGroup.totalAmount)"
+        cell.nameLabel.text = incomeItems[indexPath.row].name
+        cell.amountLabel.text = "\(incomeItems[indexPath.row].amount)"
         
        return cell
         
@@ -98,7 +74,7 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return charlieGroupListFiltered.count
+        return incomeItems.count   //charlieGroupListFiltered.count
     }
     
 }
