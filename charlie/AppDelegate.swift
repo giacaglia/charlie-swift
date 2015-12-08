@@ -37,9 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        //let cHelp = cHelper()
-       
-        
+        //let cHelp = cHelper()        
         
         //filePath = cHelp.pathForBuggyWKWebView(filePath) // This is the reason of this entire thread!
         Fabric.with([Crashlytics()])

@@ -313,8 +313,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
             endDate = startMonth.endOfMonth()!
         }
         
-//        inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
-        inboxPredicate = NSPredicate(format: "status = 0")
+        inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
+//        inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
         flaggedPredicate = NSPredicate(format: "status = 2")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
