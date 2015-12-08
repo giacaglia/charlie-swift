@@ -308,25 +308,18 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func setPredicates(hasAccounts:Bool, startMonth: NSDate) {
-        
-        
-        
         let startDate = startMonth.startOfMonth()!
         var endDate = NSDate()
         
-        if startMonth == NSDate()
-        {
+        if startMonth == NSDate() {
             endDate = startMonth
         }
-        else
-        {
+        else {
             endDate = startMonth.endOfMonth()!
-            
         }
         
         
         inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
-
        // inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
         flaggedPredicate = NSPredicate(format: "status = 2")
@@ -536,49 +529,29 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
 }
 
 extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate {
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
-    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! filterCell
-        
-       
-        cell.monthLabel.text = "Month"
-        
+        let date = NSDate().dateByAddingMonths(-indexPath.row)
+        cell.monthLabel.text = date!.monthString()
         return cell
-        
-        
     }
-    
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    
-   
         let startMonth = NSDate().dateByAddingMonths(-indexPath.row)!
         setPredicates(true, startMonth: startMonth)
-         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-      
+        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth)
-        
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
-        
-        
-      dispatch_async(dispatch_get_main_queue()) {
-        self.transactionsTable.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.transactionsTable.reloadData()
         }
     }
-    
-  
-    
-    
-    
 }
-
-
 
 
 // Swipe part of the main view controller

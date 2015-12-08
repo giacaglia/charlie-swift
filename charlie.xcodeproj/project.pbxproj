@@ -138,6 +138,7 @@
 		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
 		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
+		88033FE51C167A07004D5599 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88033FE41C167A07004D5599 /* Extensions.swift */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
 		888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888CA1B91BF5A15700381E84 /* CardsViewController.xib */; };
@@ -410,6 +411,7 @@
 		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
 		45E0F21C1B67D3E40005B234 /* charlie-bridge-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "charlie-bridge-header.h"; sourceTree = "<group>"; };
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
+		88033FE41C167A07004D5599 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		888CA1B91BF5A15700381E84 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				095414B01B46A68300682172 /* cHelper.swift */,
 				45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */,
 				091E008B1B7937730014012D /* Reachability.swift */,
+				88033FE41C167A07004D5599 /* Extensions.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1126,6 +1129,7 @@
 				456049E21B71183200C37B9D /* MPCGSizeToNSDictionaryValueTransformer.m in Sources */,
 				456049EB1B71183200C37B9D /* MPNotificationViewController.m in Sources */,
 				456049ED1B71183200C37B9D /* MPNSNumberToCGFloatValueTransformer.m in Sources */,
+				88033FE51C167A07004D5599 /* Extensions.swift in Sources */,
 				456049F51B71183200C37B9D /* MPSequenceGenerator.m in Sources */,
 				456049CF1B71183200C37B9D /* MPABTestDesignerChangeRequestMessage.m in Sources */,
 				091E008C1B7937730014012D /* Reachability.swift in Sources */,

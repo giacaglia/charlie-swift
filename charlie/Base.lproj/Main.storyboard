@@ -28,6 +28,7 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
+            <string>Montserrat-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -875,7 +876,7 @@
                                     <outlet property="delegate" destination="HbA-5y-1yC" id="FQF-FY-ZUq"/>
                                 </connections>
                             </tableView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HTZ-Xu-A7Z">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HTZ-Xu-A7Z">
                                 <rect key="frame" x="0.0" y="64" width="600" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -899,8 +900,8 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="6hS-A4-crZ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                                    <color key="textColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -908,7 +909,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <animations/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="RVF-zq-jJu" firstAttribute="centerY" secondItem="uoo-hM-iT9" secondAttribute="centerY" id="73x-85-wTY"/>
                                             <constraint firstItem="RVF-zq-jJu" firstAttribute="centerX" secondItem="uoo-hM-iT9" secondAttribute="centerX" id="Pt5-rs-PDv"/>
@@ -929,7 +930,6 @@
                         <constraints>
                             <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" id="2Ev-tC-gnK"/>
                             <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="Ssu-hU-syf" secondAttribute="bottom" id="5ky-TR-hXa"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="HTZ-Xu-A7Z" secondAttribute="trailing" id="83x-vV-MkL"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="HTZ-Xu-A7Z" secondAttribute="bottom" id="9g6-g4-L69"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" constant="66" id="AIy-H9-Ae1"/>
                             <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="KMB-kM-PnN"/>
@@ -937,25 +937,14 @@
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
                             <constraint firstAttribute="trailing" secondItem="HTZ-Xu-A7Z" secondAttribute="trailing" id="Mif-Vv-wFL"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" constant="40" id="Rky-9k-5kd"/>
-                            <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" id="TJQ-wQ-NFs"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
                             <constraint firstAttribute="trailing" secondItem="JmO-hm-sg5" secondAttribute="trailing" id="Vtc-Ma-J9k"/>
-                            <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="HTZ-Xu-A7Z" secondAttribute="bottom" constant="2" id="WuV-6V-17m"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="cOI-9j-Uot"/>
                             <constraint firstAttribute="centerX" secondItem="huO-nz-BFN" secondAttribute="centerX" id="dSh-Io-tu1"/>
-                            <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leadingMargin" id="hxa-CC-y4W"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="nj0-cQ-Ku5"/>
                             <constraint firstAttribute="centerX" secondItem="o08-Ym-LQO" secondAttribute="centerX" id="rvG-mz-nVS"/>
                             <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="zGs-sB-4Hj"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="83x-vV-MkL"/>
-                                <exclude reference="TJQ-wQ-NFs"/>
-                                <exclude reference="hxa-CC-y4W"/>
-                                <exclude reference="WuV-6V-17m"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="hDv-tP-lvS"/>
                     <connections>
@@ -1836,7 +1825,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MIk-q3-hAj"/>
-        <segue reference="swt-fH-1dv"/>
         <segue reference="X9z-ju-lxa"/>
+        <segue reference="swt-fH-1dv"/>
     </inferredMetricsTieBreakers>
 </document>
