@@ -140,6 +140,7 @@
 		45E0F2371B6918420005B234 /* passcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2361B6918420005B234 /* passcodeViewController.swift */; };
 		88033FE51C167A07004D5599 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88033FE41C167A07004D5599 /* Extensions.swift */; };
 		88033FE81C168700004D5599 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88033FE71C168700004D5599 /* Montserrat-Light.otf */; };
+		88033FEA1C1694D8004D5599 /* GothamMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88033FE91C1694D8004D5599 /* GothamMedium.otf */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
 		888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888CA1B91BF5A15700381E84 /* CardsViewController.xib */; };
@@ -414,6 +415,7 @@
 		45E0F2361B6918420005B234 /* passcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = passcodeViewController.swift; sourceTree = "<group>"; };
 		88033FE41C167A07004D5599 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		88033FE71C168700004D5599 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
+		88033FE91C1694D8004D5599 /* GothamMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamMedium.otf; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		888CA1B91BF5A15700381E84 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 		0916204C1B2F28740004C781 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				88033FE91C1694D8004D5599 /* GothamMedium.otf */,
 				099ACE491B3268390044A068 /* Montserrat-Bold.ttf */,
 				091620551B2F8B5A0004C781 /* GothamRounded-Book.otf */,
 				099ACE4B1B3268520044A068 /* Montserrat-Regular.ttf */,
@@ -990,6 +993,7 @@
 				099ACE4D1B32685C0044A068 /* Montserrat-Regular.ttf in Resources */,
 				456049CC1B71183200C37B9D /* Media.xcassets in Resources */,
 				456049F71B71183200C37B9D /* MPSurvey.storyboard in Resources */,
+				88033FEA1C1694D8004D5599 /* GothamMedium.otf in Resources */,
 				88B41F0B1BC4614E0038483F /* RewardViewController.xib in Resources */,
 				091620541B2F3B410004C781 /* Gotham-Light.ttf in Resources */,
 				0974544F1B44CF5F0004B8EC /* plaid.html in Resources */,
