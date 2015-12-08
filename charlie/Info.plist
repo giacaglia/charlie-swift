@@ -38,6 +38,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Montserrat-Light.otf</string>
 		<string>Inconsolata-Bold.ttf</string>
 		<string>Inconsolata-Regular.ttf</string>
 		<string>Gotham-XLight.ttf</string>

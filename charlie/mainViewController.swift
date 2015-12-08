@@ -54,20 +54,11 @@ protocol MainViewControllerDelegate {
 class mainViewController: UIViewController, ChangeFilterProtocol, MainViewControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
-    @IBOutlet weak var listNavBar: UIView!
-  //  @IBOutlet weak var inboxListButton: UIButton!
-  //  @IBOutlet weak var flagListButton: UIButton!
     @IBOutlet weak var accountAddView: UIView!
-   // @IBOutlet weak var rewardView: UIView!
-   
     @IBOutlet weak var addAccountButton: UIButton!
-   // @IBOutlet weak var menuButton: UIButton!
-   // @IBOutlet weak var dateRangeLabel: UILabel!
-   // @IBOutlet weak var filterButton: UIButton!
     
     var cHelp = cHelper()
     var currentTransactionSwipeID = ""
@@ -528,31 +519,36 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
 }
 
-extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! filterCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
         let date = NSDate().dateByAddingMonths(-indexPath.row)
         cell.monthLabel.text = date!.monthString()
         return cell
     }
     
-    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
         let startMonth = NSDate().dateByAddingMonths(-indexPath.row)!
         setPredicates(true, startMonth: startMonth)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth)
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth)
         dispatch_async(dispatch_get_main_queue()) {
+            cell.changeState(selected: true)
             self.transactionsTable.reloadData()
         }
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSizeMake(100, 50)
+    }
+    
 }
-
 
 // Swipe part of the main view controller
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {
@@ -847,6 +843,4 @@ extension mainViewController : UIViewControllerPreviewingDelegate {
         // Presents viewControllerToCommit in a primary context
         showViewController(viewControllerToCommit, sender: self)
     }
-
 }
-
