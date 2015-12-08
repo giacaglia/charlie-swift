@@ -21,6 +21,7 @@
             <string>Montserrat-Bold</string>
             <string>Montserrat-Bold</string>
             <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
         </mutableArray>
         <mutableArray key="Montserrat-Light.otf">
             <string>Montserrat-Light</string>
@@ -846,11 +847,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Load more transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-zn-T2u">
-                                                    <rect key="frame" x="18" y="27" width="474" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show more transactions to complete December" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-zn-T2u">
+                                                    <rect key="frame" x="177" y="21.5" width="246" height="32"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="246" id="2PY-Gg-2Tt"/>
+                                                        <constraint firstAttribute="height" constant="32" id="rA1-YR-191"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
+                                                    <color key="textColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -858,9 +863,19 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="hcq-zn-T2u" secondAttribute="bottom" constant="17.5" id="28d-tK-zfq"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="hcq-zn-T2u" secondAttribute="trailing" constant="100" id="GuY-XY-Af5"/>
+                                                <constraint firstItem="hcq-zn-T2u" firstAttribute="centerY" secondItem="gsB-Sm-UMd" secondAttribute="centerY" id="Sg3-Jq-tXw"/>
                                                 <constraint firstItem="hcq-zn-T2u" firstAttribute="leading" secondItem="gsB-Sm-UMd" secondAttribute="leadingMargin" constant="10" id="U5O-aP-Svb"/>
                                                 <constraint firstItem="hcq-zn-T2u" firstAttribute="top" secondItem="gsB-Sm-UMd" secondAttribute="topMargin" constant="19" id="Yqw-c7-PVU"/>
+                                                <constraint firstItem="hcq-zn-T2u" firstAttribute="centerX" secondItem="gsB-Sm-UMd" secondAttribute="centerX" id="nJ2-M3-0mw"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="28d-tK-zfq"/>
+                                                    <exclude reference="GuY-XY-Af5"/>
+                                                    <exclude reference="U5O-aP-Svb"/>
+                                                    <exclude reference="Yqw-c7-PVU"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>

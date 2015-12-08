@@ -737,12 +737,11 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
 
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EE, MMMM dd " //format style. Browse online to get a format that fits your needs.
+        dateFormatter.dateFormat = "EE, MMM dd " //format style. Browse online to get a format that fits your needs.
         let dateString = dateFormatter.stringFromDate(trans.date)
-        cell.dateCellLabel.text = dateString
+        cell.dateCellLabel.text = dateString.uppercaseString
         cell.smallAmountCellLabel.hidden = true
         
-                 
         return cell
     }
 
