@@ -98,7 +98,8 @@ class cHelper {
         var cashFlowTotal2: Double = 0
         let oldestDate = cashFlows[0].date
         var today:NSDate = NSDate()
-        
+        var compareEndLastMonth:NSDate = NSDate()
+        var compareEndLastMonthTemp:NSDate = NSDate()
         
         var moneySpent1:Double = 0
         var moneySpent2:Double = 0
@@ -109,15 +110,18 @@ class cHelper {
         if isCurrentMonth //if current month then compare month to day else month to month
         {
             today = startMonth
+            compareEndLastMonth = dateByAddingMonths(-1, date: today)!
         }
         else
         {
             today = startMonth.endOfMonth()!
+            compareEndLastMonthTemp = (dateByAddingMonths(-1, date: today))!
+            compareEndLastMonth = compareEndLastMonthTemp.endOfMonth()!
         }
         
         let beginingThisMonth = today.startOfMonth()
         let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
-        let compareEndLastMonth = dateByAddingMonths(-1, date: today)?.endOfMonth()
+        
     
         
         cashFlows1Predicate = NSPredicate(format:"date >= %@ and date <= %@ ", beginingThisMonth!, today)
@@ -127,7 +131,7 @@ class cHelper {
         
         if beginingLastMonth.compare(oldestDate) == .OrderedDescending
         {
-            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth!)
+            cashFlows2Predicate = NSPredicate(format: "date >= %@ and date < %@", beginingLastMonth, compareEndLastMonth)
             cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
             if cashFlows2.count > 0
             {

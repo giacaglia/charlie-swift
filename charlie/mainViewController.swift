@@ -648,7 +648,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
        
         else if indexPath.row == transactionItems.count + 2 {
-            print("Show Happy")
+            print("Show Income")
             //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
             self.navigationController?.pushViewController(incomeTransactionsViewController(), animated: true)
         }
