@@ -156,6 +156,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+      
         
         let attributes = [
             NSForegroundColorAttributeName: lightBlue,
@@ -166,6 +167,17 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         
         self.loadTransactionTable()
     }
+    
+    
+    func formatCurrency(currency: Double) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
+        let numberFromField = currency
+        return formatter.stringFromNumber(numberFromField)!
+    }
+
+    
     
     func showAccounts() {
         self.performSegueWithIdentifier("showAccountsCards", sender: nil)
@@ -760,6 +772,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
                 cellReward.rewardName.text = rewardNames[rewardIndex]
+
+                
+                
                 if rewardIndex == 1
                 {
                     if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite)
@@ -768,7 +783,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     else
                     {
-                        cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))"
+                        cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))%"
                     }
                     
                     
@@ -778,50 +793,159 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     else
                     {
-                        cellReward.prevAmount.text = "\(Int(happyFlowChange))%"
+                        cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
                     }
+                    
+                    
+                   
+                    //set background
+                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    var image:UIImage!
+                    if happyFlowChange >= 0
+                    {
+                        
+                        image = UIImage(named: "positiveIncome")
+                        imageView.backgroundColor   = lightGreen
+                        
+                    }
+                    else
+                    {
+                        image = UIImage(named: "negativeSpending")
+                        imageView.backgroundColor   = lightRed
+                        
+                    }
+                    
+                    imageView.image = image
+                    cellReward.backgroundView = UIView()
+                    cellReward.backgroundView!.addSubview(imageView)
+                    
+                    
+                    
+                    
+                    
                 }
             
             
                 if rewardIndex == 2
                 {
-                    cellReward.currentAmount.text = "\(totalIncome)"
+                    cellReward.currentAmount.text = "\(formatCurrency(totalIncome))"
                     if (changeIncome.isNaN || changeIncome.isInfinite)
                     {
                         cellReward.prevAmount.text = "n/a"
                     }
                     else
                     {
-                        cellReward.prevAmount.text = "\(Int(changeIncome))%"
+                        cellReward.prevAmount.text = "\(Int(changeIncome))% from prev month"
                     }
+                    
+                    
+                    //set background
+                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    var image:UIImage!
+                    if changeIncome >= 0
+                    {
+                        
+                        image = UIImage(named: "positiveIncome")
+                        imageView.backgroundColor   = lightGreen
+                        
+                    }
+                    else
+                    {
+                        image = UIImage(named: "negativeSpending")
+                        imageView.backgroundColor   = lightRed
+                        
+                    }
+                    
+                    imageView.image = image
+                    cellReward.backgroundView = UIView()
+                    cellReward.backgroundView!.addSubview(imageView)
+                    
+                    
+                    
                     
                 }
                 
                 if rewardIndex == 3
                 {
-                    cellReward.currentAmount.text = "\(totalSpending)"
+                    cellReward.currentAmount.text = "\(formatCurrency(totalSpending))"
                     if (changeSpending.isNaN || changeSpending.isInfinite)
                     {
                         cellReward.prevAmount.text = "n/a"
                     }
                     else
                     {
-                        cellReward.prevAmount.text = "\(Int(changeSpending))%"
+                        cellReward.prevAmount.text = "\(Int(changeSpending))% from prev month"
                     }
+                    
+                    
+                    //set background
+                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    var image:UIImage!
+                    if changeSpending <= 0
+                    {
+                        
+                        image = UIImage(named: "positiveIncome")
+                        imageView.backgroundColor   = lightGreen
+                        
+                    }
+                    else
+                    {
+                        image = UIImage(named: "negativeSpending")
+                        imageView.backgroundColor   = lightRed
+                        
+                    }
+                    
+                    imageView.image = image
+                    cellReward.backgroundView = UIView()
+                    cellReward.backgroundView!.addSubview(imageView)
+                    
+                    
+                    
                 }
                 
                 if rewardIndex == 4
                 {
-                    cellReward.currentAmount.text = "\(totalCashFlow.format("2"))"
+                    cellReward.currentAmount.text = "\(formatCurrency(totalCashFlow))"
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite)
                     {
                          cellReward.prevAmount.text = "n/a"
                     }
                     else
                     {
-                        cellReward.prevAmount.text = "\(Int(changeCashFlow))%"
+                        cellReward.prevAmount.text = "\(Int(changeCashFlow))% from prev month"
                     }
+                    
+                    //set background
+                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    var image:UIImage!
+                    if changeCashFlow >= 0
+                    {
+                        
+                        image = UIImage(named: "positiveIncome")
+                        imageView.backgroundColor   = lightGreen
+                        
+                    }
+                    else
+                    {
+                    
+                         image = UIImage(named: "negativeSpending")
+                         imageView.backgroundColor   = lightRed
+                    
+                        
+                       
+                        
+                    }
+                   
+                    
+                    imageView.image = image
+                
+                    cellReward.backgroundView = UIView()
+                    cellReward.backgroundView!.addSubview(imageView)
+                    
+                    
+                    
                 }
+                 cellReward.selectionStyle = UITableViewCellSelectionStyle.None
                 return cellReward
            }
         }
@@ -914,6 +1038,8 @@ class AddMoreCell : UITableViewCell {
         centralLabel.text = "show more transactions"
         self.contentView.addSubview(centralLabel)
     }
+    
+    
 }
 
 extension mainViewController : UIViewControllerPreviewingDelegate {

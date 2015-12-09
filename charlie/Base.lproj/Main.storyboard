@@ -22,6 +22,9 @@
             <string>Montserrat-Bold</string>
             <string>Montserrat-Bold</string>
             <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
+            <string>Montserrat-Bold</string>
         </mutableArray>
         <mutableArray key="Montserrat-Light.otf">
             <string>Montserrat-Light</string>
@@ -771,52 +774,65 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goc-IW-rtg">
-                                                    <rect key="frame" x="150" y="17" width="300" height="29"/>
+                                                    <rect key="frame" x="150" y="18" width="300" height="17.5"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="300" id="dc1-WZ-mKY"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tak-DP-gSN">
-                                                    <rect key="frame" x="260" y="56" width="80" height="18"/>
+                                                    <rect key="frame" x="150" y="50" width="300" height="51.5"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="jus-JR-958"/>
+                                                        <constraint firstAttribute="width" constant="300" id="jus-JR-958"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="42"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdN-by-ODd">
-                                                    <rect key="frame" x="260" y="77" width="80" height="16"/>
+                                                    <rect key="frame" x="200" y="105" width="200" height="17.5"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="t0g-I8-qRf"/>
+                                                        <constraint firstAttribute="width" constant="200" id="t0g-I8-qRf"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="14"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bV-DS-PsV">
+                                                    <rect key="frame" x="285" y="43.5" width="30" height="3"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="3" id="k0z-tL-poG"/>
+                                                        <constraint firstAttribute="width" constant="30" id="psn-QM-GRp"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="goc-IW-rtg" secondAttribute="trailing" constant="100" id="06c-Oz-eD3"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="OdN-by-ODd" secondAttribute="trailing" constant="12" id="08v-mQ-ta9"/>
+                                                <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="3bV-DS-PsV" secondAttribute="bottom" constant="2.5" id="Eqm-7j-ELz"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="19" id="IDE-Rl-yBK"/>
+                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="KN0-26-7Xz"/>
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="top" secondItem="tak-DP-gSN" secondAttribute="bottom" constant="3" id="KN1-rx-i5h"/>
-                                                <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="10.5" id="LB0-9F-MwN"/>
+                                                <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="15" id="LB0-9F-MwN"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="leading" secondItem="tzs-aJ-eah" secondAttribute="leadingMargin" constant="10" id="ND4-tO-SWR"/>
+                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="TPT-Fy-Wje"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="tak-DP-gSN" secondAttribute="bottom" constant="17.5" id="Viw-c0-rZs"/>
                                                 <constraint firstItem="tak-DP-gSN" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="Xtr-5O-Wko"/>
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="top" secondItem="tak-DP-gSN" secondAttribute="bottom" id="faT-d0-rTQ"/>
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="centerX" secondItem="tak-DP-gSN" secondAttribute="centerX" id="gJH-cu-U2P"/>
                                                 <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="19" id="i4X-Hn-hFj"/>
-                                                <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="9" id="kN3-zG-z1R"/>
+                                                <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="10" id="kN3-zG-z1R"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="tak-DP-gSN" secondAttribute="trailing" constant="10" id="o2b-Nb-4xJ"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="oYd-uB-a1Q"/>
+                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="top" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="8" id="oZb-Ao-EB9"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="17.5" id="yCm-Xi-Tuf"/>
                                             </constraints>
                                             <variation key="default">
@@ -825,9 +841,11 @@
                                                     <exclude reference="IDE-Rl-yBK"/>
                                                     <exclude reference="ND4-tO-SWR"/>
                                                     <exclude reference="yCm-Xi-Tuf"/>
+                                                    <exclude reference="Eqm-7j-ELz"/>
                                                     <exclude reference="Viw-c0-rZs"/>
                                                     <exclude reference="i4X-Hn-hFj"/>
                                                     <exclude reference="o2b-Nb-4xJ"/>
+                                                    <exclude reference="TPT-Fy-Wje"/>
                                                     <exclude reference="08v-mQ-ta9"/>
                                                     <exclude reference="faT-d0-rTQ"/>
                                                 </mask>
