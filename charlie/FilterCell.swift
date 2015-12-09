@@ -12,6 +12,8 @@ class FilterCell : UICollectionViewCell {
     
     @IBOutlet weak var monthLabel: UILabel!
     
+   
+       
     func changeState(selected selected: Bool) {
         if selected {
             monthLabel.font = UIFont(name: "Montserrat-Bold", size: 17.0)

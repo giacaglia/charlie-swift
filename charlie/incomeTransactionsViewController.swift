@@ -25,6 +25,8 @@ class incomeTransactionsViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+         self.title = "Your Income"
+        
         loadData()
         
         tableView.tableFooterView = UIView()

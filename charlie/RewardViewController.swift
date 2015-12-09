@@ -21,6 +21,8 @@ class RewardViewController : UIViewController {
     override func viewDidLoad() {
         charlieAnalytics.track("Show Reward")
         
+         self.title = "Your Happy Flow"
+        
         if transactionItemsActedUpon.count == 0{
             chartView.hidden = true
             return

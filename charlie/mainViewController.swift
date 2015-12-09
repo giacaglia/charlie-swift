@@ -310,9 +310,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         
         
         inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
-//        inboxPredicate = NSPredicate(format: "status = 0")
         approvedPredicate = NSPredicate(format: "status = 1")
-        flaggedPredicate = NSPredicate(format: "status = 2")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
         waitingToProcessPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = -1", startDate, endDate)
 
@@ -522,29 +520,35 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
 }
 
-extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
-        let date = NSDate().dateByAddingMonths(-indexPath.row)
-        if cell.selected {
-            cell.monthLabel.font = UIFont(name: "Montserrat-Bold", size: 17.0)
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
+            let date = NSDate().dateByAddingMonths(-indexPath.row)
+            cell.monthLabel.text = date!.monthString()
+        
+            if selectedCollectioncCellIndex == indexPath.row
+            {
+                cell.backgroundColor = lightBlue
+            }
+            else
+            {
+                cell.backgroundColor = UIColor.whiteColor()
+            }
+        
+            return cell
         }
-        else {
-            cell.monthLabel.font = UIFont(name: "Montserrat-Light", size: 17.0)
-        }
-        cell.monthLabel.text = date!.monthString()
-        return cell
-    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
-//        cell.selected = true
+        
         
         selectedCollectioncCellIndex = indexPath.row
+        
+       
+       
         
         let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
         setPredicates(true, startMonth: startMonth)
@@ -566,9 +570,15 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         
         
         dispatch_async(dispatch_get_main_queue()) {
-            collectionView.reloadItemsAtIndexPaths([indexPath])
+            //collectionView.reloadItemsAtIndexPaths([indexPath])
+            collectionView.reloadData()
             self.transactionsTable.reloadData()
+          
+            
         }
+        
+        
+        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

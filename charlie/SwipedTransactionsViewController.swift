@@ -33,6 +33,8 @@ class SwipedTransactionsViewController : UIViewController {
     override func viewDidLoad() {
        super.viewDidLoad()
         
+        self.title = "Your Spending"
+        
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MM/dd/yy"
         dateRangeLabel.text = "\(formatter.stringFromDate(self.startDate)) - \(formatter.stringFromDate(self.endDate))"
