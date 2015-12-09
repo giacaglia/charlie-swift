@@ -72,6 +72,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     var totalIncome:Double = 0
     var changeIncome:Double = 0
     
+    var moreItems = realm.objects(Transaction)
+    
     var currentMonthHappyPercentage: Double = 0
     var happyFlowChange: Double = 0
     
@@ -335,7 +337,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     }
     
     func moreTransactionforLoading() -> Bool {
-        let moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
+         moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
         if moreItems.count > 0 {
             return true
         }
@@ -591,13 +593,13 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         
         selectedCollectioncCellIndex = indexPath.row
         
-       
+        
        
         
         let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
         setPredicates(true, startMonth: startMonth)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-       
+       moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
         if selectedCollectioncCellIndex == 0 
        {
         
@@ -758,14 +760,30 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row >= transactionItems.count {
             let rewardIndex =  indexPath.row - transactionItems.count
-            var  rewardNames = ["Load More Transactions", "Happy Flow", "My Income", "My Spending", "My CashFlow"]
+            var  rewardNames = ["Show More Transactions To Complete ", "Happy Flow", "My Income", "My Spending", "My CashFlow"]
             var cellHappy:happyTableViewCell
             var cellReward:rewardTableViewCell
             
             if rewardIndex == 0
             {
                 cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
-                cellHappy.rewardName.text = rewardNames[rewardIndex]
+                
+                if self.moreItems.count > 20
+                {
+                    cellHappy.rewardName.text = "Show 20 more of \(self.moreItems.count) transactions to complete for your\nHappy Flow"
+                }
+
+                else if self.moreItems.count > 0 && self.moreItems.count < 20
+                {
+                    cellHappy.rewardName.text = "Show \(self.moreItems.count) more transaction to complete for your\n Happy Flow"
+                }
+                else
+                {
+                    cellHappy.rewardName.text = "All transactions completed for your\nHappy Flow"
+                }
+                
+               
+                
                 return cellHappy
             }
             else
@@ -945,7 +963,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     
                     
                 }
-                 cellReward.selectionStyle = UITableViewCellSelectionStyle.None
+                cellReward.selectionStyle = UITableViewCellSelectionStyle.None
                 return cellReward
            }
         }
