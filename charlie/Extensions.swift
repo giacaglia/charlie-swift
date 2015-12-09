@@ -23,6 +23,11 @@ extension NSDate {
         return calendar.dateByAddingComponents(months, toDate: self, options: [])
     }
     
+
+    func monthsFrom(date:NSDate) -> Int{
+        return NSCalendar.currentCalendar().components(.Month, fromDate: date, toDate: self, options: []).month
+    }
+    
     func dateByAddingDays(daysToAdd: Int) -> NSDate? {
         let calendar = NSCalendar.currentCalendar()
         let days = NSDateComponents()

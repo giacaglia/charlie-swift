@@ -86,6 +86,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
     let inboxLabel = UILabel(frame: CGRectMake(0, 0, 40, 40))
+    
+    var monthDiff:Int = 0
 
     
     func willEnterForeground(notification: NSNotification!) {
@@ -128,20 +130,47 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        //get month range for transactions
+        let atCount =  allTransactionItems.count
+        let lastTrans = allTransactionItems[0].date as NSDate
+        let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
+        
+         monthDiff = lastTrans.monthsFrom(firstTrans)
+        
+        //get data for report cards
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu")!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
+        var image = UIImage(named: "menu")
+        
+        image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
+
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : lightBlue]
+        self.title = "Worth It?"
+       
+        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        let attributes = [
+            NSForegroundColorAttributeName: lightBlue,
+            NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
+        ]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
+        self.collectionView.backgroundColor = UIColor.whiteColor()
         
         self.loadTransactionTable()
     }
     
     func showAccounts() {
-        self.performSegueWithIdentifier("showAccounts", sender: nil)
+        self.performSegueWithIdentifier("showAccountsCards", sender: nil)
     }
+   
     
     func loadTransactionTable() {
         transactionsTable.contentInset = UIEdgeInsetsZero
@@ -522,7 +551,7 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
 
 extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return monthDiff
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -532,11 +561,14 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         
             if selectedCollectioncCellIndex == indexPath.row
             {
-                cell.backgroundColor = lightBlue
+                //cell.backgroundColor = lightBlue
+                cell.monthLabel.font = UIFont(name: "Montserrat-Bold", size: 18)!
+                
             }
             else
             {
-                cell.backgroundColor = UIColor.whiteColor()
+                cell.monthLabel.font = UIFont(name: "Montserrat-Light", size: 18)!
+                //cell.backgroundColor = lightGray
             }
         
             return cell
