@@ -39,10 +39,7 @@ class showTransactionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-    
-
+        
         var transactionItems = realm.objects(Transaction)
         guard let usedTransaction = transaction else {
             return
@@ -96,6 +93,18 @@ class showTransactionViewController: UIViewController {
         mapView.addAnnotation(anotation)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+    }
+    
     func centerMapOnLocation(location: CLLocation) {
         let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
@@ -128,9 +137,8 @@ class showTransactionViewController: UIViewController {
         }
         else {
             try! realm.write {
-            self.transaction!.status = 1
+                self.transaction!.status = 1
             }
-           
             self.navigationController!.popViewControllerAnimated(true)
         }
     }

@@ -132,6 +132,8 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+
         //get month range for transactions
         let atCount =  allTransactionItems.count
         if atCount > 0 {
@@ -590,42 +592,24 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
         selectedCollectioncCellIndex = indexPath.row
-        
-        
-       
-        
         let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
         setPredicates(true, startMonth: startMonth)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-       moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
-        if selectedCollectioncCellIndex == 0 
-       {
-        
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
-        
+        moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
+        if selectedCollectioncCellIndex == 0  {
+            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
+            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
-        else
-        {
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
+        else {
+            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
+            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
-        
-        
-        
         dispatch_async(dispatch_get_main_queue()) {
             //collectionView.reloadItemsAtIndexPaths([indexPath])
             collectionView.reloadData()
             self.transactionsTable.reloadData()
-          
-            
         }
-        
-        
-        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -711,9 +695,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
        
         else if indexPath.row == transactionItems.count + 2 {
             print("Show Income")
-            
-            if selectedCollectioncCellIndex == 0
-            {
+            if selectedCollectioncCellIndex == 0 {
                 startDate = NSDate().startOfMonth()!
                 endDate = NSDate()
             }
@@ -726,24 +708,17 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             let ITC = incomeTransactionsViewController()
             ITC.startDate = startDate
             ITC.endDate = endDate
-            
             self.navigationController?.pushViewController(ITC, animated: true)
-            
-            
         }
-            
         else if indexPath.row == transactionItems.count + 3 {
             print("SHOW SPENDING")
-            
-            if selectedCollectioncCellIndex == 0
-            {
-            startDate = NSDate().startOfMonth()!
-            endDate = NSDate()
+            if selectedCollectioncCellIndex == 0 {
+                startDate = NSDate().startOfMonth()!
+                endDate = NSDate()
             }
-            else
-            {
-            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
-            endDate = startDate.endOfMonth()!
+            else {
+                startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+                endDate = startDate.endOfMonth()!
             }
         
             let SVC = SwipedTransactionsViewController()
@@ -752,8 +727,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
 
             self.navigationController?.pushViewController(SVC, animated: true)
         }
-        else
-        {
+        else {
             
         }
     }
@@ -791,178 +765,111 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
                 cellReward.rewardName.text = rewardNames[rewardIndex]
-
                 
-                
-                if rewardIndex == 1
-                {
-                    if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite)
-                    {
+                if rewardIndex == 1 {
+                    if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite) {
                         cellReward.currentAmount.text = "n/a"
                     }
-                    else
-                    {
+                    else {
                         cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))%"
                     }
                     
-                    
-                    if (happyFlowChange.isNaN || happyFlowChange.isInfinite)
-                    {
-                     cellReward.prevAmount.text = "n/a"
+                    if (happyFlowChange.isNaN || happyFlowChange.isInfinite) {
+                        cellReward.prevAmount.text = "n/a"
                     }
-                    else
-                    {
+                    else {
                         cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
                     }
                     
-                    
-                   
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     var image:UIImage!
-                    if happyFlowChange >= 0
-                    {
-                        
+                    if happyFlowChange >= 0 {
                         image = UIImage(named: "positiveIncome")
-                        imageView.backgroundColor   = lightGreen
-                        
+                        imageView.backgroundColor = lightGreen
                     }
-                    else
-                    {
+                    else {
                         image = UIImage(named: "negativeSpending")
-                        imageView.backgroundColor   = lightRed
-                        
+                        imageView.backgroundColor = lightRed
                     }
-                    
                     imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
-                    
-                    
-                    
-                    
-                    
                 }
             
             
-                if rewardIndex == 2
-                {
+                if rewardIndex == 2 {
                     cellReward.currentAmount.text = "\(formatCurrency(totalIncome))"
-                    if (changeIncome.isNaN || changeIncome.isInfinite)
-                    {
+                    if (changeIncome.isNaN || changeIncome.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
-                    else
-                    {
+                    else {
                         cellReward.prevAmount.text = "\(Int(changeIncome))% from prev month"
                     }
-                    
-                    
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     var image:UIImage!
-                    if changeIncome >= 0
-                    {
-                        
+                    if changeIncome >= 0 {
                         image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
-                        
                     }
-                    else
-                    {
+                    else {
                         image = UIImage(named: "negativeSpending")
                         imageView.backgroundColor   = lightRed
-                        
                     }
                     
                     imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
-                    
-                    
-                    
-                    
                 }
                 
-                if rewardIndex == 3
-                {
+                if rewardIndex == 3 {
                     cellReward.currentAmount.text = "\(formatCurrency(totalSpending))"
-                    if (changeSpending.isNaN || changeSpending.isInfinite)
-                    {
+                    if (changeSpending.isNaN || changeSpending.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
-                    else
-                    {
+                    else {
                         cellReward.prevAmount.text = "\(Int(changeSpending))% from prev month"
                     }
-                    
-                    
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     var image:UIImage!
-                    if changeSpending <= 0
-                    {
-                        
+                    if changeSpending <= 0 {
                         image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
-                        
                     }
-                    else
-                    {
+                    else {
                         image = UIImage(named: "negativeSpending")
                         imageView.backgroundColor   = lightRed
-                        
                     }
-                    
                     imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
-                    
-                    
-                    
                 }
-                
-                if rewardIndex == 4
-                {
+                if rewardIndex == 4 {
                     cellReward.currentAmount.text = "\(formatCurrency(totalCashFlow))"
-                    if (changeCashFlow.isNaN || changeCashFlow.isInfinite)
-                    {
+                    if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = "n/a"
                     }
-                    else
-                    {
+                    else {
                         cellReward.prevAmount.text = "\(Int(changeCashFlow))% from prev month"
                     }
                     
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     var image:UIImage!
-                    if changeCashFlow >= 0
-                    {
-                        
+                    if changeCashFlow >= 0 {
                         image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
-                        
                     }
-                    else
-                    {
-                    
+                    else {
                          image = UIImage(named: "negativeSpending")
                          imageView.backgroundColor   = lightRed
-                    
-                        
-                       
-                        
                     }
                    
-                    
                     imageView.image = image
-                
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
-                    
-                    
-                    
                 }
                 cellReward.selectionStyle = UITableViewCellSelectionStyle.None
                 return cellReward

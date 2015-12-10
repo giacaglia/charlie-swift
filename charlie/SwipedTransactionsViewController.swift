@@ -16,7 +16,6 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
     
@@ -27,7 +26,6 @@ class SwipedTransactionsViewController : UIViewController {
             self.loadData()
             self.tableView.reloadData()
         }
- 
     }
     
     override func viewDidLoad() {
@@ -49,16 +47,12 @@ class SwipedTransactionsViewController : UIViewController {
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
         tableView.dataSource = self
-        
-           self.automaticallyAdjustsScrollViewInsets = false
-        
+        self.automaticallyAdjustsScrollViewInsets = false
     }
     
     @IBAction func closePressed(sender: AnyObject) {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
         })
-        
-        
     }
     
 }
@@ -101,54 +95,34 @@ extension SwipedTransactionsViewController {
                     
                     
                 }
-                
-               else if trans.status  ==  -1 || trans.status ==  0
-               {
-                
-                print("NOT SWIPED\(current_index) - \(trans.name)")
-
-                 charlieGroupListFiltered[current_index].notSwipedCount += 1
-                
-                charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
-                
+               else if trans.status  ==  -1 || trans.status ==  0 {
+                    print("NOT SWIPED\(current_index) - \(trans.name)")
+                    charlieGroupListFiltered[current_index].notSwipedCount += 1
+                    charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 }
-                
-          
-                
-              
-                
             }
             else {                
-                
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
                 if trans.status == 1 {
-                
-                    
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    
                     print("create new group: WORTH IT \(current_index) - \(trans.name)")
-                    
                 }
                 else if trans.status == 2 {
-                   
                     cGroup.notWorthCount += 1
                     cGroup.notWorthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                     print("create new group: NOT WORTH IT \(current_index) - \(trans.name)")
+                    print("create new group: NOT WORTH IT \(current_index) - \(trans.name)")
                 }
-                else if trans.status ==  -1 || trans.status ==  0
-                {
-                    
+                else if trans.status ==  -1 || trans.status ==  0 {
                     cGroup.notSwipedCount += 1
                     cGroup.notSwipedValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
                     print("create new group: NOT SWIPED \(current_index) - \(trans.name)")
-
                 }
                 else {
                     // not added to the list
@@ -199,14 +173,11 @@ extension SwipedTransactionsViewController {
 }
 
 extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDataSource {
-    func
-        tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView .dequeueReusableCellWithIdentifier(GroupTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! GroupTransactionCell
-        
-            let charlieGroup = charlieGroupListFiltered[indexPath.row]
+        let charlieGroup = charlieGroupListFiltered[indexPath.row]
        
-            cell.nameLabel.text = charlieGroup.name
-
+        cell.nameLabel.text = charlieGroup.name
         if charlieGroup.transactions == 1 {
             cell.numberTransactionsLabel.text = "1 transaction"
         }
@@ -214,24 +185,20 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
             cell.numberTransactionsLabel.text = "\(charlieGroup.transactions) transactions"
         }
 
-        if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0
-        {
-           cell.dollarLabel.text = "?"
+        if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0 {
+            cell.amountLabel.text = "?"
+            cell.amountLabel.textColor = listRed
         }
-        else
-        {
-        
-           cell.dollarLabel.text = "\(charlieGroup.happyPercentage)%"
-           if charlieGroup.happyPercentage < 50 {
-               cell.dollarLabel.textColor = listRed
-           }
-           else {
-                cell.dollarLabel.textColor = listGreen
+        else {
+            cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
+            if charlieGroup.happyPercentage < 50 {
+                cell.amountLabel.textColor = listRed
             }
-
+            else {
+                cell.amountLabel.textColor = listGreen
+            }
         }
-        cell.amountLabel.textColor = UIColor.darkGrayColor()
-        cell.amountLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
+        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
         return cell
     }
     
@@ -240,18 +207,15 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController
         
         viewController!.startDate = self.startDate
         viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
         viewController!.endDate = self.endDate
-        
         self.navigationController?.pushViewController(viewController!, animated: true)
-       
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94
     }
@@ -291,13 +255,13 @@ class GroupTransactionCell : UITableViewCell {
         numberTransactionsLabel.textAlignment = .Left
         self.contentView.addSubview(numberTransactionsLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  70, 27, 80, 18)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  80, 27, 80, 18)
         amountLabel.font = UIFont.systemFontOfSize(16.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
         
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  70, 49, 80, 18)
-        dollarLabel.font = UIFont(name: "Montserrat-Bold", size: 15.0)
+        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 49, 80, 18)
+        dollarLabel.font = UIFont(name: "Montserrat-Light", size: 14.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right
         self.contentView.addSubview(dollarLabel)
