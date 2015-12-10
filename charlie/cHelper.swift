@@ -43,19 +43,17 @@ class cHelper {
     
     
     func getHappyPercentageCompare(startMonth: NSDate, isCurrentMonth:Bool) -> (happyPerc: Double, happyComperePerc: Double) {
-        
-        var today:NSDate = NSDate()
-        var compareEndLastMonth:NSDate = NSDate()
-        var compareEndLastMonthTemp:NSDate = NSDate()
+        var today = NSDate()
+        var compareEndLastMonth = NSDate()
+        var compareEndLastMonthTemp = NSDate()
 
         
-        if isCurrentMonth //if current month then compare month to day else month to month
-        {
+        if isCurrentMonth {
+            //if current month then compare month to day else month to month
             today = startMonth
             compareEndLastMonth = dateByAddingMonths(-1, date: today)!
         }
-        else
-        {
+        else {
             today = startMonth.endOfMonth()!
             compareEndLastMonthTemp = (dateByAddingMonths(-1, date: today))!
             compareEndLastMonth = compareEndLastMonthTemp.endOfMonth()!
@@ -111,6 +109,9 @@ class cHelper {
         var cashFlows1 = realm.objects(Transaction)
         var cashFlows2 = realm.objects(Transaction)
         var cashFlowTotal2: Double = 0
+        if cashFlows.count == 0 {
+           return (0, 0, 0, 0, 0, 0)
+        }
         let oldestDate = cashFlows[0].date
         var today:NSDate = NSDate()
         var compareEndLastMonth:NSDate = NSDate()

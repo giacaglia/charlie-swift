@@ -134,10 +134,11 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
        
         //get month range for transactions
         let atCount =  allTransactionItems.count
-        let lastTrans = allTransactionItems[0].date as NSDate
-        let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
-        
-         monthDiff = lastTrans.monthsFrom(firstTrans)
+        if atCount > 0 {
+            let lastTrans = allTransactionItems[0].date as NSDate
+            let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
+            monthDiff = lastTrans.monthsFrom(firstTrans)
+        }
         
         //get data for report cards
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
