@@ -702,7 +702,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-hm-sg5" customClass="SBGestureTableView" customModule="charlie" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="104" width="600" height="496"/>
+                                <rect key="frame" x="0.0" y="114" width="600" height="486"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -878,7 +878,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show more transactions to complete December" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-zn-T2u">
-                                                    <rect key="frame" x="177" y="12.5" width="246" height="50"/>
+                                                    <rect key="frame" x="177" y="12" width="246" height="50"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="246" id="2PY-Gg-2Tt"/>
@@ -919,9 +919,12 @@
                                 </connections>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HTZ-Xu-A7Z">
-                                <rect key="frame" x="0.0" y="64" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="50"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="l7x-pL-26O"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="MJF-l2-VNY">
                                     <size key="itemSize" width="150" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -930,7 +933,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="filterCell" id="uoo-hM-iT9" customClass="FilterCell" customModule="charlie" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-5" width="150" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
@@ -979,18 +982,25 @@
                             <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
                             <constraint firstAttribute="trailing" secondItem="HTZ-Xu-A7Z" secondAttribute="trailing" id="Mif-Vv-wFL"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" constant="40" id="Rky-9k-5kd"/>
+                            <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="HTZ-Xu-A7Z" secondAttribute="bottom" id="SQ7-aU-xlF"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
                             <constraint firstAttribute="trailing" secondItem="JmO-hm-sg5" secondAttribute="trailing" id="Vtc-Ma-J9k"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="HTZ-Xu-A7Z" secondAttribute="bottom" constant="2" id="WuV-6V-17m"/>
                             <constraint firstItem="JmO-hm-sg5" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="cOI-9j-Uot"/>
                             <constraint firstAttribute="centerX" secondItem="huO-nz-BFN" secondAttribute="centerX" id="dSh-Io-tu1"/>
+                            <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" id="gBN-AX-EnY"/>
+                            <constraint firstItem="JmO-hm-sg5" firstAttribute="top" secondItem="HTZ-Xu-A7Z" secondAttribute="bottom" id="gbV-kJ-F23"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="nj0-cQ-Ku5"/>
                             <constraint firstAttribute="centerX" secondItem="o08-Ym-LQO" secondAttribute="centerX" id="rvG-mz-nVS"/>
                             <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="zGs-sB-4Hj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="2Ev-tC-gnK"/>
+                                <exclude reference="9g6-g4-L69"/>
+                                <exclude reference="Rky-9k-5kd"/>
                                 <exclude reference="WuV-6V-17m"/>
+                                <exclude reference="gbV-kJ-F23"/>
                             </mask>
                         </variation>
                     </view>

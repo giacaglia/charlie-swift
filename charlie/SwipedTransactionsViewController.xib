@@ -5,15 +5,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Montserrat-Bold.ttf">
-            <string>Montserrat-Bold</string>
-            <string>Montserrat-Bold</string>
+        <mutableArray key="Montserrat-Light.otf">
+            <string>Montserrat-Light</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwipedTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
-                <outlet property="dateRangeLabel" destination="gbO-nT-ul8" id="AW7-P4-zy9"/>
                 <outlet property="monthLabel" destination="Bm5-Vj-4Ri" id="5eQ-3g-IKR"/>
                 <outlet property="tableView" destination="gvd-vj-BZV" id="cdL-rV-hqX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pxK-W6-7ib"/>
@@ -24,50 +22,43 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A88-0a-gmX">
+                    <rect key="frame" x="0.0" y="64" width="600" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
+                            <rect key="frame" x="272.5" y="15" width="55.5" height="19.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="16"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="A88-0a-gmX" secondAttribute="centerX" id="2Dc-Fe-Azp"/>
+                        <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerY" secondItem="A88-0a-gmX" secondAttribute="centerY" id="e8M-I0-X5F"/>
+                        <constraint firstAttribute="height" constant="50" id="nSh-6t-ahB"/>
+                    </constraints>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
-                    <rect key="frame" x="0.0" y="130" width="600" height="470"/>
+                    <rect key="frame" x="0.0" y="114" width="600" height="486"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HH6-rr-piB">
-                    <rect key="frame" x="0.0" y="129" width="600" height="1.5"/>
-                    <animations/>
-                    <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1.5" id="ktj-YD-RVQ"/>
-                    </constraints>
-                </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
-                    <rect key="frame" x="264" y="76" width="73" height="24.5"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="20"/>
-                    <color key="textColor" red="0.55686274509803924" green="0.74509803921568629" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/1 - 11/3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbO-nT-ul8">
-                    <rect key="frame" x="269" y="100" width="63.5" height="16"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
-                    <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="gbO-nT-ul8" firstAttribute="top" secondItem="Bm5-Vj-4Ri" secondAttribute="bottom" id="38x-F7-POL"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="A88-0a-gmX" secondAttribute="bottom" id="A1p-WD-YmL"/>
+                <constraint firstItem="A88-0a-gmX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Ds4-av-7C8"/>
                 <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="Eir-8q-4gH"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="FGq-uc-Zuu"/>
-                <constraint firstAttribute="trailing" secondItem="HH6-rr-piB" secondAttribute="trailing" id="Pdw-GS-Ogy"/>
-                <constraint firstItem="HH6-rr-piB" firstAttribute="top" secondItem="gbO-nT-ul8" secondAttribute="bottom" constant="13" id="RLe-Wx-h6l"/>
-                <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Y1Y-uo-A7A"/>
-                <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="kPs-aD-4Pq"/>
-                <constraint firstItem="gbO-nT-ul8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r5v-Hg-Xv6"/>
+                <constraint firstItem="A88-0a-gmX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OES-mY-XWs"/>
                 <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rRW-Fl-6bf"/>
                 <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="reb-UE-W8E"/>
-                <constraint firstItem="HH6-rr-piB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uyh-ne-7Zm"/>
+                <constraint firstAttribute="trailing" secondItem="A88-0a-gmX" secondAttribute="trailing" id="xBP-c1-BL6"/>
             </constraints>
-            <point key="canvasLocation" x="298" y="256"/>
+            <point key="canvasLocation" x="209" y="258"/>
         </view>
     </objects>
 </document>

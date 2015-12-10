@@ -13,7 +13,7 @@ class SwipedTransactionsViewController : UIViewController {
     var charlieGroupListFiltered = [charlieGroup]()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     @IBOutlet weak var monthLabel: UILabel!
-    @IBOutlet weak var dateRangeLabel: UILabel!
+   
     @IBOutlet weak var tableView: UITableView!
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
@@ -39,16 +39,16 @@ class SwipedTransactionsViewController : UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
-        self.title = "Your Spending"
+        self.title = "Worth It?"
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MM/dd/yy"
-        dateRangeLabel.text = "\(formatter.stringFromDate(self.startDate)) - \(formatter.stringFromDate(self.endDate))"
+       
 
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
-        monthLabel.text = months[Int(stringMonth)! - 1]
+        monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Spending"
         
         //self.loadData()
         tableView.tableFooterView = UIView()
@@ -172,7 +172,10 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
     func changeFilter(filterType:SortFilterType){
         self.filterType = filterType
         self.filterBy(self.filterType)
-        self.tableView.reloadData()
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
