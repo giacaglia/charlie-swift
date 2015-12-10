@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
-                    <rect key="frame" x="0.0" y="130.5" width="600" height="469"/>
+                    <rect key="frame" x="0.0" y="130" width="600" height="470"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
@@ -51,24 +51,13 @@
                     <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kri-FR-6oB">
-                    <rect key="frame" x="556" y="30" width="24" height="27"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="27" id="WgD-yS-5bX"/>
-                        <constraint firstAttribute="width" constant="24" id="mFr-Ng-a8J"/>
-                    </constraints>
-                    <state key="normal" title="Button" image="btn_filter"/>
-                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="kri-FR-6oB" secondAttribute="trailing" constant="20" id="2vg-9J-aIG"/>
                 <constraint firstItem="gbO-nT-ul8" firstAttribute="top" secondItem="Bm5-Vj-4Ri" secondAttribute="bottom" id="38x-F7-POL"/>
                 <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="Eir-8q-4gH"/>
                 <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="FGq-uc-Zuu"/>
-                <constraint firstItem="kri-FR-6oB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="IAO-Vu-thQ"/>
                 <constraint firstAttribute="trailing" secondItem="HH6-rr-piB" secondAttribute="trailing" id="Pdw-GS-Ogy"/>
                 <constraint firstItem="HH6-rr-piB" firstAttribute="top" secondItem="gbO-nT-ul8" secondAttribute="bottom" constant="13" id="RLe-Wx-h6l"/>
                 <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Y1Y-uo-A7A"/>
@@ -81,7 +70,4 @@
             <point key="canvasLocation" x="298" y="256"/>
         </view>
     </objects>
-    <resources>
-        <image name="btn_filter" width="27" height="27"/>
-    </resources>
 </document>

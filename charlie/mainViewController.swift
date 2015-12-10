@@ -52,7 +52,7 @@ protocol MainViewControllerDelegate {
       func showCards()
 }
 
-class mainViewController: UIViewController, ChangeFilterProtocol, MainViewControllerDelegate {
+class mainViewController: UIViewController, MainViewControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toastView: UIView!
@@ -429,40 +429,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
         keyStore.synchronize()
     }
     
-    @IBAction func refreshAccounts(sender: UIButton) {
-        mainViewController.blackView.backgroundColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3)
-        self.view .addSubview(mainViewController.blackView)
-        let sortVC = SortViewController()
-        sortVC.initialFilterType = self.filterType
-        sortVC.transactionType = self.inboxType
-        sortVC.delegate = self
-        let height = self.view.frame.size.height*0.8
-        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
-        self.addChildViewController(sortVC)
-        self.view.addSubview(sortVC.view)
-        UIView.animateWithDuration(0.5) { () -> Void in
-            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
-        }
-    }
-    
-    func removeBlackView() {
-        mainViewController.blackView.removeFromSuperview()
-    }
-    
-    func changeFilter(filterType:SortFilterType){
-        self.filterType = filterType
-        charlieGroupListFiltered = groupBy(inboxType, sortFilter: self.filterType) as! [(charlieGroup)]
-        transactionsTable.reloadData()
-        mainViewController.blackView.removeFromSuperview()
-    }
-    
-    func changeTransactionType(type: TransactionType) {
-        inboxType = type
-        charlieGroupListFiltered = groupBy(type, sortFilter: self.filterType) as! [(charlieGroup)]
-        transactionsTable.reloadData()
-        mainViewController.blackView.removeFromSuperview()
-    }
-
     
     func makeOnlyFirstNElementsVisible() {
         areThereMoreItemsToLoad = false
@@ -529,8 +495,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 
             }
             else {
-               
-                
                 print("create new group: \(trans.name)")
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
                 if trans.status == 1 {
@@ -558,7 +522,6 @@ class mainViewController: UIViewController, ChangeFilterProtocol, MainViewContro
                 
             }
             current_name = trans.name
-            
         }
  
         return charlieGroupList

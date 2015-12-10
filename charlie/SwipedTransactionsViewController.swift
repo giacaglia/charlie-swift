@@ -15,6 +15,8 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+    var filterType : SortFilterType! = .FilterByName
     
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
@@ -29,8 +31,13 @@ class SwipedTransactionsViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-       super.viewDidLoad()
+        super.viewDidLoad()
         
+        let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
+        button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
+        button.addTarget(self, action: "didTouchFilterButton:", forControlEvents: .TouchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
         self.title = "Your Spending"
         
@@ -51,9 +58,21 @@ class SwipedTransactionsViewController : UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
     }
     
-    @IBAction func closePressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+    func didTouchFilterButton(sender: AnyObject) {
+        let topViewController = self.navigationController
+        if topViewController == nil {
+            return
+        }
+        let sortVC = SortViewController()
+        sortVC.initialFilterType = self.filterType
+        sortVC.delegate = self
+        let height = self.view.frame.size.height*0.8
+        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        topViewController!.addChildViewController(sortVC)
+        topViewController!.view.addSubview(sortVC.view)
+        UIView.animateWithDuration(0.5) { () -> Void in
+            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
+        }
     }
     
 }
@@ -142,34 +161,55 @@ extension SwipedTransactionsViewController {
         }
     }
     
-    private func filterBy() {
-//        if (sortFilter == .FilterByMostWorth) {
-//            charlieGroupList.sortInPlace {
-//                return $0.happyPercentage > $1.happyPercentage
-//            }
-//        }
-//        else if (sortFilter == .FilterByLeastWorth) {
-//            charlieGroupList.sortInPlace {
-//                return $0.happyPercentage < $1.happyPercentage
-//            }
-//        }
-//
-//        else if (sortFilter == .FilterByAmount) {
-//            charlieGroupList.sortInPlace {
-//                return $0.totalAmount > $1.totalAmount
-//            }
-//        }
-//
-//        else if (sortFilter == .FilterByDescendingDate) {
-//            charlieGroupList.sortInPlace {
-//                return $0.lastDate > $1.lastDate
-//            }
-//        }
-//        else if (sortFilter == .FilterByDate) {
-//            charlieGroupList.sortInPlace {
-//                return $0.lastDate < $1.lastDate
-//            }
-//        }
+   
+}
+
+extension SwipedTransactionsViewController : ChangeFilterProtocol {
+    func removeBlackView() {
+        SwipedTransactionsViewController.blackView.removeFromSuperview()
+    }
+    
+    func changeFilter(filterType:SortFilterType){
+        self.filterType = filterType
+        self.filterBy(self.filterType)
+        self.tableView.reloadData()
+        SwipedTransactionsViewController.blackView.removeFromSuperview()
+    }
+    
+    func changeTransactionType(type: TransactionType) {
+        self.filterBy(self.filterType)
+        self.tableView.reloadData()
+        SwipedTransactionsViewController.blackView.removeFromSuperview()
+    }
+    
+    private func filterBy(sortFilter: SortFilterType) {
+        if (sortFilter == .FilterByMostWorth) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.happyPercentage > $1.happyPercentage
+            }
+        }
+        else if (sortFilter == .FilterByLeastWorth) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.happyPercentage < $1.happyPercentage
+            }
+        }
+
+        else if (sortFilter == .FilterByAmount) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.totalAmount > $1.totalAmount
+            }
+        }
+
+        else if (sortFilter == .FilterByDescendingDate) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.lastDate > $1.lastDate
+            }
+        }
+        else if (sortFilter == .FilterByDate) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.lastDate < $1.lastDate
+            }
+        }
     }
 }
 
