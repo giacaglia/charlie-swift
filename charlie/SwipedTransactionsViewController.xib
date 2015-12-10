@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
-                    <rect key="frame" x="0.0" y="136" width="600" height="463.5"/>
+                    <rect key="frame" x="0.0" y="130.5" width="600" height="469"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
@@ -55,16 +55,10 @@
                     <rect key="frame" x="556" y="30" width="24" height="27"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="43" id="PnL-x2-X5Y"/>
                         <constraint firstAttribute="height" constant="27" id="WgD-yS-5bX"/>
                         <constraint firstAttribute="width" constant="24" id="mFr-Ng-a8J"/>
                     </constraints>
                     <state key="normal" title="Button" image="btn_filter"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="PnL-x2-X5Y"/>
-                        </mask>
-                    </variation>
                 </button>
             </subviews>
             <animations/>
@@ -72,48 +66,18 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="kri-FR-6oB" secondAttribute="trailing" constant="20" id="2vg-9J-aIG"/>
                 <constraint firstItem="gbO-nT-ul8" firstAttribute="top" secondItem="Bm5-Vj-4Ri" secondAttribute="bottom" id="38x-F7-POL"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="gbO-nT-ul8" secondAttribute="bottom" constant="20" id="5AM-nN-KM6"/>
-                <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="8ts-gg-xqT"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="131" id="Cco-CU-4pB"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="E66-nX-gOA"/>
-                <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="E8c-Oj-6Ei"/>
                 <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="Eir-8q-4gH"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" constant="5.5" id="FGq-uc-Zuu"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="FGq-uc-Zuu"/>
                 <constraint firstItem="kri-FR-6oB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="IAO-Vu-thQ"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="HH6-rr-piB" secondAttribute="bottom" id="NYY-Za-uzi"/>
                 <constraint firstAttribute="trailing" secondItem="HH6-rr-piB" secondAttribute="trailing" id="Pdw-GS-Ogy"/>
                 <constraint firstItem="HH6-rr-piB" firstAttribute="top" secondItem="gbO-nT-ul8" secondAttribute="bottom" constant="13" id="RLe-Wx-h6l"/>
                 <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Y1Y-uo-A7A"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZSc-1x-T7c"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="gbO-nT-ul8" secondAttribute="bottom" constant="14.5" id="ZiN-44-MU2"/>
-                <constraint firstItem="gbO-nT-ul8" firstAttribute="top" secondItem="Bm5-Vj-4Ri" secondAttribute="bottom" id="cjm-Q0-U7l"/>
-                <constraint firstItem="HH6-rr-piB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dQX-5Z-JqK"/>
-                <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="eyF-3I-VOf"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="136.5" id="gNe-rh-HU7"/>
-                <constraint firstAttribute="trailing" secondItem="HH6-rr-piB" secondAttribute="trailing" id="hNn-3Q-tUN"/>
                 <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="kPs-aD-4Pq"/>
                 <constraint firstItem="gbO-nT-ul8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r5v-Hg-Xv6"/>
                 <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rRW-Fl-6bf"/>
                 <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="reb-UE-W8E"/>
                 <constraint firstItem="HH6-rr-piB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uyh-ne-7Zm"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="dQX-5Z-JqK"/>
-                    <exclude reference="hNn-3Q-tUN"/>
-                    <exclude reference="5AM-nN-KM6"/>
-                    <exclude reference="8ts-gg-xqT"/>
-                    <exclude reference="Cco-CU-4pB"/>
-                    <exclude reference="E66-nX-gOA"/>
-                    <exclude reference="E8c-Oj-6Ei"/>
-                    <exclude reference="NYY-Za-uzi"/>
-                    <exclude reference="ZSc-1x-T7c"/>
-                    <exclude reference="ZiN-44-MU2"/>
-                    <exclude reference="eyF-3I-VOf"/>
-                    <exclude reference="gNe-rh-HU7"/>
-                    <exclude reference="cjm-Q0-U7l"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="298" y="256"/>
         </view>
     </objects>

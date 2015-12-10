@@ -37,12 +37,10 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
-       groupTableView.tableFooterView = UIView();
-       groupTableView.separatorStyle = .None
+        self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
+       
+        groupTableView.tableFooterView = UIView();
+        groupTableView.separatorStyle = .None
         self.name.text = transactionName
 
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
@@ -85,6 +83,18 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
 //                self.finishSwipe(tableView, cell: cell, direction: 2)
 //            }
 //        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
     }
     
     func willEnterForeground(notification: NSNotification!) {
