@@ -24,10 +24,7 @@ class SwipedTransactionsViewController : UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadData()
-            self.tableView.reloadData()
-        }
+
     }
     
     override func viewDidLoad() {
@@ -50,7 +47,13 @@ class SwipedTransactionsViewController : UIViewController {
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
         monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Spending"
         
-        //self.loadData()
+       
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.loadData()
+            self.tableView.reloadData()
+        }
+        
         tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
@@ -90,9 +93,11 @@ extension SwipedTransactionsViewController {
         for trans in actedUponItems {
             if trans.name == current_name {
                 // Approved items
+                
+                
                 if trans.status == 1 {
                     
-                    print("Worth IT \(current_index) - \(trans.name)")
+                    print("Worth IT \(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].worthCount = charlieGroupListFiltered[current_index].worthCount + 1
                     charlieGroupListFiltered[current_index].worthValue = charlieGroupListFiltered[current_index].worthValue + trans.amount
                     
@@ -102,53 +107,66 @@ extension SwipedTransactionsViewController {
                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                     
                 }
+                    
                 // Flagged items
                 else if trans.status == 2 {
                     
-                     print("NOT Worth IT \(current_index) - \(trans.name)")
-                    charlieGroupListFiltered[current_index].notWorthCount = charlieGroupListFiltered[current_index].notWorthCount + 1
-                    charlieGroupListFiltered[current_index].notWorthValue = charlieGroupListFiltered[current_index].notWorthValue + trans.amount
+                    print("NOT Worth IT \(current_index) - \(trans.name) \(trans.status)")
+                    charlieGroupListFiltered[current_index].notWorthCount += 1
+                    charlieGroupListFiltered[current_index].notWorthValue += trans.amount
                     
                           charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
                     
-                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
+                     charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                     
                     
                 }
                else if trans.status  ==  -1 || trans.status ==  0 {
-                    print("NOT SWIPED\(current_index) - \(trans.name)")
+                    print("NOT SWIPED\(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].notSwipedCount += 1
-                    charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
+                    charlieGroupListFiltered[current_index].notSwipedValue += trans.amount
+                   charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 }
+            
+                
+                
             }
             else {                
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
+                
+                
+                
+                
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: WORTH IT \(current_index) - \(trans.name)")
+                    print("create new group: WORTH IT \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else if trans.status == 2 {
                     cGroup.notWorthCount += 1
                     cGroup.notWorthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: NOT WORTH IT \(current_index) - \(trans.name)")
+                    print("create new group: NOT WORTH IT \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else if trans.status ==  -1 || trans.status ==  0 {
                     cGroup.notSwipedCount += 1
                     cGroup.notSwipedValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: NOT SWIPED \(current_index) - \(trans.name)")
+                    print("create new group: NOT SWIPED \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else {
                     // not added to the list
                 }
+                
+                
+                
                 if cGroup.transactions - cGroup.notSwipedCount < 1 {
                     cGroup.happyPercentage = 0
+                    cGroup.totalAmount = cGroup.totalAmount + trans.amount
                 }
                 else {
                     cGroup.happyPercentage = Int((Double(cGroup.worthCount) / Double((cGroup.transactions)) * 100))
@@ -175,13 +193,17 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()
+            print("ROWCOUNT \(self.charlieGroupListFiltered.count)")
+
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
     func changeTransactionType(type: TransactionType) {
         self.filterBy(self.filterType)
-        self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
@@ -202,7 +224,14 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
                 return $0.totalAmount > $1.totalAmount
             }
         }
-
+        
+        else if (sortFilter == .FilterByName) {
+            self.charlieGroupListFiltered.sortInPlace {
+                return $0.name < $1.name
+            }
+        }
+            
+            
         else if (sortFilter == .FilterByDescendingDate) {
             self.charlieGroupListFiltered.sortInPlace {
                 return $0.lastDate > $1.lastDate

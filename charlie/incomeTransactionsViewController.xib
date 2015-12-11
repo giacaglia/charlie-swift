@@ -4,9 +4,15 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Montserrat-Light.otf">
+            <string>Montserrat-Light</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="incomeTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
+                <outlet property="monthLabel" destination="I4a-kb-ulQ" id="mMV-4e-5Dc"/>
                 <outlet property="tableView" destination="j4f-Lb-eaV" id="OPF-tC-3oZ"/>
                 <outlet property="view" destination="7VA-X1-cAP" id="QFu-c9-clm"/>
             </connections>
@@ -17,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="j4f-Lb-eaV">
-                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                    <rect key="frame" x="0.0" y="114" width="600" height="486"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -25,15 +31,43 @@
                         <outlet property="delegate" destination="-1" id="aZ4-vt-y6S"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HzI-fQ-UT8">
+                    <rect key="frame" x="0.0" y="64" width="600" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Income" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4a-kb-ulQ">
+                            <rect key="frame" x="270.5" y="15" width="60" height="19.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="16"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="I4a-kb-ulQ" firstAttribute="centerX" secondItem="HzI-fQ-UT8" secondAttribute="centerX" id="9lG-Sl-aYQ"/>
+                        <constraint firstItem="I4a-kb-ulQ" firstAttribute="centerY" secondItem="HzI-fQ-UT8" secondAttribute="centerY" id="GYc-zr-RkL"/>
+                        <constraint firstAttribute="height" constant="50" id="ymX-hz-mw0"/>
+                    </constraints>
+                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="HzI-fQ-UT8" firstAttribute="top" secondItem="7VA-X1-cAP" secondAttribute="top" constant="64" id="2hi-md-gsE"/>
                 <constraint firstAttribute="trailing" secondItem="j4f-Lb-eaV" secondAttribute="trailing" id="3Xg-rd-PnM"/>
                 <constraint firstItem="j4f-Lb-eaV" firstAttribute="leading" secondItem="7VA-X1-cAP" secondAttribute="leading" id="8xp-vv-tZB"/>
                 <constraint firstItem="j4f-Lb-eaV" firstAttribute="top" secondItem="7VA-X1-cAP" secondAttribute="top" constant="64" id="O0Z-Ss-Ngh"/>
                 <constraint firstAttribute="bottom" secondItem="j4f-Lb-eaV" secondAttribute="bottom" id="Qjf-aT-mMm"/>
+                <constraint firstItem="j4f-Lb-eaV" firstAttribute="top" secondItem="HzI-fQ-UT8" secondAttribute="bottom" id="YOf-xF-Kso"/>
+                <constraint firstAttribute="trailing" secondItem="HzI-fQ-UT8" secondAttribute="trailing" id="qsm-Bm-Nkq"/>
+                <constraint firstItem="HzI-fQ-UT8" firstAttribute="leading" secondItem="7VA-X1-cAP" secondAttribute="leading" id="wWP-IZ-yL6"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="O0Z-Ss-Ngh"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="259" y="207"/>
         </view>
     </objects>

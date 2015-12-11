@@ -14,7 +14,7 @@ class charlieGroup {
     var lastDate:        String
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0
-    var notSwipedCount:   Int    = 0
+    var notSwipedCount:  Int    = 0
     var worthValue:      Double = 0
     var notSwipedValue:      Double = 0
     var notWorthValue:   Double = 0

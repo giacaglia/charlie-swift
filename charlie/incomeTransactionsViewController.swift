@@ -10,15 +10,28 @@ import RealmSwift
 
 class incomeTransactionsViewController : UIViewController {
     @IBOutlet weak var tableView: UITableView!
+   
+   
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    
+    @IBOutlet weak var monthLabel: UILabel!
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
     var incomeItems = realm.objects(Transaction)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Your Income"
+        self.title = "Worth It?"
         
         loadData()
+        
+        let monthFormatter = NSDateFormatter()
+        monthFormatter.dateFormat = "MM"
+        let stringMonth = monthFormatter.stringFromDate(self.startDate)
+        monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Income"
+
+        
+        
         
         tableView.tableFooterView = UIView()
         tableView.registerClass(IncomeTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
@@ -48,6 +61,12 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return incomeItems.count   //charlieGroupListFiltered.count
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 94
+    }
+    
+    
 }
 
 class IncomeTransactionCell : UITableViewCell {
@@ -69,14 +88,14 @@ class IncomeTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 22, 270, 20)
-        nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
-        nameLabel.textColor = UIColor(red: 116/255.0, green: 116/255.0, blue: 116/255.0, alpha: 1.0)
+        nameLabel.frame = CGRectMake(14, 37, 220, 20)
+        nameLabel.font = UIFont(name: "Montserrat", size: 16.0)
+        nameLabel.textColor = UIColor.darkGrayColor()
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  80, 22, 80, 18)
-        amountLabel.font = UIFont.systemFontOfSize(16.0)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  100, 37, 100, 20)
+        amountLabel.font = UIFont(name: "Montserrat", size: 20.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
     }

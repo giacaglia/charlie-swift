@@ -19,6 +19,7 @@ var inboxPredicate = NSPredicate() //items yet to be processed
 var approvedPredicate = NSPredicate() // items marked as worth it
 var flaggedPredicate = NSPredicate() // items makes as not worth it
 var actedUponPredicate = NSPredicate() // items marked as either worth it or not worth it
+var happyPredicate = NSPredicate()
 var waitingToProcessPredicate = NSPredicate() // items set to -1 and could be processed if users chooses to load more
 var groupedPredicate = NSPredicate()
 var charlieGroupList = [charlieGroup]()
@@ -355,6 +356,8 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         
         
         inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
+        happyPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 1 or status = 2", startDate, endDate)
+        
         approvedPredicate = NSPredicate(format: "status = 1")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
         waitingToProcessPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = -1", startDate, endDate)
@@ -649,6 +652,10 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         else if indexPath.row == transactionItems.count + 1 {
             print("Show Happy")
             //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+            
+            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+            endDate = startDate.endOfMonth()!
+
             
             let RVC = RewardViewController()
             RVC.view.backgroundColor = lightBlue
