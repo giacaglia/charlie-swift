@@ -38,7 +38,6 @@
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
             <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -804,64 +803,26 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bV-DS-PsV">
-                                                    <rect key="frame" x="285" y="43" width="30" height="3"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteRightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="tHq-lG-Xrt">
+                                                    <rect key="frame" x="559" y="34.5" width="12" height="21"/>
                                                     <animations/>
-                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="3" id="k0z-tL-poG"/>
-                                                        <constraint firstAttribute="width" constant="30" id="psn-QM-GRp"/>
+                                                        <constraint firstAttribute="height" constant="21" id="cUi-gt-eaE"/>
+                                                        <constraint firstAttribute="width" constant="12" id="pwz-W9-0nW"/>
                                                     </constraints>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA2-QQ-Zmg">
-                                                    <rect key="frame" x="564" y="26" width="18" height="37"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="30"/>
-                                                    <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="goc-IW-rtg" secondAttribute="trailing" constant="100" id="06c-Oz-eD3"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="OdN-by-ODd" secondAttribute="trailing" constant="12" id="08v-mQ-ta9"/>
-                                                <constraint firstItem="TA2-QQ-Zmg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="26" id="68p-bv-GPK"/>
-                                                <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="3bV-DS-PsV" secondAttribute="bottom" constant="2.5" id="Eqm-7j-ELz"/>
-                                                <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="19" id="IDE-Rl-yBK"/>
-                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="KN0-26-7Xz"/>
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="top" secondItem="tak-DP-gSN" secondAttribute="bottom" constant="3" id="KN1-rx-i5h"/>
                                                 <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="15" id="LB0-9F-MwN"/>
-                                                <constraint firstItem="goc-IW-rtg" firstAttribute="leading" secondItem="tzs-aJ-eah" secondAttribute="leadingMargin" constant="10" id="ND4-tO-SWR"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="TA2-QQ-Zmg" secondAttribute="trailing" constant="10" id="PLo-Gb-4Sm"/>
-                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="TPT-Fy-Wje"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="tak-DP-gSN" secondAttribute="bottom" constant="17.5" id="Viw-c0-rZs"/>
                                                 <constraint firstItem="tak-DP-gSN" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="Xtr-5O-Wko"/>
-                                                <constraint firstItem="TA2-QQ-Zmg" firstAttribute="centerY" secondItem="tzs-aJ-eah" secondAttribute="centerY" id="YtV-vI-A1g"/>
-                                                <constraint firstItem="OdN-by-ODd" firstAttribute="top" secondItem="tak-DP-gSN" secondAttribute="bottom" id="faT-d0-rTQ"/>
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="centerX" secondItem="tak-DP-gSN" secondAttribute="centerX" id="gJH-cu-U2P"/>
-                                                <constraint firstItem="tak-DP-gSN" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="19" id="i4X-Hn-hFj"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="10" id="kN3-zG-z1R"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="tak-DP-gSN" secondAttribute="trailing" constant="10" id="o2b-Nb-4xJ"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="oYd-uB-a1Q"/>
-                                                <constraint firstItem="3bV-DS-PsV" firstAttribute="top" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="8" id="oZb-Ao-EB9"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="goc-IW-rtg" secondAttribute="bottom" constant="17.5" id="yCm-Xi-Tuf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tHq-lG-Xrt" secondAttribute="trailing" constant="21" id="soy-3q-CQP"/>
+                                                <constraint firstItem="tHq-lG-Xrt" firstAttribute="centerY" secondItem="tzs-aJ-eah" secondAttribute="centerY" id="stp-sW-Ovb"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="06c-Oz-eD3"/>
-                                                    <exclude reference="IDE-Rl-yBK"/>
-                                                    <exclude reference="ND4-tO-SWR"/>
-                                                    <exclude reference="yCm-Xi-Tuf"/>
-                                                    <exclude reference="Eqm-7j-ELz"/>
-                                                    <exclude reference="Viw-c0-rZs"/>
-                                                    <exclude reference="i4X-Hn-hFj"/>
-                                                    <exclude reference="o2b-Nb-4xJ"/>
-                                                    <exclude reference="08v-mQ-ta9"/>
-                                                    <exclude reference="faT-d0-rTQ"/>
-                                                    <exclude reference="TPT-Fy-Wje"/>
-                                                    <exclude reference="68p-bv-GPK"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
@@ -1869,6 +1830,7 @@
         <image name="iTunesArtwork" width="512" height="512"/>
         <image name="mcafee-1" width="127" height="47"/>
         <image name="sad_on" width="36" height="36"/>
+        <image name="whiteRightArrow" width="12" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="euX-y7-kZF"/>

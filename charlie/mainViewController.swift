@@ -725,15 +725,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 {
                     cellHappy.rewardName.text = "All transactions completed for your\nHappy Flow"
                 }
-                
-               
-                
                 return cellHappy
             }
             else
             {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
-                cellReward.rewardName.text = rewardNames[rewardIndex]
+                cellReward.rewardName.text = rewardNames[rewardIndex].uppercaseString
                 
                 if rewardIndex == 1 {
                     if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite) {
@@ -751,44 +748,46 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     //set background
-                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if happyFlowChange >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
-                        imageView.backgroundColor = lightGreen
+                        aroundImageView.backgroundColor = lightGreen
                     }
                     else {
                         imageView.image = UIImage(named: "negativeSpending")
-                        imageView.backgroundColor = lightRed
+                        aroundImageView.backgroundColor = lightRed
                     }
                     cellReward.backgroundView = UIView()
-                    cellReward.backgroundView!.addSubview(imageView)
+                    aroundImageView.addSubview(imageView)
+                    cellReward.backgroundView!.addSubview(aroundImageView)
                 }
-            
-            
                 if rewardIndex == 2 {
-                    cellReward.currentAmount.text = "\(formatCurrency(totalIncome))"
+                    cellReward.currentAmount.text = "$" + totalIncome.format(".0")
                     if (changeIncome.isNaN || changeIncome.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
                     else {
                         cellReward.prevAmount.text = "\(Int(changeIncome))% from prev month"
                     }
-                    //set background
-                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    
+                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if changeIncome >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
-                        imageView.backgroundColor   = lightGreen
+                        aroundImageView.backgroundColor = lightGreen
                     }
                     else {
                         imageView.image = UIImage(named: "negativeSpending")
-                        imageView.backgroundColor   = lightRed
+                        aroundImageView.backgroundColor = lightRed
                     }
                     cellReward.backgroundView = UIView()
-                    cellReward.backgroundView!.addSubview(imageView)
+                    aroundImageView.addSubview(imageView)
+                    cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 
                 if rewardIndex == 3 {
-                    cellReward.currentAmount.text = "\(formatCurrency(totalSpending))"
+                    cellReward.currentAmount.text = "$" + totalSpending.format(".0")
                     if (changeSpending.isNaN || changeSpending.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
@@ -796,20 +795,22 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(changeSpending))% from prev month"
                     }
                     //set background
-                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    if changeSpending <= 0 {
+                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
+                    if changeSpending >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
-                        imageView.backgroundColor   = lightGreen
+                        aroundImageView.backgroundColor = lightGreen
                     }
                     else {
                         imageView.image = UIImage(named: "negativeSpending")
-                        imageView.backgroundColor   = lightRed
+                        aroundImageView.backgroundColor = lightRed
                     }
                     cellReward.backgroundView = UIView()
-                    cellReward.backgroundView!.addSubview(imageView)
+                    aroundImageView.addSubview(imageView)
+                    cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 if rewardIndex == 4 {
-                    cellReward.currentAmount.text = "\(formatCurrency(totalCashFlow))"
+                    cellReward.currentAmount.text = "$" + totalCashFlow.format(".0")
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = "n/a"
                     }
@@ -818,17 +819,19 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     //set background
-                    let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if changeCashFlow >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
-                        imageView.backgroundColor   = lightGreen
+                        aroundImageView.backgroundColor = lightGreen
                     }
                     else {
-                         imageView.image = UIImage(named: "negativeSpending")
-                         imageView.backgroundColor   = lightRed
+                        imageView.image = UIImage(named: "negativeSpending")
+                        aroundImageView.backgroundColor = lightRed
                     }
                     cellReward.backgroundView = UIView()
-                    cellReward.backgroundView!.addSubview(imageView)
+                    aroundImageView.addSubview(imageView)
+                    cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 cellReward.selectionStyle = UITableViewCellSelectionStyle.None
                 return cellReward
@@ -858,7 +861,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let rewardIndex =  indexPath.row - transactionItems.count
         if rewardIndex > 0 {
-            return 150
+            return 160
         }
         else {
             return 94

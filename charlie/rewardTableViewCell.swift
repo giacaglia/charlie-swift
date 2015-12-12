@@ -9,10 +9,7 @@
 import UIKit
 
 class rewardTableViewCell: UITableViewCell {
-    
-   
     @IBOutlet weak var prevAmount: UILabel!
     @IBOutlet weak var currentAmount: UILabel!
     @IBOutlet weak var rewardName: UILabel!
-    
 }
