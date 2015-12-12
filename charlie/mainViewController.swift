@@ -797,7 +797,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     //set background
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                    if changeSpending >= 0 {
+                    if changeSpending < 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
                     }
@@ -810,7 +810,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 if rewardIndex == 4 {
-                    cellReward.currentAmount.text = "$" + totalCashFlow.format(".0")
+                    if (totalCashFlow < 0) {
+                        cellReward.currentAmount.text = "-$" + (-totalCashFlow).format(".0")
+                    }
+                    else {
+                        cellReward.currentAmount.text = "$" + totalCashFlow.format(".0")
+                    }
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = "n/a"
                     }
@@ -821,7 +826,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     //set background
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                    if changeCashFlow >= 0 {
+                    if totalCashFlow >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
                     }

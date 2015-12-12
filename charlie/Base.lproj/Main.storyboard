@@ -804,7 +804,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteRightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="tHq-lG-Xrt">
-                                                    <rect key="frame" x="559" y="34.5" width="12" height="21"/>
+                                                    <rect key="frame" x="567" y="34.5" width="12" height="21"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cUi-gt-eaE"/>
@@ -820,7 +820,7 @@
                                                 <constraint firstItem="OdN-by-ODd" firstAttribute="centerX" secondItem="tak-DP-gSN" secondAttribute="centerX" id="gJH-cu-U2P"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="top" secondItem="tzs-aJ-eah" secondAttribute="topMargin" constant="10" id="kN3-zG-z1R"/>
                                                 <constraint firstItem="goc-IW-rtg" firstAttribute="centerX" secondItem="tzs-aJ-eah" secondAttribute="centerX" id="oYd-uB-a1Q"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="tHq-lG-Xrt" secondAttribute="trailing" constant="21" id="soy-3q-CQP"/>
+                                                <constraint firstAttribute="trailing" secondItem="tHq-lG-Xrt" secondAttribute="trailing" constant="21" id="soy-3q-CQP"/>
                                                 <constraint firstItem="tHq-lG-Xrt" firstAttribute="centerY" secondItem="tzs-aJ-eah" secondAttribute="centerY" id="stp-sW-Ovb"/>
                                             </constraints>
                                         </tableViewCellContentView>
