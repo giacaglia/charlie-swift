@@ -752,16 +752,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    var image:UIImage!
                     if happyFlowChange >= 0 {
-                        image = UIImage(named: "positiveIncome")
+                        imageView.image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor = lightGreen
                     }
                     else {
-                        image = UIImage(named: "negativeSpending")
+                        imageView.image = UIImage(named: "negativeSpending")
                         imageView.backgroundColor = lightRed
                     }
-                    imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
                 }
@@ -777,17 +775,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    var image:UIImage!
                     if changeIncome >= 0 {
-                        image = UIImage(named: "positiveIncome")
+                        imageView.image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
                     }
                     else {
-                        image = UIImage(named: "negativeSpending")
+                        imageView.image = UIImage(named: "negativeSpending")
                         imageView.backgroundColor   = lightRed
                     }
-                    
-                    imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
                 }
@@ -802,16 +797,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    var image:UIImage!
                     if changeSpending <= 0 {
-                        image = UIImage(named: "positiveIncome")
+                        imageView.image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
                     }
                     else {
-                        image = UIImage(named: "negativeSpending")
+                        imageView.image = UIImage(named: "negativeSpending")
                         imageView.backgroundColor   = lightRed
                     }
-                    imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
                 }
@@ -826,17 +819,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     
                     //set background
                     let imageView = UIImageView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    var image:UIImage!
                     if changeCashFlow >= 0 {
-                        image = UIImage(named: "positiveIncome")
+                        imageView.image = UIImage(named: "positiveIncome")
                         imageView.backgroundColor   = lightGreen
                     }
                     else {
-                         image = UIImage(named: "negativeSpending")
+                         imageView.image = UIImage(named: "negativeSpending")
                          imageView.backgroundColor   = lightRed
                     }
-                   
-                    imageView.image = image
                     cellReward.backgroundView = UIView()
                     cellReward.backgroundView!.addSubview(imageView)
                 }

@@ -38,16 +38,10 @@ class SwipedTransactionsViewController : UIViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
         self.title = "Worth It?"
         
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/yy"
-       
-
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
         monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Spending"
-        
-       
         
         dispatch_async(dispatch_get_main_queue()) {
             self.loadData()
@@ -93,50 +87,30 @@ extension SwipedTransactionsViewController {
         for trans in actedUponItems {
             if trans.name == current_name {
                 // Approved items
-                
-                
                 if trans.status == 1 {
-                    
                     print("Worth IT \(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].worthCount = charlieGroupListFiltered[current_index].worthCount + 1
                     charlieGroupListFiltered[current_index].worthValue = charlieGroupListFiltered[current_index].worthValue + trans.amount
-                    
-                          charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
-                    
-                    
+                    charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
-                    
                 }
-                    
                 // Flagged items
                 else if trans.status == 2 {
-                    
                     print("NOT Worth IT \(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].notWorthCount += 1
                     charlieGroupListFiltered[current_index].notWorthValue += trans.amount
-                    
-                          charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
-                    
+                    charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
-                    
-                    
                 }
                else if trans.status  ==  -1 || trans.status ==  0 {
                     print("NOT SWIPED\(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].notSwipedCount += 1
                     charlieGroupListFiltered[current_index].notSwipedValue += trans.amount
-                   charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
+                    charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 }
-            
-                
-                
             }
             else {                
                 let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
-                
-                
-                
-                
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
@@ -161,9 +135,6 @@ extension SwipedTransactionsViewController {
                 else {
                     // not added to the list
                 }
-                
-                
-                
                 if cGroup.transactions - cGroup.notSwipedCount < 1 {
                     cGroup.happyPercentage = 0
                     cGroup.totalAmount = cGroup.totalAmount + trans.amount
@@ -175,11 +146,8 @@ extension SwipedTransactionsViewController {
                 
             }
             current_name = trans.name
-            
         }
     }
-    
-   
 }
 
 extension SwipedTransactionsViewController : ChangeFilterProtocol {
@@ -286,6 +254,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         viewController!.startDate = self.startDate
         viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
         viewController!.endDate = self.endDate
+        self.navigationController?.navigationBar.hidden = false
         self.navigationController?.pushViewController(viewController!, animated: true)
     }
     
@@ -328,12 +297,12 @@ class GroupTransactionCell : UITableViewCell {
         numberTransactionsLabel.textAlignment = .Left
         self.contentView.addSubview(numberTransactionsLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  80, 27, 80, 18)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  80, 27, 60, 18)
         amountLabel.font = UIFont.systemFontOfSize(16.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
         
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 49, 80, 18)
+        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 49, 60, 18)
         dollarLabel.font = UIFont(name: "Montserrat-Light", size: 14.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right

@@ -38,7 +38,9 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
-       
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.navigationBar.barStyle = .Default
         groupTableView.tableFooterView = UIView();
         groupTableView.separatorStyle = .None
         self.name.text = transactionName
