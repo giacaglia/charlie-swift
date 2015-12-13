@@ -133,7 +133,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
-
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha: 1.0)
         //get month range for transactions
         let atCount =  allTransactionItems.count
         if atCount > 0 {

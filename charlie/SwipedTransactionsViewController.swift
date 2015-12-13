@@ -23,8 +23,6 @@ class SwipedTransactionsViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-
     }
     
     override func viewDidLoad() {
@@ -32,7 +30,7 @@ class SwipedTransactionsViewController : UIViewController {
         
         let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
         button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
-        button.addTarget(self, action: "didTouchFilterButton:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "didTouchFilter:", forControlEvents: .TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
@@ -55,7 +53,7 @@ class SwipedTransactionsViewController : UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
     }
     
-    func didTouchFilterButton(sender: AnyObject) {
+    func didTouchFilter(sender: AnyObject) {
         let topViewController = self.navigationController
         if topViewController == nil {
             return
@@ -76,10 +74,10 @@ class SwipedTransactionsViewController : UIViewController {
 
 extension SwipedTransactionsViewController {
     private func loadData() {
+        charlieGroupListFiltered = [charlieGroup]()
         var current_name = ""
-        let sortProperties : Array<SortDescriptor>!
-        
-        sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+
+        let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
@@ -249,13 +247,17 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController
+        guard let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController else {
+            return
+        }
         
-        viewController!.startDate = self.startDate
-        viewController!.transactionName =  charlieGroupListFiltered[indexPath.row].name
-        viewController!.endDate = self.endDate
-        self.navigationController?.navigationBar.hidden = false
-        self.navigationController?.pushViewController(viewController!, animated: true)
+        viewController.startDate = self.startDate
+        viewController.transactionName =  charlieGroupListFiltered[indexPath.row].name
+        viewController.endDate = self.endDate
+        self.presentViewController(viewController, animated: true) { () -> Void in
+            
+        }
+//        self.navigationController?.pushViewController(viewController!, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -306,7 +308,7 @@ class GroupTransactionCell : UITableViewCell {
         dollarLabel.font = UIFont(name: "Montserrat-Light", size: 14.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right
-        self.contentView.addSubview(dollarLabel)
+        self.contentView.addSubview(dollarLabel)    
     }
     
 }

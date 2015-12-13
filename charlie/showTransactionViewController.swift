@@ -120,10 +120,9 @@ class showTransactionViewController: UIViewController {
             
         }
         else {
-           try! realm.write {
-            self.transaction!.status = 2
+            try! realm.write {
+                self.transaction!.status = 2
             }
-
             self.navigationController!.popViewControllerAnimated(true)
         }
     }

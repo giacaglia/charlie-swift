@@ -8,7 +8,7 @@
 import RealmSwift
 import UIKit
 
-class groupDetailViewController: UIViewController, UITableViewDataSource {
+class groupDetailViewController: UIViewController {
     
     @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
     @IBOutlet weak var name: UILabel!
@@ -38,9 +38,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationController?.navigationBar.hidden = false
-        self.navigationController?.navigationBar.barStyle = .Default
+
         groupTableView.tableFooterView = UIView();
         groupTableView.separatorStyle = .None
         self.name.text = transactionName
@@ -58,7 +56,7 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         else {
             self.transactionCount.text = "\(transactionItems.count) transactions"
         }
-        let happyPercentage = calculateHappy()
+        let happyPercentage = self.calculateHappy()
         if (happyPercentage >= 50) {
             self.happyPercentage.textColor = listGreen
         }
@@ -68,23 +66,6 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         self.happyPercentage.text = "\(happyPercentage)%"
         
         happyAmount = happyItems.sum("amount")
-//        removeCellBlockLeft = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-//            if self.stateOfTable == .WorthTable {
-//                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-//            }
-//            else {
-//                self.finishSwipe(tableView, cell: cell, direction: 1)
-//            }
-//        }
-//        
-//        removeCellBlockRight = {(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell) -> Void in
-//            if self.stateOfTable == .NotWorthTable {
-//                tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
-//            }
-//            else {
-//                self.finishSwipe(tableView, cell: cell, direction: 2)
-//            }
-//        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -125,41 +106,24 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         
         happyAmount = happyItems.sum("amount")
       
-        self.happyPercentage.text = "\(calculateHappy())%"
+        self.happyPercentage.text = "\(self.calculateHappy())%"
     }
-    
-    func setAttribText(message1:NSString, message2:NSString, button:UIButton, backGroundColor:UIColor, textColor:UIColor, textColor2:UIColor) {
-        button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        button.titleLabel?.textAlignment = NSTextAlignment.Center
-        let buttonText: NSString = "\(message1)\n\(message2)"
-        button.backgroundColor = backGroundColor
-        
-        //getting the range to separate the button title strings
-        let newlineRange: NSRange = buttonText.rangeOfString("\n")
-        
-        //getting both substrings
-        var substring1: NSString = ""
-        var substring2: NSString = ""
-        
-        if newlineRange.location != NSNotFound {
-            substring1 = buttonText.substringToIndex(newlineRange.location)
-            substring2 = buttonText.substringFromIndex(newlineRange.location)
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "groupToDetail") {
+            let viewController = segue.destinationViewController as! showTransactionViewController
+            let indexPath = groupTableView.indexPathForSelectedRow
+            viewController.transaction = transactionItems[indexPath!.row]
+            viewController.transactionIndex = indexPath!.row
+            viewController.sourceVC = "happy"
         }
-        
-        let attrs = [NSFontAttributeName : UIFont(name: "Avenir Next", size: 20.0)!]
-        let attrString = NSMutableAttributedString(string: substring1 as String, attributes: attrs)
-        let attrString1 = NSMutableAttributedString(string: substring2 as String, attributes: attrs)
-        
-        attrString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSRange(location:0,length:substring1.length))
-        attrString1.addAttribute(NSForegroundColorAttributeName, value: textColor2, range: NSRange(location:0,length:substring2.length))
-        
-        //appending both attributed strings
-        attrString.appendAttributedString(attrString1)
-        
-        //assigning the resultant attributed strings to the button
-        button.setAttributedTitle(attrString, forState: UIControlState.Normal)
     }
-    
+    @IBAction func closeButtonPressed(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension groupDetailViewController {
     func calculateHappy() -> Int {
         var happy = 0
         var sad = 0
@@ -176,35 +140,16 @@ class groupDetailViewController: UIViewController, UITableViewDataSource {
         }
         return Int((Double(happy) / Double((happy + sad)) * 100))
     }
-    
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "groupToDetail") {
-            let viewController = segue.destinationViewController as! showTransactionViewController
-            let indexPath = groupTableView.indexPathForSelectedRow
-            viewController.transaction = transactionItems[indexPath!.row]
-            viewController.transactionIndex = indexPath!.row
-            viewController.sourceVC = "happy"
-        }
-    }
-    
-    //actions
-    @IBAction func closeButtonPressed(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
 }
 
 // TableView Methods
-extension groupDetailViewController {
+extension groupDetailViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactionItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
-//        cell.firstLeftAction = SBGestureTableViewGroupCellAction(icon: checkImage!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
-//        cell.firstRightAction = SBGestureTableViewGroupCellAction(icon: flagImage!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
-    
         let trans = transactionItems[indexPath.row]
         let dateString = cHelp.convertDateGroup(trans.date)
         let currencyString = cHelp.formatCurrency(trans.amount)
@@ -213,7 +158,6 @@ extension groupDetailViewController {
         if trans.status == 2 { cell.transactionAmount.textColor = listRed }
         else if trans.status == 1 { cell.transactionAmount.textColor = listGreen }
         else { cell.transactionAmount.textColor = mediumGray }
-        
         return cell
     }
     
