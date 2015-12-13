@@ -17,7 +17,8 @@ class SwipedTransactionsViewController : UIViewController {
     @IBOutlet weak var tableView: UITableView!
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
-    
+    let sortVC = SortViewController()
+
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
     
@@ -35,7 +36,10 @@ class SwipedTransactionsViewController : UIViewController {
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
         self.title = "Worth It?"
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: "dismissSort")
+        SwipedTransactionsViewController.blackView.addGestureRecognizer(tapGesture)
+        self.sortVC.delegate = self
+
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
@@ -58,16 +62,22 @@ class SwipedTransactionsViewController : UIViewController {
         if topViewController == nil {
             return
         }
-        let sortVC = SortViewController()
-        sortVC.initialFilterType = self.filterType
-        sortVC.delegate = self
+        self.sortVC.initialFilterType = self.filterType
         let height = self.view.frame.size.height*0.8
-        sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        self.sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        SwipedTransactionsViewController.blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        topViewController!.view.addSubview(SwipedTransactionsViewController.blackView)
+        
         topViewController!.addChildViewController(sortVC)
         topViewController!.view.addSubview(sortVC.view)
         UIView.animateWithDuration(0.5) { () -> Void in
-            sortVC.view.frame = CGRectMake(0, 0, sortVC.view.frame.width, height)
+            self.sortVC.view.frame = CGRectMake(0, 0, self.sortVC.view.frame.width, height)
         }
+    }
+    
+    func dismissSort() {
+        self.sortVC.closePressed(self)
+//        self.presentingViewController?.dismissViewControllerAnimated(<#T##flag: Bool##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
     }
     
 }
@@ -254,10 +264,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         viewController.startDate = self.startDate
         viewController.transactionName =  charlieGroupListFiltered[indexPath.row].name
         viewController.endDate = self.endDate
-        self.presentViewController(viewController, animated: true) { () -> Void in
-            
-        }
-//        self.navigationController?.pushViewController(viewController!, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
