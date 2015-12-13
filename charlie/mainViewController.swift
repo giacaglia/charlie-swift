@@ -747,6 +747,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
                     }
                     
+                    cellReward.whiteArrow.hidden = false
                     //set background
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
@@ -771,6 +772,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(changeIncome))% from prev month"
                     }
                     
+                    cellReward.whiteArrow.hidden = false
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if changeIncome >= 0 {
@@ -794,7 +796,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     else {
                         cellReward.prevAmount.text = "\(Int(changeSpending))% from prev month"
                     }
-                    //set background
+
+                    cellReward.whiteArrow.hidden = false
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if changeSpending < 0 {
@@ -823,7 +826,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(changeCashFlow))% from prev month"
                     }
                     
-                    //set background
+                    cellReward.whiteArrow.hidden = true
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
                     if totalCashFlow >= 0 {
