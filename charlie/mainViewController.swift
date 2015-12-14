@@ -170,7 +170,10 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         self.collectionView.backgroundColor = UIColor.whiteColor()
         
+      
         self.loadTransactionTable()
+        self.collectionView.reloadData()
+      
     }
     
     
@@ -389,10 +392,23 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 self.makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
+               
+                let atCount =  allTransactionItems.count
+                if atCount > 0 {
+                    let lastTrans = allTransactionItems[0].date as NSDate
+                    let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
+                    self.monthDiff = lastTrans.monthsFrom(firstTrans)
+                }
+
+                 dispatch_async(dispatch_get_main_queue()) {
                 self.transactionsTable.reloadData()
-            //    self.setInboxTitle(true)
+                self.collectionView.reloadData()
+                }
+                
+                //    self.setInboxTitle(true)
                 self.spinner.stopAnimating()
                 self.toastView.hidden = true
+
             }
         }
     }
@@ -571,7 +587,7 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
             (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
         dispatch_async(dispatch_get_main_queue()) {
-            //collectionView.reloadItemsAtIndexPaths([indexPath])
+            //eloadItemsAtIndexPaths([indexPath])
             collectionView.reloadData()
             self.transactionsTable.reloadData()
         }
@@ -714,17 +730,22 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 
                 if self.moreItems.count > 20
                 {
-                    cellHappy.rewardName.text = "Show 20 more of \(self.moreItems.count) transactions to complete for your\nHappy Flow"
+                    cellHappy.rewardName.text = "Show 20 more of \(self.moreItems.count) transactions to complete for your Happy Flow"
                 }
 
                 else if self.moreItems.count > 0 && self.moreItems.count < 20
                 {
-                    cellHappy.rewardName.text = "Show \(self.moreItems.count) more transaction to complete for your\n Happy Flow"
+                    cellHappy.rewardName.text = "Show \(self.moreItems.count) more transaction to complete for your Happy Flow"
+                }
+                else if self.moreItems.count == 0 && transactionItems.count > 0
+                {
+                    cellHappy.rewardName.text = "Swipe the \(transactionItems.count) transaction(s) above to complete for your Happy Flow"
                 }
                 else
                 {
-                    cellHappy.rewardName.text = "All transactions completed for your\nHappy Flow"
+                    cellHappy.rewardName.text = "All current transactions completed for your Happy Flow"
                 }
+
                 return cellHappy
             }
             else
