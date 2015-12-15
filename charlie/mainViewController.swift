@@ -102,7 +102,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     }
     
     func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
+        //cHelp.splashImageView(self.view)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -270,7 +270,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             if self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeRight") == nil {
-                    let refreshAlert = UIAlertController(title: "Swipe Right", message: "To see your transactions that were worth it, select the tab on the bottom right.)", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "My Spending", message: "Tap on My Spending (bottom of the list) to view all your transactions for the current month.", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 1)
                         defaults.setObject("yes", forKey: "firstSwipeRight")
@@ -294,7 +294,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             if  self.inboxType == .InboxTransaction {
                 if defaults.stringForKey("firstSwipeLeft") == nil {
-                    let refreshAlert = UIAlertController(title: "Swipe Left", message: "To see your transactions that were not worth it, select the tab on the bottom right.", preferredStyle: UIAlertControllerStyle.Alert)
+                    let refreshAlert = UIAlertController(title: "Happy Flow", message: "Great job -  keep swiping your transactions to stay on top of purchases that were not worth it.", preferredStyle: UIAlertControllerStyle.Alert)
                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 2)
                         defaults.setObject("yes", forKey: "firstSwipeLeft")

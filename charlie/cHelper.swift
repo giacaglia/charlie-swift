@@ -536,14 +536,14 @@ class cHelper {
     }
     
     func splashImageView(view:UIView) {
-        let imageView = UIImageView(frame: view.frame)
-        let image = UIImage(named: "iTunesArtwork")
-        imageView.backgroundColor = UIColor.whiteColor()
-        imageView.image = image
-        imageView.autoresizingMask = [UIViewAutoresizing.FlexibleBottomMargin, UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleRightMargin, UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleTopMargin, UIViewAutoresizing.FlexibleWidth]
-        imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        imageView.tag = 86
-        view.addSubview(imageView)
+//        let imageView = UIImageView(frame: view.frame)
+//        let image = UIImage(named: "iTunesArtwork")
+//        imageView.backgroundColor = UIColor.whiteColor()
+//        imageView.image = image
+//        imageView.autoresizingMask = [UIViewAutoresizing.FlexibleBottomMargin, UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleRightMargin, UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleTopMargin, UIViewAutoresizing.FlexibleWidth]
+//        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+//        imageView.tag = 86
+//        view.addSubview(imageView)
     }
     
     func getKey() -> NSData {
