@@ -9,7 +9,6 @@ import RealmSwift
 import UIKit
 
 class groupDetailViewController: UIViewController {
-    
     @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!

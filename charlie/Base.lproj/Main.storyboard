@@ -1542,7 +1542,7 @@
         <!--Group Detail View Controller-->
         <scene sceneID="gXC-nU-IIg">
             <objects>
-                <viewController storyboardIdentifier="groupDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="6HP-qy-ipb" customClass="groupDetailViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="groupDetailViewController" id="6HP-qy-ipb" customClass="groupDetailViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jUu-ja-NhM"/>
                         <viewControllerLayoutGuide type="bottom" id="qMF-em-sGl"/>
@@ -1688,8 +1688,6 @@
                             <constraint firstItem="D66-Ny-b9O" firstAttribute="top" secondItem="71d-0f-Vcl" secondAttribute="bottom" constant="10" id="z39-7r-EWv"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="groupTableView" destination="Fz0-S7-Riw" id="gsi-xN-rry"/>
                         <outlet property="happyPercentage" destination="xJi-iw-PAW" id="XBb-AE-9cp"/>
@@ -1700,7 +1698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eTn-ng-0Zj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="211" y="3103"/>
+            <point key="canvasLocation" x="265" y="3127"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EMx-Ys-Lxq">
