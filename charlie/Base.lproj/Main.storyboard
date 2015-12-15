@@ -1451,18 +1451,18 @@
                                     <constraint firstAttribute="height" constant="150" id="bRF-Of-EPy"/>
                                 </constraints>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeC-bx-wVP">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeC-bx-wVP">
                                 <rect key="frame" x="300" y="116" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
                                 <rect key="frame" x="30" y="84" width="540" height="24.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
                                 <rect key="frame" x="70" y="150" width="114" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="KOi-nr-ZVo"/>
@@ -1473,7 +1473,7 @@
                                     <action selector="notWorth:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="DvU-82-K2s"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
                                 <rect key="frame" x="416" y="150" width="114" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="7np-bH-12P"/>
@@ -1625,7 +1625,7 @@
                                     <constraint firstAttribute="height" constant="1" id="fpK-r6-0BA"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Fz0-S7-Riw" customClass="SBGestureTableViewGroup" customModule="charlie" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Fz0-S7-Riw" customClass="SBGestureTableViewGroup" customModule="charlie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="280" width="600" height="320"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1634,7 +1634,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nr9-mW-r0f" id="ujT-bk-NNn">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSt-Xg-v3D">
@@ -1734,7 +1734,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="euX-y7-kZF"/>
-        <segue reference="X9z-ju-lxa"/>
         <segue reference="swt-fH-1dv"/>
+        <segue reference="pkc-wO-zVL"/>
     </inferredMetricsTieBreakers>
 </document>

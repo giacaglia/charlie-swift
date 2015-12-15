@@ -474,6 +474,7 @@
 				88E6209F1BB476330060ED28 /* SignUp */,
 				880B116A1BE68BB800BB2064 /* MainViewController */,
 				09435D411B38B42F006E126B /* showCardsViewController.swift */,
+				09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */,
 				094EDB751C0CCD68001462E4 /* happyTableViewCell.swift */,
 				09435D441B38B43F006E126B /* cardTableViewCell.swift */,
 				09401F031C0E0918002DBBEB /* rewardTableViewCell.swift */,
@@ -481,7 +482,6 @@
 				095414AE1B45E91D00682172 /* addAccountViewController.swift */,
 				45E0F2101B5E7E660005B234 /* revealViewController.swift */,
 				45E0F2361B6918420005B234 /* passcodeViewController.swift */,
-				09167F161B8B6CA30093BA53 /* groupDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

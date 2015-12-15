@@ -22,9 +22,6 @@ class SwipedTransactionsViewController : UIViewController {
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,16 +42,17 @@ class SwipedTransactionsViewController : UIViewController {
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
         monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Spending"
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadData()
-            self.tableView.reloadData()
-        }
-        
         tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
         tableView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.loadData()
+        self.tableView.reloadData()
     }
     
     func didTouchFilter(sender: AnyObject) {

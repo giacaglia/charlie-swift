@@ -65,9 +65,8 @@ class showTransactionViewController: UIViewController {
         }
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd, YYYY" //format style. Browse online to get a format that fits your needs.
-        let dateString = dateFormatter.stringFromDate(trans.date)
-        dateLabel.text = dateString
+        dateFormatter.dateFormat = "MMM dd, YYYY"
+        dateLabel.text = dateFormatter.stringFromDate(trans.date)
 
         // Fix name: Terrible name
         if let categories = trans.categories {

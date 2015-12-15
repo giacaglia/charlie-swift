@@ -40,13 +40,11 @@ class groupDetailViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
 
         groupTableView.tableFooterView = UIView();
-        groupTableView.separatorStyle = .None
-        self.name.text = transactionName
 
+        self.name.text = transactionName
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate, self.endDate, transactionName)
         transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
-        
         
         happyItems = transactionItems.sorted("date", ascending: true)
         
@@ -56,6 +54,12 @@ class groupDetailViewController: UIViewController {
         else {
             self.transactionCount.text = "\(transactionItems.count) transactions"
         }
+    
+        happyAmount = happyItems.sum("amount")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         let happyPercentage = self.calculateHappy()
         if (happyPercentage >= 50) {
             self.happyPercentage.textColor = listGreen
@@ -64,14 +68,14 @@ class groupDetailViewController: UIViewController {
             self.happyPercentage.textColor = listRed
         }
         self.happyPercentage.text = "\(happyPercentage)%"
-        
-        happyAmount = happyItems.sum("amount")
+
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        self.groupTableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
