@@ -613,10 +613,23 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         
         realm.beginWrite()
         transactionItems[indexPath.row].status = direction
+        
+         let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
+        
 
         transactionsTable.removeCell(cell, duration: 0.3) { () -> Void in
-            (self.currentMonthHappyPercentage, self.happyFlowChange) =  self.cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
+           
+            var currentMonth = false
+            
+            if selectedCollectioncCellIndex  == 0
+            {
+                currentMonth = true
+            }
+            
+            
+            (self.currentMonthHappyPercentage, self.happyFlowChange) =  self.cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: currentMonth)
             self.transactionsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: transactionItems.count + 1, inSection: 0)], withRowAnimation: .None)
+            
         }
         try! realm.commitWrite()
         let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
