@@ -147,6 +147,15 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
     
     
     @IBAction func nextButtonPressed(sender: AnyObject) {
+        self.validateEmail()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.validateEmail()
+        return true
+    }
+    
+    func validateEmail() {
         if isValidEmail(emailAddress.text!) {
             // Register for notifications
             let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
