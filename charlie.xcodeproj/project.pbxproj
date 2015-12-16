@@ -1309,7 +1309,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1011a6bb-49c8-4a2a-aaad-bdc31c590cae";
+				PROVISIONING_PROFILE = "e98345c1-044e-47d1-a16f-a9ebcbc52a86";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1333,7 +1333,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1011a6bb-49c8-4a2a-aaad-bdc31c590cae";
+				PROVISIONING_PROFILE = "e98345c1-044e-47d1-a16f-a9ebcbc52a86";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
