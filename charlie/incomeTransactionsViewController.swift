@@ -10,13 +10,10 @@ import RealmSwift
 
 class incomeTransactionsViewController : UIViewController {
     @IBOutlet weak var tableView: UITableView!
-   
-   
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    
     @IBOutlet weak var monthLabel: UILabel!
-    var startDate:NSDate = NSDate()
-    var endDate:NSDate = NSDate()
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    var startDate = NSDate()
+    var endDate = NSDate()
     var incomeItems = realm.objects(Transaction)
 
     override func viewDidLoad() {
@@ -30,9 +27,7 @@ class incomeTransactionsViewController : UIViewController {
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
         monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Income"
 
-        
-        
-        
+
         tableView.tableFooterView = UIView()
         tableView.registerClass(IncomeTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
@@ -54,7 +49,7 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView .dequeueReusableCellWithIdentifier(IncomeTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! IncomeTransactionCell
         cell.nameLabel.text = incomeItems[indexPath.row].name
-        cell.amountLabel.text = "\(incomeItems[indexPath.row].amount)"
+        cell.amountLabel.text = incomeItems[indexPath.row].amount.format(".2")
         return cell
     }
     
@@ -65,8 +60,6 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94
     }
-    
-    
 }
 
 class IncomeTransactionCell : UITableViewCell {

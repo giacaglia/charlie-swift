@@ -12,10 +12,7 @@ import Charts
 class RewardViewController : UIViewController {
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
-    
     var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
-    
-    
     var typeOfView : RewardType = .HappyFlowType
     enum RewardType  {
        case HappyFlowType, CashFlowType, TripLocationsType
@@ -39,6 +36,16 @@ class RewardViewController : UIViewController {
             let cashFlow = fillUpWithCashFlow(self.chartView!)
             happyRewardPercentage.text = "$\(cashFlow)"
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.backgroundColor = lightBlue
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
     }
     
     @IBAction func closePressed(sender: AnyObject) {

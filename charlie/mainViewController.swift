@@ -54,7 +54,6 @@ protocol MainViewControllerDelegate {
 }
 
 class mainViewController: UIViewController, MainViewControllerDelegate {
-    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -283,12 +282,17 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 }
                 else {
                     self.finishSwipe(tableView, cell: cell, direction: 1)
+//                    self.finish
                 }
             }
             else {
                 //swiping not acted on
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+//            })
+           
         }
         
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
@@ -313,6 +317,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             else {
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
+          
         }
         
         transactionsTable.backgroundColor = UIColor.clearColor()
@@ -557,16 +562,11 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
             let date = NSDate().dateByAddingMonths(-indexPath.row)
             cell.monthLabel.text = date!.monthString()
         
-            if selectedCollectioncCellIndex == indexPath.row
-            {
-                //cell.backgroundColor = lightBlue
+            if selectedCollectioncCellIndex == indexPath.row {
                 cell.monthLabel.font = UIFont(name: "Montserrat-Bold", size: 18)!
-                
             }
-            else
-            {
+            else {
                 cell.monthLabel.font = UIFont(name: "Montserrat-Light", size: 18)!
-                //cell.backgroundColor = lightGray
             }
         
             return cell
@@ -608,14 +608,17 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     
     private func updateTableAt(indexPath indexPath: NSIndexPath, direction: Int) {
         currentTransactionSwipeID = transactionItems[indexPath.row]._id
-        let cell = transactionsTable.cellForRowAtIndexPath(indexPath) as? SBGestureTableViewCell
+        let cell = transactionsTable.cellForRowAtIndexPath(indexPath) as! SBGestureTableViewCell
         currentTransactionCell = cell
         
         realm.beginWrite()
         transactionItems[indexPath.row].status = direction
-        transactionsTable.removeCell(cell!, duration: 0.3, completion: nil)
+
+        transactionsTable.removeCell(cell, duration: 0.3) { () -> Void in
+            (self.currentMonthHappyPercentage, self.happyFlowChange) =  self.cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
+            self.transactionsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: transactionItems.count + 1, inSection: 0)], withRowAnimation: .None)
+        }
         try! realm.commitWrite()
-      //  self.setInboxTitle(true)
         let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
         
         if direction == 1 {
@@ -632,6 +635,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 self.showReward()
             }
         }
+      
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -667,11 +671,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
         else if indexPath.row == transactionItems.count + 1 {
             print("Show Happy")
-            //self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
-            
             startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
             endDate = startDate.endOfMonth()!
-
             
             let RVC = RewardViewController()
             RVC.view.backgroundColor = lightBlue
@@ -711,9 +712,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             SVC.endDate = endDate
 
             self.navigationController?.pushViewController(SVC, animated: true)
-        }
-        else {
-            
         }
     }
     
@@ -850,7 +848,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     cellReward.whiteArrow.hidden = true
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                    if totalCashFlow >= 0 {
+                    if changeCashFlow >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
                     }
@@ -874,9 +872,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
         cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         
-        cell.amountCellLabel.text = cHelp.formatCurrency(trans.amount)
+        cell.amountCellLabel.text = "-" + trans.amount.format(".2")
         cell.amountCellLabel.textColor = listBlue
-        cell.amountCellLabel.font = UIFont.systemFontOfSize(18.0)
+        cell.amountCellLabel.font = UIFont(name: "Montserrat", size: 22.0)
 
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EE, MMM dd " //format style. Browse online to get a format that fits your needs.

@@ -10,12 +10,10 @@ import UIKit
 
 
 class SBGestureTableViewCell: UITableViewCell {
-
     var actionIconsFollowSliding = true
     var actionIconsMargin: CGFloat = 20.0
     var leftActionNormalColor = lightGreen
     var rightActionNormalColor = lightRed
-
     
     var leftSideView = SBGestureTableViewCellSideView()
     var rightSideView = SBGestureTableViewCellSideView()
