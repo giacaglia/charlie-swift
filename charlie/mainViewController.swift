@@ -122,7 +122,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             }
             else {
                 print("Still waiting")
-                //they finished tutorial and account has still not loaded - something until data is loaded
+                //they finished tutorial and account has still not loaded - show something until data is loaded
             }
         }
        
@@ -132,14 +132,15 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha:
+            1.0)
+
+        
         //get month range for transactions
-        let atCount =  allTransactionItems.count
-        if atCount > 0 {
-            let lastTrans = allTransactionItems[0].date as NSDate
-            let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
-            monthDiff = lastTrans.monthsFrom(firstTrans)
-        }
+                    //need to show only full month worth of data
+
+        
+        monthDiff = getMonthCountOfData()
         
         //get data for report cards
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
@@ -173,6 +174,33 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.loadTransactionTable()
         self.collectionView.reloadData()
       
+    }
+    
+    
+    
+    func getMonthCountOfData() -> Int
+    {
+        let atCount =  allTransactionItems.count
+        var monthReturn:Int = 0
+        
+        if atCount > 0
+        {
+            let lastTrans = allTransactionItems[0].date as NSDate
+            let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
+            
+            let months = lastTrans.monthsFrom(firstTrans)
+            if months > 2 //if we have a bunch of months
+            {
+                monthReturn = lastTrans.monthsFrom(firstTrans)  - 1
+            }
+            else
+            {
+                monthReturn = 1
+            }
+            
+        }
+       
+       return monthReturn
     }
     
     
@@ -398,14 +426,9 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                
-                let atCount =  allTransactionItems.count
-                if atCount > 0 {
-                    let lastTrans = allTransactionItems[0].date as NSDate
-                    let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
-                    self.monthDiff = lastTrans.monthsFrom(firstTrans)
-                }
-
-                 dispatch_async(dispatch_get_main_queue()) {
+                self.monthDiff = self.getMonthCountOfData()
+                
+                dispatch_async(dispatch_get_main_queue()) {
                 self.transactionsTable.reloadData()
                 self.collectionView.reloadData()
                 }
