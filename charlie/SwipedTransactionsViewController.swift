@@ -183,36 +183,41 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
     
     private func filterBy(sortFilter: SortFilterType) {
         if (sortFilter == .FilterByMostWorth) {
-            self.charlieGroupListFiltered.sortInPlace {
+           self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
                 return $0.happyPercentage > $1.happyPercentage
             }
         }
         else if (sortFilter == .FilterByLeastWorth) {
-            self.charlieGroupListFiltered.sortInPlace {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+
                 return $0.happyPercentage < $1.happyPercentage
             }
         }
 
         else if (sortFilter == .FilterByAmount) {
-            self.charlieGroupListFiltered.sortInPlace {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+
                 return $0.totalAmount > $1.totalAmount
             }
         }
         
         else if (sortFilter == .FilterByName) {
-            self.charlieGroupListFiltered.sortInPlace {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+
                 return $0.name < $1.name
             }
         }
             
             
         else if (sortFilter == .FilterByDescendingDate) {
-            self.charlieGroupListFiltered.sortInPlace {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+
                 return $0.lastDate > $1.lastDate
             }
         }
         else if (sortFilter == .FilterByDate) {
-            self.charlieGroupListFiltered.sortInPlace {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+
                 return $0.lastDate < $1.lastDate
             }
         }

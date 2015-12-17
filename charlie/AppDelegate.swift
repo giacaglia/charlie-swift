@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 James Caralis. All rights reserved.
 //
 
-import CoreData
+
 import Fabric
 import Crashlytics
 import UIKit
