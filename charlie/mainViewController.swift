@@ -129,6 +129,16 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
        // transactionsTable.reloadData()
     }
     
+    
+    func calculateReports() -> Void
+    {
+        //bad programming setting a local global... need to fix
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
@@ -143,8 +153,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         monthDiff = getMonthCountOfData()
         
         //get data for report cards
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
+       calculateReports()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -246,15 +255,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             setPredicates(true, startMonth: NSDate())
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             areThereMoreItemsToLoad = moreTransactionforLoading()
-            
-            
-            //            if transactionItems.count == 0
-            //            {
-            //                areThereMoreItemsToLoad = true
-            //                // print ("OUT OF TRANSACTIONS")
-            //                //makeOnlyFirstNElementsVisible()
-            //
-            //            }
             addAccountButton.hidden = true
             accountAddView.hidden = true
             //refresh accounts
@@ -427,6 +427,11 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                
                 self.monthDiff = self.getMonthCountOfData()
+                
+                self.areThereMoreItemsToLoad = self.moreTransactionforLoading()
+                
+                self.calculateReports()
+                
                 
                 dispatch_async(dispatch_get_main_queue()) {
                 self.transactionsTable.reloadData()
