@@ -551,13 +551,13 @@
 		0916204C1B2F28740004C781 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				88033FE91C1694D8004D5599 /* GothamMedium.otf */,
+				88033FE71C168700004D5599 /* Montserrat-Light.otf */,
 				099ACE491B3268390044A068 /* Montserrat-Bold.ttf */,
-				091620551B2F8B5A0004C781 /* GothamRounded-Book.otf */,
 				099ACE4B1B3268520044A068 /* Montserrat-Regular.ttf */,
+				091620551B2F8B5A0004C781 /* GothamRounded-Book.otf */,
+				88033FE91C1694D8004D5599 /* GothamMedium.otf */,
 				091620561B2F8B5A0004C781 /* GothamRounded-Light.otf */,
 				091620531B2F3B3D0004C781 /* Gotham-Light.ttf */,
-				88033FE71C168700004D5599 /* Montserrat-Light.otf */,
 				091620511B2F2E350004C781 /* Gotham-XLight.ttf */,
 				0916204D1B2F28910004C781 /* Inconsolata-Bold.ttf */,
 				0916204E1B2F28910004C781 /* Inconsolata-Regular.ttf */,

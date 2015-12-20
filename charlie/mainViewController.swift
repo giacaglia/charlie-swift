@@ -657,7 +657,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             
             (self.currentMonthHappyPercentage, self.happyFlowChange) =  self.cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: currentMonth)
             self.transactionsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: transactionItems.count + 1, inSection: 0)], withRowAnimation: .None)
-            
         }
         try! realm.commitWrite()
         let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
