@@ -30,6 +30,9 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
         loadAllPages()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,18 +54,50 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
          // Load the pages that are now on screen
         let pageWidth = scrollView.frame.size.width
-        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        let page = Int(floor((scrollView.contentOffset.x) / (pageWidth)))
+        switch page {
+        case 0:
+            self.nextButton.backgroundColor = listBlue
+            self.nextButton.setTitle("Start Tutorial", forState: .Normal)
+            self.nextButton.setImage(nil, forState: .Normal)
+        case 1:
+            self.nextButton.backgroundColor = UIColor.whiteColor()
+            self.nextButton.setTitle("", forState: .Normal)
+            self.nextButton.setImage(UIImage(named: "blue_next"), forState: .Normal)
+            self.nextButton.tintColor = listBlue
+        case 2:
+            self.nextButton.backgroundColor = UIColor.whiteColor()
+            self.nextButton.setTitle("", forState: .Normal)
+            self.nextButton.setImage(UIImage(named: "red_next"), forState: .Normal)
+            self.nextButton.tintColor = listRed
+        case 3:
+            self.nextButton.backgroundColor = UIColor.whiteColor()
+            self.nextButton.setTitle("", forState: .Normal)
+            self.nextButton.setImage(UIImage(named: "green_next"), forState: .Normal)
+            self.nextButton.tintColor = listGreen
+        case 4:
+            self.nextButton.backgroundColor = listBlue
+            self.nextButton.setTitle("Start Swiping", forState: .Normal)
+            self.nextButton.setImage(nil, forState: .Normal)
+        default:
+            break
+        }
     }
     
     @IBAction func didPressNext(sender: AnyObject) {
         let pageWidth = self.scrollView.frame.size.width
-        let page = Int(floor((self.scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-//        self.scrollView.
-    }
-    
-    @IBAction func closeButtonPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-        charlieAnalytics.track("App Tutorial Completed")
+        let page : CGFloat = (self.scrollView.contentOffset.x) / (pageWidth)
+        
+        if page < 4 {
+            var frame = scrollView.frame
+            frame.origin.x = frame.size.width * (page + 1.0);
+            frame.origin.y = 0;
+            scrollView.scrollRectToVisible(frame, animated: true)
+        }
+        else {
+            dismissViewControllerAnimated(true, completion: nil)
+            charlieAnalytics.track("App Tutorial Completed")
+        }
     }
     
     

@@ -318,7 +318,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHM-8m-i8b">
-                                <rect key="frame" x="0.0" y="20" width="600" height="490"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="510"/>
                                 <connections>
                                     <outlet property="delegate" destination="5XY-Qr-2zh" id="rNx-Tq-zId"/>
                                 </connections>
@@ -330,11 +330,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                         <color key="backgroundColor" red="0.51372549020000002" green="0.71764705880000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="19"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Start tutorial">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="closeButtonPressed:" destination="5XY-Qr-2zh" eventType="touchUpInside" id="wWp-4P-zFb"/>
                                             <action selector="didPressNext:" destination="5XY-Qr-2zh" eventType="touchUpInside" id="dyV-fH-6se"/>
                                         </connections>
                                     </button>
@@ -364,7 +364,7 @@
                             <constraint firstAttribute="trailing" secondItem="fHM-8m-i8b" secondAttribute="trailing" id="2cL-PP-lgx"/>
                             <constraint firstItem="bhe-XB-zv7" firstAttribute="top" secondItem="fHM-8m-i8b" secondAttribute="bottom" id="35q-ag-CfS"/>
                             <constraint firstItem="fHM-8m-i8b" firstAttribute="leading" secondItem="ZBM-Rh-cO7" secondAttribute="leading" id="3rz-Jp-k5G"/>
-                            <constraint firstItem="fHM-8m-i8b" firstAttribute="top" secondItem="ZBM-Rh-cO7" secondAttribute="top" constant="20" id="CiV-fC-OGc"/>
+                            <constraint firstItem="fHM-8m-i8b" firstAttribute="top" secondItem="ZBM-Rh-cO7" secondAttribute="top" id="CiV-fC-OGc"/>
                             <constraint firstItem="bhe-XB-zv7" firstAttribute="top" secondItem="fHM-8m-i8b" secondAttribute="bottom" id="dxc-oa-uEC"/>
                             <constraint firstAttribute="trailing" secondItem="bhe-XB-zv7" secondAttribute="trailing" id="fCB-Ee-T4Z"/>
                         </constraints>
