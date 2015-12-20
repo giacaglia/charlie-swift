@@ -9,7 +9,7 @@
 import UIKit
 
 
-class TutorialCardViewController: UIViewController {
+class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
     var pageImages: [UIImage] = []
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nextButton: UIButton!
@@ -48,8 +48,16 @@ class TutorialCardViewController: UIViewController {
             scrollView.addSubview(newPageView)
         }
     }
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+         // Load the pages that are now on screen
+        let pageWidth = scrollView.frame.size.width
+        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+    }
     
     @IBAction func didPressNext(sender: AnyObject) {
+        let pageWidth = self.scrollView.frame.size.width
+        let page = Int(floor((self.scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+//        self.scrollView.
     }
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
