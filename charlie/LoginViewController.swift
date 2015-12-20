@@ -13,15 +13,15 @@ var realm = try! Realm()
 let users = realm.objects(User)
 var cHelp = cHelper()
 
-class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScreenSetupViewControllerDelegate {
+class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerDelegate {
     
     @IBOutlet weak var emailAddress: UITextField!
-    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var pinSetValidated = false
     var access_token = ""
     var email_address = ""
     var keyChainStore = KeychainHelper()
+    var nextButton = UIButton()
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
@@ -54,6 +54,14 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
     override func viewDidLoad() {
         super.viewDidLoad()
         emailAddress.delegate = self
+       
+        nextButton = UIButton(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 80))
+        nextButton.backgroundColor = listBlue
+        nextButton.setTitle("Next", forState: .Normal)
+        nextButton.addTarget(self, action: "didPressNext", forControlEvents: .TouchUpInside)
+        nextButton.titleLabel?.font = UIFont(name: "Montserrat-ExtraBold", size: 20)
+//        nextButton.hidden = true
+        emailAddress.inputAccessoryView = nextButton
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,7 +98,7 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
             self.activityIndicator.startAnimating()
             self.emailAddress.enabled = false
-            self.nextButton.enabled = false
+            self.nextButton.hidden = false
             charlieAnalytics.track("Account Recovered")
             
             //get categories
@@ -146,17 +154,13 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
     }
     
     
-    @IBAction func nextButtonPressed(sender: AnyObject) {
+    func didPressNext() {
         self.validateEmail()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.validateEmail()
-        return true
-    }
-    
+   
     func validateEmail() {
-        if isValidEmail(emailAddress.text!) {
+        if emailAddress.text!.isValidEmail() {
             // Register for notifications
             let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
             let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
@@ -178,11 +182,6 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
         }
     }
     
-    func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
-    }
     
     func createUser(email:String) {
         let user = User()
@@ -200,5 +199,15 @@ class loginViewController: UIViewController, UITextFieldDelegate, ABPadLockScree
         else {
             UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy")!)
         }
+    }
+}
+
+extension LoginViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.validateEmail()
+        return true
+    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        return true
     }
 }

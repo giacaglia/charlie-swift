@@ -43,7 +43,7 @@
 		09C2A7501B21F0AD005A40DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A74E1B21F0AD005A40DA /* Main.storyboard */; };
 		09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7511B21F0AD005A40DA /* Images.xcassets */; };
 		09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7531B21F0AD005A40DA /* LaunchScreen.xib */; };
-		09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* loginViewController.swift */; };
+		09C2A76B1B238EFB005A40DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A76A1B238EFB005A40DA /* LoginViewController.swift */; };
 		09CA4D721B71915300D4F63D /* persistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA4D711B71915300D4F63D /* persistenceStore.swift */; };
 		09ED67B51C15D935006F03AC /* incomeTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */; };
 		09ED67B71C15D9F6006F03AC /* incomeTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */; };
@@ -266,7 +266,7 @@
 		09C2A7511B21F0AD005A40DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09C2A7541B21F0AD005A40DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		09C2A75F1B21F0AD005A40DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09C2A76A1B238EFB005A40DA /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
+		09C2A76A1B238EFB005A40DA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		09CA4D711B71915300D4F63D /* persistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = persistenceStore.swift; sourceTree = "<group>"; };
 		09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = incomeTransactionsViewController.xib; sourceTree = "<group>"; };
 		09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = incomeTransactionsViewController.swift; sourceTree = "<group>"; };
@@ -878,7 +878,7 @@
 				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
 				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
 				09C2A74C1B21F0AD005A40DA /* tutorialViewController.swift */,
-				09C2A76A1B238EFB005A40DA /* loginViewController.swift */,
+				09C2A76A1B238EFB005A40DA /* LoginViewController.swift */,
 			);
 			name = SignUp;
 			sourceTree = "<group>";
@@ -1072,7 +1072,7 @@
 				456049FB1B71183200C37B9D /* MPSwizzler.m in Sources */,
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
 				88A295221BB598AC0091A36B /* ABPadLockScreenView.m in Sources */,
-				09C2A76B1B238EFB005A40DA /* loginViewController.swift in Sources */,
+				09C2A76B1B238EFB005A40DA /* LoginViewController.swift in Sources */,
 				456049D11B71183200C37B9D /* MPABTestDesignerClearRequestMessage.m in Sources */,
 				45604A031B71183200C37B9D /* MPUIFontToNSDictionaryValueTransformer.m in Sources */,
 				456049D41B71183200C37B9D /* MPABTestDesignerDeviceInfoRequestMessage.m in Sources */,
