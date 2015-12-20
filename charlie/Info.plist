@@ -48,6 +48,8 @@
 		<string>GothamRounded-Light.otf</string>
 		<string>Montserrat-Bold.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
+		<string>Montserrat-ExtraBold.otf</string>
+		<string>Montserrat-SemiBold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
