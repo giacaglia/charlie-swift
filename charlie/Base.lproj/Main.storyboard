@@ -71,7 +71,7 @@
         <!--Welcome View Controller-->
         <scene sceneID="KQH-Fv-Slh">
             <objects>
-                <viewController id="ZrX-Ji-UKh" customClass="welcomeViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZrX-Ji-UKh" customClass="WelcomeViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="87J-Gj-xaV"/>
                         <viewControllerLayoutGuide type="bottom" id="o0e-ES-hLm"/>
@@ -124,7 +124,7 @@
         <!--Tutorial View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="tutorialViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TutorialViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -305,7 +305,7 @@
         <!--Tutorial Card View Controller-->
         <scene sceneID="1az-hy-Co7">
             <objects>
-                <viewController id="5XY-Qr-2zh" customClass="tutorialCardViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5XY-Qr-2zh" customClass="TutorialCardViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0SP-hQ-KPp"/>
                         <viewControllerLayoutGuide type="bottom" id="fSO-f5-xQM"/>
@@ -1657,7 +1657,7 @@
         <image name="whiteRightArrow" width="12" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MIk-q3-hAj"/>
+        <segue reference="euX-y7-kZF"/>
         <segue reference="swt-fH-1dv"/>
         <segue reference="X9z-ju-lxa"/>
     </inferredMetricsTieBreakers>

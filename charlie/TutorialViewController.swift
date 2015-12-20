@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 
-class tutorialViewController: UIViewController {
+class TutorialViewController: UIViewController {
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var sliderAmount: UILabel!
@@ -19,8 +19,6 @@ class tutorialViewController: UIViewController {
     let blueThumb = UIImage(named: "slider_neutral")
     let redThumb = UIImage(named: "slider_sad")
     let greenThumb = UIImage(named: "slider_happy")
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

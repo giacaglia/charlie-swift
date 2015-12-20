@@ -1,5 +1,5 @@
 //
-//  welcomeViewController.swift
+//  WelcomeViewController.swift
 //  charlie
 //
 //  Created by James Caralis on 7/18/15.
@@ -9,8 +9,7 @@
 import UIKit
 import RealmSwift
 
-class welcomeViewController: UIViewController, UIScrollViewDelegate {
-    
+class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var splashImageView: UIImageView!

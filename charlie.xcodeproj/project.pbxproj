@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043B721B5AB16200B49A7E /* welcomeViewController.swift */; };
+		09043B731B5AB16200B49A7E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043B721B5AB16200B49A7E /* WelcomeViewController.swift */; };
 		090BD3451B25089300F26E78 /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BD3441B25089300F26E78 /* mainViewController.swift */; };
 		090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; };
 		090BD3561B250D2D00F26E78 /* BladeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -39,7 +39,7 @@
 		099ACE4D1B32685C0044A068 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 099ACE4B1B3268520044A068 /* Montserrat-Regular.ttf */; };
 		099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099ACE4E1B3363CA0044A068 /* showTransactionViewController.swift */; };
 		09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A7471B21F0AD005A40DA /* AppDelegate.swift */; };
-		09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A74C1B21F0AD005A40DA /* tutorialViewController.swift */; };
+		09C2A74D1B21F0AD005A40DA /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2A74C1B21F0AD005A40DA /* TutorialViewController.swift */; };
 		09C2A7501B21F0AD005A40DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A74E1B21F0AD005A40DA /* Main.storyboard */; };
 		09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7511B21F0AD005A40DA /* Images.xcassets */; };
 		09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09C2A7531B21F0AD005A40DA /* LaunchScreen.xib */; };
@@ -133,7 +133,7 @@
 		4596990E1BA9E5DC00233C66 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4596990D1BA9E50B00233C66 /* Charts.framework */; };
 		4596990F1BA9E5DC00233C66 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4596990D1BA9E50B00233C66 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */; };
-		45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */; };
+		45C01CB01B4DB19100D34DE8 /* TutorialCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C01CAF1B4DB19100D34DE8 /* TutorialCardViewController.swift */; };
 		45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F2101B5E7E660005B234 /* revealViewController.swift */; };
 		45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2131B613F420005B234 /* Fabric.framework */; };
 		45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E0F2141B613F420005B234 /* Crashlytics.framework */; };
@@ -227,7 +227,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09043B721B5AB16200B49A7E /* welcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = welcomeViewController.swift; sourceTree = "<group>"; };
+		09043B721B5AB16200B49A7E /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		090BD3441B25089300F26E78 /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BladeKit.xcodeproj; path = "BladeKit-iOS/BladeKit.xcodeproj"; sourceTree = "<group>"; };
 		090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 		09C2A7421B21F0AD005A40DA /* charlie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = charlie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09C2A7461B21F0AD005A40DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C2A7471B21F0AD005A40DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		09C2A74C1B21F0AD005A40DA /* tutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tutorialViewController.swift; sourceTree = "<group>"; };
+		09C2A74C1B21F0AD005A40DA /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		09C2A74F1B21F0AD005A40DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09C2A7511B21F0AD005A40DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09C2A7541B21F0AD005A40DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -409,7 +409,7 @@
 		45604A1A1B7266BE00C37B9D /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		459698551BA9E50A00233C66 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Charts.xcodeproj; sourceTree = "<group>"; };
 		45AF27DA1B3B0F3C001BB1CF /* showTypePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showTypePickerViewController.swift; sourceTree = "<group>"; };
-		45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialCardViewController.swift; sourceTree = "<group>"; };
+		45C01CAF1B4DB19100D34DE8 /* TutorialCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCardViewController.swift; sourceTree = "<group>"; };
 		45E0F2101B5E7E660005B234 /* revealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revealViewController.swift; sourceTree = "<group>"; };
 		45E0F2131B613F420005B234 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = ../Fabric.framework; sourceTree = "<group>"; };
 		45E0F2141B613F420005B234 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
@@ -875,10 +875,10 @@
 		88E6209F1BB476330060ED28 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				09043B721B5AB16200B49A7E /* welcomeViewController.swift */,
-				45C01CAF1B4DB19100D34DE8 /* tutorialCardViewController.swift */,
-				09C2A74C1B21F0AD005A40DA /* tutorialViewController.swift */,
+				09043B721B5AB16200B49A7E /* WelcomeViewController.swift */,
+				09C2A74C1B21F0AD005A40DA /* TutorialViewController.swift */,
 				09C2A76A1B238EFB005A40DA /* LoginViewController.swift */,
+				45C01CAF1B4DB19100D34DE8 /* TutorialCardViewController.swift */,
 			);
 			name = SignUp;
 			sourceTree = "<group>";
@@ -1090,13 +1090,13 @@
 				456049FF1B71183200C37B9D /* MPTypeDescription.m in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
-				09C2A74D1B21F0AD005A40DA /* tutorialViewController.swift in Sources */,
+				09C2A74D1B21F0AD005A40DA /* TutorialViewController.swift in Sources */,
 				45604A021B71183200C37B9D /* MPUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */,
 				88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */,
 				45604A061B71183200C37B9D /* MPVariant.m in Sources */,
 				456049CB1B71183200C37B9D /* _MPTweakBindObserver.m in Sources */,
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
-				09043B731B5AB16200B49A7E /* welcomeViewController.swift in Sources */,
+				09043B731B5AB16200B49A7E /* WelcomeViewController.swift in Sources */,
 				45604A0C1B71183200C37B9D /* UIColor+MPColor.m in Sources */,
 				889DF01E1BED3DF600BBB77B /* ReportCardCell.swift in Sources */,
 				456049D01B71183200C37B9D /* MPABTestDesignerChangeResponseMessage.m in Sources */,
@@ -1153,7 +1153,7 @@
 				090BD35E1B25D2F600F26E78 /* SwiftyJSON.swift in Sources */,
 				456049D31B71183200C37B9D /* MPABTestDesignerConnection.m in Sources */,
 				456049E11B71183200C37B9D /* MPCGRectToNSDictionaryValueTransformer.m in Sources */,
-				45C01CB01B4DB19100D34DE8 /* tutorialCardViewController.swift in Sources */,
+				45C01CB01B4DB19100D34DE8 /* TutorialCardViewController.swift in Sources */,
 				456049CE1B71183200C37B9D /* MPAbstractABTestDesignerMessage.m in Sources */,
 				888CA1BD1BF5A16300381E84 /* CardsViewController.swift in Sources */,
 				456049F01B71183200C37B9D /* MPObjectSerializer.m in Sources */,

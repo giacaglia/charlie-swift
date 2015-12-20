@@ -9,7 +9,7 @@
 import UIKit
 
 
-class tutorialCardViewController: UIViewController, UIScrollViewDelegate {
+class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
     var pageImages: [UIImage] = []
     
     @IBOutlet weak var pageControl: UIPageControl!
