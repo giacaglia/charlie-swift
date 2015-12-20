@@ -9,24 +9,20 @@
 import UIKit
 
 
-class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
+class TutorialCardViewController: UIViewController {
     var pageImages: [UIImage] = []
-    
-    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var nextButton: UIButton!
     
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(true)
         pageImages = [
                 UIImage(named: "tutorial_1")!,
+                UIImage(named: "tutorial_2")!,
+                UIImage(named: "tutorial_3")!,
                 UIImage(named: "tutorial_4")!,
-                UIImage(named: "tutorial_5")!,
-                UIImage(named: "tutorial_6")!
+                UIImage(named: "tutorial_5")!
         ]
-        
-        let pageCount = pageImages.count
-        pageControl.currentPage = 0
-        pageControl.numberOfPages = pageCount
    
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(pageImages.count),
             height: scrollView.frame.size.height)
@@ -40,28 +36,21 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
         charlieAnalytics.track("App Tutorial Started")
     }
     
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        // Load the pages that are now on screen
-        let pageWidth = scrollView.frame.size.width
-        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        pageControl.currentPage = page
-    }
-    
-    
     func loadAllPages() {
-        for page in 0..<pageImages.count {
+        for page in 0 ..< pageImages.count {
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
             
             let newPageView = UIImageView(image: pageImages[page])
-            newPageView.contentMode = .ScaleAspectFit
+            newPageView.contentMode = .ScaleAspectFill
             newPageView.frame = frame
             scrollView.addSubview(newPageView)
         }
     }
     
+    @IBAction func didPressNext(sender: AnyObject) {
+    }
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
