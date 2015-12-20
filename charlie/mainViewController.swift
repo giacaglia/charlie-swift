@@ -147,7 +147,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
 
         
         //get month range for transactions
-                    //need to show only full month worth of data
+        //need to show only full month worth of data
 
         
         monthDiff = getMonthCountOfData()
@@ -159,9 +159,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
 
         var image = UIImage(named: "menu")
-        
         image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
 
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : lightBlue]
@@ -179,10 +177,12 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         self.collectionView.backgroundColor = UIColor.whiteColor()
         
-      
+        self.addAccountButton.layer.cornerRadius = 25
+        self.addAccountButton.layer.borderColor = UIColor.clearColor().CGColor
+        self.addAccountButton.layer.borderWidth = 1.0
+        
         self.loadTransactionTable()
         self.collectionView.reloadData()
-      
     }
     
     
