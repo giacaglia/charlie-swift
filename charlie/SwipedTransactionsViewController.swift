@@ -242,19 +242,19 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         }
         
         if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0 {
-            cell.amountLabel.text = "---"
+            cell.amountLabel.text = "-"
             cell.amountLabel.textColor = UIColor(white: 209.0/255.0, alpha: 1.0)
         }
         else {
-            cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
             if charlieGroup.happyPercentage < 50 {
-                cell.amountLabel.textColor = listRed
+                cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "\(charlieGroup.happyPercentage)", color1: listRed, string2: "%", color2:UIColor(white: 209/255.0, alpha: 1.0))
             }
             else {
-                cell.amountLabel.textColor = listGreen
+                cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "\(charlieGroup.happyPercentage)", color1: listGreen, string2: "%", color2:UIColor(white: 209/255.0, alpha: 1.0))
             }
         }
-        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
+//        cell.dollarLabel.text = "\(cHelp.formatCurrency(charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue ))"
+        cell.dollarLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
         return cell
     }
     
