@@ -229,14 +229,18 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         let cell = tableView .dequeueReusableCellWithIdentifier(GroupTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! GroupTransactionCell
         let charlieGroup = charlieGroupListFiltered[indexPath.row]
        
-        cell.nameLabel.text = charlieGroup.name
+        let attrsA = [NSFontAttributeName: UIFont(name: "Montserrat", size: 15.0)!, NSForegroundColorAttributeName: UIColor(white: 74.0/255.0, alpha: 1.0)]
+        let a = NSMutableAttributedString(string:charlieGroup.name, attributes:attrsA)
         if charlieGroup.transactions == 1 {
-            cell.numberTransactionsLabel.text = "1 transaction"
+            cell.nameLabel.attributedText = a
         }
         else {
-            cell.numberTransactionsLabel.text = "\(charlieGroup.transactions) transactions"
+            let attrsB = [NSFontAttributeName: UIFont(name: "Montserrat", size: 15.0)!, NSForegroundColorAttributeName: UIColor(white: 155.0/255.0, alpha: 1.0)]
+            let b = NSAttributedString(string:" (\(charlieGroup.transactions))", attributes:attrsB)
+            a.appendAttributedString(b)
+            cell.nameLabel.attributedText = a
         }
-
+        
         if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0 {
             cell.amountLabel.text = "?"
             cell.amountLabel.textColor = listRed
@@ -277,7 +281,6 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
 
 class GroupTransactionCell : UITableViewCell {
     let nameLabel = UILabel()
-    let numberTransactionsLabel = UILabel()
     let amountLabel = UILabel()
     let dollarLabel = UILabel()
     
@@ -297,17 +300,11 @@ class GroupTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 27, 270, 20)
+        nameLabel.frame = CGRectMake(14, 39, 270, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
-        nameLabel.textColor = UIColor(red: 116/255.0, green: 116/255.0, blue: 116/255.0, alpha: 1.0)
+        nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
-        
-        numberTransactionsLabel.frame = CGRectMake(14, 49, 270, 18)
-        numberTransactionsLabel.font = UIFont.systemFontOfSize(14.0)
-        numberTransactionsLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
-        numberTransactionsLabel.textAlignment = .Left
-        self.contentView.addSubview(numberTransactionsLabel)
         
         amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  60, 27, 60, 18)
         amountLabel.font = UIFont.systemFontOfSize(16.0)
