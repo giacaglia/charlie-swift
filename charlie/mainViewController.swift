@@ -427,15 +427,14 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
                
                 self.monthDiff = self.getMonthCountOfData()
-                
                 self.areThereMoreItemsToLoad = self.moreTransactionforLoading()
                 
                 self.calculateReports()
                 
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                self.transactionsTable.reloadData()
-                self.collectionView.reloadData()
+                    self.transactionsTable.reloadData()
+                    self.collectionView.reloadData()
                 }
                 
                 //    self.setInboxTitle(true)

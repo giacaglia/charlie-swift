@@ -242,8 +242,8 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         }
         
         if (charlieGroup.transactions - charlieGroup.notSwipedCount) == 0 {
-            cell.amountLabel.text = "?"
-            cell.amountLabel.textColor = listRed
+            cell.amountLabel.text = "---"
+            cell.amountLabel.textColor = UIColor(white: 209.0/255.0, alpha: 1.0)
         }
         else {
             cell.amountLabel.text = "\(charlieGroup.happyPercentage)%"
@@ -306,16 +306,17 @@ class GroupTransactionCell : UITableViewCell {
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  60, 27, 60, 18)
-        amountLabel.font = UIFont.systemFontOfSize(16.0)
-        amountLabel.textAlignment = .Right
-        self.contentView.addSubview(amountLabel)
-        
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 49, 80, 18)
-        dollarLabel.font = UIFont(name: "Montserrat-Light", size: 14.0)
+        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 26, 80, 18)
+        dollarLabel.font = UIFont(name: "Montserrat-Light", size: 18.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right
-        self.contentView.addSubview(dollarLabel)    
+        self.contentView.addSubview(dollarLabel)
+        
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  60, 50, 60, 18)
+        amountLabel.font = UIFont(name: "Montserrat", size: 18.0)
+        amountLabel.textAlignment = .Right
+        self.contentView.addSubview(amountLabel)
+
     }
     
 }
