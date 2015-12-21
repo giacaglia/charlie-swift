@@ -39,7 +39,7 @@ class incomeTransactionsViewController : UIViewController {
     private func loadData() {
         // var current_name = ""
         let sortProperties : Array<SortDescriptor>!
-        sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        sortProperties = [SortDescriptor(property: "amount", ascending: true)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -10.00", startDate, endDate)
         incomeItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
     }
@@ -49,7 +49,7 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView .dequeueReusableCellWithIdentifier(IncomeTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! IncomeTransactionCell
         cell.nameLabel.text = incomeItems[indexPath.row].name
-        cell.amountLabel.text = incomeItems[indexPath.row].amount.format(".2")
+        cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (-incomeItems[indexPath.row].amount).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
         return cell
     }
     
@@ -83,12 +83,11 @@ class IncomeTransactionCell : UITableViewCell {
     private func setup() {
         nameLabel.frame = CGRectMake(14, 37, 220, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 16.0)
-        nameLabel.textColor = UIColor.darkGrayColor()
+        nameLabel.textColor = UIColor(white: 74/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
         amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  100, 37, 100, 20)
-        amountLabel.font = UIFont(name: "Montserrat", size: 20.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
     }
