@@ -911,9 +911,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
         cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)
         
-        cell.amountCellLabel.text = "-" + trans.amount.format(".2")
-        cell.amountCellLabel.textColor = listBlue
-        cell.amountCellLabel.font = UIFont(name: "Montserrat", size: 22.0)
+        cell.amountCellLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 22.0)!, string1: "-", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: trans.amount.format(".2"), color2: listBlue)
+
 
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EE, MMM dd " //format style. Browse online to get a format that fits your needs.
