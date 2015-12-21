@@ -709,13 +709,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             }
         }
         else if indexPath.row == transactionItems.count + 1 {
-            print("Show Happy")
-            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
-            endDate = startDate.endOfMonth()!
-            
-            let RVC = RewardViewController()
-            RVC.view.backgroundColor = lightBlue
-            self.navigationController?.pushViewController(RVC, animated: true)
+//            print("Show Happy")
+//            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+//            endDate = startDate.endOfMonth()!
+//            
+//            let RVC = RewardViewController()
+//            RVC.view.backgroundColor = lightBlue
+//            self.navigationController?.pushViewController(RVC, animated: true)
+            return
         }
        
         else if indexPath.row == transactionItems.count + 2 {
@@ -805,7 +806,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
                     }
                     
-                    cellReward.whiteArrow.hidden = false
+                    cellReward.whiteArrow.hidden = true
                     //set background
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
@@ -872,10 +873,10 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 if rewardIndex == 4 {
                     if (totalCashFlow < 0) {
-                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("-$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("- ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     else {
-                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("+ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = "n/a"
