@@ -822,7 +822,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 if rewardIndex == 2 {
-                    cellReward.currentAmount.text = "$" + totalIncome.format(".0")
+                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalIncome.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeIncome.isNaN || changeIncome.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
@@ -847,7 +847,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 if rewardIndex == 3 {
-                    cellReward.currentAmount.text = "$" + totalSpending.format(".0")
+                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalSpending.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeSpending.isNaN || changeSpending.isInfinite) {
                         cellReward.prevAmount.text = "n/a"
                     }
@@ -872,10 +872,10 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 if rewardIndex == 4 {
                     if (totalCashFlow < 0) {
-                        cellReward.currentAmount.text = "-$" + (-totalCashFlow).format(".0")
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("-$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     else {
-                        cellReward.currentAmount.text = "$" + totalCashFlow.format(".0")
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = "n/a"
@@ -991,8 +991,6 @@ class AddMoreCell : UITableViewCell {
         centralLabel.text = "show more transactions"
         self.contentView.addSubview(centralLabel)
     }
-    
-    
 }
 
 extension mainViewController : UIViewControllerPreviewingDelegate {

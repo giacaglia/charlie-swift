@@ -77,6 +77,15 @@ extension NSAttributedString {
         a.appendAttributedString(b)
         return a
     }
+    
+    static func twoFontsAttributedString(string1: String, font1: UIFont, color1: UIColor, string2: String, font2: UIFont, color2: UIColor) -> NSAttributedString {
+        let attrsA = [NSFontAttributeName: font1, NSForegroundColorAttributeName: color1]
+        let a = NSMutableAttributedString(string:string1, attributes:attrsA)
+        let attrsB = [NSFontAttributeName: font2, NSForegroundColorAttributeName: color2]
+        let b = NSAttributedString(string:string2, attributes:attrsB)
+        a.appendAttributedString(b)
+        return a
+    }
 }
 
 extension UIColor {

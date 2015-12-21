@@ -427,4 +427,11 @@ extension Double {
     func format(f: String) -> String {
         return NSString(format: "%\(f)f", self) as String
     }
+    
+    func commaFormatted() -> String {
+        let integer = Int(self)
+        let fmt = NSNumberFormatter()
+        fmt.numberStyle = .DecimalStyle
+        return fmt.stringFromNumber(integer)!
+    }
 }
