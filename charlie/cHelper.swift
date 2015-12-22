@@ -101,7 +101,7 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getCashFlow(startMonth: NSDate, isCurrentMonth:Bool) -> (cashFlowTotal: Double, Double, Double, Double, Double, Double) {
+    func getCashFlow(startMonth: NSDate, isCurrentMonth:Bool) -> (cashFlowTotal: Double, Double, Double, Double, Double, changeIncome: Double) {
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -188,9 +188,9 @@ class cHelper {
             }
         }
     
-        let moneySpentChange = ((moneySpent1 - moneySpent2) / moneySpent2) * 100
-        let cashFlowChange = ((cashFlowTotal - cashFlowTotal2) / cashFlowTotal2) * 100
-        let incomeChange = (((income1 * -1) -  (income2 * -1)) / (income2 * -1)) * 100
+        let moneySpentChange = (moneySpent1 - moneySpent2)
+        let cashFlowChange = (cashFlowTotal - cashFlowTotal2)
+        let incomeChange = ((income1 * -1) -  (income2 * -1))
         
         return (cashFlowTotal, cashFlowChange * -1, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }

@@ -832,7 +832,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "n/a"
                     }
                     else {
-                        cellReward.prevAmount.text = "\(Int(changeIncome))% from prev month"
+                        if changeIncome > 0 {
+                            cellReward.prevAmount.text = "+" + changeIncome.commaFormatted() + " from prev month"
+                        }
+                        else {
+                            cellReward.prevAmount.text = changeIncome.commaFormatted() + " from prev month"
+                        }
                     }
                     
                     cellReward.whiteArrow.hidden = false
@@ -857,7 +862,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "n/a"
                     }
                     else {
-                        cellReward.prevAmount.text = "\(Int(changeSpending))% from prev month"
+                        if changeSpending > 0 {
+                             cellReward.prevAmount.text = "+" + changeSpending.commaFormatted() + " from prev month"
+                        }
+                        else {
+                            cellReward.prevAmount.text = changeSpending.commaFormatted() + " from prev month"
+                        }
                     }
 
                     cellReward.whiteArrow.hidden = false
@@ -886,7 +896,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                          cellReward.prevAmount.text = "n/a"
                     }
                     else {
-                        cellReward.prevAmount.text = "\(Int(changeCashFlow))% from prev month"
+                        if changeCashFlow > 0 {
+                            cellReward.prevAmount.text = "+" + changeCashFlow.commaFormatted() + " from prev month"
+                        }
+                        else {
+                            cellReward.prevAmount.text = changeCashFlow.commaFormatted() + " from prev month"
+                        }
                     }
                     
                     cellReward.whiteArrow.hidden = true
