@@ -175,7 +175,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
         ]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
-        self.collectionView.backgroundColor = UIColor.whiteColor()
         
         self.addAccountButton.layer.cornerRadius = 25
         self.addAccountButton.layer.borderColor = UIColor.clearColor().CGColor
@@ -186,14 +185,11 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     }
     
     
-    
-    func getMonthCountOfData() -> Int
-    {
+    func getMonthCountOfData() -> Int {
         let atCount =  allTransactionItems.count
         var monthReturn:Int = 0
         
-        if atCount > 0
-        {
+        if atCount > 0 {
             let lastTrans = allTransactionItems[0].date as NSDate
             let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
             
@@ -202,16 +198,12 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             {
                 monthReturn = lastTrans.monthsFrom(firstTrans)  - 1
             }
-            else
-            {
+            else {
                 monthReturn = 1
             }
-            
         }
-       
-       return monthReturn
+        return monthReturn
     }
-    
     
     func formatCurrency(currency: Double) -> String {
         let formatter = NSNumberFormatter()
@@ -221,7 +213,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         return formatter.stringFromNumber(numberFromField)!
     }
 
-    
     
     func showAccounts() {
         self.performSegueWithIdentifier("showAccountsCards", sender: nil)
