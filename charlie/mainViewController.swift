@@ -791,7 +791,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     if (happyFlowChange.isNaN || happyFlowChange.isInfinite) {
-                        cellReward.prevAmount.text = "n/a"
+                        cellReward.prevAmount.text = ""
                     }
                     else {
                         cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
@@ -816,7 +816,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 if rewardIndex == 2 {
                     cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalIncome.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeIncome.isNaN || changeIncome.isInfinite) {
-                        cellReward.prevAmount.text = "n/a"
+                        cellReward.prevAmount.text = ""
                     }
                     else {
                         if changeIncome > 0 {
@@ -846,7 +846,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 if rewardIndex == 3 {
                     cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalSpending.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeSpending.isNaN || changeSpending.isInfinite) {
-                        cellReward.prevAmount.text = "n/a"
+                        cellReward.prevAmount.text = ""
                     }
                     else {
                         if changeSpending > 0 {
@@ -880,7 +880,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("+ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
-                         cellReward.prevAmount.text = "n/a"
+                         cellReward.prevAmount.text = ""
                     }
                     else {
                         if changeCashFlow > 0 {
