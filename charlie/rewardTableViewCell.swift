@@ -13,4 +13,5 @@ class rewardTableViewCell: UITableViewCell {
     @IBOutlet weak var currentAmount: UILabel!
     @IBOutlet weak var rewardName: UILabel!
     @IBOutlet weak var whiteArrow: UIImageView!
+    @IBOutlet weak var lineImageView: UIImageView!
 }

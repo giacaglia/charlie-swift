@@ -696,6 +696,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="currentAmount" destination="tak-DP-gSN" id="vgB-7X-KgQ"/>
+                                            <outlet property="lineImageView" destination="RCD-JN-W7v" id="yb7-sZ-LNd"/>
                                             <outlet property="prevAmount" destination="OdN-by-ODd" id="lYV-CE-bMZ"/>
                                             <outlet property="rewardName" destination="goc-IW-rtg" id="6eM-qc-cWO"/>
                                             <outlet property="whiteArrow" destination="tHq-lG-Xrt" id="TlJ-fc-FKZ"/>

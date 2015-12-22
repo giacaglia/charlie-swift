@@ -781,10 +781,23 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
                 cellReward.rewardName.text = rewardNames[rewardIndex].uppercaseString
-                
+                cellReward.lineImageView.hidden = false
+
                 if rewardIndex == 1 {
                     if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite) {
-                        cellReward.currentAmount.text = "n/a"
+                        cellReward.rewardName.text = ""
+                        cellReward.prevAmount.text = ""
+                        cellReward.currentAmount.text = ""
+                        cellReward.lineImageView.hidden = true
+                        cellReward.whiteArrow.hidden = true
+                        let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
+                        let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
+                        imageView.contentMode = .ScaleAspectFill
+                        imageView.image = UIImage(named: "not_sure_happy_flow")
+                        aroundImageView.addSubview(imageView)
+                        cellReward.backgroundView = UIView()
+                        cellReward.backgroundView!.addSubview(aroundImageView)
+                        return cellReward
                     }
                     else {
                         cellReward.currentAmount.text = "\(Int(currentMonthHappyPercentage))%"
