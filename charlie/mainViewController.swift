@@ -756,29 +756,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             if rewardIndex == 0
             {
                 cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
-                
-                if self.moreItems.count > 20
-                {
-                    cellHappy.rewardName.text = "Show 20 more of \(self.moreItems.count) transactions to complete for your Happy Flow"
+                if self.moreItems.count > 0 {
+                    cellHappy.rewardName.text = "\(self.moreItems.count) left to swipe"
                 }
-
-                else if self.moreItems.count > 0 && self.moreItems.count < 20
-                {
-                    cellHappy.rewardName.text = "Show \(self.moreItems.count) more transaction to complete for your Happy Flow"
-                }
-                else if self.moreItems.count == 0 && transactionItems.count > 0
-                {
-                    cellHappy.rewardName.text = "Swipe the \(transactionItems.count) transaction(s) above to complete for your Happy Flow"
-                }
-                else
-                {
+                else {
                     cellHappy.rewardName.text = "All current transactions completed for your Happy Flow"
                 }
 
                 return cellHappy
             }
-            else
-            {
+            else {
                 cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
                 cellReward.rewardName.text = rewardNames[rewardIndex].uppercaseString
                 cellReward.lineImageView.hidden = false

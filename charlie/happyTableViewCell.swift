@@ -10,9 +10,7 @@
 import UIKit
 
 class happyTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var currentAmount: UILabel!
-    
+
     @IBOutlet weak var rewardName: UILabel!
     
 }
