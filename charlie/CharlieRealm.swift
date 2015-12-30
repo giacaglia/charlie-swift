@@ -76,7 +76,6 @@ class Transaction: Object {
         return "_id"
         
     }
-    
 }
 
 

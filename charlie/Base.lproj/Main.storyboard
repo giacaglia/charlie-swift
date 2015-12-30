@@ -1161,7 +1161,7 @@
         <!--Show Transaction View Controller-->
         <scene sceneID="evQ-qU-ZGx">
             <objects>
-                <viewController id="Rxg-kj-fnh" customClass="showTransactionViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="showTransactionViewController" id="Rxg-kj-fnh" customClass="showTransactionViewController" customModule="charlie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CUi-gB-ZvV"/>
                         <viewControllerLayoutGuide type="bottom" id="7cX-2z-z71"/>

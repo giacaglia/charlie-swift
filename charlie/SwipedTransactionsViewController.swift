@@ -13,7 +13,6 @@ class SwipedTransactionsViewController : UIViewController {
     var charlieGroupListFiltered = [charlieGroup]()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     @IBOutlet weak var monthLabel: UILabel!
-   
     @IBOutlet weak var tableView: UITableView!
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
@@ -21,7 +20,6 @@ class SwipedTransactionsViewController : UIViewController {
 
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -187,21 +185,18 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         }
         else if (sortFilter == .FilterByLeastWorth) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-
                 return $0.happyPercentage < $1.happyPercentage
             }
         }
 
         else if (sortFilter == .FilterByAmount) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-
                 return $0.totalAmount > $1.totalAmount
             }
         }
         
         else if (sortFilter == .FilterByName) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-
                 return $0.name < $1.name
             }
         }
@@ -209,13 +204,11 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
             
         else if (sortFilter == .FilterByDescendingDate) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-
                 return $0.lastDate > $1.lastDate
             }
         }
         else if (sortFilter == .FilterByDate) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-
                 return $0.lastDate < $1.lastDate
             }
         }
@@ -260,15 +253,40 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let groupDetailVC = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
-            return
+        let group = charlieGroupListFiltered[indexPath.row]
+        if group.transactions > 1 {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let groupDetailVC = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
+                return
+            }
+            
+            groupDetailVC.startDate = self.startDate
+            groupDetailVC.transactionName =  group.name
+            groupDetailVC.endDate = self.endDate
+            self.navigationController?.pushViewController(groupDetailVC, animated: true)
         }
-        
-        groupDetailVC.startDate = self.startDate
-        groupDetailVC.transactionName =  charlieGroupListFiltered[indexPath.row].name
-        groupDetailVC.endDate = self.endDate
-        self.navigationController?.pushViewController(groupDetailVC, animated: true)
+        else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let showTransactionVC = storyboard.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else {
+                return
+            }
+            let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
+            let predicate = NSPredicate(format: "name = %@", group.name)
+            transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
+            let transaction = transactionItems[0]
+            showTransactionVC.transaction = transaction
+            showTransactionVC.transactionIndex = 0
+            if transaction.status == -1 {
+                showTransactionVC.sourceVC = "main"
+            }
+            else if transaction.status == 1 {
+                showTransactionVC.sourceVC = "happy"
+            }
+            else {
+                showTransactionVC.sourceVC = "sad"
+            }
+            self.navigationController?.pushViewController(showTransactionVC, animated: true)
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
