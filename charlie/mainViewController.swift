@@ -301,16 +301,11 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 }
                 else {
                     self.finishSwipe(tableView, cell: cell, direction: 1)
-//                    self.finish
                 }
             }
             else {
-                //swiping not acted on
                 tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
             }
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
-//            })
            
         }
         
@@ -806,7 +801,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         aroundImageView.backgroundColor = lightGreen
                     }
                     else {
-                        imageView.image = UIImage(named: "negativeSpending")
+                        imageView.image = UIImage(named: "negative_2")
                         aroundImageView.backgroundColor = lightRed
                     }
                     cellReward.backgroundView = UIView()
