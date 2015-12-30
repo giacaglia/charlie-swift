@@ -75,7 +75,6 @@ class SwipedTransactionsViewController : UIViewController {
     
     func dismissSort() {
         self.sortVC.closePressed(self)
-//        self.presentingViewController?.dismissViewControllerAnimated(<#T##flag: Bool##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
     }
     
 }
@@ -298,7 +297,7 @@ class GroupTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 39, 270, 20)
+        nameLabel.frame = CGRectMake(14, 39, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
         nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
@@ -310,7 +309,7 @@ class GroupTransactionCell : UITableViewCell {
         dollarLabel.textAlignment = .Right
         self.contentView.addSubview(dollarLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  60, 50, 60, 18)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  60, 50, 60, 18)
         amountLabel.font = UIFont(name: "Montserrat", size: 18.0)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
