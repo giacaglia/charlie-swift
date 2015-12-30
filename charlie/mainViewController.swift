@@ -375,8 +375,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         let startDate = startMonth.startOfMonth()!
         let endDate = startMonth.endOfMonth()!
         
-        
-        
         inboxPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 0", startDate, endDate)
         happyPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = 1 or status = 2", startDate, endDate)
         
@@ -793,10 +791,12 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     cellReward.whiteArrow.hidden = true
-                    //set background
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                    if happyFlowChange >= 0 {
+                    let users = realm.objects(User)
+                    let user = users[0]
+                    
+                    if currentMonthHappyPercentage >= user.happy_flow {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
                     }

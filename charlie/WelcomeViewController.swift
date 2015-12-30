@@ -118,17 +118,17 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPage = page
         if (page == 0) {
             pageControl.currentPageIndicatorTintColor = listBlue
-            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+            pageControl.pageIndicatorTintColor = UIColor(white: 0/255, alpha: 0.4)
         }
         else {
             pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
-            pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+            pageControl.pageIndicatorTintColor = UIColor(white: 0/255, alpha: 0.4)
         }
     }
     
     func loadAllPages() {
         pageControl.currentPageIndicatorTintColor = listBlue
-        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+        pageControl.pageIndicatorTintColor = UIColor(white: 0/255, alpha: 0.4)
         for page in 0..<pageImages.count {
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)

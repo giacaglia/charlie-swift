@@ -56,4 +56,9 @@ class TutorialViewController: UIViewController {
         charlieAnalytics.track("Happy Flow Guessed")
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let loginVC = segue.destinationViewController as! LoginViewController
+        loginVC.user_happy_flow = Double(slider.value)
+    }
+    
 }

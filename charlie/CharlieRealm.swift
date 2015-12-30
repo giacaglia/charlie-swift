@@ -15,7 +15,7 @@ class User: Object {
     dynamic var password = ""
     dynamic var pin = ""
     dynamic var access_token = ""
-    
+    dynamic var happy_flow : Double = 0
     override static func primaryKey() -> String? {
         return "email"
     }

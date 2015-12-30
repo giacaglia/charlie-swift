@@ -22,6 +22,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     var email_address = ""
     var keyChainStore = KeychainHelper()
     var nextButton = UIButton()
+    var user_happy_flow : Double = 0
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
@@ -119,6 +120,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                 let user = User()
                 user.email = email
                 user.password = "password"
+                user.happy_flow = self.user_happy_flow
                 try! realm.write {
                     realm.add(user, update: true)
                 }
@@ -187,6 +189,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         let user = User()
         user.email = email
         user.password = "password"
+        user.happy_flow = self.user_happy_flow
         try! realm.write {
             realm.add(user, update: true)
         }
