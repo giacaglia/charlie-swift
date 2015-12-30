@@ -451,7 +451,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         }
         else if (segue.identifier == "groupDetail") {
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            let viewController = segue.destinationViewController as! groupDetailViewController
+            let viewController = segue.destinationViewController as! GroupDetailViewController
             viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
         }
     }

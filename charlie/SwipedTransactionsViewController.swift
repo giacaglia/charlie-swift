@@ -52,7 +52,7 @@ class SwipedTransactionsViewController : UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.loadData()
-        self.tableView.reloadData()
+        self.changeFilter(self.filterType)
     }
     
     func didTouchFilter(sender: AnyObject) {
@@ -168,7 +168,6 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()
             print("ROWCOUNT \(self.charlieGroupListFiltered.count)")
-
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
@@ -263,7 +262,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let viewController = storyboard.instantiateViewControllerWithIdentifier("groupDetailViewController") as? groupDetailViewController else {
+        guard let viewController = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
             return
         }
         

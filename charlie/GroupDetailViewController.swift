@@ -1,5 +1,5 @@
 //
-//  groupDetailViewController.swift
+//  GroupDetailViewController.swift
 //  charlie
 //
 //  Created by James Caralis on 8/24/15.
@@ -8,7 +8,7 @@
 import RealmSwift
 import UIKit
 
-class groupDetailViewController: UIViewController {
+class GroupDetailViewController: UIViewController {
     @IBOutlet weak var groupTableView: SBGestureTableViewGroup!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!
@@ -24,7 +24,6 @@ class groupDetailViewController: UIViewController {
     
     var startDate:NSDate = NSDate()
     var endDate:NSDate = NSDate()
-    
     
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewGroupCell!
@@ -59,6 +58,9 @@ class groupDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
         let happyPercentage = self.calculateHappy()
         if (happyPercentage >= 50) {
             self.happyPercentage.textColor = listGreen
@@ -72,8 +74,7 @@ class groupDetailViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+      
         self.groupTableView.reloadData()
     }
     
@@ -126,7 +127,7 @@ class groupDetailViewController: UIViewController {
     }
 }
 
-extension groupDetailViewController {
+extension GroupDetailViewController {
     func calculateHappy() -> Int {
         var happy = 0
         var sad = 0
@@ -146,7 +147,7 @@ extension groupDetailViewController {
 }
 
 // TableView Methods
-extension groupDetailViewController : UITableViewDataSource {
+extension GroupDetailViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactionItems.count
     }
