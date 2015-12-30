@@ -13,6 +13,7 @@ class GroupDetailViewController: UIViewController {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var transactionCount: UILabel!
     @IBOutlet weak var happyPercentage: UILabel!
+    @IBOutlet weak var categoriesLabel: UILabel!
     
     var transactionName:String = ""
     var transactionItems = realm.objects(Transaction)
@@ -35,11 +36,16 @@ class GroupDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
 
         groupTableView.tableFooterView = UIView();
 
-        self.name.text = transactionName
+        name.text = transactionName
+        let transaction = transactionItems[0]
+        if let categories = transaction.categories {
+            categoriesLabel.text = categories.categories
+        }
+        
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate, self.endDate, transactionName)
         transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)

@@ -82,7 +82,6 @@ class Transaction: Object {
 
 
 class Category: Object {
-    
     dynamic var id = ""
     dynamic var type = ""
     dynamic var categories = ""

@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 
 class showTransactionViewController: UIViewController {
-    
     @IBOutlet weak var accountNumberLabel: UILabel!
     @IBOutlet weak var accountNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!

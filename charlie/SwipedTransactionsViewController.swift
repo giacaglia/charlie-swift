@@ -261,14 +261,14 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let viewController = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
+        guard let groupDetailVC = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
             return
         }
         
-        viewController.startDate = self.startDate
-        viewController.transactionName =  charlieGroupListFiltered[indexPath.row].name
-        viewController.endDate = self.endDate
-        self.navigationController?.pushViewController(viewController, animated: true)
+        groupDetailVC.startDate = self.startDate
+        groupDetailVC.transactionName =  charlieGroupListFiltered[indexPath.row].name
+        groupDetailVC.endDate = self.endDate
+        self.navigationController?.pushViewController(groupDetailVC, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
