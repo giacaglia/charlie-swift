@@ -30,6 +30,10 @@ var apiKey = "jj859i3mfp230p34"
 //var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
 
 
+//var srSwipeSave = ServerRequest(url: NSURL(string:  "https://localhost:3000/transactions"))
+
+var srSwipeSave = ServerRequest(url: NSURL(string:  "https://evening-anchorage-6916.herokuapp.com/transactions"))
+
 class charlieService {
 
     init(){
@@ -55,6 +59,121 @@ class charlieService {
             callback(true)
         })
     }
+    
+   
+    
+    
+    func saveSwipe(direction:Int, transactionIndex:Int, callback: Bool->())
+    {
+        
+       // var lat = 0.0
+        var lat = 0.0
+        var lng = 0.0
+        var category_id = 0
+        var city = ""
+        var state = ""
+        var address = ""
+        var zip = ""
+       
+        
+        
+        if ((transactionItems[transactionIndex].meta?.location?.coordinates?.lat) != nil)
+        {
+            lat = (transactionItems[transactionIndex].meta?.location?.coordinates?.lat)!
+        }
+      
+        if ((transactionItems[transactionIndex].meta?.location?.coordinates?.lon) != nil)
+        {
+            lng = (transactionItems[transactionIndex].meta?.location?.coordinates?.lon)!
+        }
+  
+
+        if ((transactionItems[transactionIndex].categories?.id) != nil)
+        {
+            category_id = Int((transactionItems[transactionIndex].categories?.id)!)!
+        }
+        
+       
+        if ((transactionItems[transactionIndex].meta?.location?.city) != nil)
+        {
+            city = (transactionItems[transactionIndex].meta?.location?.city)!
+        }
+        
+        if ((transactionItems[transactionIndex].meta?.location?.state) != nil)
+        {
+            state = (transactionItems[transactionIndex].meta?.location?.state)!
+        }
+       
+        if ((transactionItems[transactionIndex].meta?.location?.address) != nil)
+        {
+            address = (transactionItems[transactionIndex].meta?.location?.address)!
+        }
+        
+        if ((transactionItems[transactionIndex].meta?.location?.zip) != nil)
+        {
+            zip = (transactionItems[transactionIndex].meta?.location?.zip)!
+        }
+        
+                   
+       
+        
+        
+//        if ((transactionItems[transactionIndex].meta?.location?.zip) != nil)
+//        {
+//            zip = (transactionItems[transactionIndex].meta?.location?.zip)!
+//        }
+        
+        
+        
+        if let client_id = keyChainStore.get("client_id"),
+            let client_secret = keyChainStore.get("client_secret")
+        {
+            
+            let parameters = [
+
+                "name":   transactionItems[transactionIndex].name,
+                "transaction_date": String(transactionItems[transactionIndex].date),
+                "amount": transactionItems[transactionIndex].amount,
+                "swipe_type": direction,
+                "location_type": transactionItems[transactionIndex].placeType,
+                "category_id": category_id,
+                "city": city,
+                "state": state,
+                "address": address,
+                "zip": zip,
+                "lat": lat,
+                "lng": lng
+
+            ]
+            
+            srSwipeSave.parameters = parameters as! [String : AnyObject]
+        }
+        
+        
+        srSwipeSave.httpMethod = .Post
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            ServerClient.performRequest(srSwipeSave, completion: { (response) -> Void in
+                print(JSON(response.results()))
+                if let errorMsg:String = response.error?.description {
+                    print(errorMsg)
+                    callback(false)
+                }
+                else {
+                    httpStatusCode = response.rawResponse!.statusCode
+                    if httpStatusCode == 200 {
+                        print(JSON(response.results()))
+                    }
+                    else { //can process data
+                        print("ERROR")
+                    }
+                    callback(true)
+                }
+            })
+            
+        })
+    }
+    
+    
     
     func getAccessToken(public_token:String, callback: NSDictionary->()) {
         if let client_id = keyChainStore.get("client_id"),

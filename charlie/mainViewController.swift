@@ -606,8 +606,28 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
+        
+        self.saveSwipeToServer(indexPath: indexPath!, direction: direction)
         self.updateTableAt(indexPath: indexPath!, direction: direction)
+        
+        
     }
+    
+    
+    private func saveSwipeToServer(indexPath indexPath: NSIndexPath, direction: Int)
+    {
+        
+        print("Saved Swipe: \(direction)")
+        cService.saveSwipe(direction, transactionIndex: indexPath.row)
+            { (callback) in
+                print("callback complete1")
+                
+        }
+        
+    }
+    
+    
+    
     
     private func updateTableAt(indexPath indexPath: NSIndexPath, direction: Int) {
         currentTransactionSwipeID = transactionItems[indexPath.row]._id
