@@ -14,7 +14,6 @@ import WebKit
 class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMessageHandler {
     
     @IBOutlet weak var webViewView: UIView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     let users = realm.objects(User)
     var keyStore = NSUbiquitousKeyValueStore()
@@ -37,7 +36,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-        spinner.startAnimating()
+        SwiftLoader.show(true)
     }
     
     override func viewDidLoad() {
@@ -82,14 +81,14 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
             if public_token == "exit" {
                 print("Exit")
                 dismissViewControllerAnimated(true, completion: nil)
-                spinner.stopAnimating()
+                SwiftLoader.hide()
             }
             else if public_token == "loaded" {
                 print("finished loading")
-                spinner.stopAnimating()
+                SwiftLoader.hide()
             }
             else {
-                spinner.startAnimating()
+                SwiftLoader.show(true)
                 cService.getAccessToken(public_token) { (response) in
                     // var uuid = NSUUID().UUIDString
 
@@ -137,7 +136,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                             charlieAnalytics.track("Accounts Added")
                             self.dismissViewControllerAnimated(true, completion: nil)
                             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-                            self.spinner.stopAnimating()
+                            SwiftLoader.hide()
                             self.dismissViewControllerAnimated(true, completion: nil)
                         }
                     }

@@ -87,10 +87,9 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
     let inboxLabel = UILabel(frame: CGRectMake(0, 0, 40, 40))
-    
+
     var monthDiff:Int = 0
 
-    
     func willEnterForeground(notification: NSNotification!) {
         if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
             presentViewController(resultController, animated: false, completion: { () -> Void in
@@ -128,53 +127,27 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
        // transactionsTable.reloadData()
     }
     
-    
-    func calculateReports() -> Void
-    {
+    func calculateReports() -> Void {
         //bad programming setting a local global... need to fix
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
         (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
-        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha:
-            1.0)
+      
+        self.setupNavigationBar()
 
-        
-        //get month range for transactions
-        //need to show only full month worth of data
-
-        
-        monthDiff = getMonthCountOfData()
-        
-        //get data for report cards
-       calculateReports()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-
-        var image = UIImage(named: "menu")
-        image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
-
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : lightBlue]
-        self.title = "Worth It?"
+        
+        //get month range for transactions
+        monthDiff = self.getMonthCountOfData()
+        
+        //get data for report cards
+        self.calculateReports()
        
-        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
       
-        
-        let attributes = [
-            NSForegroundColorAttributeName: lightBlue,
-            NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
-        ]
-        self.navigationController?.navigationBar.titleTextAttributes = attributes
-        
         self.addAccountButton.layer.cornerRadius = 25
         self.addAccountButton.layer.borderColor = UIColor.clearColor().CGColor
         self.addAccountButton.layer.borderWidth = 1.0
@@ -183,6 +156,26 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.collectionView.reloadData()
     }
     
+    func setupNavigationBar() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha:
+            1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : lightBlue]
+        self.title = "Worth It?"
+        var image = UIImage(named: "menu")
+        image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        let attributes = [
+            NSForegroundColorAttributeName: lightBlue,
+            NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
+        ]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
+    }
     
     func getMonthCountOfData() -> Int {
         let atCount =  allTransactionItems.count
