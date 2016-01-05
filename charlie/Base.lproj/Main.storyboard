@@ -73,7 +73,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O6k-is-dPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-964" y="305"/>
+            <point key="canvasLocation" x="-1050" y="249"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="KQH-Fv-Slh">
@@ -501,10 +501,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="huO-nz-BFN">
-                                <rect key="frame" x="282" y="282" width="37" height="37"/>
-                                <color key="color" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-hU-syf" userLabel="Add Account View">
                                 <rect key="frame" x="0.0" y="130" width="600" height="470"/>
                                 <subviews>
@@ -802,10 +798,8 @@
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" constant="66" id="AIy-H9-Ae1"/>
                             <constraint firstItem="h6E-wf-TVZ" firstAttribute="top" secondItem="JmO-hm-sg5" secondAttribute="bottom" id="CwA-eK-c8e"/>
                             <constraint firstAttribute="trailing" secondItem="Ssu-hU-syf" secondAttribute="trailing" id="KR4-W5-jHn"/>
-                            <constraint firstAttribute="centerY" secondItem="huO-nz-BFN" secondAttribute="centerY" id="M9k-BQ-DGH"/>
                             <constraint firstAttribute="trailing" secondItem="HTZ-Xu-A7Z" secondAttribute="trailing" id="Mif-Vv-wFL"/>
                             <constraint firstAttribute="centerY" secondItem="o08-Ym-LQO" secondAttribute="centerY" constant="-75" id="V5Y-62-0yN"/>
-                            <constraint firstAttribute="centerX" secondItem="huO-nz-BFN" secondAttribute="centerX" id="dSh-Io-tu1"/>
                             <constraint firstItem="HTZ-Xu-A7Z" firstAttribute="top" secondItem="gm9-53-q3d" secondAttribute="bottom" id="gBN-AX-EnY"/>
                             <constraint firstAttribute="trailing" secondItem="JmO-hm-sg5" secondAttribute="trailing" id="i3G-CF-yfm"/>
                             <constraint firstItem="Ssu-hU-syf" firstAttribute="leading" secondItem="yyi-Gr-U2e" secondAttribute="leading" id="nj0-cQ-Ku5"/>
@@ -819,7 +813,6 @@
                         <outlet property="accountAddView" destination="Ssu-hU-syf" id="I2j-Nc-7zS"/>
                         <outlet property="addAccountButton" destination="pbA-n2-qga" id="U1c-Gd-u1U"/>
                         <outlet property="collectionView" destination="HTZ-Xu-A7Z" id="RWG-NF-DCW"/>
-                        <outlet property="spinner" destination="huO-nz-BFN" id="ZZv-hj-1AR"/>
                         <outlet property="toastView" destination="o08-Ym-LQO" id="aEc-yW-LS3"/>
                         <outlet property="transactionsTable" destination="JmO-hm-sg5" id="Ccw-2S-17q"/>
                         <segue destination="071-ho-sdj" kind="presentation" identifier="showTypePicker" modalPresentationStyle="overCurrentContext" id="tRI-2L-w6f"/>
@@ -1642,6 +1635,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="euX-y7-kZF"/>
         <segue reference="swt-fH-1dv"/>
-        <segue reference="pkc-wO-zVL"/>
+        <segue reference="X9z-ju-lxa"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -56,7 +56,6 @@ protocol MainViewControllerDelegate {
 class mainViewController: UIViewController, MainViewControllerDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toastView: UIView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
     @IBOutlet weak var accountAddView: UIView!
     @IBOutlet weak var addAccountButton: UIButton!
@@ -115,7 +114,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
                 performSegueWithIdentifier("showTutorial", sender: self)
                 timerCount = 1
-                spinner.startAnimating()
+                SwiftLoader.show(true)
                 toastView.hidden = false
                 accountAddView.hidden = true
                 //show toast
@@ -271,11 +270,11 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                     dateToSychTo = 0 // we may still have some old transactions so do a full sync
                 }
                 
-                spinner.startAnimating()
+                SwiftLoader.show(true)
                 print("DAYS \(dateToSychTo)")
                 cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
                     self.transactionsTable.reloadData()
-                    self.spinner.stopAnimating()
+                    SwiftLoader.hide()
                     if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
                         self.showReward()
                     }
@@ -422,7 +421,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 }
                 
                 //    self.setInboxTitle(true)
-                self.spinner.stopAnimating()
+                SwiftLoader.hide()
                 self.toastView.hidden = true
 
             }

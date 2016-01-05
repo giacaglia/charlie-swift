@@ -48,6 +48,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Mixpanel.sharedInstance().identify(Mixpanel.sharedInstance().distinctId)
         charlieAnalytics.track("App Launched")
+        
+        var config = SwiftLoader.Config()
+        config.size = 150
+        config.spinnerLineWidth = 8.0
+        config.spinnerColor = listBlue
+        config.backgroundColor = UIColor(white: 1.0, alpha: 0.80)
+        config.foregroundColor = UIColor.blackColor()
+        config.foregroundAlpha = 0.5
+        SwiftLoader.setConfig(config)
+        
         return true
     }
 
