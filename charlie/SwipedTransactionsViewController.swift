@@ -321,7 +321,7 @@ class GroupTransactionCell : UITableViewCell {
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  80, 26, 80, 18)
+        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  90, 26, 90, 18)
         dollarLabel.font = UIFont(name: "Montserrat-Light", size: 18.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
         dollarLabel.textAlignment = .Right
