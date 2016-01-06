@@ -588,7 +588,7 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
         if selectedCollectioncCellIndex == 0  {
             (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
-            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
+            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: true)
         }
         else {
             (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
@@ -813,13 +813,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     let users = realm.objects(User)
                     let user = users[0]
                     
-                    if currentMonthHappyPercentage >= user.happy_flow {
-                        imageView.image = UIImage(named: "positiveIncome")
-                        aroundImageView.backgroundColor = lightGreen
-                    }
-                    else {
+                    if happyFlowChange <= 0 {
                         imageView.image = UIImage(named: "negative_2")
                         aroundImageView.backgroundColor = lightRed
+                    }
+                    else {
+                        imageView.image = UIImage(named: "positiveIncome")
+                        aroundImageView.backgroundColor = lightGreen
+                       
                     }
                     cellReward.backgroundView = UIView()
                     aroundImageView.addSubview(imageView)

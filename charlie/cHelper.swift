@@ -154,9 +154,7 @@ class cHelper {
             {
                 for cashFlowItem in cashFlows2
                 {
-                    let convertedCF = cashFlowItem.amount * -1
-                    cashFlowTotal2 += convertedCF
-                
+                    
                     if cashFlowItem.amount > 0
                     {
                         moneySpent2 += cashFlowItem.amount
@@ -168,26 +166,44 @@ class cHelper {
                         print("INCOME: \(cashFlowItem.name) - \(income2)")
                     }
                 }
+                
+                cashFlowTotal2 = (income2 * -1) - moneySpent2
             }
         }
   
         for cashFlowItem in cashFlows1
         {
             
-            let convertedCF = cashFlowItem.amount * -1
-            cashFlowTotal += convertedCF
-        
-            if cashFlowItem.amount > 0
+//            let convertedCF = cashFlowItem.amount * -1
+//            cashFlowTotal += convertedCF
+           
+            
+            if let category_id = cashFlowItem.categories?.id
             {
-               moneySpent1 += cashFlowItem.amount
+                
+              if category_id != "21001000"
+                                   {
+                                    print("IGNORE \(cashFlowItem.name)")
+                               
+            
+                if cashFlowItem.amount > 0
+                {
+                   moneySpent1 += cashFlowItem.amount
+                }
+
+                if cashFlowItem.amount < -10 //get rid of small savings transfers keep the change...
+                {
+                    income1 += cashFlowItem.amount
+                }
+                                        
+            }
+                
             }
 
-            if cashFlowItem.amount < -10 //get rid of small savings transfers keep the change...
-            {
-                income1 += cashFlowItem.amount
-            }
+            
         }
     
+        cashFlowTotal = (income1 * -1) - moneySpent1
         let moneySpentChange = (moneySpent1 - moneySpent2)
         let cashFlowChange = (cashFlowTotal - cashFlowTotal2)
         let incomeChange = ((income1 * -1) -  (income2 * -1))
@@ -400,8 +416,8 @@ class cHelper {
                                 let categoryToAdd = realm.objects(Category).filter(predicate)
                                 newTrans.categories = categoryToAdd[0]
                                 
-                                //if category is one we don't want to count or amount is too small or negative
-                                if (category_id == "21008000" || category_id == "21007001" || dictAmount < 1) {
+                                //if category is one we don't want to count or amount is too small or negative or internal transfer
+                                if (category_id == "21008000" || category_id == "21007001" || category_id == "21001000" || dictAmount < 1) {
                                     newTrans.status = 86 //sets status to ignore from totals
                                 }
                                 
