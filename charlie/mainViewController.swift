@@ -886,7 +886,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 if rewardIndex == 4 {
                     if (totalCashFlow < 0) {
-                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("- ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     else {
                         cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("+ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
