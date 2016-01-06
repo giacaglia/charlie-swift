@@ -254,7 +254,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let group = charlieGroupListFiltered[indexPath.row]
-        if group.transactions > 1 {
+        //if group.transactions > 1 {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             guard let groupDetailVC = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
                 return
@@ -264,29 +264,29 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
             groupDetailVC.transactionName =  group.name
             groupDetailVC.endDate = self.endDate
             self.navigationController?.pushViewController(groupDetailVC, animated: true)
-        }
-        else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let showTransactionVC = storyboard.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else {
-                return
-            }
-            let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
-            let predicate = NSPredicate(format: "name = %@", group.name)
-            transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
-            let transaction = transactionItems[0]
-            showTransactionVC.transaction = transaction
-            showTransactionVC.transactionIndex = 0
-            if transaction.status == -1 {
-                showTransactionVC.sourceVC = "main"
-            }
-            else if transaction.status == 1 {
-                showTransactionVC.sourceVC = "happy"
-            }
-            else {
-                showTransactionVC.sourceVC = "sad"
-            }
-            self.navigationController?.pushViewController(showTransactionVC, animated: true)
-        }
+//        }
+//        else {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            guard let showTransactionVC = storyboard.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else {
+//                return
+//            }
+//            let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
+//            let predicate = NSPredicate(format: "name = %@", group.name)
+//            transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
+//            let transaction = transactionItems[0]
+//            showTransactionVC.transaction = transaction
+//            showTransactionVC.transactionIndex = 0
+//            if transaction.status == -1 {
+//                showTransactionVC.sourceVC = "main"
+//            }
+//            else if transaction.status == 1 {
+//                showTransactionVC.sourceVC = "happy"
+//            }
+//            else {
+//                showTransactionVC.sourceVC = "sad"
+//            }
+//            self.navigationController?.pushViewController(showTransactionVC, animated: true)
+//        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
