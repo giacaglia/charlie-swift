@@ -789,7 +789,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.whiteArrow.hidden = true
                         let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                         let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                        imageView.contentMode = .ScaleAspectFill
+                        imageView.contentMode = .ScaleAspectFit
                         imageView.image = UIImage(named: "not_sure_happy_flow")
                         aroundImageView.addSubview(imageView)
                         cellReward.backgroundView = UIView()

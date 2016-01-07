@@ -377,6 +377,10 @@ class cHelper {
     
     func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
         let users = realm.objects(User)
+        var fake_count = 0
+        
+        var dictDate = ""
+        var fake_institution = false
         
         for _ in users {
             let user_access_token  = keyChainStore.get("access_token")
@@ -385,6 +389,13 @@ class cHelper {
                     try! realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
+                            if let institution_type = account.valueForKey("institution_type")
+                            {
+                                if String(institution_type) == "fake_institution"
+                                {
+                                    fake_institution = true
+                                }
+                            }
                             realm.create(Account.self, value: account, update: true)
                         }
                     }
@@ -402,8 +413,23 @@ class cHelper {
                             let dictName = transaction.valueForKey("name") as? String
                             transaction.setValue(self.cleanName(dictName!), forKey: "name")
                             //convert string to date before insert
-                            let dictDate = transaction.valueForKey("date") as? String
-                            transaction.setValue(self.convertDate(dictDate!), forKey: "date")
+                            if fake_institution == true
+                            {
+                              
+                                let formatter = NSDateFormatter()
+                                print("DATE \(NSDate())")
+                                formatter.dateFormat = "yyyy-MM-dd"
+                                dictDate = formatter.stringFromDate(NSDate())
+                                transaction.setValue(self.convertDate(dictDate), forKey: "date")
+                            }
+                            else
+                            {
+                                dictDate = (transaction.valueForKey("date") as? String)!
+                                transaction.setValue(self.convertDate(dictDate), forKey: "date")
+                            }
+                        
+                           
+                           
                             //check for deposits and remove
                             let dictAmount = transaction.valueForKey("amount") as? Double
                             //add category
