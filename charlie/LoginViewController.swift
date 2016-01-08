@@ -125,6 +125,10 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     realm.add(user, update: true)
                 }
                 
+                
+                let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                self.keyChainStore.set(uuid, key: "uuid")
+                
                 self.keyChainStore.set(access_token, key: "access_token")
                 cService.saveAccessToken(access_token) { (response) in
                 }

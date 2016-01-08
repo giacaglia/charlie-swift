@@ -29,7 +29,6 @@ var srInstitutions = ServerRequest(url: NSURL(string:  "https://api.plaid.com/in
 var apiKey = "jj859i3mfp230p34"
 var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track"))
 
-
 //var srSwipeSave = ServerRequest(url: NSURL(string:  "https://localhost:3000/transactions"))
 
 var srSwipeSave = ServerRequest(url: NSURL(string:  "https://evening-anchorage-6916.herokuapp.com/transactions"))
@@ -126,12 +125,14 @@ class charlieService {
         
         
         if let client_id = keyChainStore.get("client_id"),
-            let client_secret = keyChainStore.get("client_secret")
+            let client_secret = keyChainStore.get("client_secret"),
+               let uuid = keyChainStore.get("uuid")
         {
             
             let parameters = [
 
                 "name":   transactionItems[transactionIndex].name,
+                "account": uuid,
                 "transaction_date": String(transactionItems[transactionIndex].date),
                 "amount": transactionItems[transactionIndex].amount,
                 "swipe_type": direction,

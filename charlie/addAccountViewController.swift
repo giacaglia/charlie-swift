@@ -99,6 +99,10 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     self.keyStore.synchronize()
                     Mixpanel.sharedInstance().people.set(["$email":email_address])
                     
+                    
+                    let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                    self.keyChainStore.set(uuid, key: "uuid")
+                    
                     self.keyChainStore.set(access_token, key: "access_token")
                     print("ACCESS TOKEN\n")
                     print(access_token)
