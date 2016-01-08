@@ -402,6 +402,8 @@ class cHelper {
                     
                     let transactions = response["transactions"] as! [NSDictionary]
                     // Save one Venue object (and dependents) for each element of the array
+                    
+                    var transCount =  0
                     for transaction in transactions {
                         try! realm.write {
                             //get placeType
@@ -455,8 +457,17 @@ class cHelper {
                                 if (dictAmount < 1)
                                 {  newTrans.status = 86 }
                             }
+                            
+                            if newTrans.status != 86
+                            { transCount += 1 }
+                            
                         }
+                        
+                        
+                        
                     }
+                    
+                    
                     
 //                    if realm.objects(Transaction).filter("status = 0").count == 0 && realm.objects(Transaction).filter("status = 1 or status = 2 ").count == 0
 //                    {
@@ -481,6 +492,8 @@ class cHelper {
                     
                     let transactions_count = transactions.count
                     callback(transactions_count)
+                    
+                     Mixpanel.sharedInstance().track("Initital Transaction Count", properties: ["count": transCount])
                 }
                 else {
                     callback(0)

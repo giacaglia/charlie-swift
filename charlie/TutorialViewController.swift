@@ -53,12 +53,17 @@ class TutorialViewController: UIViewController {
         performSegueWithIdentifier("happyFlowToLogin", sender: self)
         
         //add way to send what was guessed
-        charlieAnalytics.track("Happy Flow Guessed")
+       
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let loginVC = segue.destinationViewController as! LoginViewController
         loginVC.user_happy_flow = Double(slider.value)
+        let sliderValue =  slider.value
+        
+        Mixpanel.sharedInstance().track("Happy Flow Guessed", properties: ["happy_flow": sliderValue])
+        
+        
     }
     
 }
