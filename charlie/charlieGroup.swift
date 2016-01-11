@@ -11,7 +11,7 @@ import Foundation
 
 class charlieGroup {
     var name:            String
-    var lastDate:        String
+    var lastDate:        NSDate
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0
     var notSwipedCount:  Int    = 0
@@ -21,7 +21,7 @@ class charlieGroup {
     var happyPercentage: Int    = 0
     var totalAmount:     Double = 0
 
-    init(name:String, lastDate:String) {
+    init(name:String, lastDate:NSDate) {
         self.name = name
         self.lastDate = lastDate
     }

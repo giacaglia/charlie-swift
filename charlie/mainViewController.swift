@@ -528,7 +528,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             }
             else {
                 print("create new group: \(trans.name)")
-                let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
+                let cGroup = charlieGroup(name: trans.name, lastDate: trans.date)
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
@@ -767,7 +767,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             {
                 cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
                 if self.moreItems.count > 0 {
-                    cellHappy.rewardName.text = "\(self.moreItems.count) left to swipe"
+                    cellHappy.rewardName.text = "\(self.moreItems.count) left to swipe. Tap to load them and complete your happy flow!"
                 }
                 else {
                     cellHappy.rewardName.text = "All current transactions completed for your Happy Flow"

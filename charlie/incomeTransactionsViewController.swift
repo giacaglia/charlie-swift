@@ -40,17 +40,27 @@ class incomeTransactionsViewController : UIViewController {
         // var current_name = ""
         let sortProperties : Array<SortDescriptor>!
         sortProperties = [SortDescriptor(property: "amount", ascending: true)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -10.00", startDate, endDate)
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and amount < -10.00 and categories.id != '21001000'", startDate, endDate)
         incomeItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
     }
 }
 
 extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView .dequeueReusableCellWithIdentifier(IncomeTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! IncomeTransactionCell
-        cell.nameLabel.text = incomeItems[indexPath.row].name
-        cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (-incomeItems[indexPath.row].amount).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
-        return cell
+       
+
+            let cell = tableView .dequeueReusableCellWithIdentifier(IncomeTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! IncomeTransactionCell
+            cell.nameLabel.text = incomeItems[indexPath.row].name
+            
+            
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "MMM dd, YYYY"
+            let dateString = dateFormatter.stringFromDate(incomeItems[indexPath.row].date)
+            cell.dateLabel.text = dateString.uppercaseString
+            cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (-incomeItems[indexPath.row].amount).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
+            return cell
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,7 +74,9 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
 
 class IncomeTransactionCell : UITableViewCell {
     let nameLabel = UILabel()
+    let dateLabel = UILabel()
     let amountLabel = UILabel()
+    
     
     static func cellIdentifier() -> String {
         return "group_transaction_cell"
@@ -84,8 +96,17 @@ class IncomeTransactionCell : UITableViewCell {
         nameLabel.frame = CGRectMake(14, 37, 220, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 16.0)
         nameLabel.textColor = UIColor(white: 74/255.0, alpha: 1.0)
+
+        dateLabel.frame = CGRectMake(14, 57, 220, 20)
+        dateLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        dateLabel.textColor = UIColor(white: 74/255.0, alpha: 1.0)
+
+        
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
+        
+        dateLabel.textAlignment = .Left
+        self.contentView.addSubview(dateLabel)
         
         amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  100, 37, 100, 20)
         amountLabel.textAlignment = .Right

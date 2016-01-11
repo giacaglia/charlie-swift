@@ -113,7 +113,7 @@ extension SwipedTransactionsViewController {
                 }
             }
             else {                
-                let cGroup = charlieGroup(name: trans.name, lastDate: String(trans.date))
+                let cGroup = charlieGroup(name: trans.name, lastDate: trans.date)
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
@@ -204,12 +204,12 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
             
         else if (sortFilter == .FilterByDescendingDate) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-                return $0.lastDate > $1.lastDate
+                return String($0.lastDate) > String($1.lastDate)
             }
         }
         else if (sortFilter == .FilterByDate) {
             self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
-                return $0.lastDate < $1.lastDate
+                return String($0.lastDate) < String($1.lastDate)
             }
         }
     }
@@ -244,6 +244,21 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
                 cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "\(charlieGroup.happyPercentage)", color1: listGreen, string2: "%", color2:UIColor(white: 209/255.0, alpha: 1.0))
             }
         }
+        
+        
+        let dateFormatter = NSDateFormatter()
+         dateFormatter.dateFormat = "EE, MMM dd "
+        
+        let dateString = dateFormatter.stringFromDate(charlieGroup.lastDate)
+        cell.dateLabel.text = dateString.uppercaseString
+
+        //dateFormatter.dateFormat = "MMM dd, YYYY"
+       // let tempDate = dateFormatter.dateFromString(charlieGroup.lastDate)
+        cell.dateLabel.text = dateString
+        
+        
+        
+        
         cell.dollarLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
         return cell
     }
@@ -297,6 +312,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
 class GroupTransactionCell : UITableViewCell {
     let nameLabel = UILabel()
     let amountLabel = UILabel()
+    let dateLabel = UILabel()
     let dollarLabel = UILabel()
     
     static func cellIdentifier() -> String {
@@ -320,6 +336,14 @@ class GroupTransactionCell : UITableViewCell {
         nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
+        
+        dateLabel.frame = CGRectMake(14, 59, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        dateLabel.font = UIFont(name: "Montserrat", size: 12.0)
+        dateLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
+        dateLabel.textAlignment = .Left
+        self.contentView.addSubview(dateLabel)
+        
+        
         
         dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  90, 26, 90, 18)
         dollarLabel.font = UIFont(name: "Montserrat-Light", size: 18.0)

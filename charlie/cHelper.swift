@@ -381,6 +381,7 @@ class cHelper {
         
         var dictDate = ""
         var fake_institution = false
+        var institution = ""
         
         for _ in users {
             let user_access_token  = keyChainStore.get("access_token")
@@ -389,8 +390,12 @@ class cHelper {
                     try! realm.write {
                         // Save one Venue object (and dependents) for each element of the array
                         for account in accounts {
+                            
+                            
                             if let institution_type = account.valueForKey("institution_type")
                             {
+
+                                institution = institution_type as! String
                                 if String(institution_type) == "fake_institution"
                                 {
                                     fake_institution = true
@@ -398,6 +403,8 @@ class cHelper {
                             }
                             realm.create(Account.self, value: account, update: true)
                         }
+                        
+                        Mixpanel.sharedInstance().track("Institution", properties: ["name": institution])
                     }
                     
                     let transactions = response["transactions"] as! [NSDictionary]
