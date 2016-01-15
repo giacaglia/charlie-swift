@@ -254,7 +254,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
 
         //dateFormatter.dateFormat = "MMM dd, YYYY"
        // let tempDate = dateFormatter.dateFromString(charlieGroup.lastDate)
-        cell.dateLabel.text = dateString
+        cell.dateLabel.text = dateString.uppercaseString
         
         
         
@@ -331,13 +331,13 @@ class GroupTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 39, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        nameLabel.frame = CGRectMake(14, 26, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
         nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
-        dateLabel.frame = CGRectMake(14, 59, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        dateLabel.frame = CGRectMake(14, 50, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
         dateLabel.font = UIFont(name: "Montserrat", size: 12.0)
         dateLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         dateLabel.textAlignment = .Left

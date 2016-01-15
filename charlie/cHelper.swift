@@ -183,7 +183,7 @@ class cHelper {
                 
               if category_id != "21001000"
                                    {
-                                    print("IGNORE \(cashFlowItem.name)")
+                                    //print("IGNORE \(cashFlowItem.name)")
                                
             
                 if cashFlowItem.amount > 0
@@ -476,26 +476,6 @@ class cHelper {
                     
                     
                     
-//                    if realm.objects(Transaction).filter("status = 0").count == 0 && realm.objects(Transaction).filter("status = 1 or status = 2 ").count == 0
-//                    {
-//                        let nextUp = realm.objects(Transaction).filter("date >= %@ and date <= %@ and status = -1", NSDate().startOfMonth()!, NSDate()).sorted("date", ascending: false)
-//                        
-//                        
-//                        
-//                        let numItemsToLoad = 20
-//                        var loadCount = 0
-//                        realm.beginWrite()
-//                        for item in nextUp
-//                        {
-//                            if loadCount < numItemsToLoad {
-//                                let trans = item
-//                                trans.status = 0
-//                                loadCount += 1
-//                            }
-//                        }
-//                        try! realm.commitWrite()
-//                        
-//                    }
                     
                     let transactions_count = transactions.count
                     callback(transactions_count)

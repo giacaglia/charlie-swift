@@ -45,8 +45,8 @@ class charlieService {
             "context": token,
         ]
         
-//        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track")) // DEV
-        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track")) // PROD
+        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track")) // DEV
+ //       let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track")) // PROD
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
         

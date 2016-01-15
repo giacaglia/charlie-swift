@@ -93,11 +93,11 @@ class IncomeTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 37, 220, 20)
+        nameLabel.frame = CGRectMake(14, 26, 220, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 16.0)
         nameLabel.textColor = UIColor(white: 74/255.0, alpha: 1.0)
 
-        dateLabel.frame = CGRectMake(14, 57, 220, 20)
+        dateLabel.frame = CGRectMake(14, 50, 220, 20)
         dateLabel.font = UIFont(name: "Montserrat", size: 13.0)
         dateLabel.textColor = UIColor(white: 74/255.0, alpha: 1.0)
 
@@ -108,7 +108,7 @@ class IncomeTransactionCell : UITableViewCell {
         dateLabel.textAlignment = .Left
         self.contentView.addSubview(dateLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  100, 37, 100, 20)
+        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 16 -  100, 26, 100, 20)
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
     }

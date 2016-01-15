@@ -48,6 +48,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         }
         else {
             emailAddress.becomeFirstResponder()
+                charlieAnalytics.track("Email Asked")
         }
     }
     
