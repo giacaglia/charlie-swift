@@ -39,6 +39,8 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         return accounts.count
     }
     
+    //for test checkin
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! cardTableViewCell
         cell.cardView.layer.cornerRadius = 20
