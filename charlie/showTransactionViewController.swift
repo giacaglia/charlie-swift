@@ -22,20 +22,7 @@ class showTransactionViewController: UIViewController {
     var transaction : Transaction?
     var transactionIndex  = 0
     var sourceVC = "main"
-    
-    func willEnterForeground(notification: NSNotification!) {
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            presentViewController(resultController, animated: true, completion: { () -> Void in
-                cHelp.removeSpashImageView(self.view)
-                cHelp.removeSpashImageView(self.presentingViewController!.view)
-            })
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,17 +78,6 @@ class showTransactionViewController: UIViewController {
         mapView.addAnnotation(anotation)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-    }
     
     func centerMapOnLocation(location: CLLocation) {
         let regionRadius: CLLocationDistance = 1000

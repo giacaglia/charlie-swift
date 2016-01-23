@@ -50,20 +50,27 @@ class TutorialViewController: UIViewController {
         defaults.setObject(sliderAmount.text, forKey: "userSelectedHappyScore")
         defaults.setObject("0", forKey: "happyScoreViewed")
         //performSegueWithIdentifier("toMainfromTutorial", sender: self)
-        performSegueWithIdentifier("happyFlowToLogin", sender: self)
         
-        //add way to send what was guessed
-       
+        self.createUser()
+        defaults.setObject("no", forKey: "firstLoad")
+        performSegueWithIdentifier("happyFlowToLogin", sender: self)
+    }
+    
+    private func createUser() {
+        let user = User()
+        user.password = "password"
+        user.happy_flow = Double(slider.value)
+        try! realm.write {
+            realm.add(user, update: true)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let loginVC = segue.destinationViewController as! LoginViewController
-        loginVC.user_happy_flow = Double(slider.value)
+//        let loginVC = segue.destinationViewController as! LoginViewController
+//        loginVC.user_happy_flow = Double(slider.value)
         let sliderValue =  slider.value
         
         Mixpanel.sharedInstance().track("Happy Flow Guessed", properties: ["happy_flow": sliderValue])
-        
-        
     }
     
 }

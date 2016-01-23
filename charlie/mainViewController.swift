@@ -91,19 +91,8 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     var monthDiff:Int = 0
 
     func willEnterForeground(notification: NSNotification!) {
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            presentViewController(resultController, animated: false, completion: { () -> Void in
-                self.cHelp.removeSpashImageView(self.view)
-            })
-            
-                self.loadTransactionTable()
-                self.collectionView.reloadData()
-
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        //cHelp.splashImageView(self.view)
+        self.loadTransactionTable()
+        self.collectionView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -127,9 +116,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 //they finished tutorial and account has still not loaded - show something until data is loaded
             }
         }
-       
-       
-       // transactionsTable.reloadData()
+        // transactionsTable.reloadData()
     }
     
     func calculateReports() -> Void {
@@ -140,11 +127,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         self.setupNavigationBar()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         //get month range for transactions
         monthDiff = self.getMonthCountOfData()

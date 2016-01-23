@@ -27,18 +27,6 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     //var realm = try! Realm(path: Realm().path, readOnly: false, encryptionKey: cHelper().getKey())
 
     
-    func didFinishLaunching(notification: NSNotification!) {
-        if defaults.stringForKey("firstLoad") != nil {
-            if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-                presentViewController(resultController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,8 +35,6 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
 //        let config = Realm.Configuration(encryptionKey: encriptionKey)
 //        realm = try! Realm(configuration: config)
 
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishLaunching:", name: UIApplicationDidFinishLaunchingNotification, object: nil)
         
         // If it's not connected to the internet
         if !Reachability.isConnectedToNetwork() {
@@ -60,12 +46,8 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
-        if defaults.stringForKey("firstLoad") == nil {
-            keyChainStore.set("", key: "pin")
-        }
-        
-        if users.count > 0 &&  keyChainStore.get("pin") != "" {
+        // USER FOUND IN THE DEVICE
+        if users.count > 0  {
             performSegueWithIdentifier("skipOnboarding", sender: self)
         }
         else {

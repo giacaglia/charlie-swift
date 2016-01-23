@@ -20,19 +20,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     var keyChainStore = KeychainHelper()
     var timer = NSTimer()
     var cHelp = cHelper()
-    
-    func willEnterForeground(notification: NSNotification!) {
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            presentViewController(resultController, animated: true, completion: { () -> Void in
-                self.cHelp.removeSpashImageView(self.view)
-                self.cHelp.removeSpashImageView(self.presentingViewController!.view)
-            })
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
-    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
@@ -41,10 +29,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        
+                
         charlieAnalytics.track("Find Bank Button Pressed")
         
         let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!))

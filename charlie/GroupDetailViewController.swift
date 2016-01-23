@@ -68,8 +68,6 @@ class GroupDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
         let happyPercentage = self.calculateHappy()
         if (happyPercentage >= 50) {
@@ -88,24 +86,6 @@ class GroupDetailViewController: UIViewController {
         self.groupTableView.reloadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-    }
-    
-    func willEnterForeground(notification: NSNotification!) {
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            presentViewController(resultController, animated: true, completion: { () -> Void in
-                cHelp.removeSpashImageView(self.view)
-                cHelp.removeSpashImageView(self.presentingViewController!.view)
-            })
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
-    }
     
     func finishSwipe(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)

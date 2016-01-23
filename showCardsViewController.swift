@@ -13,22 +13,10 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var cardsTableView: UITableView!
     @IBOutlet weak var addAccountButton: UIButton!
     var accounts = realm.objects(Account)
-    func willEnterForeground(notification: NSNotification!) {
-        if let resultController = storyboard!.instantiateViewControllerWithIdentifier("passcodeViewController") as? passcodeViewController {
-            presentViewController(resultController, animated: true, completion: { () -> Void in
-                cHelp.removeSpashImageView(self.view)
-            })
-        }
-    }
-    
-    func didEnterBackgroundNotification(notification: NSNotification) {
-        cHelp.splashImageView(self.view)
-    }
+      
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackgroundNotification:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         if accounts.count > 0 {
             addAccountButton.enabled = false
         }
