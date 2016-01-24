@@ -109,6 +109,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 SwiftLoader.show(true)
                 toastView.hidden = false
                 accountAddView.hidden = true
+                collectionView.hidden = false
                 //show toast
             }
             else {
@@ -135,7 +136,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         //get data for report cards
         self.calculateReports()
        
-      
         self.addAccountButton.layer.cornerRadius = 25
         self.addAccountButton.layer.borderColor = UIColor.clearColor().CGColor
         self.addAccountButton.layer.borderWidth = 1.0
@@ -218,6 +218,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
+            collectionView.hidden = true
             //makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             charlieAnalytics.track("Find Bank Screen - Main")
@@ -228,6 +229,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             areThereMoreItemsToLoad = moreTransactionforLoading()
             addAccountButton.hidden = true
             accountAddView.hidden = true
+            collectionView.hidden = false
             //refresh accounts
             if allTransactionItems.count > 0 {
                 let transCount = allTransactionItems.count
@@ -666,6 +668,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             transactionsTable.hidden = false
             addAccountButton.hidden = true
             accountAddView.hidden = true
+            collectionView.hidden = false
         }
         return transactionItems.count + 5//Int(areThereMoreItemsToLoad)
     }
@@ -792,9 +795,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     
                     cellReward.whiteArrow.hidden = true
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                    let users = realm.objects(User)
-                    let user = users[0]
+                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))             
                     
                     if happyFlowChange <= 0 {
                         imageView.image = UIImage(named: "negative_2")

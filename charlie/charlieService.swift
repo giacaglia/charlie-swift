@@ -124,8 +124,8 @@ class charlieService {
         
         
         
-        if let client_id = keyChainStore.get("client_id"),
-            let client_secret = keyChainStore.get("client_secret"),
+        if let _ = keyChainStore.get("client_id"),
+            let _ = keyChainStore.get("client_secret"),
                let uuid = keyChainStore.get("uuid")
         {
             
@@ -147,7 +147,7 @@ class charlieService {
 
             ]
             
-            srSwipeSave.parameters = parameters as! [String : AnyObject]
+            srSwipeSave.parameters = parameters as? [String : AnyObject]
         }
         
         

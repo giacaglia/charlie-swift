@@ -377,7 +377,6 @@ class cHelper {
     
     func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
         let users = realm.objects(User)
-        var fake_count = 0
         
         var dictDate = ""
         var fake_institution = false
