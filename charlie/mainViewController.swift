@@ -571,6 +571,12 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
+        let trans = transactionItems[indexPath!.row]
+        let categoryVC = CategoryViewController()
+        categoryVC.trans = trans
+        self.addChildViewController(categoryVC)
+        categoryVC.view.frame = self.view.frame
+        self.view.addSubview(categoryVC.view)
         
         self.saveSwipeToServer(indexPath: indexPath!, direction: direction)
         self.updateTableAt(indexPath: indexPath!, direction: direction)

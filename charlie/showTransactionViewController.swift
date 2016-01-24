@@ -56,11 +56,14 @@ class showTransactionViewController: UIViewController {
         dateLabel.text = dateFormatter.stringFromDate(trans.date)
 
         categoryLabel.text = String()
-//        categoryLabel.text = trans.user_category
+        categoryLabel.text = trans.user_category
         
         // Fix name: Terrible name
         if let categories = trans.categories {
             typeLabel.text = categories.categories
+        }
+        else {
+            typeLabel.text = String()
         }
         
         guard let location = trans.meta?.location else {

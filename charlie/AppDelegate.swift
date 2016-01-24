@@ -52,15 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configRealm = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 1,
+            schemaVersion: 2,
             
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
-            
-            
             migrationBlock: { migration, oldSchemaVersion in
-                
-                
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if (oldSchemaVersion < 1) {
                     migration.enumerate(User.className()) { oldObject, newObject in
@@ -69,10 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // And will update the schema on disk automatically
                         newObject!["happy_flow"] = 0.0
                     }
-//                    migration.enumerate(Transaction.className()) { oldObject, newObject in
-//                        newObject!["user_category"] = String()
-//                    }
-                    
+                }
+                if oldSchemaVersion < 2 {
+                    migration.enumerate(Transaction.className()) { oldObject, newObject in
+                        newObject!["user_category"] = String()
+                    }
                 }
         })
         
@@ -92,11 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.backgroundColor = UIColor(white: 1.0, alpha: 0.80)
         config.foregroundColor = UIColor.blackColor()
         config.foregroundAlpha = 0.5
-        SwiftLoader.setConfig(config)
-
-        
-        
-        
+        SwiftLoader.setConfig(config)        
         return true
     }
 

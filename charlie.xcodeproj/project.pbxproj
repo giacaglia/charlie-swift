@@ -143,6 +143,8 @@
 		88033FEA1C1694D8004D5599 /* GothamMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88033FE91C1694D8004D5599 /* GothamMedium.otf */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
+		882C48E81C548C7C006C8559 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882C48E71C548C7C006C8559 /* CategoryViewController.xib */; };
+		882C48EB1C548C8D006C8559 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882C48EA1C548C8D006C8559 /* CategoryViewController.swift */; };
 		885A41A71C3B7293000787C4 /* SwiftLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885A41A61C3B7293000787C4 /* SwiftLoader.swift */; };
 		888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888CA1B91BF5A15700381E84 /* CardsViewController.xib */; };
 		888CA1BD1BF5A16300381E84 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CA1BC1BF5A16300381E84 /* CardsViewController.swift */; };
@@ -421,6 +423,8 @@
 		88033FE91C1694D8004D5599 /* GothamMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamMedium.otf; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		882C48E71C548C7C006C8559 /* CategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryViewController.xib; sourceTree = "<group>"; };
+		882C48EA1C548C8D006C8559 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		885A41A61C3B7293000787C4 /* SwiftLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLoader.swift; sourceTree = "<group>"; };
 		888CA1B91BF5A15700381E84 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
 		888CA1BC1BF5A16300381E84 /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
@@ -871,6 +875,8 @@
 				09ED67B61C15D9F6006F03AC /* incomeTransactionsViewController.swift */,
 				09ED67B41C15D935006F03AC /* incomeTransactionsViewController.xib */,
 				094BAF5B1C16227E00B34B3A /* FilterCell.swift */,
+				882C48E71C548C7C006C8559 /* CategoryViewController.xib */,
+				882C48EA1C548C8D006C8559 /* CategoryViewController.swift */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -1017,6 +1023,7 @@
 				09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */,
 				091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */,
 				09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */,
+				882C48E81C548C7C006C8559 /* CategoryViewController.xib in Resources */,
 				888CA1BA1BF5A15700381E84 /* CardsViewController.xib in Resources */,
 				45604A0B1B71183200C37B9D /* test_variant.json in Resources */,
 				09ED67B51C15D935006F03AC /* incomeTransactionsViewController.xib in Resources */,
@@ -1167,6 +1174,7 @@
 				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
 				456049FD1B71183200C37B9D /* MPTweakInline.m in Sources */,
 				45604A081B71183200C37B9D /* NSData+MPBase64.m in Sources */,
+				882C48EB1C548C8D006C8559 /* CategoryViewController.swift in Sources */,
 				453E60031B8E242D00F4794E /* SBGestureTableViewGroup.swift in Sources */,
 				09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */,
 				456049DC1B71183200C37B9D /* MPBOOLToNSNumberValueTransformer.m in Sources */,
