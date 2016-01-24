@@ -1096,18 +1096,27 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
-                                        <rect key="frame" x="532" y="15" width="47.5" height="16"/>
+                                        <rect key="frame" x="519.5" y="15" width="47.5" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="date_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="5ij-ju-VtG">
+                                        <rect key="frame" x="582" y="17.5" width="6" height="11"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="11" id="CRi-He-6uE"/>
+                                            <constraint firstAttribute="width" constant="6" id="JKb-2K-7xG"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="lGl-du-pUq" firstAttribute="leading" secondItem="F9B-8I-H8h" secondAttribute="leading" constant="20" id="9UK-IH-qm9"/>
+                                    <constraint firstItem="5ij-ju-VtG" firstAttribute="centerY" secondItem="F9B-8I-H8h" secondAttribute="centerY" id="MWS-dN-Ohm"/>
                                     <constraint firstItem="lGl-du-pUq" firstAttribute="top" secondItem="F9B-8I-H8h" secondAttribute="top" constant="15" id="SxS-9U-Bao"/>
+                                    <constraint firstAttribute="trailing" secondItem="5ij-ju-VtG" secondAttribute="trailing" constant="12" id="VGu-QP-5Mx"/>
                                     <constraint firstAttribute="height" constant="45" id="Vwf-GH-wtW"/>
                                     <constraint firstItem="3Lg-fc-14x" firstAttribute="top" secondItem="F9B-8I-H8h" secondAttribute="top" constant="15" id="i9L-Ys-hiO"/>
-                                    <constraint firstAttribute="trailing" secondItem="3Lg-fc-14x" secondAttribute="trailing" constant="20" id="kQN-6e-VAl"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Lg-fc-14x" secondAttribute="trailing" constant="33" id="kQN-6e-VAl"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hka-Kj-XX4" userLabel="Account Type">
@@ -1268,12 +1277,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeN-mJ-2EU">
-                                <rect key="frame" x="20" y="183" width="66" height="14.5"/>
-                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhe-oM-yWB">
                                 <rect key="frame" x="0.0" y="213" width="600" height="1"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1296,9 +1299,22 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CAT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeC-bx-wVP">
-                                <rect key="frame" x="553" y="182" width="26.5" height="16"/>
+                                <rect key="frame" x="540.5" y="182" width="26.5" height="16"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="date_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="ssY-ep-W47">
+                                <rect key="frame" x="581" y="184" width="6" height="11"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="11" id="lid-zT-Cro"/>
+                                    <constraint firstAttribute="width" constant="6" id="xaH-So-m6q"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeN-mJ-2EU">
+                                <rect key="frame" x="20" y="183" width="66" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1311,7 +1327,7 @@
                             <constraint firstItem="0Wu-fy-D9f" firstAttribute="top" secondItem="2I2-mU-906" secondAttribute="bottom" constant="10" id="3wo-qm-rNH"/>
                             <constraint firstItem="vil-r9-6b1" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="5gy-9O-2Wd"/>
                             <constraint firstItem="2zn-NW-qcG" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="78F-r6-X4y"/>
-                            <constraint firstAttribute="trailing" secondItem="AeC-bx-wVP" secondAttribute="trailing" constant="20" id="81a-Y0-W5x"/>
+                            <constraint firstAttribute="trailing" secondItem="AeC-bx-wVP" secondAttribute="trailing" constant="33" id="81a-Y0-W5x"/>
                             <constraint firstAttribute="trailing" secondItem="2I2-mU-906" secondAttribute="trailing" id="8gg-WF-vgB"/>
                             <constraint firstItem="znV-b8-8bi" firstAttribute="top" secondItem="HhE-Tx-QpR" secondAttribute="bottom" constant="25" id="Avt-J2-pNM"/>
                             <constraint firstAttribute="centerX" secondItem="U3L-Aa-dqn" secondAttribute="trailing" constant="10" id="BSW-kq-OFr"/>
@@ -1326,6 +1342,7 @@
                             <constraint firstItem="Hka-Kj-XX4" firstAttribute="top" secondItem="F9B-8I-H8h" secondAttribute="bottom" id="NlH-a9-YGk"/>
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="top" secondItem="Qnq-UO-ahh" secondAttribute="bottom" constant="16" id="OoQ-VT-NZG"/>
                             <constraint firstItem="Lhe-oM-yWB" firstAttribute="top" secondItem="AeC-bx-wVP" secondAttribute="bottom" constant="15" id="UCC-Kp-zg3"/>
+                            <constraint firstItem="ssY-ep-W47" firstAttribute="centerY" secondItem="AeC-bx-wVP" secondAttribute="centerY" id="UX0-Gv-UOv"/>
                             <constraint firstAttribute="trailing" secondItem="Qnq-UO-ahh" secondAttribute="trailing" constant="20" id="UZ2-Ng-vUo"/>
                             <constraint firstItem="Hka-Kj-XX4" firstAttribute="top" secondItem="2zn-NW-qcG" secondAttribute="bottom" id="Uun-c2-VDR"/>
                             <constraint firstItem="0Wu-fy-D9f" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="Wcs-wT-3Xa"/>
@@ -1346,6 +1363,7 @@
                             <constraint firstItem="am2-oB-cnd" firstAttribute="top" secondItem="Lhe-oM-yWB" secondAttribute="bottom" constant="15" id="oNS-NX-XIY"/>
                             <constraint firstAttribute="trailing" secondItem="Hka-Kj-XX4" secondAttribute="trailing" id="tpI-Rw-MKQ"/>
                             <constraint firstItem="iLY-jN-twa" firstAttribute="top" secondItem="Hka-Kj-XX4" secondAttribute="bottom" id="u36-I4-LDX"/>
+                            <constraint firstAttribute="trailing" secondItem="ssY-ep-W47" secondAttribute="trailing" constant="13" id="u9X-62-EVI"/>
                             <constraint firstItem="znV-b8-8bi" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="centerX" constant="10" id="voG-Bd-pdn"/>
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="top" secondItem="am2-oB-cnd" secondAttribute="bottom" constant="15" id="wEv-9b-y2B"/>
                             <constraint firstItem="SeN-mJ-2EU" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" constant="20" id="z2b-YU-JAE"/>
@@ -1559,6 +1577,7 @@
         <image name="btn_notWorth" width="90" height="46"/>
         <image name="btn_worth" width="90" height="46"/>
         <image name="close" width="23" height="22"/>
+        <image name="date_chevron" width="10" height="15"/>
         <image name="dont_count" width="39" height="39"/>
         <image name="happy_on" width="36" height="36"/>
         <image name="iTunesArtwork" width="512" height="512"/>
