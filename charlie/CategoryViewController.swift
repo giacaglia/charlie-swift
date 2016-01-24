@@ -15,6 +15,12 @@ class CategoryViewController : UIViewController {
     @IBOutlet weak var transLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
+    
+    @IBOutlet weak var savingsView: UIImageView!
+    @IBOutlet weak var billsView: UIImageView!
+    @IBOutlet weak var spendingImgView: UIImageView!
+    @IBOutlet weak var dontCountImgView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         boxView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -29,6 +35,57 @@ class CategoryViewController : UIViewController {
         dateFormatter.dateFormat = "EE, MMM dd "
         let dateString = dateFormatter.stringFromDate(transaction.date)
         dateLabel.text = dateString.uppercaseString
+        
+        let savingsTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressSavings")
+        savingsView.userInteractionEnabled = true
+        savingsView.addGestureRecognizer(savingsTapRecognizer)
+        
+        
+        let billTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressBill")
+        billsView.userInteractionEnabled = true
+        billsView.addGestureRecognizer(billTapRecognizer)
+        
+        let spendingTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressSpending")
+        spendingImgView.userInteractionEnabled = true
+        spendingImgView.addGestureRecognizer(spendingTapRecognizer)
+        
+        
+        let dontCountTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressDontCount")
+        dontCountImgView.userInteractionEnabled = true
+        dontCountImgView.addGestureRecognizer(dontCountTapRecognizer)
+    }
+    
+    
+    func didPressSavings() {
+        realm.beginWrite()
+        trans?.user_category = "Savings"
+        try! realm.commitWrite()
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
+    func didPressBills() {
+        realm.beginWrite()
+        trans?.user_category = "Bills"
+        try! realm.commitWrite()
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
+    func didPressSpending() {
+        realm.beginWrite()
+        trans?.user_category = "Spending"
+        try! realm.commitWrite()
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
+    func didPressDontCount() {
+        realm.beginWrite()
+        trans?.user_category = "Don't Count"
+        try! realm.commitWrite()
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
     }
 
     @IBAction func didPressClose(sender: AnyObject) {

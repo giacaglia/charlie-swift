@@ -112,7 +112,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 toastView.hidden = false
                 accountAddView.hidden = true
                 collectionView.hidden = false
-                //show toast
             }
             else {
                 print("Still waiting")
@@ -572,11 +571,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
         let trans = transactionItems[indexPath!.row]
+        let navigationVC = self.navigationController
         let categoryVC = CategoryViewController()
         categoryVC.trans = trans
-        self.addChildViewController(categoryVC)
+        navigationVC!.addChildViewController(categoryVC)
+        self.view.alpha = 0.0
         categoryVC.view.frame = self.view.frame
-        self.view.addSubview(categoryVC.view)
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.navigationController!.view.addSubview(categoryVC.view)
+            self.view.alpha = 1.0
+        }
         
         self.saveSwipeToServer(indexPath: indexPath!, direction: direction)
         self.updateTableAt(indexPath: indexPath!, direction: direction)

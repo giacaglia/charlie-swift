@@ -64,17 +64,13 @@ class charlieService {
     
     func saveSwipe(direction:Int, transactionIndex:Int, callback: Bool->())
     {
-        
-       // var lat = 0.0
         var lat = 0.0
         var lng = 0.0
         var category_id = 0
         var city = ""
         var state = ""
         var address = ""
-        var zip = ""
-       
-        
+        var zip = ""        
         
         if ((transactionItems[transactionIndex].meta?.location?.coordinates?.lat) != nil)
         {

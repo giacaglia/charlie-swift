@@ -21,8 +21,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryViewController" customModule="charlie" customModuleProvider="target">
             <connections>
                 <outlet property="amountLabel" destination="tZv-nu-Kp8" id="mJ1-Dk-gJK"/>
+                <outlet property="billsView" destination="U2l-Rc-ai5" id="8qW-eK-5yc"/>
                 <outlet property="boxView" destination="fcJ-PG-XKj" id="lfy-5Y-0VO"/>
                 <outlet property="dateLabel" destination="UVw-41-Bx6" id="kHz-Fh-tNB"/>
+                <outlet property="dontCountImgView" destination="aOZ-cV-EuY" id="VUi-g0-0Xe"/>
+                <outlet property="savingsView" destination="XbW-bz-o96" id="CMe-u8-bdM"/>
+                <outlet property="spendingImgView" destination="hGt-Kc-Htb" id="hdd-4c-vQh"/>
                 <outlet property="transLabel" destination="7l2-aY-Tsf" id="QEU-b9-Qi0"/>
                 <outlet property="view" destination="iN0-l3-epB" id="muL-qT-gez"/>
             </connections>
