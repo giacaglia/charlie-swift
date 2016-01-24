@@ -375,117 +375,97 @@ class cHelper {
             dispatch_get_main_queue(), closure)
     }
     
-    func addUpdateResetAccount(type:Int, dayLength:Int, callback: Int->()) {
-        let users = realm.objects(User)
-        
+    func addUpdateResetAccount(dayLength dayLength:Int, callback: Int->()) {
         var dictDate = ""
         var fake_institution = false
         var institution = ""
         
-        for _ in users {
-            let user_access_token  = keyChainStore.get("access_token")
-            cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
-                if let accounts = response["accounts"] as? [NSDictionary] {
-                    try! realm.write {
-                        // Save one Venue object (and dependents) for each element of the array
-                        for account in accounts {
-                            
-                            
-                            if let institution_type = account.valueForKey("institution_type")
-                            {
-
-                                institution = institution_type as! String
-                                if String(institution_type) == "fake_institution"
-                                {
-                                    fake_institution = true
-                                }
-                            }
-                            realm.create(Account.self, value: account, update: true)
-                        }
-                        
-                        Mixpanel.sharedInstance().track("Institution", properties: ["name": institution])
-                    }
-                    
-                    let transactions = response["transactions"] as! [NSDictionary]
+        let user_access_token  = keyChainStore.get("access_token")
+        cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
+            if let accounts = response["accounts"] as? [NSDictionary] {
+                try! realm.write {
                     // Save one Venue object (and dependents) for each element of the array
-                    
-                    var transCount =  0
-                    for transaction in transactions {
-                        try! realm.write {
-                            //get placeType
-                            let placeTypeO = transaction.valueForKey("type")
-                            let placeType = placeTypeO!.valueForKey("primary")
-                            
-                            transaction.setValue(placeType, forKeyPath: "placeType")
-                            //clean up name
-                            let dictName = transaction.valueForKey("name") as? String
-                            transaction.setValue(self.cleanName(dictName!), forKey: "name")
-                            //convert string to date before insert
-                            if fake_institution == true
-                            {
-                              
-                                let formatter = NSDateFormatter()
-                                print("DATE \(NSDate())")
-                                formatter.dateFormat = "yyyy-MM-dd"
-                                dictDate = formatter.stringFromDate(NSDate())
-                                transaction.setValue(self.convertDate(dictDate), forKey: "date")
+                    for account in accounts {
+                        if let institution_type = account.valueForKey("institution_type") {
+                            institution = institution_type as! String
+                            if String(institution_type) == "fake_institution" {
+                                fake_institution = true
                             }
-                            else
-                            {
-                                dictDate = (transaction.valueForKey("date") as? String)!
-                                transaction.setValue(self.convertDate(dictDate), forKey: "date")
-                            }
-                        
-                           
-                           
-                            //check for deposits and remove
-                            let dictAmount = transaction.valueForKey("amount") as? Double
-                            //add category
-                            
-                            let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
-                            
-                            //add category
-                            if let category_id = transaction.valueForKey("category_id") as? String {
-                                let predicate = NSPredicate(format: "id = %@", category_id)
-                                let categoryToAdd = realm.objects(Category).filter(predicate)
-                                newTrans.categories = categoryToAdd[0]
-                                
-                                //if category is one we don't want to count or amount is too small or negative or internal transfer
-                                if (category_id == "21008000" || category_id == "21007001" || category_id == "21001000" || dictAmount < 1) {
-                                    newTrans.status = 86 //sets status to ignore from totals
-                                }
-                                
-                                
-                            }
-                            else //doesn't have a cateogry
-                            {
-                                // set first twenty transations to status of
-                                if (dictAmount < 1)
-                                {  newTrans.status = 86 }
-                            }
-                            
-                            if newTrans.status != 86
-                            { transCount += 1 }
-                            
                         }
-                        
-                        
-                        
+                        realm.create(Account.self, value: account, update: true)
                     }
                     
-                    
-                    
-                    
-                    let transactions_count = transactions.count
-                    callback(transactions_count)
-                    
-                     Mixpanel.sharedInstance().track("Initital Transaction Count", properties: ["count": transCount])
+                    Mixpanel.sharedInstance().track("Institution", properties: ["name": institution])
                 }
-                else {
-                    callback(0)
+                
+                let transactions = response["transactions"] as! [NSDictionary]
+                // Save one Venue object (and dependents) for each element of the array
+                
+                var transCount =  0
+                for transaction in transactions {
+                    try! realm.write {
+                        //get placeType
+                        let placeTypeO = transaction.valueForKey("type")
+                        let placeType = placeTypeO!.valueForKey("primary")
+                        
+                        transaction.setValue(placeType, forKeyPath: "placeType")
+                        //clean up name
+                        let dictName = transaction.valueForKey("name") as? String
+                        transaction.setValue(self.cleanName(dictName!), forKey: "name")
+                        //convert string to date before insert
+                        if fake_institution == true {
+                            let formatter = NSDateFormatter()
+                            print("DATE \(NSDate())")
+                            formatter.dateFormat = "yyyy-MM-dd"
+                            dictDate = formatter.stringFromDate(NSDate())
+                            transaction.setValue(self.convertDate(dictDate), forKey: "date")
+                        }
+                        else {
+                            dictDate = (transaction.valueForKey("date") as? String)!
+                            transaction.setValue(self.convertDate(dictDate), forKey: "date")
+                        }
+                        
+                        //check for deposits and remove
+                        let dictAmount = transaction.valueForKey("amount") as? Double
+                        //add category
+                        
+                        let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                        
+                        //add category
+                        if let category_id = transaction.valueForKey("category_id") as? String {
+                            let predicate = NSPredicate(format: "id = %@", category_id)
+                            let categoryToAdd = realm.objects(Category).filter(predicate)
+                            newTrans.categories = categoryToAdd[0]
+                            
+                            //if category is one we don't want to count or amount is too small or negative or internal transfer
+                            if (category_id == "21008000" || category_id == "21007001" || category_id == "21001000" || dictAmount < 1) {
+                                newTrans.status = 86 //sets status to ignore from totals
+                            }
+                        }
+                        else //doesn't have a cateogry
+                        {
+                            // set first twenty transations to status of
+                            if (dictAmount < 1) {
+                                newTrans.status = 86
+                            }
+                        }
+                        
+                        if newTrans.status != 86 {
+                            transCount += 1
+                        }
+                        
+                    }
                 }
+                let transactions_count = transactions.count
+                callback(transactions_count)
+                
+                 Mixpanel.sharedInstance().track("Initital Transaction Count", properties: ["count": transCount])
+            }
+            else {
+                callback(0)
             }
         }
+        
     }
     
     func getSettings(callback: Bool->()) {

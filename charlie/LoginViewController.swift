@@ -139,7 +139,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                 keyStore.synchronize()
                 Mixpanel.sharedInstance().people.set(["$email":self.email_address])
                 
-                cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
+                cHelp.addUpdateResetAccount(dayLength: 0) { (response) in
                     let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
                     ABPinSetup.view.backgroundColor = listBlue
                     

@@ -57,8 +57,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         webView!.loadRequest(req)
     }
     
-    func userContentController(
-        userContentController: WKUserContentController,
+    func userContentController(userContentController: WKUserContentController,
         didReceiveScriptMessage message: WKScriptMessage) {
         if message.name == "callbackHandler" {
             //get access_token
@@ -76,14 +75,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                 SwiftLoader.show(true)
                 cService.getAccessToken(public_token) { (response) in
                     // var uuid = NSUUID().UUIDString
-
                     let access_token = response["access_token"] as! String
                     let email_address = self.users[0].email
                     self.keyStore.setString(access_token, forKey: "access_token")
                     self.keyStore.setString(email_address, forKey: "email_address")
                     self.keyStore.synchronize()
                     Mixpanel.sharedInstance().people.set(["$email":email_address])
-                    
                     
                     let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
                     self.keyChainStore.set(uuid, key: "uuid")
@@ -99,16 +96,15 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     _ = realm.objects(Category)
                     cService.getCategories() { (responses) in
                         for response in responses {
-                            
-                            let cat = Category()
+                            let category = Category()
                             let id:String = response["id"] as! String
                             let type:String = response["type"] as! String
-                            cat.id = id
-                            cat.type = type
+                            category.id = id
+                            category.type = type
                             let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
-                            cat.categories = categories
+                            category.categories = categories
                             try! realm.write {
-                                realm.add(cat, update: true)
+                                realm.add(category, update: true)
                             }
                         }
                         

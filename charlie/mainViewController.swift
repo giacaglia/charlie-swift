@@ -50,7 +50,7 @@ protocol ChangeFilterProtocol {
 
 protocol MainViewControllerDelegate {
     func hideCardsAndShowTransactions()
-      func showCards()
+    func showCards()
 }
 
 class mainViewController: UIViewController, MainViewControllerDelegate {
@@ -91,6 +91,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     var monthDiff:Int = 0
 
     func willEnterForeground(notification: NSNotification!) {
+        print("here")
         self.loadTransactionTable()
         self.collectionView.reloadData()
     }
@@ -98,6 +99,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+      
         //if accounts have been added but we don't have transactions that means plaid hasn't retreived transactions yet so check plaid until they have them every x seconds
         if accounts.count > 0 && allTransactionItems.count == 0 {
             if timerCount == 0 {
@@ -120,6 +122,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         // transactionsTable.reloadData()
     }
     
+    
     func calculateReports() -> Void {
         //bad programming setting a local global... need to fix
         (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
@@ -128,6 +131,8 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+
         self.setupNavigationBar()
         
         //get month range for transactions
@@ -235,7 +240,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 let transCount = allTransactionItems.count
                 let firstTransaction = allTransactionItems[transCount - 1].date as NSDate
                 
-                
                 let lastTransaction = allTransactionItems[0].date as NSDate
                 let calendar: NSCalendar = NSCalendar.currentCalendar()
                 let flags = NSCalendarUnit.Day
@@ -255,12 +259,9 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 
                 SwiftLoader.show(true)
                 print("DAYS \(dateToSychTo)")
-                cHelp.addUpdateResetAccount(1, dayLength: dateToSychTo) { (response) in
+                cHelp.addUpdateResetAccount(dayLength: dateToSychTo) { (response) in
                     self.transactionsTable.reloadData()
                     SwiftLoader.hide()
-                    if transactionItems.count == 0 && self.inboxType == .InboxTransaction && allTransactionItems.count > 0 {
-                        self.showReward()
-                    }
                 }
             }
         }
@@ -322,16 +323,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         transactionsTable.tableFooterView = UIView()
     }
     
-    func showReward() {
-//        rewardView.subviews.forEach({ $0.removeFromSuperview() })
-//        let rewardVC = RewardViewController()
-//        self.addChildViewController(rewardVC)
-//        rewardVC.view.backgroundColor = lightBlue
-//        rewardView.addSubview(rewardVC.view)
-//        rewardVC.view.frame = CGRectMake(0, 0, rewardView.frame.size.width, rewardView.frame.size.height)
-//        rewardView.hidden = false
-    }
-    
     func showCards() {
 //        //dateRangeLabel.hidden = false
 //        rewardView.subviews.forEach({ $0.removeFromSuperview() })
@@ -363,25 +354,15 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         approvedPredicate = NSPredicate(format: "status = 1")
         actedUponPredicate = NSPredicate(format: "status = 1 OR status = 2")
         waitingToProcessPredicate = NSPredicate(format: "(date >= %@ and date <= %@) and status = -1", startDate, endDate)
-
     }
     
-    func hideReward() {
-     //   rewardView.hidden = true
-        //dateRangeLabel.hidden = true
-    }   
-    
     func hideCardsAndShowTransactions() {
-//        self.
-//        hideReward()
-//        transactionsTable.hidden = false
-//        showPastTransactions()
         self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
     }
     
     func updateTrans() -> Void {
         print("looking for records")
-        cHelp.addUpdateResetAccount(1, dayLength: 0) { (response) in
+        cHelp.addUpdateResetAccount(dayLength: 0) { (response) in
             charlieAnalytics.track("Account Transations Initial Sync Completed")
             
             print(response)
@@ -397,16 +378,13 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 
                 self.calculateReports()
                 
-                
                 dispatch_async(dispatch_get_main_queue()) {
                     self.transactionsTable.reloadData()
                     self.collectionView.reloadData()
                 }
                 
-                //    self.setInboxTitle(true)
                 SwiftLoader.hide()
                 self.toastView.hidden = true
-
             }
         }
     }
@@ -465,11 +443,9 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         
         try! realm.commitWrite()
         
-        if loadCount > 0
-        {
+        if loadCount > 0 {
             areThereMoreItemsToLoad =  true
         }
-        
     }
     
    
@@ -580,7 +556,6 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
             (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
         dispatch_async(dispatch_get_main_queue()) {
-            //eloadItemsAtIndexPaths([indexPath])
             collectionView.reloadData()
             self.transactionsTable.reloadData()
         }
@@ -599,24 +574,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         
         self.saveSwipeToServer(indexPath: indexPath!, direction: direction)
         self.updateTableAt(indexPath: indexPath!, direction: direction)
-        
-        
     }
     
     
-    private func saveSwipeToServer(indexPath indexPath: NSIndexPath, direction: Int)
-    {
-        
+    private func saveSwipeToServer(indexPath indexPath: NSIndexPath, direction: Int) {
         print("Saved Swipe: \(direction)")
         cService.saveSwipe(direction, transactionIndex: indexPath.row)
             { (callback) in
-                print("callback complete1")
-                
+            print("callback complete1")
         }
-        
     }
-    
-    
     
     
     private func updateTableAt(indexPath indexPath: NSIndexPath, direction: Int) {
@@ -627,12 +594,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         realm.beginWrite()
         transactionItems[indexPath.row].status = direction
         
-         let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
-        
-
+        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
         transactionsTable.removeCell(cell, duration: 0.3) { () -> Void in
-           
-            var currentMonth = false
+           var currentMonth = false
             
             if selectedCollectioncCellIndex  == 0
             {
@@ -644,23 +608,13 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             self.transactionsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: transactionItems.count + 1, inSection: 0)], withRowAnimation: .None)
         }
         try! realm.commitWrite()
-        let rowCount = Int(transactionsTable.numberOfRowsInSection(0).value)
         
         if direction == 1 {
             charlieAnalytics.track("Worth It Swipe")
-            if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
-                print("show reward window")
-                self.showReward()
-            }
         }
         else {
             charlieAnalytics.track("Not Worth It Swipe")
-            if rowCount == 1 + Int(areThereMoreItemsToLoad) && self.inboxType == .InboxTransaction {
-                print("show reward window")
-                self.showReward()
-            }
         }
-      
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -696,13 +650,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             }
         }
         else if indexPath.row == transactionItems.count + 1 {
-//            print("Show Happy")
-//            startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
-//            endDate = startDate.endOfMonth()!
-//            
-//            let RVC = RewardViewController()
-//            RVC.view.backgroundColor = lightBlue
-//            self.navigationController?.pushViewController(RVC, animated: true)
             return
         }
        
