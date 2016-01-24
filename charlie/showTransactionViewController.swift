@@ -15,8 +15,9 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var categoryLabel: UILabel!
     
     var mainVC:mainViewController!
     var transaction : Transaction?
@@ -54,10 +55,14 @@ class showTransactionViewController: UIViewController {
         dateFormatter.dateFormat = "MMM dd, YYYY"
         dateLabel.text = dateFormatter.stringFromDate(trans.date)
 
+        categoryLabel.text = String()
+//        categoryLabel.text = trans.user_category
+        
         // Fix name: Terrible name
         if let categories = trans.categories {
-            categoryLabel.text = categories.categories
+            typeLabel.text = categories.categories
         }
+        
         guard let location = trans.meta?.location else {
             mapView.hidden = true
             return

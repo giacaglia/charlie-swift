@@ -63,14 +63,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if (oldSchemaVersion < 1) {
-                    
                     migration.enumerate(User.className()) { oldObject, newObject in
-                        
                         // Nothing to do!
                         // Realm will automatically detect new properties and removed properties
                         // And will update the schema on disk automatically
                         newObject!["happy_flow"] = 0.0
                     }
+//                    migration.enumerate(Transaction.className()) { oldObject, newObject in
+//                        newObject!["user_category"] = String()
+//                    }
                     
                 }
         })
