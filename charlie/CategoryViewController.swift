@@ -49,10 +49,22 @@ class CategoryViewController : UIViewController {
         spendingImgView.userInteractionEnabled = true
         spendingImgView.addGestureRecognizer(spendingTapRecognizer)
         
-        
         let dontCountTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressDontCount")
         dontCountImgView.userInteractionEnabled = true
         dontCountImgView.addGestureRecognizer(dontCountTapRecognizer)
+        
+        if trans!.user_category == "Savings" {
+            savingsView.image = UIImage(named: "blue_savings")
+        }
+        else if trans!.user_category == "Bills" {
+            billsView.image = UIImage(named: "blue_bills")
+        }
+        else if trans!.user_category == "Spending" {
+            spendingImgView.image = UIImage(named: "blue_spending")
+        }
+        else if trans!.user_category == "Don't Count" {
+            dontCountImgView.image = UIImage(named: "blue_dont_count")
+        }
     }
     
     
