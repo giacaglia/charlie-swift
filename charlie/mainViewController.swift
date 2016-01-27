@@ -571,15 +571,19 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
         let indexPath = tableView.indexPathForCell(cell)
         let trans = transactionItems[indexPath!.row]
-        let navigationVC = self.navigationController
-        let categoryVC = CategoryViewController()
-        categoryVC.trans = trans
-        navigationVC!.addChildViewController(categoryVC)
-        self.view.alpha = 0.0
-        categoryVC.view.frame = self.view.frame
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.navigationController!.view.addSubview(categoryVC.view)
-            self.view.alpha = 1.0
+        
+        if trans.ctype == 0
+        {
+            let navigationVC = self.navigationController
+            let categoryVC = CategoryViewController()
+            categoryVC.trans = trans
+            navigationVC!.addChildViewController(categoryVC)
+            self.view.alpha = 0.0
+            categoryVC.view.frame = self.view.frame
+            UIView.animateWithDuration(0.3) { () -> Void in
+                self.navigationController!.view.addSubview(categoryVC.view)
+                self.view.alpha = 1.0
+            }
         }
         
         self.saveSwipeToServer(indexPath: indexPath!, direction: direction)
@@ -725,6 +729,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
 
                 if rewardIndex == 1 {
                     if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite) {
+            
                         cellReward.rewardName.text = ""
                         cellReward.prevAmount.text = ""
                         cellReward.currentAmount.text = ""
@@ -868,6 +873,33 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
         let trans = transactionItems[indexPath.row]
         cell.nameCellLabel.text = trans.name
+        
+        
+
+        
+        if trans.ctype == 86
+        {
+            cell.typeImageView.image = UIImage(named: "dont count")
+        }
+        else if trans.ctype == 1
+        {
+            cell.typeImageView.image = UIImage(named: "blue_bills")
+        }
+        else if trans.ctype == 2
+        {
+            cell.typeImageView.image = UIImage(named: "blue_spending")
+        }
+        else if trans.ctype == 3
+        {
+            cell.typeImageView.image = UIImage(named: "blue_savings")
+        }
+        else
+        {
+            cell.typeImageView.image = UIImage(named: "white_dont count")
+        }
+        
+        
+        
 
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
         cell.firstRightAction = SBGestureTableViewCellAction(icon: UIImage(named: "sadFaceRight")!, color: listRed, fraction: 0.35, didTriggerBlock: removeCellBlockRight)

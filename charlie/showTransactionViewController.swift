@@ -65,7 +65,7 @@ class showTransactionViewController: UIViewController {
 
         categoryLabel.text = String()
         
-        if trans.ctype == 0
+        if trans.ctype == 86
         {
             categoryLabel.text = "Don't Count"
         }

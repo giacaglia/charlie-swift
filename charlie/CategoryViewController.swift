@@ -62,7 +62,7 @@ class CategoryViewController : UIViewController {
         else if trans!.ctype == 2 {
             spendingImgView.image = UIImage(named: "blue_spending")
         }
-        else if trans!.ctype == 0 {
+        else if trans!.ctype == 86 {
             dontCountImgView.image = UIImage(named: "blue_dont_count")
         }
     }
@@ -92,7 +92,7 @@ class CategoryViewController : UIViewController {
         self.removeFromParentViewController()
     }
     
-    func didPressBills() {
+    func didPressBill() {
         saveAllTransactions(1)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
@@ -105,7 +105,7 @@ class CategoryViewController : UIViewController {
     }
     
     func didPressDontCount() {
-        saveAllTransactions(0)
+        saveAllTransactions(86)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }

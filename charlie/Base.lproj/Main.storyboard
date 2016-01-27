@@ -588,6 +588,7 @@
                                             <outlet property="dateCellLabel" destination="SHf-3p-UR2" id="7X3-Vh-uXx"/>
                                             <outlet property="nameCellLabel" destination="4QY-YB-o90" id="RQR-9Q-yvn"/>
                                             <outlet property="smallAmountCellLabel" destination="OBt-xV-iU4" id="B3C-Dt-sG0"/>
+                                            <outlet property="typeImageView" destination="MaJ-Xr-v8P" id="uYR-Gs-72y"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell alpha="0.80000001192092896" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellReward" rowHeight="90" id="oyf-Zd-A9r" customClass="rewardTableViewCell" customModule="charlie" customModuleProvider="target">
@@ -1324,14 +1325,14 @@
                                     <constraint firstAttribute="height" constant="150" id="bRF-Of-EPy"/>
                                 </constraints>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you spend $38.29 at Blue Dragon Yesterday?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhE-Tx-QpR">
                                 <rect key="frame" x="30" y="64" width="540" height="22"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                 <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3L-Aa-dqn">
                                 <rect key="frame" x="200" y="111" width="90" height="46"/>
                                 <animations/>
                                 <constraints>
@@ -1349,7 +1350,7 @@
                                     <action selector="notWorth:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="DvU-82-K2s"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znV-b8-8bi">
                                 <rect key="frame" x="310" y="111" width="155" height="46"/>
                                 <animations/>
                                 <constraints>
@@ -1746,7 +1747,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="mah-IZ-spG"/>
-        <segue reference="90x-Hi-7no"/>
-        <segue reference="pkc-wO-zVL"/>
+        <segue reference="swt-fH-1dv"/>
+        <segue reference="X9z-ju-lxa"/>
     </inferredMetricsTieBreakers>
 </document>
