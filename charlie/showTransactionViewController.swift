@@ -64,7 +64,29 @@ class showTransactionViewController: UIViewController {
         dateLabel.text = dateFormatter.stringFromDate(trans.date)
 
         categoryLabel.text = String()
-        categoryLabel.text = trans.user_category
+        
+        if trans.ctype == 0
+        {
+            categoryLabel.text = "Don't Count"
+        }
+        else if trans.ctype == 1
+        {
+            categoryLabel.text = "Bills"
+        }
+        else if trans.ctype == 2
+        {
+            categoryLabel.text = "Spending"
+        }
+        else if trans.ctype == 3
+        {
+            categoryLabel.text = "Savings"
+        }
+        else
+        {
+            categoryLabel.text = ""
+        }
+
+        
         
         // Fix name: Terrible name
         if let categories = trans.categories {

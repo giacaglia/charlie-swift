@@ -53,49 +53,59 @@ class CategoryViewController : UIViewController {
         dontCountImgView.userInteractionEnabled = true
         dontCountImgView.addGestureRecognizer(dontCountTapRecognizer)
         
-        if trans!.user_category == "Savings" {
+        if trans!.ctype == 3 {
             savingsView.image = UIImage(named: "blue_savings")
         }
-        else if trans!.user_category == "Bills" {
+        else if trans!.ctype == 1 {
             billsView.image = UIImage(named: "blue_bills")
         }
-        else if trans!.user_category == "Spending" {
+        else if trans!.ctype == 2 {
             spendingImgView.image = UIImage(named: "blue_spending")
         }
-        else if trans!.user_category == "Don't Count" {
+        else if trans!.ctype == 0 {
             dontCountImgView.image = UIImage(named: "blue_dont_count")
         }
     }
     
     
+    func saveAllTransactions(ctype:Int)
+   {
+    
+    
+    // get all transactions for name
+    
+    let predicate = NSPredicate(format: "name = %@", trans!.name)
+    
+    try! realm.write {
+        for transName in realm.objects(Transaction).filter(predicate) {
+            transName.ctype = ctype
+        }
+    }
+    
+    
+    }
+    
+    
     func didPressSavings() {
-        realm.beginWrite()
-        trans?.user_category = "Savings"
-        try! realm.commitWrite()
+        saveAllTransactions(3)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
     
     func didPressBills() {
-        realm.beginWrite()
-        trans?.user_category = "Bills"
-        try! realm.commitWrite()
+        saveAllTransactions(1)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
     
     func didPressSpending() {
-        realm.beginWrite()
-        trans?.user_category = "Spending"
-        try! realm.commitWrite()
+        saveAllTransactions(2)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
     
     func didPressDontCount() {
-        realm.beginWrite()
-        trans?.user_category = "Don't Count"
-        try! realm.commitWrite()
+        saveAllTransactions(0)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
