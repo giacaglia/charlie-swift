@@ -11,8 +11,6 @@
                 <outlet property="amountButton" destination="vsN-Pj-ZnK" id="vUY-kT-Hbs"/>
                 <outlet property="dividerWorthView" destination="qpr-zj-ga2" id="kpy-xs-6Xr"/>
                 <outlet property="howShouldISortLabel" destination="0RJ-xC-Iv6" id="IHM-Bc-4Uy"/>
-                <outlet property="leastRecentButton" destination="djJ-Wl-1dr" id="eQx-wf-NhL"/>
-                <outlet property="leastWorthButton" destination="38d-rt-zvK" id="VK9-oW-ilk"/>
                 <outlet property="mostRecentButton" destination="HEo-86-vcf" id="8TF-tK-ASE"/>
                 <outlet property="mostWorthButton" destination="Y3K-RD-P53" id="YDl-WM-Zcb"/>
                 <outlet property="view" destination="D6X-BM-Bnh" id="j5w-Ht-im1"/>
@@ -23,30 +21,19 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-86-vcf">
-                    <rect key="frame" x="251" y="157" width="97" height="34"/>
+                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-86-vcf">
+                    <rect key="frame" x="281" y="157" width="38" height="34"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Most recent">
+                    <state key="normal" title="Date">
                         <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
                         <action selector="mostRecentPressed:" destination="-1" eventType="touchUpInside" id="R1B-m5-9qh"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djJ-Wl-1dr">
-                    <rect key="frame" x="250" y="220" width="101" height="34"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Least recent">
-                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="leastRecentPressed:" destination="-1" eventType="touchUpInside" id="l51-jf-PiJ"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gbS-1S-QeL">
-                    <rect key="frame" x="250" y="283" width="100" height="34"/>
+                    <rect key="frame" x="250" y="219" width="100" height="34"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Alphabetical">
@@ -57,7 +44,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsN-Pj-ZnK">
-                    <rect key="frame" x="268" y="346" width="64" height="34"/>
+                    <rect key="frame" x="267" y="283" width="64" height="34"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Amount">
@@ -79,7 +66,7 @@
                         <action selector="closePressed:" destination="-1" eventType="touchUpInside" id="8E9-mj-Yse"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="3ck-R6-7Ql">
+                <view contentMode="scaleToFill" verticalHuggingPriority="249" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ck-R6-7Ql">
                     <rect key="frame" x="180" y="205" width="240" height="1"/>
                     <animations/>
                     <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
@@ -106,17 +93,6 @@
                         <constraint firstAttribute="width" constant="240" id="SYN-4f-BQ2"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3K-RD-P53">
-                    <rect key="frame" x="247" y="409" width="107" height="34"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Most worth it">
-                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="mostWorthPressed:" destination="-1" eventType="touchUpInside" id="1uw-Cp-0Y3"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="siI-wt-3gF">
                     <rect key="frame" x="180" y="394" width="240" height="1"/>
                     <animations/>
@@ -137,17 +113,6 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38d-rt-zvK">
-                    <rect key="frame" x="245" y="472" width="110" height="34"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Least worth it">
-                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="leastWorthPressed:" destination="-1" eventType="touchUpInside" id="bZk-6o-EFc"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qpr-zj-ga2">
                     <rect key="frame" x="180" y="457" width="240" height="1"/>
                     <animations/>
@@ -157,36 +122,42 @@
                         <constraint firstAttribute="height" constant="1" id="Mnj-hg-NBM"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3K-RD-P53">
+                    <rect key="frame" x="266" y="347" width="65" height="34"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Worth it">
+                        <color key="titleColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="mostWorthPressed:" destination="-1" eventType="touchUpInside" id="1uw-Cp-0Y3"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gbS-1S-QeL" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="23h-Bc-9fO"/>
-                <constraint firstItem="38d-rt-zvK" firstAttribute="top" secondItem="qpr-zj-ga2" secondAttribute="bottom" constant="14" id="2si-Tt-EMD"/>
                 <constraint firstItem="tbJ-wC-ivL" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="25" id="7BI-TR-Qm8"/>
-                <constraint firstItem="qpr-zj-ga2" firstAttribute="centerX" secondItem="38d-rt-zvK" secondAttribute="centerX" id="8C8-U8-wed"/>
                 <constraint firstItem="9rg-RK-YqT" firstAttribute="leading" secondItem="h0a-0Z-2hc" secondAttribute="leading" id="BgY-V3-pgD"/>
-                <constraint firstItem="qpr-zj-ga2" firstAttribute="top" secondItem="Y3K-RD-P53" secondAttribute="bottom" constant="14" id="DNw-ua-3jg"/>
-                <constraint firstItem="djJ-Wl-1dr" firstAttribute="top" secondItem="3ck-R6-7Ql" secondAttribute="bottom" constant="14" id="EYJ-VK-qaQ"/>
-                <constraint firstItem="siI-wt-3gF" firstAttribute="top" secondItem="vsN-Pj-ZnK" secondAttribute="bottom" constant="14" id="HFY-wb-NJx"/>
+                <constraint firstItem="qpr-zj-ga2" firstAttribute="top" secondItem="Y3K-RD-P53" secondAttribute="bottom" constant="76" id="DNw-ua-3jg"/>
+                <constraint firstItem="siI-wt-3gF" firstAttribute="top" secondItem="vsN-Pj-ZnK" secondAttribute="bottom" constant="77" id="HFY-wb-NJx"/>
                 <constraint firstItem="0RJ-xC-Iv6" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="60" id="IAN-8p-2VZ"/>
                 <constraint firstItem="HEo-86-vcf" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="KCe-9i-Axe"/>
-                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="top" secondItem="9rg-RK-YqT" secondAttribute="bottom" constant="14" id="Kk9-eJ-59W"/>
-                <constraint firstItem="gbS-1S-QeL" firstAttribute="top" secondItem="h0a-0Z-2hc" secondAttribute="bottom" constant="14" id="LAl-Jk-VqL"/>
+                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="top" secondItem="9rg-RK-YqT" secondAttribute="bottom" constant="-49" id="Kk9-eJ-59W"/>
+                <constraint firstItem="gbS-1S-QeL" firstAttribute="top" secondItem="h0a-0Z-2hc" secondAttribute="bottom" constant="-50" id="LAl-Jk-VqL"/>
                 <constraint firstAttribute="trailing" secondItem="tbJ-wC-ivL" secondAttribute="trailing" constant="15" id="Ohw-WJ-9Pg"/>
-                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="SL7-9z-RNs"/>
+                <constraint firstItem="vsN-Pj-ZnK" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" constant="-1" id="SL7-9z-RNs"/>
                 <constraint firstItem="0RJ-xC-Iv6" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="Xvh-jU-gk0"/>
                 <constraint firstItem="siI-wt-3gF" firstAttribute="leading" secondItem="9rg-RK-YqT" secondAttribute="leading" id="Yab-g8-k8N"/>
-                <constraint firstItem="Y3K-RD-P53" firstAttribute="top" secondItem="siI-wt-3gF" secondAttribute="bottom" constant="14" id="YuR-Ns-jh1"/>
+                <constraint firstItem="Y3K-RD-P53" firstAttribute="top" secondItem="siI-wt-3gF" secondAttribute="bottom" constant="-48" id="YuR-Ns-jh1"/>
                 <constraint firstItem="3ck-R6-7Ql" firstAttribute="top" secondItem="HEo-86-vcf" secondAttribute="bottom" constant="14" id="ZiH-RU-XdV"/>
                 <constraint firstItem="qpr-zj-ga2" firstAttribute="leading" secondItem="siI-wt-3gF" secondAttribute="leading" id="aDx-VT-6AE"/>
-                <constraint firstItem="djJ-Wl-1dr" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="anZ-Dp-74I"/>
-                <constraint firstItem="9rg-RK-YqT" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="14" id="gl1-vh-FcI"/>
+                <constraint firstItem="9rg-RK-YqT" firstAttribute="top" secondItem="gbS-1S-QeL" secondAttribute="bottom" constant="78" id="gl1-vh-FcI"/>
                 <constraint firstItem="3ck-R6-7Ql" firstAttribute="centerX" secondItem="D6X-BM-Bnh" secondAttribute="centerX" id="goH-vS-ssU"/>
-                <constraint firstItem="siI-wt-3gF" firstAttribute="centerX" secondItem="Y3K-RD-P53" secondAttribute="centerX" id="qNT-HB-giT"/>
+                <constraint firstItem="siI-wt-3gF" firstAttribute="centerX" secondItem="Y3K-RD-P53" secondAttribute="centerX" constant="1.5" id="qNT-HB-giT"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="D6X-BM-Bnh" secondAttribute="top" constant="268" id="sOJ-rA-Gup"/>
                 <constraint firstItem="h0a-0Z-2hc" firstAttribute="leading" secondItem="3ck-R6-7Ql" secondAttribute="leading" id="vZc-y0-coc"/>
-                <constraint firstItem="h0a-0Z-2hc" firstAttribute="top" secondItem="djJ-Wl-1dr" secondAttribute="bottom" constant="14" id="zpJ-va-mMT"/>
             </constraints>
         </view>
     </objects>

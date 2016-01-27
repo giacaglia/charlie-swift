@@ -30,18 +30,18 @@ class SortViewController : UIViewController {
         if initialFilterType == .FilterByDescendingDate {
             mostRecentButton.setTitleColor(listBlue, forState: .Normal)
         }
-        else if initialFilterType == .FilterByDate {
-            leastRecentButton.setTitleColor(listBlue, forState: .Normal)
-        }
+//        else if initialFilterType == .FilterByDate {
+//            leastRecentButton.setTitleColor(listBlue, forState: .Normal)
+//        }
         else if initialFilterType == .FilterByName {
             alphabeticalButton.setTitleColor(listBlue, forState: .Normal)
         }
         else if initialFilterType == .FilterByAmount {
             amountButton.setTitleColor(listBlue, forState: .Normal)
         }
-        else if initialFilterType == .FilterByMostWorth {
-            mostWorthButton.setTitleColor(listBlue, forState: .Normal)
-        }
+//        else if initialFilterType == .FilterByMostWorth {
+//            mostWorthButton.setTitleColor(listBlue, forState: .Normal)
+//        }
         else if initialFilterType == .FilterByLeastWorth {
             leastWorthButton.setTitleColor(listBlue, forState: .Normal)
         }
@@ -104,11 +104,11 @@ class SortViewController : UIViewController {
     
     private func allButtonsGrayExcept(buttonIndex: Int) {
         if buttonIndex != 0 {mostRecentButton.setTitleColor(grayColor, forState: .Normal)}
-        if buttonIndex != 1 {leastRecentButton.setTitleColor(grayColor, forState: .Normal)}
+//        if buttonIndex != 1 {leastRecentButton.setTitleColor(grayColor, forState: .Normal)}
         if buttonIndex != 2 {alphabeticalButton.setTitleColor(grayColor, forState: .Normal)}
         if buttonIndex != 3 {amountButton.setTitleColor(grayColor, forState: .Normal)}
         if buttonIndex != 4 {mostWorthButton.setTitleColor(grayColor, forState: .Normal)}
-        if buttonIndex != 5 {leastWorthButton.setTitleColor(grayColor, forState: .Normal)}
+    //    if buttonIndex != 5 {leastWorthButton.setTitleColor(grayColor, forState: .Normal)}
     }
     
     @IBAction func closePressed(sender: AnyObject) {
