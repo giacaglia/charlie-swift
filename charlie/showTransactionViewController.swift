@@ -35,12 +35,8 @@ class showTransactionViewController: UIViewController {
        datePickerView.hidden =  true
        
         
-        //var transactionItems = realm.objects(Transaction)
-//        guard let usedTransaction = transaction else {
-//            return
-//        }
         let account = realm.objects(Account).filter("_id = '\(transaction!._account)'")
-        //transactionItems = realm.objects(Transaction).filter("_id = '\(usedTransaction._id)'")
+
         
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
@@ -159,6 +155,7 @@ class showTransactionViewController: UIViewController {
         
         datePickerView.hidden = false
         mapView.hidden = true
+        datePickerControl.date = (transaction?.date)!
         
     }
     

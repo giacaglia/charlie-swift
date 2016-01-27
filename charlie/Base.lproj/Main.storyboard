@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O6k-is-dPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1050" y="249"/>
+            <point key="canvasLocation" x="-451" y="310"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="KQH-Fv-Slh">
@@ -231,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1017" y="659"/>
+            <point key="canvasLocation" x="-1165" y="267"/>
         </scene>
         <!--Tutorial Card View Controller-->
         <scene sceneID="1az-hy-Co7">
