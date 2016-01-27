@@ -19,6 +19,11 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var categoryLabel: UILabel!
     
+  
+    @IBOutlet weak var datePickerControl: UIDatePicker!
+    
+    @IBOutlet weak var datePickerView: UIView!
+    
     var mainVC:mainViewController!
     var transaction : Transaction?
     var transactionIndex  = 0
@@ -27,16 +32,19 @@ class showTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var transactionItems = realm.objects(Transaction)
-        guard let usedTransaction = transaction else {
-            return
-        }
+       datePickerView.hidden =  true
+       
+        
+        //var transactionItems = realm.objects(Transaction)
+//        guard let usedTransaction = transaction else {
+//            return
+//        }
         let account = realm.objects(Account).filter("_id = '\(transactionItems[0]._account)'")
-        transactionItems = realm.objects(Transaction).filter("_id = '\(usedTransaction._id)'")
+        //transactionItems = realm.objects(Transaction).filter("_id = '\(usedTransaction._id)'")
         
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
-        let trans = transactionItems[0]
+        let trans = transactionItems[transactionIndex]
         if sourceVC == "main" {
             let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
             let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
@@ -109,6 +117,7 @@ class showTransactionViewController: UIViewController {
         }
     }
     
+   
     @IBAction func worth(sender: AnyObject) {
         if let vc = mainVC {
             
@@ -122,6 +131,43 @@ class showTransactionViewController: UIViewController {
             }
             self.navigationController!.popViewControllerAnimated(true)
         }
+    }
+    
+    @IBAction func showDatePickerButton(sender: UIButton) {
+        
+        datePickerView.hidden = false
+        mapView.hidden = true
+        
+    }
+    
+    @IBAction func saveDateButton(sender: UIButton) {
+        
+       if let vc = mainVC {
+            datePickerView.hidden = true
+            mapView.hidden = false
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "MMM dd, YYYY"
+            let strDate = dateFormatter.stringFromDate(datePickerControl.date)
+            
+            dateLabel.text = strDate
+            
+            try! realm.write {
+                self.transaction!.date = self.datePickerControl.date
+            }
+         //vc.loadTransactionTable()
+        
+        }
+      
+        
+        
+       
+        
+        
+        
+        
+       
+        
     }
     
     @IBAction func closeButtonPress(sender: AnyObject) {
