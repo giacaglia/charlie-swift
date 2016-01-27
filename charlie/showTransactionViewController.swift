@@ -39,12 +39,12 @@ class showTransactionViewController: UIViewController {
 //        guard let usedTransaction = transaction else {
 //            return
 //        }
-        let account = realm.objects(Account).filter("_id = '\(transactionItems[0]._account)'")
+        let account = realm.objects(Account).filter("_id = '\(transaction!._account)'")
         //transactionItems = realm.objects(Transaction).filter("_id = '\(usedTransaction._id)'")
         
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
-        let trans = transactionItems[transactionIndex]
+        let trans = transaction!
         if sourceVC == "main" {
             let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
             let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
@@ -142,7 +142,7 @@ class showTransactionViewController: UIViewController {
     
     @IBAction func saveDateButton(sender: UIButton) {
         
-       if let vc = mainVC {
+      
             datePickerView.hidden = true
             mapView.hidden = false
             
@@ -155,18 +155,14 @@ class showTransactionViewController: UIViewController {
             try! realm.write {
                 self.transaction!.date = self.datePickerControl.date
             }
-         //vc.loadTransactionTable()
+       
+         if let vc = mainVC {
+            
+            //vc.transactionsTable.reloadData()
+            vc.loadTransactionTable()
         
         }
       
-        
-        
-       
-        
-        
-        
-        
-       
         
     }
     

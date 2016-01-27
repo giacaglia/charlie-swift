@@ -443,7 +443,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8s-NF-Z6y">
                                         <rect key="frame" x="0.0" y="370" width="600" height="100"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mcafee-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mcafee-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ml7-f5-3py">
                                                 <rect key="frame" x="236" y="-19" width="127" height="47"/>
                                                 <animations/>
                                             </imageView>
@@ -993,7 +993,7 @@
                                         <color key="textColor" red="0.43529411759999997" green="0.64313725489999995" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zey-lw-PhZ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zey-lw-PhZ">
                                         <rect key="frame" x="559" y="28" width="23" height="22"/>
                                         <animations/>
                                         <state key="normal" image="close">
@@ -1423,13 +1423,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-xC-gsA">
                                 <rect key="frame" x="0.0" y="450" width="600" height="150"/>
                                 <subviews>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="1aw-et-TvM">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="106"/>
-                                        <animations/>
-                                        <date key="date" timeIntervalSinceReferenceDate="475534801.43770599">
-                                            <!--2016-01-26 21:00:01 +0000-->
-                                        </date>
-                                    </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccV-M0-Fe1">
                                         <rect key="frame" x="0.0" y="106" width="600" height="44"/>
                                         <animations/>
@@ -1438,6 +1431,13 @@
                                             <action selector="saveDateButton:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="An7-k9-KxJ"/>
                                         </connections>
                                     </button>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="1aw-et-TvM">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="106"/>
+                                        <animations/>
+                                        <date key="date" timeIntervalSinceReferenceDate="475534801.43770599">
+                                            <!--2016-01-26 21:00:01 +0000-->
+                                        </date>
+                                    </datePicker>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

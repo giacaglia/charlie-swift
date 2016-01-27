@@ -410,6 +410,7 @@ class cHelper {
                         
                         transaction.setValue(placeType, forKeyPath: "placeType")
                         //clean up name
+                        let id = transaction.valueForKey("_id") as? String
                         let dictName = transaction.valueForKey("name") as? String
                         transaction.setValue(self.cleanName(dictName!), forKey: "name")
                         //convert string to date before insert
@@ -429,7 +430,14 @@ class cHelper {
                         let dictAmount = transaction.valueForKey("amount") as? Double
                         //add category
                         
-                        let newTrans =  realm.create(Transaction.self, value: transaction, update: true)
+                        
+                        
+                        let predicate = NSPredicate(format: "_id == %@", id!)
+                        let dupTest = realm.objects(Transaction).filter(predicate)
+                        if dupTest.count == 0
+                        {
+                        
+                        let newTrans =  try! realm.create(Transaction.self, value: transaction, update: true)
                         
                         //add category
                         if let category_id = transaction.valueForKey("category_id") as? String {
@@ -454,6 +462,7 @@ class cHelper {
                             transCount += 1
                         }
                         
+                        }
                     }
                 }
                 let transactions_count = transactions.count

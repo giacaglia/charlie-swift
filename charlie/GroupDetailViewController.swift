@@ -16,7 +16,7 @@ class GroupDetailViewController: UIViewController {
     @IBOutlet weak var categoriesLabel: UILabel!
     
     var transactionName:String = ""
-    var transactionItems = realm.objects(Transaction)
+    var transactionGroupItems = realm.objects(Transaction)
     var happyItems = realm.objects(Transaction)
     var comingFromSad = false
     
@@ -43,24 +43,24 @@ class GroupDetailViewController: UIViewController {
         
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
         let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate, self.endDate, transactionName)
-        transactionItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
+        transactionGroupItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         
         
         
         name.text = transactionName
-        let transaction = transactionItems[0]
+        let transaction = transactionGroupItems[0]
         
         if let categories = transaction.categories {
             categoriesLabel.text = categories.categories
         }
         
-        happyItems = transactionItems.sorted("date", ascending: true)
+        happyItems = transactionGroupItems.sorted("date", ascending: true)
         
-        if transactionItems.count == 1 {
-            self.transactionCount.text = "\(transactionItems.count) transaction"
+        if transactionGroupItems.count == 1 {
+            self.transactionCount.text = "\(transactionGroupItems.count) transaction"
         }
         else {
-            self.transactionCount.text = "\(transactionItems.count) transactions"
+            self.transactionCount.text = "\(transactionGroupItems.count) transactions"
         }
     
         happyAmount = happyItems.sum("amount")
@@ -92,9 +92,9 @@ class GroupDetailViewController: UIViewController {
         currentTransactionCell = cell
         print("Direction \(direction)")
         
-        currentTransactionSwipeID = transactionItems[indexPath!.row]._id
+        currentTransactionSwipeID = transactionGroupItems[indexPath!.row]._id
         realm.beginWrite()
-        transactionItems[indexPath!.row].status = direction
+        transactionGroupItems[indexPath!.row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
         
@@ -107,7 +107,7 @@ class GroupDetailViewController: UIViewController {
         if (segue.identifier == "groupToDetail") {
             let viewController = segue.destinationViewController as! showTransactionViewController
             let indexPath = groupTableView.indexPathForSelectedRow
-            viewController.transaction = transactionItems[indexPath!.row]
+            viewController.transaction = transactionGroupItems[indexPath!.row]
             viewController.transactionIndex = indexPath!.row
             viewController.sourceVC = "happy"
         }
@@ -121,7 +121,7 @@ extension GroupDetailViewController {
     func calculateHappy() -> Int {
         var happy = 0
         var sad = 0
-        for trans in transactionItems {
+        for trans in transactionGroupItems {
             if trans.status == 1 {
                 happy += 1
             }
@@ -139,12 +139,12 @@ extension GroupDetailViewController {
 // TableView Methods
 extension GroupDetailViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transactionItems.count
+        return transactionGroupItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
-        let trans = transactionItems[indexPath.row]
+        let trans = transactionGroupItems[indexPath.row]
         let dateString = cHelp.convertDateGroup(trans.date)
         let currencyString = cHelp.formatCurrency(trans.amount)
         cell.transactionDate.text = dateString

@@ -118,7 +118,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 //they finished tutorial and account has still not loaded - show something until data is loaded
             }
         }
-        // transactionsTable.reloadData()
+       transactionsTable.reloadData()
     }
     
     
