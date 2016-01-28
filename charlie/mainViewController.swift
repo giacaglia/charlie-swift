@@ -875,11 +875,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         cell.nameCellLabel.text = trans.name
         
         
-
-        
         if trans.ctype == 86
         {
-            cell.typeImageView.image = UIImage(named: "dont count")
+            cell.typeImageView.image = UIImage(named: "dont_count")
         }
         else if trans.ctype == 1
         {
@@ -895,10 +893,8 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
         else
         {
-            cell.typeImageView.image = UIImage(named: "white_dont count")
+            cell.typeImageView.image = UIImage(named: "blue_uncategorized")
         }
-        
-        
         
 
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: UIImage(named: "happyFaceLeft")!, color: listGreen, fraction: 0.35, didTriggerBlock: removeCellBlockLeft)
