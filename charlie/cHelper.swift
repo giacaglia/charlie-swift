@@ -449,6 +449,21 @@ class cHelper {
                             if (category_id == "21008000" || category_id == "21007001" || category_id == "21001000" || dictAmount < 1) {
                                 newTrans.status = 86 //sets status to ignore from totals
                             }
+                            
+                            if Int(category_id) >= 13000000 && Int(category_id) <= 13005059
+                            {
+                                newTrans.ctype = 2
+                            }
+                            
+                            
+                            if Int(category_id) >= 19000000 && Int(category_id) <= 19054000
+                            {
+                                newTrans.ctype = 2
+                            }
+                            
+                            
+                            
+                            
                         }
                         else //doesn't have a cateogry
                         {
