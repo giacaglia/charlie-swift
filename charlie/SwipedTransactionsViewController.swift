@@ -9,11 +9,20 @@
 import Foundation
 import RealmSwift
 
-class SwipedTransactionsViewController : UIViewController {
+class SwipedTransactionsViewController : UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     var charlieGroupListFiltered = [charlieGroup]()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    
+    let filterNames = ["Spending", "Bills", "All"]
+    
+    
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var cvHolder: UIView!
+   
+        
+    @IBOutlet weak var collectionView: UICollectionView!
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
     let sortVC = SortViewController()
@@ -23,6 +32,21 @@ class SwipedTransactionsViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 90, height: 120)
+        
+//        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView!.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        
+       // collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+
+        
+        
         
         let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
         button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
@@ -52,6 +76,36 @@ class SwipedTransactionsViewController : UIViewController {
         self.loadData()
         self.changeFilter(self.filterType)
     }
+    
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        return CGSizeMake((self.view.frame.width/3 - 5), 44)
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! mySpendingCVCell
+        
+      
+        cell.filterName.text = filterNames[indexPath.row]
+        
+        
+        //cell.backgroundColor = UIColor.orangeColor()
+        return cell
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        print("pressed")
+        
+    }
+    
     
     func didTouchFilter(sender: AnyObject) {
         let topViewController = self.navigationController
