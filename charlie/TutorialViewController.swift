@@ -65,6 +65,19 @@ class TutorialViewController: UIViewController {
         charlieAnalytics.track("Account Recovered")
           SwiftLoader.show(true)
             
+            
+            let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            keyChainStore.set(uuid, key: "uuid")
+            
+            keyChainStore.set(access_token, key: "access_token")
+            cService.saveAccessToken(access_token) { (response) in
+            }
+            
+            keyStore.setString(access_token, forKey: "access_token")
+            
+            keyStore.synchronize()
+            
+            
             //get categories
             cService.getCategories() { (responses) in
                 for response in responses {
@@ -97,17 +110,7 @@ class TutorialViewController: UIViewController {
                     realm.add(user, update: true)
                 }
                 
-                
-                let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
-                keyChainStore.set(uuid, key: "uuid")
-                
-                keyChainStore.set(access_token, key: "access_token")
-                cService.saveAccessToken(access_token) { (response) in
-                }
-                
-                keyStore.setString(access_token, forKey: "access_token")
                
-                keyStore.synchronize()
                 self.performSegueWithIdentifier("happyFlowToLogin", sender: self)
                 
                 
