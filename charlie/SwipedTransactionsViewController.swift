@@ -13,7 +13,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     var charlieGroupListFiltered = [charlieGroup]()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     
-    let filterNames = ["Spending", "Bills", "All"]
+    let filterNames = ["All", "Bills", "Spending"]
     
     
     @IBOutlet weak var monthLabel: UILabel!
@@ -38,13 +38,10 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
         layout.itemSize = CGSize(width: 90, height: 120)
         
-//        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView!.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
-        
-       // collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-
         
         
         
@@ -73,7 +70,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        self.loadData()
+        self.loadData(0)
         self.changeFilter(self.filterType)
     }
     
@@ -102,6 +99,21 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        if indexPath.row == 0
+        {
+         self.loadData(0)
+         self.tableView.reloadData()
+        }
+        else if indexPath.row  == 1
+        {
+         self.loadData(1)
+         self.tableView.reloadData()
+        }
+        else if indexPath.row  == 2
+        {
+          self.loadData(2)
+         self.tableView.reloadData()
+        }
         print("pressed")
         
     }
@@ -132,12 +144,31 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 }
 
 extension SwipedTransactionsViewController {
-    private func loadData() {
+    private func loadData(spendingType:Int) {
         charlieGroupListFiltered = [charlieGroup]()
+        
+        var predicate = NSPredicate()
         var current_name = ""
 
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
+        
+        if spendingType == 0
+        {
+            predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
+        }
+        else if spendingType == 2
+        {
+            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 2", startDate, endDate)
+            
+        }
+        else if spendingType == 1
+        {
+            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 1", startDate, endDate)
+            
+        }
+
+        
+        
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
         
