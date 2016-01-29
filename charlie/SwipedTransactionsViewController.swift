@@ -15,6 +15,9 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     
     let filterNames = ["All", "Bills", "Spending"]
     
+    var totalAll:Double = 0.0
+    var totalSpending:Double = 0.0
+    var totalBills:Double = 0.0
     
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -89,7 +92,22 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! mySpendingCVCell
         
       
-        cell.filterName.text = filterNames[indexPath.row]
+        if indexPath.row == 0
+        {
+             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalAll)"
+            
+        }
+        else if indexPath.row == 1
+        {
+             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalBills)"
+        }
+        else if indexPath.row == 2
+        {
+             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalSpending)"
+        }
+        
+        
+        
         
         
         //cell.backgroundColor = UIColor.orangeColor()
@@ -171,12 +189,31 @@ extension SwipedTransactionsViewController {
         
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
-        
+        print("TOTAL \(actedUponItems.count)")
         for trans in actedUponItems {
+            if spendingType == 0
+            {
+                if trans.amount > 0
+                {
+                    totalAll += trans.amount
+                }
+                if trans.ctype == 1
+                {
+                    totalBills += trans.amount
+                }
+                else if trans.ctype == 2
+                {
+                    totalSpending += trans.amount
+                }
+             
+            }
             if trans.name == current_name {
                 // Approved items
+                
+             
+            
                 if trans.status == 1 {
-                    print("Worth IT \(current_index) - \(trans.name) \(trans.status)")
+                  //  print("Worth IT \(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].worthCount = charlieGroupListFiltered[current_index].worthCount + 1
                     charlieGroupListFiltered[current_index].worthValue = charlieGroupListFiltered[current_index].worthValue + trans.amount
                     charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
@@ -184,14 +221,14 @@ extension SwipedTransactionsViewController {
                 }
                 // Flagged items
                 else if trans.status == 2 {
-                    print("NOT Worth IT \(current_index) - \(trans.name) \(trans.status)")
+                  //  print("NOT Worth IT \(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].notWorthCount += 1
                     charlieGroupListFiltered[current_index].notWorthValue += trans.amount
                     charlieGroupListFiltered[current_index].happyPercentage = Int((Double(charlieGroupListFiltered[current_index].worthCount) / Double((charlieGroupListFiltered[current_index].transactions - charlieGroupListFiltered[current_index].notSwipedCount )) * 100))
                      charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
                 }
                else if trans.status  ==  -1 || trans.status ==  0 {
-                    print("NOT SWIPED\(current_index) - \(trans.name) \(trans.status)")
+                  //  print("NOT SWIPED\(current_index) - \(trans.name) \(trans.status)")
                     charlieGroupListFiltered[current_index].notSwipedCount += 1
                     charlieGroupListFiltered[current_index].notSwipedValue += trans.amount
                     charlieGroupListFiltered[current_index].totalAmount +=  trans.amount
@@ -204,21 +241,21 @@ extension SwipedTransactionsViewController {
                     cGroup.worthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: WORTH IT \(current_index) - \(trans.name) \(trans.status)")
+                   // print("create new group: WORTH IT \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else if trans.status == 2 {
                     cGroup.notWorthCount += 1
                     cGroup.notWorthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: NOT WORTH IT \(current_index) - \(trans.name) \(trans.status)")
+                    //print("create new group: NOT WORTH IT \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else if trans.status ==  -1 || trans.status ==  0 {
                     cGroup.notSwipedCount += 1
                     cGroup.notSwipedValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
                     current_index = charlieGroupListFiltered.count - 1
-                    print("create new group: NOT SWIPED \(current_index) - \(trans.name) \(trans.status)")
+                   // print("create new group: NOT SWIPED \(current_index) - \(trans.name) \(trans.status)")
                 }
                 else {
                     // not added to the list
@@ -249,7 +286,7 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()
-            print("ROWCOUNT \(self.charlieGroupListFiltered.count)")
+           // print("ROWCOUNT \(self.charlieGroupListFiltered.count)")
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }

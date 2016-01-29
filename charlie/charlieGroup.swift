@@ -20,6 +20,7 @@ class charlieGroup {
     var notWorthValue:   Double = 0
     var happyPercentage: Int    = 0
     var totalAmount:     Double = 0
+    
 
     init(name:String, lastDate:NSDate) {
         self.name = name
