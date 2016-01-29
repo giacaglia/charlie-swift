@@ -11,6 +11,7 @@ import Foundation
 
 class charlieGroup {
     var name:            String
+    var  ctype:          Int = 0
     var lastDate:        NSDate
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0

@@ -62,7 +62,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
-        monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Spending"
+        monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Expenses"
         
         tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
@@ -94,16 +94,19 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
       
         if indexPath.row == 0
         {
-             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalAll)"
+             cell.filterName.text = "\(filterNames[indexPath.row])"
+             cell.filterAmount.text = "\(totalAll)"
             
         }
         else if indexPath.row == 1
         {
-             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalBills)"
+             cell.filterName.text = "\(filterNames[indexPath.row])"
+             cell.filterAmount.text = "\(totalBills)"
         }
         else if indexPath.row == 2
         {
-             cell.filterName.text = "\(filterNames[indexPath.row]) -  \(totalSpending)"
+             cell.filterName.text = "\(filterNames[indexPath.row])"
+             cell.filterAmount.text = "\(totalSpending)"
         }
         
         
@@ -207,10 +210,12 @@ extension SwipedTransactionsViewController {
                 }
              
             }
+            
+            
             if trans.name == current_name {
                 // Approved items
                 
-             
+               
             
                 if trans.status == 1 {
                   //  print("Worth IT \(current_index) - \(trans.name) \(trans.status)")
@@ -236,10 +241,12 @@ extension SwipedTransactionsViewController {
             }
             else {                
                 let cGroup = charlieGroup(name: trans.name, lastDate: trans.date)
+                cGroup.ctype = trans.ctype
                 if trans.status == 1 {
                     cGroup.worthCount += 1
                     cGroup.worthValue += trans.amount
                     charlieGroupListFiltered.append((cGroup))
+                    
                     current_index = charlieGroupListFiltered.count - 1
                    // print("create new group: WORTH IT \(current_index) - \(trans.name) \(trans.status)")
                 }
@@ -381,6 +388,29 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         
         
         
+        if charlieGroup.ctype == 86
+        {
+            cell.typeImageView.image = UIImage(named: "dont_count")
+        }
+        else if charlieGroup.ctype == 1
+        {
+            cell.typeImageView.image = UIImage(named: "blue_bills")
+        }
+        else if charlieGroup.ctype == 2
+        {
+            cell.typeImageView.image = UIImage(named: "blue_spending")
+        }
+        else if charlieGroup.ctype == 3
+        {
+            cell.typeImageView.image = UIImage(named: "blue_savings")
+        }
+        else
+        {
+            cell.typeImageView.image = UIImage(named: "blue_uncategorized")
+        }
+        
+        
+        
         cell.dollarLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat-Light", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (charlieGroup.worthValue + charlieGroup.notWorthValue + charlieGroup.notSwipedValue).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
         return cell
     }
@@ -436,6 +466,7 @@ class GroupTransactionCell : UITableViewCell {
     let amountLabel = UILabel()
     let dateLabel = UILabel()
     let dollarLabel = UILabel()
+    let typeImageView = UIImageView()
     
     static func cellIdentifier() -> String {
         return "group_transaction_cell"
@@ -453,13 +484,17 @@ class GroupTransactionCell : UITableViewCell {
     }
     
     private func setup() {
-        nameLabel.frame = CGRectMake(14, 26, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        typeImageView.frame = CGRectMake(16, 30, 39, 39)
+        
+        self.contentView.addSubview(typeImageView)
+        
+        nameLabel.frame = CGRectMake(66, 26, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5 - 42, 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
         nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         nameLabel.textAlignment = .Left
         self.contentView.addSubview(nameLabel)
         
-        dateLabel.frame = CGRectMake(14, 50, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        dateLabel.frame = CGRectMake(66, 50, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
         dateLabel.font = UIFont(name: "Montserrat", size: 12.0)
         dateLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
         dateLabel.textAlignment = .Left

@@ -1406,14 +1406,6 @@
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="date_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="ssY-ep-W47">
-                                <rect key="frame" x="581" y="184" width="6" height="11"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="11" id="lid-zT-Cro"/>
-                                    <constraint firstAttribute="width" constant="6" id="xaH-So-m6q"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeN-mJ-2EU">
                                 <rect key="frame" x="20" y="183" width="66" height="14.5"/>
                                 <animations/>
@@ -1454,6 +1446,14 @@
                                     <constraint firstAttribute="trailing" secondItem="1aw-et-TvM" secondAttribute="trailing" id="sdW-8S-EuI"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anm-nh-9Mv">
+                                <rect key="frame" x="563" y="175" width="30" height="30"/>
+                                <animations/>
+                                <state key="normal" title="&gt;"/>
+                                <connections>
+                                    <action selector="changeTypeButtonPressed:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="Kp0-PU-ciT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1481,10 +1481,10 @@
                             <constraint firstItem="Hka-Kj-XX4" firstAttribute="top" secondItem="F9B-8I-H8h" secondAttribute="bottom" id="NlH-a9-YGk"/>
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="top" secondItem="Qnq-UO-ahh" secondAttribute="bottom" constant="16" id="OoQ-VT-NZG"/>
                             <constraint firstItem="Lhe-oM-yWB" firstAttribute="top" secondItem="AeC-bx-wVP" secondAttribute="bottom" constant="15" id="UCC-Kp-zg3"/>
-                            <constraint firstItem="ssY-ep-W47" firstAttribute="centerY" secondItem="AeC-bx-wVP" secondAttribute="centerY" id="UX0-Gv-UOv"/>
                             <constraint firstAttribute="trailing" secondItem="Qnq-UO-ahh" secondAttribute="trailing" constant="20" id="UZ2-Ng-vUo"/>
                             <constraint firstItem="Hka-Kj-XX4" firstAttribute="top" secondItem="2zn-NW-qcG" secondAttribute="bottom" id="Uun-c2-VDR"/>
                             <constraint firstItem="0Wu-fy-D9f" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="Wcs-wT-3Xa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="anm-nh-9Mv" secondAttribute="trailing" constant="-13" id="Wdf-x6-G4m"/>
                             <constraint firstAttribute="trailing" secondItem="dhv-9A-21p" secondAttribute="trailing" id="Wk3-mL-AU5"/>
                             <constraint firstAttribute="trailing" secondItem="iLY-jN-twa" secondAttribute="trailing" id="YY2-cG-6eg"/>
                             <constraint firstItem="Lhe-oM-yWB" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="afq-iV-Kso"/>
@@ -1501,10 +1501,10 @@
                             <constraint firstItem="HhE-Tx-QpR" firstAttribute="top" secondItem="CUi-gB-ZvV" secondAttribute="bottom" id="hJF-7w-YsX"/>
                             <constraint firstAttribute="leading" secondItem="am2-oB-cnd" secondAttribute="leading" constant="-20" id="hoW-9l-zNi"/>
                             <constraint firstItem="7cX-2z-z71" firstAttribute="top" secondItem="0Wu-fy-D9f" secondAttribute="bottom" id="ln6-zJ-0nc"/>
+                            <constraint firstItem="Lhe-oM-yWB" firstAttribute="top" secondItem="anm-nh-9Mv" secondAttribute="bottom" constant="8" id="luS-FB-9Jm"/>
                             <constraint firstItem="am2-oB-cnd" firstAttribute="top" secondItem="Lhe-oM-yWB" secondAttribute="bottom" constant="15" id="oNS-NX-XIY"/>
                             <constraint firstAttribute="trailing" secondItem="Hka-Kj-XX4" secondAttribute="trailing" id="tpI-Rw-MKQ"/>
                             <constraint firstItem="iLY-jN-twa" firstAttribute="top" secondItem="Hka-Kj-XX4" secondAttribute="bottom" id="u36-I4-LDX"/>
-                            <constraint firstAttribute="trailing" secondItem="ssY-ep-W47" secondAttribute="trailing" constant="13" id="u9X-62-EVI"/>
                             <constraint firstItem="znV-b8-8bi" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="centerX" constant="10" id="voG-Bd-pdn"/>
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="top" secondItem="am2-oB-cnd" secondAttribute="bottom" constant="15" id="wEv-9b-y2B"/>
                             <constraint firstItem="SeN-mJ-2EU" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" constant="20" id="z2b-YU-JAE"/>
@@ -1737,7 +1737,6 @@
         <image name="btn_notWorth" width="90" height="46"/>
         <image name="btn_worth" width="90" height="46"/>
         <image name="close" width="23" height="22"/>
-        <image name="date_chevron" width="10" height="15"/>
         <image name="dont_count" width="39" height="39"/>
         <image name="happy_on" width="36" height="36"/>
         <image name="iTunesArtwork" width="512" height="512"/>

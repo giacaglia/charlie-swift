@@ -14,6 +14,7 @@ class mySpendingCVCell: UICollectionViewCell {
     
     @IBOutlet weak var filterName: UILabel!
     
+    @IBOutlet weak var filterAmount: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

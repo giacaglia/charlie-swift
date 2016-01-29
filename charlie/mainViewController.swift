@@ -706,7 +706,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row >= transactionItems.count {
             let rewardIndex =  indexPath.row - transactionItems.count
-            var  rewardNames = ["Show More Transactions To Complete ", "Happy Flow", "My Income", "My Spending", "My CashFlow"]
+            var  rewardNames = ["Show More Transactions To Complete ", "Happy Flow", "My Income", "My Expenses", "My CashFlow"]
             var cellHappy:happyTableViewCell
             var cellReward:rewardTableViewCell
             

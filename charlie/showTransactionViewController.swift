@@ -136,6 +136,74 @@ class showTransactionViewController: UIViewController {
     }
     
    
+   
+    
+    @IBAction func changeTypeButtonPressed(sender: UIButton) {
+        
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "Change Type", preferredStyle: .ActionSheet)
+        
+        // 2
+        let billsAction = UIAlertAction(title: "Bills", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            try! realm.write {
+                self.transaction!.ctype = 1
+                self.categoryLabel.text = "Bills"
+            }
+           
+        })
+//        let image = UIImage(named: "blue_bills")
+//        billsAction.setValue(image, forKey: "image")
+//        
+       
+        
+        
+        let spendingAction = UIAlertAction(title: "Spending", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            try! realm.write {
+                self.transaction!.ctype = 2
+                self.categoryLabel.text = "Spending"
+            }
+            
+        })
+        
+       
+        let dcAction = UIAlertAction(title: "Don't Count", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            try! realm.write {
+                self.transaction!.ctype = 86
+                self.categoryLabel.text = "Don't Count"
+            }
+            
+        })
+        
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+           
+        })
+        
+        // 4
+        optionMenu.addAction(billsAction)
+        optionMenu.addAction(spendingAction)
+        optionMenu.addAction(dcAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+    }
+    
+        
+        
+        
+
+    
+    
     @IBAction func worth(sender: AnyObject) {
         if let vc = mainVC {
             
@@ -159,6 +227,9 @@ class showTransactionViewController: UIViewController {
         
     }
     
+    
+    
+    
     @IBAction func saveDateButton(sender: UIButton) {
         
       
@@ -168,7 +239,7 @@ class showTransactionViewController: UIViewController {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "MMM dd, YYYY"
             let strDate = dateFormatter.stringFromDate(datePickerControl.date)
-            
+        
             dateLabel.text = strDate
             
             try! realm.write {
