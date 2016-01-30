@@ -196,7 +196,7 @@ extension SwipedTransactionsViewController {
         for trans in actedUponItems {
             if spendingType == 0
             {
-                if trans.amount > 0
+                if trans.amount > 0 && trans.ctype != 86 && trans.categories?.id != "21001000"
                 {
                     totalAll += trans.amount
                 }

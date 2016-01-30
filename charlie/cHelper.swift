@@ -155,15 +155,25 @@ class cHelper {
                 for cashFlowItem in cashFlows2
                 {
                     
-                    if cashFlowItem.amount > 0
+                    if let category_id = cashFlowItem.categories?.id
                     {
-                        moneySpent2 += cashFlowItem.amount
-                    }
+                        
+                        if category_id != "21001000"
+                        {
                     
-                    if cashFlowItem.amount < -10
-                    {
-                        income2 += cashFlowItem.amount
-                        print("INCOME: \(cashFlowItem.name) - \(income2)")
+                    
+                            if cashFlowItem.amount > 0 && cashFlowItem.ctype != 86
+                            {
+                                moneySpent2 += cashFlowItem.amount
+                            }
+                            
+                            if cashFlowItem.amount < -10
+                            {
+                                income2 += cashFlowItem.amount
+                                print("INCOME: \(cashFlowItem.name) - \(income2)")
+                            }
+                            
+                        }
                     }
                 }
                 
@@ -182,11 +192,11 @@ class cHelper {
             {
                 
               if category_id != "21001000"
-                                   {
+              {
                                     //print("IGNORE \(cashFlowItem.name)")
                                
             
-                if cashFlowItem.amount > 0
+                if cashFlowItem.amount > 0 && cashFlowItem.ctype != 86
                 {
                    moneySpent1 += cashFlowItem.amount
                 }
