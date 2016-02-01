@@ -19,6 +19,9 @@ class showTransactionViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var categoryLabel: UILabel!
     
+    @IBOutlet weak var notWorthButton: UIButton!
+    
+    @IBOutlet weak var worthButton: UIButton!
   
     @IBOutlet weak var datePickerControl: UIDatePicker!
     
@@ -38,15 +41,36 @@ class showTransactionViewController: UIViewController {
         let account = realm.objects(Account).filter("_id = '\(transaction!._account)'")
 
         
+        if transaction?.amount < 0
+        {
+            
+            notWorthButton.hidden = true
+            worthButton.hidden =  true
+        }
+      
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
         let trans = transaction!
         if sourceVC == "main" {
-            let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
-            let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
-            attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
+    
+            
+            if trans.amount < 0
+            {
+                let myString = "$\(trans.amount * -1) at \(trans.name)"
+                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                //attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
+                
+                descriptionLabel.attributedText = attString
+                
+            }
+            else
+            {
+                let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
+                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
 
-            descriptionLabel.attributedText = attString
+                descriptionLabel.attributedText = attString
+            }
         }
         else if sourceVC == "happy" {
             descriptionLabel.text = "\(trans.name)\nwas worth it"

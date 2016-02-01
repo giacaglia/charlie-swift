@@ -717,7 +717,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HTZ-Xu-A7Z">
                                 <rect key="frame" x="0.0" y="64" width="600" height="50"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="l7x-pL-26O"/>
                                 </constraints>
@@ -1520,7 +1520,9 @@
                         <outlet property="datePickerView" destination="gCw-xC-gsA" id="cpE-i8-7p6"/>
                         <outlet property="descriptionLabel" destination="HhE-Tx-QpR" id="6Lo-sk-Zju"/>
                         <outlet property="mapView" destination="0Wu-fy-D9f" id="6fB-2W-5aY"/>
+                        <outlet property="notWorthButton" destination="U3L-Aa-dqn" id="BET-tB-Wbk"/>
                         <outlet property="typeLabel" destination="Qnq-UO-ahh" id="MgT-7l-vJS"/>
+                        <outlet property="worthButton" destination="znV-b8-8bi" id="fOi-nw-eri"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C1-NQ-pQe" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -67,6 +67,25 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
         return incomeItems.count   //charlieGroupListFiltered.count
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+      
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let transactionDetailVC = storyboard.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else {
+            return
+        }
+
+        
+        
+
+        transactionDetailVC.transaction = incomeItems[indexPath.row]
+
+        
+        self.navigationController?.pushViewController(transactionDetailVC, animated: true)
+
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 94
     }

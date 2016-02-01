@@ -4,17 +4,10 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Montserrat-Light.otf">
-            <string>Montserrat-Light</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwipedTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="VJe-ru-REy" id="ZIm-w8-O9d"/>
-                <outlet property="cvHolder" destination="Cyb-h9-N3u" id="0rZ-9W-iOi"/>
-                <outlet property="monthLabel" destination="Bm5-Vj-4Ri" id="5eQ-3g-IKR"/>
                 <outlet property="tableView" destination="gvd-vj-BZV" id="cdL-rV-hqX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pxK-W6-7ib"/>
             </connections>
@@ -24,69 +17,36 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A88-0a-gmX">
-                    <rect key="frame" x="0.0" y="64" width="600" height="50"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm5-Vj-4Ri">
-                            <rect key="frame" x="272" y="15" width="55.5" height="19.5"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="16"/>
-                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="VJe-ru-REy">
+                    <rect key="frame" x="0.0" y="66" width="600" height="56"/>
                     <animations/>
-                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerX" secondItem="A88-0a-gmX" secondAttribute="centerX" id="2Dc-Fe-Azp"/>
-                        <constraint firstItem="Bm5-Vj-4Ri" firstAttribute="centerY" secondItem="A88-0a-gmX" secondAttribute="centerY" id="e8M-I0-X5F"/>
-                        <constraint firstAttribute="height" constant="50" id="nSh-6t-ahB"/>
+                        <constraint firstAttribute="height" constant="56" id="DnT-xf-31y"/>
                     </constraints>
-                </view>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zmH-wr-tsg">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
-                    <rect key="frame" x="0.0" y="158" width="600" height="442"/>
+                    <rect key="frame" x="0.0" y="122" width="600" height="478"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cyb-h9-N3u">
-                    <rect key="frame" x="0.0" y="114" width="600" height="44"/>
-                    <subviews>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="VJe-ru-REy">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                            <animations/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zmH-wr-tsg">
-                                <size key="itemSize" width="50" height="50"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
-                    </subviews>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="VJe-ru-REy" secondAttribute="bottom" id="8aq-gf-Q9z"/>
-                        <constraint firstItem="VJe-ru-REy" firstAttribute="leading" secondItem="Cyb-h9-N3u" secondAttribute="leading" id="mtK-Fi-giG"/>
-                        <constraint firstItem="VJe-ru-REy" firstAttribute="top" secondItem="Cyb-h9-N3u" secondAttribute="top" id="omJ-OS-JEg"/>
-                        <constraint firstAttribute="trailing" secondItem="VJe-ru-REy" secondAttribute="trailing" id="rqq-Te-7dw"/>
-                    </constraints>
-                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="A88-0a-gmX" secondAttribute="bottom" constant="44" id="A1p-WD-YmL"/>
-                <constraint firstItem="Cyb-h9-N3u" firstAttribute="top" secondItem="A88-0a-gmX" secondAttribute="bottom" id="CNF-ci-tbL"/>
-                <constraint firstItem="A88-0a-gmX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Ds4-av-7C8"/>
+                <constraint firstItem="VJe-ru-REy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BoM-ae-bep"/>
                 <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="Eir-8q-4gH"/>
-                <constraint firstItem="A88-0a-gmX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OES-mY-XWs"/>
-                <constraint firstItem="Cyb-h9-N3u" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OPG-Lv-nO5"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="Cyb-h9-N3u" secondAttribute="bottom" id="WwN-3K-lGJ"/>
-                <constraint firstAttribute="trailing" secondItem="Cyb-h9-N3u" secondAttribute="trailing" id="hOl-BY-54m"/>
+                <constraint firstAttribute="trailing" secondItem="VJe-ru-REy" secondAttribute="trailing" id="c19-Ha-Zgk"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="VJe-ru-REy" secondAttribute="bottom" id="dQU-UE-mvN"/>
+                <constraint firstItem="VJe-ru-REy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="66" id="gPi-hu-5V2"/>
                 <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rRW-Fl-6bf"/>
                 <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="reb-UE-W8E"/>
-                <constraint firstAttribute="trailing" secondItem="A88-0a-gmX" secondAttribute="trailing" id="xBP-c1-BL6"/>
             </constraints>
             <point key="canvasLocation" x="209" y="258"/>
         </view>

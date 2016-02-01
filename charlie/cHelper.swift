@@ -166,8 +166,8 @@ class cHelper {
                             {
                                 moneySpent2 += cashFlowItem.amount
                             }
-                            
-                            if cashFlowItem.amount < -10
+                    
+                            if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86
                             {
                                 income2 += cashFlowItem.amount
                                 print("INCOME: \(cashFlowItem.name) - \(income2)")
@@ -201,7 +201,7 @@ class cHelper {
                    moneySpent1 += cashFlowItem.amount
                 }
 
-                if cashFlowItem.amount < -10 //get rid of small savings transfers keep the change...
+                if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
                 {
                     income1 += cashFlowItem.amount
                 }

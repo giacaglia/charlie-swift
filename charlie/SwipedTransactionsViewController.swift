@@ -22,7 +22,9 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var cvHolder: UIView!
+    
+    var currentRow = 0
+  
    
         
     @IBOutlet weak var collectionView: UICollectionView!
@@ -62,25 +64,28 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         let monthFormatter = NSDateFormatter()
         monthFormatter.dateFormat = "MM"
         let stringMonth = monthFormatter.stringFromDate(self.startDate)
-        monthLabel.text = "My \(months[Int(stringMonth)! - 1]) Expenses"
+      
         
         tableView.tableFooterView = UIView()
         tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         tableView.delegate = self
         tableView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
+        
+        self.loadData(0)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        self.loadData(0)
+        self.loadData(currentRow)
         self.changeFilter(self.filterType)
+        self.collectionView.reloadData()
     }
     
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        return CGSizeMake((self.view.frame.width/3 - 5), 44)
+        return CGSizeMake((self.view.frame.width/3 - 10), 44)
     }
     
     
@@ -91,22 +96,61 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! mySpendingCVCell
         
-      
+        
         if indexPath.row == 0
         {
-             cell.filterName.text = "\(filterNames[indexPath.row])"
-             cell.filterAmount.text = "\(totalAll)"
+            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterAmount.text = "\(totalAll)"
+            
+            if currentRow == 0
+            {
+                cell.filterName.textColor = UIColor.blackColor()
+                cell.filterAmount.textColor = UIColor.blackColor()
+            }
+            else
+            {
+                cell.filterName.textColor = UIColor.lightGrayColor()
+                cell.filterAmount.textColor = UIColor.lightGrayColor()
+   
+            }
+            
             
         }
         else if indexPath.row == 1
         {
-             cell.filterName.text = "\(filterNames[indexPath.row])"
-             cell.filterAmount.text = "\(totalBills)"
+            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterAmount.text = "\(totalBills)"
+            
+            
+            if currentRow == 1
+            {
+                cell.filterName.textColor = UIColor.blackColor()
+                cell.filterAmount.textColor = UIColor.blackColor()
+            }
+            else
+            {
+                cell.filterName.textColor = UIColor.lightGrayColor()
+                cell.filterAmount.textColor = UIColor.lightGrayColor()
+                
+            }
         }
         else if indexPath.row == 2
         {
-             cell.filterName.text = "\(filterNames[indexPath.row])"
-             cell.filterAmount.text = "\(totalSpending)"
+            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterAmount.text = "\(totalSpending)"
+           
+            if currentRow == 2
+            {
+                cell.filterName.textColor = UIColor.blackColor()
+                cell.filterAmount.textColor = UIColor.blackColor()
+            }
+            else
+            {
+                cell.filterName.textColor = UIColor.lightGrayColor()
+                cell.filterAmount.textColor = UIColor.lightGrayColor()
+                
+            }
+            
         }
         
         
@@ -120,20 +164,29 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+       currentRow = indexPath.row
+        
         if indexPath.row == 0
         {
          self.loadData(0)
          self.tableView.reloadData()
+         self.collectionView.reloadData()
+            
+            
         }
         else if indexPath.row  == 1
         {
          self.loadData(1)
          self.tableView.reloadData()
+         self.collectionView.reloadData()
+         
         }
         else if indexPath.row  == 2
         {
-          self.loadData(2)
+         self.loadData(2)
          self.tableView.reloadData()
+         self.collectionView.reloadData()
+        
         }
         print("pressed")
         
@@ -169,9 +222,13 @@ extension SwipedTransactionsViewController {
         charlieGroupListFiltered = [charlieGroup]()
         
         var predicate = NSPredicate()
+        var count_predicate = NSPredicate()
         var current_name = ""
 
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
+        
+        count_predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
+        
         
         if spendingType == 0
         {
@@ -188,28 +245,40 @@ extension SwipedTransactionsViewController {
             
         }
 
-        
+        let countItems = realm.objects(Transaction).filter(count_predicate).sorted(sortProperties)
         
         let actedUponItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         var current_index = 1
         print("TOTAL \(actedUponItems.count)")
-        for trans in actedUponItems {
-            if spendingType == 0
+        
+        
+       
+        totalAll = 0
+        totalBills = 0
+        totalSpending = 0
+       
+       
+        
+        for countI in countItems {
+            
+            if countI.amount > 0 && countI.ctype != 86 && countI.categories?.id != "21001000"
             {
-                if trans.amount > 0 && trans.ctype != 86 && trans.categories?.id != "21001000"
-                {
-                    totalAll += trans.amount
-                }
-                if trans.ctype == 1
-                {
-                    totalBills += trans.amount
-                }
-                else if trans.ctype == 2
-                {
-                    totalSpending += trans.amount
-                }
-             
+                totalAll += countI.amount
             }
+            if countI.ctype == 1
+            {
+                totalBills += countI.amount
+            }
+            else if countI.ctype == 2
+            {
+                totalSpending += countI.amount
+            }
+
+            
+            
+        }
+        
+        for trans in actedUponItems {
             
             
             if trans.name == current_name {
@@ -280,6 +349,7 @@ extension SwipedTransactionsViewController {
             current_name = trans.name
         }
     }
+   
 }
 
 extension SwipedTransactionsViewController : ChangeFilterProtocol {
@@ -293,7 +363,6 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()
-           // print("ROWCOUNT \(self.charlieGroupListFiltered.count)")
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
