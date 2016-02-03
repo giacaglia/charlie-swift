@@ -178,13 +178,15 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
             
             let months = lastTrans.monthsFrom(firstTrans)
-            if months > 2 //if we have a bunch of months
-            {
-                monthReturn = lastTrans.monthsFrom(firstTrans)  - 1
-            }
-            else {
-                monthReturn = 1
-            }
+//            if months > 2 //if we have a bunch of months
+//            {
+//                monthReturn = lastTrans.monthsFrom(firstTrans)  - 1
+//            }
+//            else {
+//                monthReturn = 1
+//            }
+                monthReturn = months
+        
         }
         return monthReturn
     }

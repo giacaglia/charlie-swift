@@ -204,10 +204,25 @@ class cHelper {
                 if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
                 {
                     income1 += cashFlowItem.amount
+                    print (cashFlowItem.ctype)
+                    print (cashFlowItem.status)
+                    print (cashFlowItem.name)
+                    print (income1)
                 }
                                         
-            }
+                }
                 
+            }
+            else
+            {
+                if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
+                {
+                    income1 += cashFlowItem.amount
+                    print (cashFlowItem.ctype)
+                    print (cashFlowItem.status)
+                    print (cashFlowItem.name)
+                    print (income1)
+                }
             }
 
             
@@ -391,11 +406,14 @@ class cHelper {
         var institution = ""
         
         let user_access_token  = keyChainStore.get("access_token")
+        print(user_access_token)
         cService.updateAccount(user_access_token!, dayLength: dayLength) { (response) in
             if let accounts = response["accounts"] as? [NSDictionary] {
                 try! realm.write {
                     // Save one Venue object (and dependents) for each element of the array
                     for account in accounts {
+                        print ("ACCOUNT \(account.valueForKey("institution_type"))")
+                        
                         if let institution_type = account.valueForKey("institution_type") {
                             institution = institution_type as! String
                             if String(institution_type) == "fake_institution" {
@@ -460,12 +478,15 @@ class cHelper {
                                 newTrans.status = 86 //sets status to ignore from totals
                             }
                             
+                           //food and drink as spending
+                            
                             if Int(category_id) >= 13000000 && Int(category_id) <= 13005059
                             {
                                 newTrans.ctype = 2
                             }
                             
                             
+                            //shops as spending
                             if Int(category_id) >= 19000000 && Int(category_id) <= 19054000
                             {
                                 newTrans.ctype = 2

@@ -51,6 +51,11 @@ class showTransactionViewController: UIViewController {
         accountNumberLabel.text = account[0].meta!.number
         accountNameLabel.text = account[0].meta!.name
         let trans = transaction!
+        
+        
+        print ("STATUS \(trans.status)")
+          print ("TYPE \(trans.ctype)")
+        print ("CATEGORY \(trans.categories?.id)")
         if sourceVC == "main" {
     
             
