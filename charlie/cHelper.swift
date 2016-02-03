@@ -175,6 +175,20 @@ class cHelper {
                             
                         }
                     }
+                    else
+                    {
+                        if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
+                        {
+                            income2 += cashFlowItem.amount
+                        }
+                        
+                        if cashFlowItem.amount > 0 && cashFlowItem.ctype != 86
+                        {
+                            moneySpent2 += cashFlowItem.amount
+                        }
+                    }
+                    
+                    
                 }
                 
                 cashFlowTotal2 = (income2 * -1) - moneySpent2
@@ -204,10 +218,6 @@ class cHelper {
                 if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
                 {
                     income1 += cashFlowItem.amount
-                    print (cashFlowItem.ctype)
-                    print (cashFlowItem.status)
-                    print (cashFlowItem.name)
-                    print (income1)
                 }
                                         
                 }
@@ -218,10 +228,11 @@ class cHelper {
                 if cashFlowItem.amount < -10 && cashFlowItem.ctype != 86//get rid of small savings transfers keep the change...
                 {
                     income1 += cashFlowItem.amount
-                    print (cashFlowItem.ctype)
-                    print (cashFlowItem.status)
-                    print (cashFlowItem.name)
-                    print (income1)
+                }
+                
+                if cashFlowItem.amount > 0 && cashFlowItem.ctype != 86
+                {
+                    moneySpent1 += cashFlowItem.amount
                 }
             }
 
