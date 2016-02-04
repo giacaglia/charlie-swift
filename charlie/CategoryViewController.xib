@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -38,7 +38,6 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categorize this transaction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0A-7K-6d3">
                     <rect key="frame" x="190" y="72" width="220" height="59"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="220" id="SOJ-ZQ-EO0"/>
                     </constraints>
@@ -51,27 +50,23 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Electricity Bill" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7l2-aY-Tsf">
                             <rect key="frame" x="17" y="17" width="82.5" height="15"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUN, OCT 23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVw-41-Bx6">
                             <rect key="frame" x="17" y="35" width="67" height="13"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10.399999618530273"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-35.84" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZv-nu-Kp8">
                             <rect key="frame" x="201" y="22" width="55" height="21.5"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17.600000381469727"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="UVw-41-Bx6" firstAttribute="top" secondItem="7l2-aY-Tsf" secondAttribute="bottom" constant="3" id="43R-o5-QsF"/>
@@ -86,7 +81,6 @@
                 </view>
                 <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="savings" translatesAutoresizingMaskIntoConstraints="NO" id="XbW-bz-o96">
                     <rect key="frame" x="210" y="320" width="75" height="75"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="KO2-nn-g15"/>
                         <constraint firstAttribute="height" constant="75" id="p9U-nh-u7q"/>
@@ -94,7 +88,6 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spending" translatesAutoresizingMaskIntoConstraints="NO" id="hGt-Kc-Htb">
                     <rect key="frame" x="210" y="427" width="75" height="75"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="7n6-aT-Gsz"/>
                         <constraint firstAttribute="height" constant="75" id="a3M-CQ-1g5"/>
@@ -102,7 +95,6 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_dont count" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-cV-EuY">
                     <rect key="frame" x="315" y="427" width="75" height="75"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="jRg-Hy-ZRb"/>
                         <constraint firstAttribute="height" constant="75" id="u24-oT-UDE"/>
@@ -110,7 +102,6 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bills" translatesAutoresizingMaskIntoConstraints="NO" id="U2l-Rc-ai5">
                     <rect key="frame" x="315" y="320" width="75" height="75"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="KAQ-06-vz4"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="cv8-OB-kdB"/>
@@ -126,28 +117,24 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAVINGS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxu-Gt-KKw">
                     <rect key="frame" x="222" y="401" width="50.5" height="13.5"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                     <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPENDING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6d-af-jPu">
                     <rect key="frame" x="217" y="509" width="60.5" height="13.5"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                     <color key="textColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BILLS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0o-Jc-P7n">
                     <rect key="frame" x="337" y="400" width="31" height="13.5"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                     <color key="textColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6CE-pJ-6Vs">
                     <rect key="frame" x="289" y="554" width="22" height="22"/>
-                    <animations/>
                     <state key="normal" image="category_close"/>
                     <connections>
                         <action selector="didPressClose:" destination="-1" eventType="touchUpInside" id="pUS-zW-EKu"/>
@@ -155,13 +142,11 @@
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DONT COUNT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5R-sY-GaB">
                     <rect key="frame" x="313" y="509" width="78.5" height="13.5"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
                     <color key="textColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="h0A-7K-6d3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6P4-Tz-9Np"/>
