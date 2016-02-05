@@ -96,11 +96,11 @@ class showTransactionViewController: UIViewController {
         }
         else if trans.ctype == 1
         {
-            categoryLabel.text = "Bills"
+            categoryLabel.text = "Expenses - Bills"
         }
         else if trans.ctype == 2
         {
-            categoryLabel.text = "Spending"
+            categoryLabel.text = "Expenses - Spending"
         }
         else if trans.ctype == 3
         {
@@ -173,12 +173,12 @@ class showTransactionViewController: UIViewController {
         let optionMenu = UIAlertController(title: nil, message: "Change Type", preferredStyle: .ActionSheet)
         
         // 2
-        let billsAction = UIAlertAction(title: "Bills", style: .Default, handler: {
+        let billsAction = UIAlertAction(title: "Expenses - Bills", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
                 self.transaction!.ctype = 1
-                self.categoryLabel.text = "Bills"
+                self.categoryLabel.text = "Expenses - Bills"
             }
            
         })
@@ -188,12 +188,33 @@ class showTransactionViewController: UIViewController {
        
         
         
-        let spendingAction = UIAlertAction(title: "Spending", style: .Default, handler: {
+        let spendingAction = UIAlertAction(title: "Expenses - Spending", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
                 self.transaction!.ctype = 2
-                self.categoryLabel.text = "Spending"
+                self.categoryLabel.text = "Expenses - Spending"
+            }
+            
+        })
+        
+        let incomeAction = UIAlertAction(title: "Income", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            try! realm.write {
+                self.transaction!.ctype = 3
+                self.categoryLabel.text = "Income"
+            }
+            
+        })
+        
+        
+        let savingAction = UIAlertAction(title: "Savings", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            try! realm.write {
+                self.transaction!.ctype = 3
+                self.categoryLabel.text = "Savings"
             }
             
         })
@@ -219,6 +240,8 @@ class showTransactionViewController: UIViewController {
         // 4
         optionMenu.addAction(billsAction)
         optionMenu.addAction(spendingAction)
+        optionMenu.addAction(incomeAction)
+        optionMenu.addAction(savingAction)
         optionMenu.addAction(dcAction)
         optionMenu.addAction(cancelAction)
         
