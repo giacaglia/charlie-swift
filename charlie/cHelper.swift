@@ -489,6 +489,11 @@ class cHelper {
                                 newTrans.status = 86 //sets status to ignore from totals
                             }
                             
+                            if dictAmount < -10
+                            {
+                                newTrans.ctype = 4
+                            }
+                            
                            //food and drink as spending
                             
                             if Int(category_id) >= 13000000 && Int(category_id) <= 13005059

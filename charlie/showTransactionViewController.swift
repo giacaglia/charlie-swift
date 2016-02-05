@@ -106,9 +106,14 @@ class showTransactionViewController: UIViewController {
         {
             categoryLabel.text = "Savings"
         }
+        else if trans.ctype == 4
+        {
+            categoryLabel.text = "Income"
+        }
+            
         else
         {
-            categoryLabel.text = ""
+            categoryLabel.text = "No type selected"
         }
 
         
@@ -202,7 +207,7 @@ class showTransactionViewController: UIViewController {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
-                self.transaction!.ctype = 3
+                self.transaction!.ctype = 4
                 self.categoryLabel.text = "Income"
             }
             
