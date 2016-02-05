@@ -761,7 +761,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
                     let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))             
                     
-                    if happyFlowChange <= 0 {
+                    if happyFlowChange < 0 {
                         imageView.image = UIImage(named: "negative_2")
                         aroundImageView.backgroundColor = lightRed
                     }

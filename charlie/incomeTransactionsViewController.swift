@@ -56,9 +56,24 @@ extension incomeTransactionsViewController : UITableViewDelegate, UITableViewDat
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "MMM dd, YYYY"
+        
             let dateString = dateFormatter.stringFromDate(incomeItems[indexPath.row].date)
+        
+            //gray out if it doesn't count
+            if incomeItems[indexPath.row].ctype == 86
+            {
+            
+             cell.dateLabel.text = dateString.uppercaseString
+             cell.dateLabel.textColor = UIColor.lightGrayColor()
+             cell.amountLabel.textColor = UIColor.lightGrayColor()
+             cell.nameLabel.textColor = UIColor.lightGrayColor()
+                cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 18.0)!, string1: "$", color1: UIColor.lightGrayColor(), string2: (-incomeItems[indexPath.row].amount).format(".2"), color2: UIColor.lightGrayColor())
+            }
+            else
+            {
             cell.dateLabel.text = dateString.uppercaseString
             cell.amountLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 18.0)!, string1: "$", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: (-incomeItems[indexPath.row].amount).format(".2"), color2: UIColor(white: 92/255.0, alpha: 1.0))
+            }
             return cell
 
     }
