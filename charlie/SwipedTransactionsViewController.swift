@@ -502,7 +502,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         vw.backgroundColor = UIColor.whiteColor()
         let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 0, 300, 300))
         let dataPoints = ["Bills", "Spending"]
-        let values = [100.0, 30.0]
+        let values = [totalBills, totalSpending]
         var dataEntries: [ChartDataEntry] = []
         for i in 0..<dataPoints.count {
             let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
