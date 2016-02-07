@@ -21,7 +21,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 
 //    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    let collectionView = UICollectionView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 60), collectionViewLayout: UICollectionViewLayout())
 
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
@@ -36,8 +36,6 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
         layout.itemSize = CGSize(width: 90, height: 120)
-        
-        collectionView!.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         
         let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
         button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
@@ -500,7 +498,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = UIView()
         vw.backgroundColor = UIColor.whiteColor()
-        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 0, 300, 300))
+        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 60, 300, 300))
         let dataPoints = ["Bills", "Spending"]
         let values = [totalBills, totalSpending]
         var dataEntries: [ChartDataEntry] = []
@@ -509,18 +507,19 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
             dataEntries.append(dataEntry)
         }
         let pieChartDataSet = PieChartDataSet(yVals: dataEntries)
-        pieChartDataSet.colors = [listBlue, UIColor(white: 216/255.0, alpha: 1.0)]
+        pieChartDataSet.colors = [UIColor(white: 216/255.0, alpha: 1.0), listBlue]
         let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
 
         pieChart.drawHoleEnabled = false
         pieChart.data = pieChartData
         vw.addSubview(pieChart)
         
-//        vw.addSubview(progressView)
-//        vw.backgroundColor = UIColor.blackColor()
-//        collectionView.removeFromSuperview()
-//        vw.addSubview(collectionView)
-//        collectionView.frame = CGRectMake(0, 0, collectionView.frame.size.width, collectionView.frame.size.height)
+        collectionView.backgroundColor = .whiteColor()
+        collectionView.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        vw.addSubview(collectionView)
+
         return vw
     }
 }

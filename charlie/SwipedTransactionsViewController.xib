@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwipedTransactionsViewController" customModule="charlie" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="VJe-ru-REy" id="ZIm-w8-O9d"/>
                 <outlet property="tableView" destination="gvd-vj-BZV" id="cdL-rV-hqX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pxK-W6-7ib"/>
             </connections>
@@ -17,26 +16,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="VJe-ru-REy">
-                    <rect key="frame" x="0.0" y="66" width="600" height="56"/>
-                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="56" id="DnT-xf-31y"/>
-                    </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zmH-wr-tsg">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="ray-lO-8uf"/>
-                        <outlet property="delegate" destination="-1" id="0zH-xT-mTB"/>
-                    </connections>
-                </collectionView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
-                    <rect key="frame" x="0.0" y="122" width="600" height="478"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-vj-BZV">
+                    <rect key="frame" x="0.0" y="66" width="600" height="534"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="W0h-0A-4EZ"/>
                         <outlet property="delegate" destination="-1" id="DHp-No-OOP"/>
@@ -45,11 +27,8 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="VJe-ru-REy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BoM-ae-bep"/>
                 <constraint firstAttribute="trailing" secondItem="gvd-vj-BZV" secondAttribute="trailing" id="Eir-8q-4gH"/>
-                <constraint firstAttribute="trailing" secondItem="VJe-ru-REy" secondAttribute="trailing" id="c19-Ha-Zgk"/>
-                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="VJe-ru-REy" secondAttribute="bottom" id="dQU-UE-mvN"/>
-                <constraint firstItem="VJe-ru-REy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="66" id="gPi-hu-5V2"/>
+                <constraint firstItem="gvd-vj-BZV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="66" id="fQe-Tu-tzZ"/>
                 <constraint firstItem="gvd-vj-BZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rRW-Fl-6bf"/>
                 <constraint firstAttribute="bottom" secondItem="gvd-vj-BZV" secondAttribute="bottom" id="reb-UE-W8E"/>
             </constraints>

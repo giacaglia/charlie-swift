@@ -1090,13 +1090,13 @@
                                 <rect key="frame" x="0.0" y="260" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGl-du-pUq">
-                                        <rect key="frame" x="20" y="15" width="32" height="14.5"/>
+                                        <rect key="frame" x="20" y="15" width="32" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lg-fc-14x" userLabel="dateDetail">
-                                        <rect key="frame" x="519" y="15" width="47.5" height="16"/>
+                                        <rect key="frame" x="519" y="15" width="48" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1126,7 +1126,7 @@
                                 <rect key="frame" x="0.0" y="305" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCOUNT TYPE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MJ-TE-4dn">
-                                        <rect key="frame" x="20" y="15" width="98" height="14.5"/>
+                                        <rect key="frame" x="20" y="15" width="98" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="98" id="2Ly-8b-4ab"/>
                                         </constraints>
@@ -1161,7 +1161,7 @@
                                 <rect key="frame" x="0.0" y="350" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCOUNT NUMBER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hke-jc-fb2">
-                                        <rect key="frame" x="20" y="15" width="123" height="14.5"/>
+                                        <rect key="frame" x="20" y="15" width="123" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="123" id="oup-jm-2J3"/>
                                         </constraints>
@@ -1196,7 +1196,7 @@
                                 <rect key="frame" x="0.0" y="395" width="600" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADDRESS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47W-wS-t9B">
-                                        <rect key="frame" x="20" y="15" width="59" height="14.5"/>
+                                        <rect key="frame" x="20" y="15" width="59" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="3qg-RR-CAq"/>
                                             <constraint firstAttribute="width" constant="59" id="KAF-dc-vPH"/>
@@ -1274,7 +1274,7 @@
                                     <action selector="worth:" destination="Rxg-kj-fnh" eventType="touchUpInside" id="pEq-93-Reh"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lhe-oM-yWB">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhe-oM-yWB">
                                 <rect key="frame" x="0.0" y="213" width="600" height="1"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -1290,13 +1290,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CAT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeC-bx-wVP">
-                                <rect key="frame" x="543" y="227" width="26.5" height="16"/>
+                                <rect key="frame" x="543" y="227" width="27" height="16"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRANSACTION TYPE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeN-mJ-2EU">
-                                <rect key="frame" x="20" y="227" width="120.5" height="14.5"/>
+                                <rect key="frame" x="20" y="227" width="121" height="15"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1342,7 +1342,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4/15/15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qnq-UO-ahh" userLabel="dateDetail">
-                                <rect key="frame" x="284" y="87" width="34" height="13.5"/>
+                                <rect key="frame" x="284" y="87" width="34" height="14"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="11"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1377,6 +1377,7 @@
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="leading" secondItem="0w5-za-huW" secondAttribute="leading" id="L6w-4C-V4n"/>
                             <constraint firstItem="Qnq-UO-ahh" firstAttribute="centerX" secondItem="0w5-za-huW" secondAttribute="centerX" id="LAh-Fl-9wN"/>
                             <constraint firstItem="Hka-Kj-XX4" firstAttribute="top" secondItem="F9B-8I-H8h" secondAttribute="bottom" id="NlH-a9-YGk"/>
+                            <constraint firstItem="anm-nh-9Mv" firstAttribute="top" secondItem="Lhe-oM-yWB" secondAttribute="bottom" constant="5" id="OB0-XQ-W2q"/>
                             <constraint firstItem="JPW-Aa-cfi" firstAttribute="top" secondItem="Qnq-UO-ahh" secondAttribute="bottom" constant="16" id="OoQ-VT-NZG"/>
                             <constraint firstItem="Qnq-UO-ahh" firstAttribute="top" secondItem="HhE-Tx-QpR" secondAttribute="bottom" constant="1" id="QRB-qJ-AgF"/>
                             <constraint firstItem="Lhe-oM-yWB" firstAttribute="top" secondItem="AeC-bx-wVP" secondAttribute="bottom" constant="15" id="UCC-Kp-zg3"/>
@@ -1418,8 +1419,8 @@
                                 <exclude reference="QRB-qJ-AgF"/>
                                 <exclude reference="UZ2-Ng-vUo"/>
                                 <exclude reference="nX3-oL-2cE"/>
-                                <exclude reference="81a-Y0-W5x"/>
                                 <exclude reference="Wdf-x6-G4m"/>
+                                <exclude reference="81a-Y0-W5x"/>
                             </mask>
                         </variation>
                     </view>
