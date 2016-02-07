@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Charts
 
 class SwipedTransactionsViewController : UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     var charlieGroupListFiltered = [charlieGroup]()
@@ -498,6 +499,21 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = UIView()
+        vw.backgroundColor = UIColor.whiteColor()
+        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 0, 300, 300))
+        let dataPoints = ["Bills", "Spending"]
+        let values = [100.0, 30.0]
+        var dataEntries: [ChartDataEntry] = []
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntries)
+        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
+
+        pieChart.data = pieChartData
+        vw.addSubview(pieChart)
+//        vw.addSubview(progressView)
 //        vw.backgroundColor = UIColor.blackColor()
 //        collectionView.removeFromSuperview()
 //        vw.addSubview(collectionView)
