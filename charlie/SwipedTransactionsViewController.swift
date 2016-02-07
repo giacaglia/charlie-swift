@@ -509,10 +509,13 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
             dataEntries.append(dataEntry)
         }
         let pieChartDataSet = PieChartDataSet(yVals: dataEntries)
+        pieChartDataSet.colors = [listBlue, UIColor(white: 216/255.0, alpha: 1.0)]
         let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
 
+        pieChart.drawHoleEnabled = false
         pieChart.data = pieChartData
         vw.addSubview(pieChart)
+        
 //        vw.addSubview(progressView)
 //        vw.backgroundColor = UIColor.blackColor()
 //        collectionView.removeFromSuperview()
