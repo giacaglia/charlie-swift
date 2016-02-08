@@ -22,7 +22,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 //    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     let layout = UICollectionViewFlowLayout()
-    let collectionView = UICollectionView(frame: CGRectMake(0, 300, UIScreen.mainScreen().bounds.size.width, 60), collectionViewLayout: UICollectionViewLayout())
+    let collectionView = UICollectionView(frame: CGRectMake(0, 300, UIScreen.mainScreen().bounds.size.width, 50), collectionViewLayout: UICollectionViewLayout())
 
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
@@ -490,7 +490,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 360.0
+        return 350.0
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -515,7 +515,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         vw.addSubview(collectionView)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSizeMake((self.view.frame.width/3), 44)
+        layout.itemSize = CGSizeMake((self.view.frame.width/3), 50)
         collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .whiteColor()
         collectionView.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")

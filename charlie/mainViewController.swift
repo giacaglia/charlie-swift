@@ -156,7 +156,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.title = "Worth It?"
         var image = UIImage(named: "menu")
         image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: UIBarButtonItemStyle.Plain, target: self, action: "showAccounts")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: .Plain, target: self, action: "showAccounts")
         
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
@@ -167,6 +167,24 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
         ]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
+//        let rightBarButton = UIBarButtonItem(image: UIImage(named: "calendar")!, style: .Plain, target: self, action: "showCalendar")
+//        rightBarButton.title = "OCT"
+//        self.navigationItem.rightBarButtonItem = rightBarButton
+        let containView = UIView(frame: CGRectMake(0, 0,70, 40))
+        
+        let label = UILabel(frame: CGRectMake(0, 0, 50, 40))
+        label.text = "OCT"
+        label.textAlignment = .Center
+        
+        containView.addSubview(label)
+        
+        let imageview = UIImageView(frame: CGRectMake(50, 10, 20, 20))
+        imageview.image = UIImage(named: "calendar")
+        imageview.contentMode = .ScaleAspectFill
+        containView.addSubview(imageview)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: containView)
+        
     }
     
     func getMonthCountOfData() -> Int {
