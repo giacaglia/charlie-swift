@@ -21,7 +21,8 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 
 //    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    let collectionView = UICollectionView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 60), collectionViewLayout: UICollectionViewLayout())
+    let layout = UICollectionViewFlowLayout()
+    let collectionView = UICollectionView(frame: CGRectMake(0, 300, UIScreen.mainScreen().bounds.size.width, 60), collectionViewLayout: UICollectionViewLayout())
 
     static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
     var filterType : SortFilterType! = .FilterByName
@@ -32,10 +33,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 90, height: 120)
+    
         
         let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
         button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
@@ -66,9 +64,9 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
         self.collectionView.reloadData()
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake((self.view.frame.width/3 - 10), 44)
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        return CGSizeMake((self.view.frame.width/3 - 10), 44)
+//    }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -492,13 +490,13 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 383.0
+        return 360.0
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = UIView()
-        vw.backgroundColor = UIColor.whiteColor()
-        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 60, 300, 300))
+        vw.backgroundColor = .whiteColor()
+        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 0, 300, 300))
         let dataPoints = ["Bills", "Spending"]
         let values = [totalBills, totalSpending]
         var dataEntries: [ChartDataEntry] = []
@@ -514,11 +512,15 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         pieChart.data = pieChartData
         vw.addSubview(pieChart)
         
+        vw.addSubview(collectionView)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSizeMake((self.view.frame.width/3), 44)
+        collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .whiteColor()
         collectionView.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.delegate = self
         collectionView.dataSource = self
-        vw.addSubview(collectionView)
 
         return vw
     }
@@ -576,79 +578,5 @@ class GroupTransactionCell : UITableViewCell {
         amountLabel.textAlignment = .Right
         self.contentView.addSubview(amountLabel)
 
-    }
-}
-
-@IBDesignable class ProgressPieIcon: UIView {
-    @IBInspectable var progress : Double =  0.0 {
-        didSet {
-            self.setNeedsDisplay()
-        }
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)!
-        self.contentMode = .Redraw
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.clearColor()
-        self.contentMode = .Redraw
-    }
-    
-    override func drawRect(rect: CGRect) {
-        let color = UIColor.blackColor().CGColor
-        let lineWidth : CGFloat = 2.0
-        
-        // Calculate box with insets
-        let margin: CGFloat = lineWidth
-        let box0 = CGRectInset(self.bounds, margin, margin)
-        let side : CGFloat = min(box0.width, box0.height)
-        let box = CGRectMake((self.bounds.width-side)/2, (self.bounds.height-side)/2,side,side)
-        
-        
-        let ctx = UIGraphicsGetCurrentContext()
-        
-        // Draw outline
-        CGContextBeginPath(ctx)
-        CGContextSetStrokeColorWithColor(ctx, color)
-        CGContextSetLineWidth(ctx, lineWidth)
-        CGContextAddEllipseInRect(ctx, box)
-        CGContextClosePath(ctx)
-        CGContextStrokePath(ctx)
-        
-        // Draw arc
-        let delta : CGFloat = -CGFloat(M_PI_2)
-        let radius : CGFloat = min(box.width, box.height)/2.0
-        
-        func prog_to_rad(p: Double) -> CGFloat {
-            let rad = CGFloat(p * 2 * M_PI)
-            return rad + delta
-        }
-        
-        func draw_arc(s: CGFloat, e: CGFloat, color: CGColor) {
-            CGContextBeginPath(ctx)
-            CGContextMoveToPoint(ctx, box.midX, box.midY)
-            CGContextSetFillColorWithColor(ctx, color)
-            
-            CGContextAddArc(
-                ctx,
-                box.midX,
-                box.midY,
-                radius-lineWidth/2,
-                s,
-                e,
-                0)
-            
-            CGContextClosePath(ctx)
-            CGContextFillPath(ctx)
-        }
-        
-        if progress > 0 {
-            let s = prog_to_rad(0)
-            let e = prog_to_rad(min(1.0, progress))
-            draw_arc(s, e: e, color: color)
-        }
     }
 }
