@@ -16,7 +16,7 @@ import RealmSwift
 func RGB(red:CGFloat,green:CGFloat,blue:CGFloat) -> UIColor
          {return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1.0) }
 let listRed    = UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
-let lightRed   = UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0);
+let lightRed   = UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0)
 let listBlue   = UIColor(red: 142/255, green: 180/255, blue: 246/255, alpha: 1.0)
 let lightBlue  = UIColor(red: 164/255, green: 202/255, blue: 247/255, alpha: 1.0)
 let listGreen  = UIColor(red: 153/255, green: 219/255, blue: 103/255, alpha: 1.0)

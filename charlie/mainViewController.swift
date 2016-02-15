@@ -167,24 +167,29 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             NSFontAttributeName: UIFont(name: "Montserrat-Bold", size: 24)!
         ]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
-//        let rightBarButton = UIBarButtonItem(image: UIImage(named: "calendar")!, style: .Plain, target: self, action: "showCalendar")
-//        rightBarButton.title = "OCT"
-//        self.navigationItem.rightBarButtonItem = rightBarButton
+
+        self.setMonth(NSDate())
+    }
+    
+    private func setMonth(date: NSDate) {
         let containView = UIView(frame: CGRectMake(0, 0,70, 40))
         
-        let label = UILabel(frame: CGRectMake(0, 0, 50, 40))
-        label.text = "OCT"
-        label.textAlignment = .Center
-        
-        containView.addSubview(label)
-        
-        let imageview = UIImageView(frame: CGRectMake(50, 10, 20, 20))
+        let imageview = UIImageView(frame: CGRectMake(50, 5, 30, 30))
         imageview.image = UIImage(named: "calendar")
-        imageview.contentMode = .ScaleAspectFill
+        imageview.contentMode = .ScaleAspectFit
         containView.addSubview(imageview)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: containView)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM"
+        let dateString = formatter.stringFromDate(date)
+        let label = UILabel(frame: CGRectMake(55, 15, 20, 20))
+        label.font =  UIFont(name: "Montserrat-Bold", size: 8.5)
+        label.textColor = listBlue
+        label.text = dateString.uppercaseString
+        label.textAlignment = .Center
+        containView.addSubview(label)
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: containView)
     }
     
     func getMonthCountOfData() -> Int {
