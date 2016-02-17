@@ -143,6 +143,8 @@
 		88033FE51C167A07004D5599 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88033FE41C167A07004D5599 /* Extensions.swift */; };
 		88033FE81C168700004D5599 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88033FE71C168700004D5599 /* Montserrat-Light.otf */; };
 		88033FEA1C1694D8004D5599 /* GothamMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88033FE91C1694D8004D5599 /* GothamMedium.otf */; };
+		880DA0491C7405A8007FAC43 /* MonthSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880DA0481C7405A8007FAC43 /* MonthSelectorViewController.swift */; };
+		880DA04C1C74061F007FAC43 /* MonthSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880DA04B1C74061F007FAC43 /* MonthSelectorViewController.xib */; };
 		8816CCB11BBDB596001F6F31 /* SortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8816CCB01BBDB596001F6F31 /* SortViewController.xib */; };
 		8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */; };
 		882C48E81C548C7C006C8559 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882C48E71C548C7C006C8559 /* CategoryViewController.xib */; };
@@ -425,6 +427,8 @@
 		88033FE41C167A07004D5599 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		88033FE71C168700004D5599 /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
 		88033FE91C1694D8004D5599 /* GothamMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamMedium.otf; sourceTree = "<group>"; };
+		880DA0481C7405A8007FAC43 /* MonthSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthSelectorViewController.swift; sourceTree = "<group>"; };
+		880DA04B1C74061F007FAC43 /* MonthSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthSelectorViewController.xib; sourceTree = "<group>"; };
 		8816CCB01BBDB596001F6F31 /* SortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortViewController.xib; sourceTree = "<group>"; };
 		8816CCB31BBDB5A6001F6F31 /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		882C48E71C548C7C006C8559 /* CategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryViewController.xib; sourceTree = "<group>"; };
@@ -883,6 +887,8 @@
 				094BAF5B1C16227E00B34B3A /* FilterCell.swift */,
 				882C48E71C548C7C006C8559 /* CategoryViewController.xib */,
 				882C48EA1C548C8D006C8559 /* CategoryViewController.swift */,
+				880DA04B1C74061F007FAC43 /* MonthSelectorViewController.xib */,
+				880DA0481C7405A8007FAC43 /* MonthSelectorViewController.swift */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -1028,6 +1034,7 @@
 				0916204F1B2F28DE0004C781 /* Inconsolata-Bold.ttf in Resources */,
 				88B335611C270B4900AC0992 /* Montserrat-SemiBold.otf in Resources */,
 				09C2A7551B21F0AD005A40DA /* LaunchScreen.xib in Resources */,
+				880DA04C1C74061F007FAC43 /* MonthSelectorViewController.xib in Resources */,
 				091620571B2F8B620004C781 /* GothamRounded-Book.otf in Resources */,
 				09C2A7521B21F0AD005A40DA /* Images.xcassets in Resources */,
 				882C48E81C548C7C006C8559 /* CategoryViewController.xib in Resources */,
@@ -1095,6 +1102,7 @@
 				456049D41B71183200C37B9D /* MPABTestDesignerDeviceInfoRequestMessage.m in Sources */,
 				45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */,
 				88A295241BB598AC0091A36B /* ABPinSelectionView.m in Sources */,
+				880DA0491C7405A8007FAC43 /* MonthSelectorViewController.swift in Sources */,
 				88A295231BB598AC0091A36B /* ABPadLockScreenViewController.m in Sources */,
 				45604A051B71183200C37B9D /* MPUITableViewBinding.m in Sources */,
 				456049D81B71183200C37B9D /* MPABTestDesignerSnapshotResponseMessage.m in Sources */,

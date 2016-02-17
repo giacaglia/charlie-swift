@@ -708,10 +708,6 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="HbA-5y-1yC" id="1fa-Ux-5eM"/>
-                                    <outlet property="delegate" destination="HbA-5y-1yC" id="akz-Up-HM9"/>
-                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -735,7 +731,6 @@
                     <connections>
                         <outlet property="accountAddView" destination="Ssu-hU-syf" id="I2j-Nc-7zS"/>
                         <outlet property="addAccountButton" destination="pbA-n2-qga" id="U1c-Gd-u1U"/>
-                        <outlet property="collectionView" destination="HTZ-Xu-A7Z" id="RWG-NF-DCW"/>
                         <outlet property="toastView" destination="o08-Ym-LQO" id="aEc-yW-LS3"/>
                         <outlet property="transactionsTable" destination="JmO-hm-sg5" id="Ccw-2S-17q"/>
                         <segue destination="071-ho-sdj" kind="presentation" identifier="showTypePicker" modalPresentationStyle="overCurrentContext" id="tRI-2L-w6f"/>

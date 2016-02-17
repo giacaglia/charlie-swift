@@ -54,7 +54,6 @@ protocol MainViewControllerDelegate {
 }
 
 class mainViewController: UIViewController, MainViewControllerDelegate {
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toastView: UIView!
     @IBOutlet weak var transactionsTable: SBGestureTableView!
     @IBOutlet weak var accountAddView: UIView!
@@ -91,9 +90,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     var monthDiff:Int = 0
 
     func willEnterForeground(notification: NSNotification!) {
-        print("here")
         self.loadTransactionTable()
-        self.collectionView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -111,7 +108,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 SwiftLoader.show(true)
                 toastView.hidden = false
                 accountAddView.hidden = true
-                collectionView.hidden = false
             }
             else {
                 print("Still waiting")
@@ -145,7 +141,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.addAccountButton.layer.borderWidth = 1.0
         
         self.loadTransactionTable()
-        self.collectionView.reloadData()
     }
     
     func setupNavigationBar() {
@@ -172,12 +167,12 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     }
     
     private func setMonth(date: NSDate) {
-        let containView = UIView(frame: CGRectMake(0, 0,70, 40))
+        let customButtom = UIButton(frame: CGRectMake(0, 0,70, 40))
         
         let imageview = UIImageView(frame: CGRectMake(50, 5, 30, 30))
         imageview.image = UIImage(named: "calendar")
         imageview.contentMode = .ScaleAspectFit
-        containView.addSubview(imageview)
+        customButtom.addSubview(imageview)
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MMM"
@@ -187,9 +182,16 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         label.textColor = listBlue
         label.text = dateString.uppercaseString
         label.textAlignment = .Center
-        containView.addSubview(label)
+        customButtom.addSubview(label)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: containView)
+        customButtom.addTarget(self, action: "showMonthSelector", forControlEvents: .TouchUpInside)
+        let barButtonItem = UIBarButtonItem(customView: customButtom)
+        self.navigationItem.rightBarButtonItem = barButtonItem
+    }
+    
+    func showMonthSelector() {
+        let monthVC = MonthSelectorViewController()
+        self.presentViewController(monthVC, animated: true) { () -> Void in }
     }
     
     func getMonthCountOfData() -> Int {
@@ -247,7 +249,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             accountAddView.hidden = false
             addAccountButton.hidden = false
             transactionsTable.hidden = true
-            collectionView.hidden = true
             //makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             charlieAnalytics.track("Find Bank Screen - Main")
@@ -258,7 +259,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             areThereMoreItemsToLoad = moreTransactionforLoading()
             addAccountButton.hidden = true
             accountAddView.hidden = true
-            collectionView.hidden = false
             //refresh accounts
             if allTransactionItems.count > 0 {
                 let transCount = allTransactionItems.count
@@ -404,7 +404,6 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.transactionsTable.reloadData()
-                    self.collectionView.reloadData()
                 }
                 
                 SwiftLoader.hide()
@@ -544,52 +543,26 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         return charlieGroupList
     }
 }
-
-extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return monthDiff
-    }
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        selectedCollectioncCellIndex = indexPath.row
+//        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
+//        setPredicates(true, startMonth: startMonth)
+//        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
+//        moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
+//        if selectedCollectioncCellIndex == 0  {
+//            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
+//            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: true)
+//        }
+//        else {
+//            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
+//            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
+//        }
+//        dispatch_async(dispatch_get_main_queue()) {
+//            collectionView.reloadData()
+//            self.transactionsTable.reloadData()
+//        }
+//    }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
-            let date = NSDate().dateByAddingMonths(-indexPath.row)
-            cell.monthLabel.text = date!.monthString()
-        
-            if selectedCollectioncCellIndex == indexPath.row {
-                cell.monthLabel.font = UIFont(name: "Montserrat-Bold", size: 18)!
-            }
-            else {
-                cell.monthLabel.font = UIFont(name: "Montserrat-Light", size: 18)!
-            }
-        
-            return cell
-        }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedCollectioncCellIndex = indexPath.row
-        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
-        setPredicates(true, startMonth: startMonth)
-        transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
-        moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
-        if selectedCollectioncCellIndex == 0  {
-            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: true)
-            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: true)
-        }
-        else {
-            (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
-            (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
-        }
-        dispatch_async(dispatch_get_main_queue()) {
-            collectionView.reloadData()
-            self.transactionsTable.reloadData()
-        }
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(100, 50)
-    }
-    
-}
 
 // Swipe part of the main view controller
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {
@@ -661,7 +634,6 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             transactionsTable.hidden = false
             addAccountButton.hidden = true
             accountAddView.hidden = true
-            collectionView.hidden = false
         }
         return transactionItems.count + 5//Int(areThereMoreItemsToLoad)
     }
