@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		09043B731B5AB16200B49A7E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043B721B5AB16200B49A7E /* WelcomeViewController.swift */; };
 		090BD3451B25089300F26E78 /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BD3441B25089300F26E78 /* mainViewController.swift */; };
-		090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; };
-		090BD3561B250D2D00F26E78 /* BladeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 090BD34E1B250C0000F26E78 /* BladeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		090BD35E1B25D2F600F26E78 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */; };
 		090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BD35F1B25D85B00F26E78 /* charlieService.swift */; };
 		091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091620211B2DA2330004C781 /* SBGestureTableView.swift */; };
@@ -167,39 +165,30 @@
 		88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B41F0D1BC461610038483F /* RewardViewController.swift */; };
 		88B438341C04235900A0461B /* SwipedTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B438331C04235900A0461B /* SwipedTransactionsViewController.swift */; };
 		88B438391C0423FB00A0461B /* SwipedTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B438381C0423FB00A0461B /* SwipedTransactionsViewController.xib */; };
-		88B7F0711BEB0F4F00E6EFEE /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88B7F06D1BEB0EB100E6EFEE /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88B7F0721BEB0F5300E6EFEE /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88C13A6E1D05E93D001EDB5C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6D1D05E93D001EDB5C /* Realm.framework */; };
+		88C13A701D05E943001EDB5C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; };
+		88C13A711D05E94A001EDB5C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; };
+		88C13A721D05E94A001EDB5C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88C13A731D05E94A001EDB5C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6D1D05E93D001EDB5C /* Realm.framework */; };
+		88C13A741D05E94A001EDB5C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6D1D05E93D001EDB5C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88D49E701D34359A0006BD9E /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E611D3435990006BD9E /* BaseObject.swift */; };
+		88D49E711D34359A0006BD9E /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E621D3435990006BD9E /* DesignableView.swift */; };
+		88D49E721D34359A0006BD9E /* InsetUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E631D3435990006BD9E /* InsetUITextField.swift */; };
+		88D49E731D34359A0006BD9E /* NSCharacterSet+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E641D3435990006BD9E /* NSCharacterSet+BladeKit.swift */; };
+		88D49E741D34359A0006BD9E /* NSDate+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E651D3435990006BD9E /* NSDate+BladeKit.swift */; };
+		88D49E751D34359A0006BD9E /* NSError+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E661D3435990006BD9E /* NSError+BladeKit.swift */; };
+		88D49E761D34359A0006BD9E /* NSTimer+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E671D3435990006BD9E /* NSTimer+BladeKit.swift */; };
+		88D49E771D34359A0006BD9E /* ServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E681D3435990006BD9E /* ServerClient.swift */; };
+		88D49E781D34359A0006BD9E /* ServerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E691D3435990006BD9E /* ServerOperation.swift */; };
+		88D49E791D34359A0006BD9E /* ServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6A1D3435990006BD9E /* ServerRequest.swift */; };
+		88D49E7A1D34359A0006BD9E /* ServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6B1D3435990006BD9E /* ServerResponse.swift */; };
+		88D49E7B1D34359A0006BD9E /* String+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6C1D34359A0006BD9E /* String+BladeKit.swift */; };
+		88D49E7C1D34359A0006BD9E /* UIColor+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6D1D34359A0006BD9E /* UIColor+BladeKit.swift */; };
+		88D49E7D1D34359A0006BD9E /* UIImage+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6E1D34359A0006BD9E /* UIImage+BladeKit.swift */; };
+		88D49E7E1D34359A0006BD9E /* UIViewController+BladeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D49E6F1D34359A0006BD9E /* UIViewController+BladeKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		090BD34D1B250C0000F26E78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 91D3658B1ACDCFA800D018B2;
-			remoteInfo = BladeKit;
-		};
-		090BD34F1B250C0000F26E78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 91D365961ACDCFA800D018B2;
-			remoteInfo = BladeKitTests;
-		};
-		090BD3531B250CF800F26E78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 91D3658A1ACDCFA800D018B2;
-			remoteInfo = BladeKit;
-		};
-		090BD3571B250D2D00F26E78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 91D3658A1ACDCFA800D018B2;
-			remoteInfo = BladeKit;
-		};
 		4596990C1BA9E50B00233C66 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 459698551BA9E50A00233C66 /* Charts.xcodeproj */;
@@ -223,10 +212,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				88B7F0721BEB0F5300E6EFEE /* RealmSwift.framework in Embed Frameworks */,
-				88B7F0711BEB0F4F00E6EFEE /* Realm.framework in Embed Frameworks */,
+				88C13A741D05E94A001EDB5C /* Realm.framework in Embed Frameworks */,
 				4596990F1BA9E5DC00233C66 /* Charts.framework in Embed Frameworks */,
-				090BD3561B250D2D00F26E78 /* BladeKit.framework in Embed Frameworks */,
+				88C13A721D05E94A001EDB5C /* RealmSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,7 +224,6 @@
 /* Begin PBXFileReference section */
 		09043B721B5AB16200B49A7E /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		090BD3441B25089300F26E78 /* mainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
-		090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BladeKit.xcodeproj; path = "BladeKit-iOS/BladeKit.xcodeproj"; sourceTree = "<group>"; };
 		090BD35D1B25D2F600F26E78 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		090BD35F1B25D85B00F26E78 /* charlieService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = charlieService.swift; sourceTree = "<group>"; };
 		091620211B2DA2330004C781 /* SBGestureTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableView.swift; sourceTree = "<group>"; };
@@ -457,8 +444,23 @@
 		88B41F0D1BC461610038483F /* RewardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardViewController.swift; sourceTree = "<group>"; };
 		88B438331C04235900A0461B /* SwipedTransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipedTransactionsViewController.swift; sourceTree = "<group>"; };
 		88B438381C0423FB00A0461B /* SwipedTransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwipedTransactionsViewController.xib; sourceTree = "<group>"; };
-		88B7F06D1BEB0EB100E6EFEE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		88C13A6D1D05E93D001EDB5C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		88C13A6F1D05E943001EDB5C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		88D49E611D3435990006BD9E /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
+		88D49E621D3435990006BD9E /* DesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
+		88D49E631D3435990006BD9E /* InsetUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetUITextField.swift; sourceTree = "<group>"; };
+		88D49E641D3435990006BD9E /* NSCharacterSet+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCharacterSet+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E651D3435990006BD9E /* NSDate+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E661D3435990006BD9E /* NSError+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E671D3435990006BD9E /* NSTimer+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTimer+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E681D3435990006BD9E /* ServerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerClient.swift; sourceTree = "<group>"; };
+		88D49E691D3435990006BD9E /* ServerOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerOperation.swift; sourceTree = "<group>"; };
+		88D49E6A1D3435990006BD9E /* ServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRequest.swift; sourceTree = "<group>"; };
+		88D49E6B1D3435990006BD9E /* ServerResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerResponse.swift; sourceTree = "<group>"; };
+		88D49E6C1D34359A0006BD9E /* String+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E6D1D34359A0006BD9E /* UIColor+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E6E1D34359A0006BD9E /* UIImage+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+BladeKit.swift"; sourceTree = "<group>"; };
+		88D49E6F1D34359A0006BD9E /* UIViewController+BladeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+BladeKit.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,8 +468,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C13A731D05E94A001EDB5C /* Realm.framework in Frameworks */,
 				88A53B231BB38B0300D5A1F0 /* libz.tbd in Frameworks */,
 				88AD39B91BB337CB003AE420 /* libicucore.tbd in Frameworks */,
+				88C13A711D05E94A001EDB5C /* RealmSwift.framework in Frameworks */,
 				4596990E1BA9E5DC00233C66 /* Charts.framework in Frameworks */,
 				4560494E1B7115AE00C37B9D /* SystemConfiguration.framework in Frameworks */,
 				4560494C1B7115A100C37B9D /* Security.framework in Frameworks */,
@@ -475,10 +479,11 @@
 				456049481B71159000C37B9D /* MobileCoreServices.framework in Frameworks */,
 				456049441B71156F00C37B9D /* CoreLocation.framework in Frameworks */,
 				456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */,
+				88C13A6E1D05E93D001EDB5C /* Realm.framework in Frameworks */,
 				456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */,
-				090BD3551B250D2D00F26E78 /* BladeKit.framework in Frameworks */,
 				091E008E1B7959AB0014012D /* CloudKit.framework in Frameworks */,
 				45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */,
+				88C13A701D05E943001EDB5C /* RealmSwift.framework in Frameworks */,
 				45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,10 +512,10 @@
 		090BD3471B250B9B00F26E78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88C13A6F1D05E943001EDB5C /* RealmSwift.framework */,
+				88C13A6D1D05E93D001EDB5C /* Realm.framework */,
 				88A53B221BB38B0300D5A1F0 /* libz.tbd */,
 				88AD39B81BB337CB003AE420 /* libicucore.tbd */,
-				88B7F06D1BEB0EB100E6EFEE /* Realm.framework */,
-				88B7F06E1BEB0EB100E6EFEE /* RealmSwift.framework */,
 				091E008D1B7959AB0014012D /* CloudKit.framework */,
 				4560494F1B71183200C37B9D /* Mixpanel */,
 				4560494D1B7115AE00C37B9D /* SystemConfiguration.framework */,
@@ -523,20 +528,11 @@
 				45E0F2131B613F420005B234 /* Fabric.framework */,
 				45E0F2141B613F420005B234 /* Crashlytics.framework */,
 				091620201B2DA2330004C781 /* SBGestureTableView */,
+				88D49E601D34358A0006BD9E /* BladeKit */,
 				45E0F2231B67D7DD0005B234 /* ABPin */,
-				090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */,
 			);
 			name = Frameworks;
 			path = frameworks;
-			sourceTree = "<group>";
-		};
-		090BD3491B250C0000F26E78 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				090BD34E1B250C0000F26E78 /* BladeKit.framework */,
-				090BD3501B250C0000F26E78 /* BladeKitTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		090BD3611B25D86E00F26E78 /* Services */ = {
@@ -893,6 +889,28 @@
 			name = MainViewController;
 			sourceTree = "<group>";
 		};
+		88D49E601D34358A0006BD9E /* BladeKit */ = {
+			isa = PBXGroup;
+			children = (
+				88D49E611D3435990006BD9E /* BaseObject.swift */,
+				88D49E621D3435990006BD9E /* DesignableView.swift */,
+				88D49E631D3435990006BD9E /* InsetUITextField.swift */,
+				88D49E641D3435990006BD9E /* NSCharacterSet+BladeKit.swift */,
+				88D49E651D3435990006BD9E /* NSDate+BladeKit.swift */,
+				88D49E661D3435990006BD9E /* NSError+BladeKit.swift */,
+				88D49E671D3435990006BD9E /* NSTimer+BladeKit.swift */,
+				88D49E681D3435990006BD9E /* ServerClient.swift */,
+				88D49E691D3435990006BD9E /* ServerOperation.swift */,
+				88D49E6A1D3435990006BD9E /* ServerRequest.swift */,
+				88D49E6B1D3435990006BD9E /* ServerResponse.swift */,
+				88D49E6C1D34359A0006BD9E /* String+BladeKit.swift */,
+				88D49E6D1D34359A0006BD9E /* UIColor+BladeKit.swift */,
+				88D49E6E1D34359A0006BD9E /* UIImage+BladeKit.swift */,
+				88D49E6F1D34359A0006BD9E /* UIViewController+BladeKit.swift */,
+			);
+			name = BladeKit;
+			sourceTree = "<group>";
+		};
 		88E6209F1BB476330060ED28 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,14 +933,12 @@
 				09C2A73F1B21F0AD005A40DA /* Frameworks */,
 				09C2A7401B21F0AD005A40DA /* Resources */,
 				090BD3591B250D2D00F26E78 /* Embed Frameworks */,
-				090BD36D1B268B3300F26E78 /* Run Script */,
 				45E0F2121B613F070005B234 /* ShellScript */,
+				090BD36D1B268B3300F26E78 /* Run Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				090BD3541B250CF800F26E78 /* PBXTargetDependency */,
-				090BD3581B250D2D00F26E78 /* PBXTargetDependency */,
 				459699111BA9E5DC00233C66 /* PBXTargetDependency */,
 			);
 			name = charlie;
@@ -943,7 +959,7 @@
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = UFDBYP5MQ8;
+						DevelopmentTeam = 66H4QSVXLG;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 0;
@@ -968,10 +984,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 090BD3491B250C0000F26E78 /* Products */;
-					ProjectRef = 090BD3481B250C0000F26E78 /* BladeKit.xcodeproj */;
-				},
-				{
 					ProductGroup = 459698561BA9E50A00233C66 /* Products */;
 					ProjectRef = 459698551BA9E50A00233C66 /* Charts.xcodeproj */;
 				},
@@ -984,20 +996,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		090BD34E1B250C0000F26E78 /* BladeKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BladeKit.framework;
-			remoteRef = 090BD34D1B250C0000F26E78 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		090BD3501B250C0000F26E78 /* BladeKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BladeKitTests.xctest;
-			remoteRef = 090BD34F1B250C0000F26E78 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		4596990D1BA9E50B00233C66 /* Charts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1093,11 +1091,13 @@
 				091620261B2DA2330004C781 /* SBGestureTableViewCell.swift in Sources */,
 				456049D51B71183200C37B9D /* MPABTestDesignerDeviceInfoResponseMessage.m in Sources */,
 				45604A0D1B71183200C37B9D /* UIImage+MPAverageColor.m in Sources */,
+				88D49E781D34359A0006BD9E /* ServerOperation.swift in Sources */,
 				456049FB1B71183200C37B9D /* MPSwizzler.m in Sources */,
 				099ACE4F1B3363CA0044A068 /* showTransactionViewController.swift in Sources */,
 				88A295221BB598AC0091A36B /* ABPadLockScreenView.m in Sources */,
 				09C2A76B1B238EFB005A40DA /* LoginViewController.swift in Sources */,
 				456049D11B71183200C37B9D /* MPABTestDesignerClearRequestMessage.m in Sources */,
+				88D49E7E1D34359A0006BD9E /* UIViewController+BladeKit.swift in Sources */,
 				45604A031B71183200C37B9D /* MPUIFontToNSDictionaryValueTransformer.m in Sources */,
 				456049D41B71183200C37B9D /* MPABTestDesignerDeviceInfoRequestMessage.m in Sources */,
 				45E0F2111B5E7E660005B234 /* revealViewController.swift in Sources */,
@@ -1115,6 +1115,7 @@
 				456049FF1B71183200C37B9D /* MPTypeDescription.m in Sources */,
 				091620251B2DA2330004C781 /* SBGestureTableView.swift in Sources */,
 				885A41A71C3B7293000787C4 /* SwiftLoader.swift in Sources */,
+				88D49E7D1D34359A0006BD9E /* UIImage+BladeKit.swift in Sources */,
 				095414B11B46A68300682172 /* cHelper.swift in Sources */,
 				09C2A74D1B21F0AD005A40DA /* TutorialViewController.swift in Sources */,
 				45604A021B71183200C37B9D /* MPUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */,
@@ -1124,6 +1125,7 @@
 				45AF27DB1B3B0F3C001BB1CF /* showTypePickerViewController.swift in Sources */,
 				09043B731B5AB16200B49A7E /* WelcomeViewController.swift in Sources */,
 				45604A0C1B71183200C37B9D /* UIColor+MPColor.m in Sources */,
+				88D49E771D34359A0006BD9E /* ServerClient.swift in Sources */,
 				889DF01E1BED3DF600BBB77B /* ReportCardCell.swift in Sources */,
 				456049D01B71183200C37B9D /* MPABTestDesignerChangeResponseMessage.m in Sources */,
 				456049F21B71183200C37B9D /* MPObjectSerializerContext.m in Sources */,
@@ -1135,6 +1137,8 @@
 				090BD3601B25D85B00F26E78 /* charlieService.swift in Sources */,
 				453E60071B8E269C00F4794E /* SBGestureTableViewGroupCellAction.swift in Sources */,
 				090BD3451B25089300F26E78 /* mainViewController.swift in Sources */,
+				88D49E731D34359A0006BD9E /* NSCharacterSet+BladeKit.swift in Sources */,
+				88D49E7C1D34359A0006BD9E /* UIColor+BladeKit.swift in Sources */,
 				456049EC1B71183200C37B9D /* MPNSAttributedStringToNSDictionaryValueTransformer.m in Sources */,
 				45604A0F1B71183200C37B9D /* UIView+MPHelpers.m in Sources */,
 				456049DF1B71183200C37B9D /* MPCGColorRefToNSStringValueTransformer.m in Sources */,
@@ -1145,6 +1149,7 @@
 				453E60091B8E26AD00F4794E /* SBGestureTableViewGroupCellSideView.swift in Sources */,
 				454858911B861E6300AFEAB1 /* charlieGroup.swift in Sources */,
 				456049D21B71183200C37B9D /* MPABTestDesignerClearResponseMessage.m in Sources */,
+				88D49E7A1D34359A0006BD9E /* ServerResponse.swift in Sources */,
 				456049EE1B71183200C37B9D /* MPObjectIdentityProvider.m in Sources */,
 				456049D61B71183200C37B9D /* MPABTestDesignerDisconnectMessage.m in Sources */,
 				456049E41B71183200C37B9D /* MPDesignerEventBindingRequestMesssage.m in Sources */,
@@ -1154,18 +1159,23 @@
 				45604A041B71183200C37B9D /* MPUIImageToNSDictionaryValueTransformer.m in Sources */,
 				456049E91B71183200C37B9D /* MPNotification.m in Sources */,
 				091620281B2DA2330004C781 /* SBGestureTableViewCellSideView.swift in Sources */,
+				88D49E751D34359A0006BD9E /* NSError+BladeKit.swift in Sources */,
+				88D49E791D34359A0006BD9E /* ServerRequest.swift in Sources */,
 				45604A1B1B7266BE00C37B9D /* KeychainHelper.swift in Sources */,
 				45604A071B71183200C37B9D /* MPWebSocket.m in Sources */,
 				456049E51B71183200C37B9D /* MPDesignerEventBindingResponseMesssage.m in Sources */,
 				456049DB1B71183200C37B9D /* MPApplicationStateSerializer.m in Sources */,
 				09401F041C0E0918002DBBEB /* rewardTableViewCell.swift in Sources */,
 				456049EF1B71183200C37B9D /* MPObjectSelector.m in Sources */,
+				88D49E7B1D34359A0006BD9E /* String+BladeKit.swift in Sources */,
 				456049E81B71183200C37B9D /* MPEventBinding.m in Sources */,
 				88A2951F1BB598AC0091A36B /* ABPadButton.m in Sources */,
+				88D49E741D34359A0006BD9E /* NSDate+BladeKit.swift in Sources */,
 				45604A001B71183200C37B9D /* MPUIColorToNSStringValueTransformer.m in Sources */,
 				09435D421B38B42F006E126B /* showCardsViewController.swift in Sources */,
 				456049F31B71183200C37B9D /* MPPassThroughValueTransformer.m in Sources */,
 				09435D451B38B43F006E126B /* cardTableViewCell.swift in Sources */,
+				88D49E761D34359A0006BD9E /* NSTimer+BladeKit.swift in Sources */,
 				45604A091B71183200C37B9D /* NSInvocation+MPHelpers.m in Sources */,
 				456049DA1B71183200C37B9D /* MPABTestDesignerTweakResponseMessage.m in Sources */,
 				456049F81B71183200C37B9D /* MPSurveyNavigationController.m in Sources */,
@@ -1188,30 +1198,23 @@
 				456049FC1B71183200C37B9D /* MPTweak.m in Sources */,
 				88A295201BB598AC0091A36B /* ABPadLockScreenAbstractViewController.m in Sources */,
 				095414AF1B45E91D00682172 /* addAccountViewController.swift in Sources */,
+				88D49E711D34359A0006BD9E /* DesignableView.swift in Sources */,
 				456049FD1B71183200C37B9D /* MPTweakInline.m in Sources */,
 				45604A081B71183200C37B9D /* NSData+MPBase64.m in Sources */,
+				88D49E701D34359A0006BD9E /* BaseObject.swift in Sources */,
 				882C48EB1C548C8D006C8559 /* CategoryViewController.swift in Sources */,
 				453E60031B8E242D00F4794E /* SBGestureTableViewGroup.swift in Sources */,
 				09C2A7481B21F0AD005A40DA /* AppDelegate.swift in Sources */,
 				456049DC1B71183200C37B9D /* MPBOOLToNSNumberValueTransformer.m in Sources */,
 				8816CCB41BBDB5A6001F6F31 /* SortViewController.swift in Sources */,
 				456049E01B71183200C37B9D /* MPCGPointToNSDictionaryValueTransformer.m in Sources */,
+				88D49E721D34359A0006BD9E /* InsetUITextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		090BD3541B250CF800F26E78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BladeKit;
-			targetProxy = 090BD3531B250CF800F26E78 /* PBXContainerItemProxy */;
-		};
-		090BD3581B250D2D00F26E78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BladeKit;
-			targetProxy = 090BD3571B250D2D00F26E78 /* PBXContainerItemProxy */;
-		};
 		459699111BA9E5DC00233C66 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Charts;
@@ -1343,9 +1346,9 @@
 				INFOPLIST_FILE = charlie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
+				PRODUCT_BUNDLE_IDENTIFIER = "charlie.charlie-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98345c1-044e-47d1-a16f-a9ebcbc52a86";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1367,9 +1370,9 @@
 				INFOPLIST_FILE = charlie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.blade.charlieEnterprise;
+				PRODUCT_BUNDLE_IDENTIFIER = "charlie.charlie-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98345c1-044e-47d1-a16f-a9ebcbc52a86";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

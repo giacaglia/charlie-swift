@@ -1,6 +1,3 @@
-[submodule "frameworks/BladeKit-iOS"]
-	path = frameworks/BladeKit-iOS
-	url = git@github.com:bladenet/BladeKit-iOS.git
 [submodule "Alamofire"]
 	path = Alamofire
 	url = https://github.com/Alamofire/Alamofire.git
