@@ -176,8 +176,8 @@ class charlieService {
         if let client_id = keyChainStore.get("client_id"),
            let client_secret = keyChainStore.get("client_secret") {
             let parameters = [
-                "client_id": client_id,
-                "secret": client_secret,
+                "client_id": "test_id",
+                "secret": "test_secret",
                 "public_token": public_token
             ]
             

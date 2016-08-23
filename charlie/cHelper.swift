@@ -543,22 +543,28 @@ class cHelper {
         let container = CKContainer.defaultContainer()
         let publicData = container.publicCloudDatabase
         let query = CKQuery(recordType: "Settings", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
-        publicData.performQuery(query, inZoneWithID: nil) { results, error in
-            if error == nil { // There is no error
-                for result in results! {
-                    if let client_id = result["client_id"] as? String,
-                        let client_secret = result["client_secret"] as? String {
-                        keyChainStore.set(client_id, key: "client_id")
-                        keyChainStore.set(client_secret, key: "client_secret")
-                        callback(true)
-                    }
-                }
-            }
-            else {
-                print(error)
-                callback(false)
-            }
-        }
+        let client_id = "test_id"
+        let client_secret = "test_secret"
+        keyChainStore.set(client_id, key: "client_id")
+        keyChainStore.set(client_secret, key: "client_secret")
+//        publicData.performQuery(query, inZoneWithID: nil) { results, error in
+//            if error == nil { // There is no error
+//                for result in results! {
+////                    if let client_id = result["client_id"] as? String,
+////                        let client_secret = result["client_secret"] as? String {
+//                        let client_id = "test_id"
+//                        let client_secret = "test_secret"
+//                        keyChainStore.set(client_id, key: "client_id")
+//                        keyChainStore.set(client_secret, key: "client_secret")
+//                        callback(true)
+////                    }
+//                }
+//            }
+//            else {
+//                print(error)
+//                callback(false)
+//            }
+//        }
     }
     
     func formatCurrency(currency: Double) -> String {
