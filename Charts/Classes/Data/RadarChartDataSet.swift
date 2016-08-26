@@ -15,19 +15,19 @@
 import Foundation
 import UIKit
 
-public class RadarChartDataSet: LineRadarChartDataSet
+open class RadarChartDataSet: LineRadarChartDataSet
 {
     public override init()
     {
         super.init()
         
-        self.valueFont = UIFont.systemFontOfSize(13.0)
+        self.valueFont = UIFont.systemFont(ofSize: 13.0)
     }
     
     public override init(yVals: [ChartDataEntry]?, label: String?)
     {
         super.init(yVals: yVals, label: label)
         
-        self.valueFont = UIFont.systemFontOfSize(13.0)
+        self.valueFont = UIFont.systemFont(ofSize: 13.0)
     }
 }

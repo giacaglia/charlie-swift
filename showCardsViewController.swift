@@ -18,23 +18,23 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         if accounts.count > 0 {
-            addAccountButton.enabled = false
+            addAccountButton.isEnabled = false
         }
         cardsTableView.tableFooterView = UIView()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return accounts.count
     }
     
     //for test checkin
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! cardTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! cardTableViewCell
         cell.cardView.layer.cornerRadius = 20
-        cell.cardView.layer.borderColor = listBlue.CGColor
+        cell.cardView.layer.borderColor = listBlue.cgColor
         cell.cardView.layer.borderWidth = 0.5
-        if let current = accounts[indexPath.row].balance!.current.value
+        if let current = accounts[(indexPath as NSIndexPath).row].balance!.current.value
         {
             cell.cardBalance.text = String(stringInterpolationSegment: current)
         }
@@ -42,26 +42,26 @@ class showCardsViewController: UIViewController, UITableViewDataSource, UITableV
         {
             cell.cardBalance.text = "n/a"
         }
-        cell.cardName.text = accounts[indexPath.row].meta!.name
-        cell.cardAccountNumber.text = accounts[indexPath.row].meta!.number
-        cell.accountID.text = accounts[indexPath.row]._id
+        cell.cardName.text = accounts[(indexPath as NSIndexPath).row].meta!.name
+        cell.cardAccountNumber.text = accounts[(indexPath as NSIndexPath).row].meta!.number
+        cell.accountID.text = accounts[(indexPath as NSIndexPath).row]._id
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
-    @IBAction func dismissViewButtonPress(sender: UIButton ) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismissViewButtonPress(_ sender: UIButton ) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func openLink(sender: UIButton) {
+    @IBAction func openLink(_ sender: UIButton) {
         if sender.tag == 0 {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms")!)
+            UIApplication.shared.openURL(URL(string: "http://www.charliestudios.com/terms")!)
         }
         else {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy")!)
+            UIApplication.shared.openURL(URL(string: "http://www.charliestudios.com/privacy")!)
         }
     }
     

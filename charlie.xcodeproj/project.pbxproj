@@ -165,8 +165,6 @@
 		88B41F0E1BC461610038483F /* RewardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B41F0D1BC461610038483F /* RewardViewController.swift */; };
 		88B438341C04235900A0461B /* SwipedTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B438331C04235900A0461B /* SwipedTransactionsViewController.swift */; };
 		88B438391C0423FB00A0461B /* SwipedTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B438381C0423FB00A0461B /* SwipedTransactionsViewController.xib */; };
-		88C13A6E1D05E93D001EDB5C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6D1D05E93D001EDB5C /* Realm.framework */; };
-		88C13A701D05E943001EDB5C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; };
 		88C13A711D05E94A001EDB5C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; };
 		88C13A721D05E94A001EDB5C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6F1D05E943001EDB5C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88C13A731D05E94A001EDB5C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C13A6D1D05E93D001EDB5C /* Realm.framework */; };
@@ -479,11 +477,9 @@
 				456049481B71159000C37B9D /* MobileCoreServices.framework in Frameworks */,
 				456049441B71156F00C37B9D /* CoreLocation.framework in Frameworks */,
 				456049421B71156100C37B9D /* CoreGraphics.framework in Frameworks */,
-				88C13A6E1D05E93D001EDB5C /* Realm.framework in Frameworks */,
 				456049401B71155800C37B9D /* CFNetwork.framework in Frameworks */,
 				091E008E1B7959AB0014012D /* CloudKit.framework in Frameworks */,
 				45E0F2151B613F420005B234 /* Fabric.framework in Frameworks */,
-				88C13A701D05E943001EDB5C /* RealmSwift.framework in Frameworks */,
 				45E0F2161B613F420005B234 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -954,12 +950,13 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "James Caralis";
 				TargetAttributes = {
 					09C2A7411B21F0AD005A40DA = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 66H4QSVXLG;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 0;
@@ -1255,8 +1252,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1303,8 +1302,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1325,6 +1326,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1333,11 +1335,11 @@
 		09C2A7651B21F0AD005A40DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = charlie/charlie.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
@@ -1350,6 +1352,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1357,11 +1360,11 @@
 		09C2A7661B21F0AD005A40DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = charlie/charlie.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
@@ -1374,6 +1377,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "charlie/charlie-bridge-header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

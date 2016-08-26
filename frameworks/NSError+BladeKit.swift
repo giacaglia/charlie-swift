@@ -9,7 +9,7 @@
 import Foundation
 
 public extension NSError {
-    public class func errorWithDomain(domain: String, code:Int, localizedDescription:String) -> NSError {
+    public class func errorWithDomain(_ domain: String, code:Int, localizedDescription:String) -> NSError {
         return NSError(domain: domain, code: code, userInfo:[NSLocalizedDescriptionKey:localizedDescription])
     }
 }

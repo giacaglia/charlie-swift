@@ -23,7 +23,7 @@ class CategoryViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        boxView.layer.borderColor = UIColor.whiteColor().CGColor
+        boxView.layer.borderColor = UIColor.white.cgColor
         boxView.layer.borderWidth = 1.0
         
         guard let transaction = trans else {
@@ -31,26 +31,26 @@ class CategoryViewController : UIViewController {
         }
         transLabel.text = transaction.name
         amountLabel.text = "-" + transaction.amount.format(".2")
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EE, MMM dd "
-        let dateString = dateFormatter.stringFromDate(transaction.date)
-        dateLabel.text = dateString.uppercaseString
+        let dateString = dateFormatter.string(from: transaction.date as Date)
+        dateLabel.text = dateString.uppercased()
         
-        let savingsTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressSavings")
-        savingsView.userInteractionEnabled = true
+        let savingsTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CategoryViewController.didPressSavings))
+        savingsView.isUserInteractionEnabled = true
         savingsView.addGestureRecognizer(savingsTapRecognizer)
         
         
-        let billTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressBill")
-        billsView.userInteractionEnabled = true
+        let billTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CategoryViewController.didPressBill))
+        billsView.isUserInteractionEnabled = true
         billsView.addGestureRecognizer(billTapRecognizer)
         
-        let spendingTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressSpending")
-        spendingImgView.userInteractionEnabled = true
+        let spendingTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CategoryViewController.didPressSpending))
+        spendingImgView.isUserInteractionEnabled = true
         spendingImgView.addGestureRecognizer(spendingTapRecognizer)
         
-        let dontCountTapRecognizer = UITapGestureRecognizer(target: self, action: "didPressDontCount")
-        dontCountImgView.userInteractionEnabled = true
+        let dontCountTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CategoryViewController.didPressDontCount))
+        dontCountImgView.isUserInteractionEnabled = true
         dontCountImgView.addGestureRecognizer(dontCountTapRecognizer)
         
         if trans!.ctype == 3 {
@@ -68,7 +68,7 @@ class CategoryViewController : UIViewController {
     }
     
     
-    func saveAllTransactions(ctype:Int)
+    func saveAllTransactions(_ ctype:Int)
    {
     
     
@@ -110,7 +110,7 @@ class CategoryViewController : UIViewController {
         self.removeFromParentViewController()
     }
 
-    @IBAction func didPressClose(sender: AnyObject) {
+    @IBAction func didPressClose(_ sender: AnyObject) {
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }

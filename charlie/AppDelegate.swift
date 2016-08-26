@@ -13,7 +13,7 @@ import UIKit
 import Security
 import RealmSwift
 
-func RGB(red:CGFloat,green:CGFloat,blue:CGFloat) -> UIColor
+func RGB(_ red:CGFloat,green:CGFloat,blue:CGFloat) -> UIColor
          {return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1.0) }
 let listRed    = UIColor(red: 245/255, green: 125/255, blue: 128/255, alpha: 1.0)
 let lightRed   = UIColor(red: 247/255, green: 160/255, blue: 160/255, alpha: 1.0)
@@ -24,8 +24,8 @@ let lightGreen = UIColor(red: 169/255, green: 232/255, blue: 121/255, alpha: 1.0
 let lightGray  = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
 let mediumGray = UIColor(red: 154/255, green: 154/255, blue: 154/255, alpha: 1.0)
 var cService = charlieService()
-var filePath = NSBundle.mainBundle().pathForResource("plaid", ofType: "html")
-let defaults = NSUserDefaults.standardUserDefaults()
+var filePath = Bundle.main.path(forResource: "plaid", ofType: "html")
+let defaults = UserDefaults.standard
 //let config = Realm.Configuration(encryptionKey: cHelper().getKey())
 
 
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: Any]?) -> Bool {
         // Override point for customization after application launch.
         //let cHelp = cHelper()        
         
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //PRODCHANGE
         //Mixpanel.sharedInstanceWithToken("4bcfd424118b13447dd4cb200b123fda") //DEV
-        Mixpanel.sharedInstanceWithToken("77a88d24eaf156359e9e0617338ed328") //prod
+        Mixpanel.sharedInstance(withToken: "77a88d24eaf156359e9e0617338ed328") //prod
         
         Mixpanel.sharedInstance().identify(Mixpanel.sharedInstance().distinctId)
              
@@ -87,36 +87,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.spinnerLineWidth = 8.0
         config.spinnerColor = listBlue
         config.backgroundColor = UIColor(white: 1.0, alpha: 0.80)
-        config.foregroundColor = UIColor.blackColor()
+        config.foregroundColor = UIColor.black
         config.foregroundAlpha = 0.5
         SwiftLoader.setConfig(config)        
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
          Mixpanel.sharedInstance().people.addPushDeviceToken(deviceToken)
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
        
@@ -126,11 +126,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 extension UIButton {
-    override public func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let relativeFrame = self.bounds
         let hitTestEdgeInsets = UIEdgeInsetsMake(-22, -22, -22, -22)
         let hitFrame = UIEdgeInsetsInsetRect(relativeFrame, hitTestEdgeInsets)
-        return CGRectContainsPoint(hitFrame, point)
+        return hitFrame.contains(point)
     }
 }
 

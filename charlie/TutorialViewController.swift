@@ -24,12 +24,12 @@ class TutorialViewController: UIViewController {
     let greenThumb = UIImage(named: "slider_happy")
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
        
         
-        if (keyStore.stringForKey("access_token") != nil) {
-            self.access_token = keyStore.stringForKey("access_token")!
+        if (keyStore.string(forKey: "access_token") != nil) {
+            self.access_token = keyStore.string(forKey: "access_token")!
             alertUserRecoverData()
             
             
@@ -40,7 +40,7 @@ class TutorialViewController: UIViewController {
             nextButton.backgroundColor = listBlue
             nextButton.layer.cornerRadius = 10
             
-            slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
+            slider.setThumbImage(blueThumb, for: UIControlState())
         }
         
         
@@ -53,27 +53,27 @@ class TutorialViewController: UIViewController {
     }
     
     func alertUserRecoverData() {
-        guard let access_token = keyStore.stringForKey("access_token") else {
+        guard let access_token = keyStore.string(forKey: "access_token") else {
             return
         }
         
         
         
-        let refreshAlert = UIAlertController(title: "Hello again!", message: "Would you like to recover your old account?", preferredStyle: UIAlertControllerStyle.Alert)
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
-            self.nextButton.hidden = false
+        let refreshAlert = UIAlertController(title: "Hello again!", message: "Would you like to recover your old account?", preferredStyle: UIAlertControllerStyle.alert)
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
+            self.nextButton.isHidden = false
         charlieAnalytics.track("Account Recovered")
           SwiftLoader.show(true)
             
             
-            let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            let uuid = UIDevice.current.identifierForVendor!.uuidString
             keyChainStore.set(uuid, key: "uuid")
             
             keyChainStore.set(access_token, key: "access_token")
             cService.saveAccessToken(access_token) { (response) in
             }
             
-            keyStore.setString(access_token, forKey: "access_token")
+            keyStore.set(access_token, forKey: "access_token")
             
             keyStore.synchronize()
             
@@ -86,7 +86,7 @@ class TutorialViewController: UIViewController {
                     let type:String = response["type"] as! String
                     cat.id = id
                     cat.type = type
-                    let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
+                    let categories = (response["hierarchy"] as! Array).joined(separator: ",")
                     cat.categories = categories
                     try! realm.write {
                         realm.add(cat, update: true)
@@ -111,18 +111,18 @@ class TutorialViewController: UIViewController {
                 }
                 
                
-                self.performSegueWithIdentifier("happyFlowToLogin", sender: self)
+                self.performSegue(withIdentifier: "happyFlowToLogin", sender: self)
                 
                 
                 
             }
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction) in
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
             //do nothing and allow user to sign up again
         }))
         
-        self.presentViewController(refreshAlert, animated: true, completion: nil)
+        self.present(refreshAlert, animated: true, completion: nil)
     }
 
     
@@ -130,34 +130,34 @@ class TutorialViewController: UIViewController {
     
     
     
-    @IBAction func sliderChangedValue(sender: UISlider) {
+    @IBAction func sliderChangedValue(_ sender: UISlider) {
         let selectedValue = Int(sender.value)
         if selectedValue >= 0 && selectedValue < 40 {
             sliderAmount.textColor = listRed
-            slider.setThumbImage(redThumb, forState: UIControlState.Normal)
+            slider.setThumbImage(redThumb, for: UIControlState())
         }
         else if selectedValue > 40 && selectedValue < 80 {
             sliderAmount.textColor = listBlue
-            slider.setThumbImage(blueThumb, forState: UIControlState.Normal)
+            slider.setThumbImage(blueThumb, for: UIControlState())
         }
         else {
             sliderAmount.textColor = listGreen
-            slider.setThumbImage(greenThumb, forState: UIControlState.Normal)
+            slider.setThumbImage(greenThumb, for: UIControlState())
         }
         sliderAmount.text = "\(selectedValue)%"
     }
     
-    @IBAction func startButtonPress(sender: UIButton) {
-        defaults.setObject(sliderAmount.text, forKey: "userSelectedHappyScore")
-        defaults.setObject("0", forKey: "happyScoreViewed")
+    @IBAction func startButtonPress(_ sender: UIButton) {
+        defaults.set(sliderAmount.text, forKey: "userSelectedHappyScore")
+        defaults.set("0", forKey: "happyScoreViewed")
         //performSegueWithIdentifier("toMainfromTutorial", sender: self)
         
         self.createUser()
-        defaults.setObject("no", forKey: "firstLoad")
-        performSegueWithIdentifier("happyFlowToLogin", sender: self)
+        defaults.set("no", forKey: "firstLoad")
+        performSegue(withIdentifier: "happyFlowToLogin", sender: self)
     }
     
-    private func createUser() {
+    fileprivate func createUser() {
         let user = User()
         user.password = "password"
         user.happy_flow = Double(slider.value)
@@ -166,7 +166,7 @@ class TutorialViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        let loginVC = segue.destinationViewController as! LoginViewController
 //        loginVC.user_happy_flow = Double(slider.value)
         let sliderValue =  slider.value

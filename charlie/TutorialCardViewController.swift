@@ -14,7 +14,7 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nextButton: UIButton!
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         pageImages = [
                 UIImage(named: "tutorial_1")!,
@@ -46,45 +46,45 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
             frame.origin.y = 0.0
             
             let newPageView = UIImageView(image: pageImages[page])
-            newPageView.contentMode = .ScaleAspectFill
+            newPageView.contentMode = .scaleAspectFill
             newPageView.frame = frame
             scrollView.addSubview(newPageView)
         }
     }
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
          // Load the pages that are now on screen
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x) / (pageWidth)))
         switch page {
         case 0:
             self.nextButton.backgroundColor = listBlue
-            self.nextButton.setTitle("Start Tutorial", forState: .Normal)
-            self.nextButton.setImage(nil, forState: .Normal)
+            self.nextButton.setTitle("Start Tutorial", for: UIControlState())
+            self.nextButton.setImage(nil, for: UIControlState())
         case 1:
-            self.nextButton.backgroundColor = UIColor.whiteColor()
-            self.nextButton.setTitle("", forState: .Normal)
-            self.nextButton.setImage(UIImage(named: "blue_next"), forState: .Normal)
+            self.nextButton.backgroundColor = UIColor.white
+            self.nextButton.setTitle("", for: UIControlState())
+            self.nextButton.setImage(UIImage(named: "blue_next"), for: UIControlState())
             self.nextButton.tintColor = listBlue
         case 2:
-            self.nextButton.backgroundColor = UIColor.whiteColor()
-            self.nextButton.setTitle("", forState: .Normal)
-            self.nextButton.setImage(UIImage(named: "red_next"), forState: .Normal)
+            self.nextButton.backgroundColor = UIColor.white
+            self.nextButton.setTitle("", for: UIControlState())
+            self.nextButton.setImage(UIImage(named: "red_next"), for: UIControlState())
             self.nextButton.tintColor = listRed
         case 3:
-            self.nextButton.backgroundColor = UIColor.whiteColor()
-            self.nextButton.setTitle("", forState: .Normal)
-            self.nextButton.setImage(UIImage(named: "green_next"), forState: .Normal)
+            self.nextButton.backgroundColor = UIColor.white
+            self.nextButton.setTitle("", for: UIControlState())
+            self.nextButton.setImage(UIImage(named: "green_next"), for: UIControlState())
             self.nextButton.tintColor = listGreen
         case 4:
             self.nextButton.backgroundColor = listBlue
-            self.nextButton.setTitle("Start Swiping", forState: .Normal)
-            self.nextButton.setImage(nil, forState: .Normal)
+            self.nextButton.setTitle("Start Swiping", for: UIControlState())
+            self.nextButton.setImage(nil, for: UIControlState())
         default:
             break
         }
     }
     
-    @IBAction func didPressNext(sender: AnyObject) {
+    @IBAction func didPressNext(_ sender: AnyObject) {
         let pageWidth = self.scrollView.frame.size.width
         let page : CGFloat = (self.scrollView.contentOffset.x) / (pageWidth)
         
@@ -95,7 +95,7 @@ class TutorialCardViewController: UIViewController, UIScrollViewDelegate {
             scrollView.scrollRectToVisible(frame, animated: true)
         }
         else {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             charlieAnalytics.track("App Tutorial Completed")
         }
     }

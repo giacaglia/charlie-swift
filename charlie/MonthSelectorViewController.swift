@@ -26,41 +26,41 @@ class MonthSelectorViewController : UIViewController {
         super.viewDidLoad()
     }
     
-    @IBAction func didPressJanuary(sender: AnyObject) {
+    @IBAction func didPressJanuary(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressFebruary(sender: AnyObject) {
+    @IBAction func didPressFebruary(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressMarch(sender: AnyObject) {
+    @IBAction func didPressMarch(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressApril(sender: AnyObject) {
+    @IBAction func didPressApril(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressMay(sender: AnyObject) {
+    @IBAction func didPressMay(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressJune(sender: AnyObject) {
+    @IBAction func didPressJune(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressJuly(sender: AnyObject) {
+    @IBAction func didPressJuly(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressAugust(sender: AnyObject) {
+    @IBAction func didPressAugust(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressSeptember(sender: AnyObject) {
+    @IBAction func didPressSeptember(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressNovember(sender: AnyObject) {
+    @IBAction func didPressNovember(_ sender: AnyObject) {
     }
   
-    @IBAction func didPressDecember(sender: AnyObject) {
+    @IBAction func didPressDecember(_ sender: AnyObject) {
     }
     
-    @IBAction func didPressClose(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+    @IBAction func didPressClose(_ sender: AnyObject) {
+        self.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
         })
     }
 }

@@ -15,7 +15,7 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class LineScatterCandleRadarChartRenderer: ChartDataRendererBase
+open class LineScatterCandleRadarChartRenderer: ChartDataRendererBase
 {
     public override init(animator: ChartAnimator?, viewPortHandler: ChartViewPortHandler)
     {
@@ -27,7 +27,7 @@ public class LineScatterCandleRadarChartRenderer: ChartDataRendererBase
     /// :param: points
     /// :param: horizontal
     /// :param: vertical
-    public func drawHighlightLines(context context: CGContext?, points: UnsafePointer<CGPoint>, horizontal: Bool, vertical: Bool)
+    open func drawHighlightLines(context: CGContext?, points: UnsafePointer<CGPoint>, horizontal: Bool, vertical: Bool)
     {
         // draw vertical highlight lines
         if vertical

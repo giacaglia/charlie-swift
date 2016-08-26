@@ -13,9 +13,9 @@ class RewardViewController : UIViewController {
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var happyRewardPercentage: UILabel!
     var transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
-    var typeOfView : RewardType = .HappyFlowType
+    var typeOfView : RewardType = .happyFlowType
     enum RewardType  {
-       case HappyFlowType, CashFlowType, TripLocationsType
+       case happyFlowType, cashFlowType, tripLocationsType
     }
     
     override func viewDidLoad() {
@@ -24,12 +24,12 @@ class RewardViewController : UIViewController {
          self.title = "Your Happy Flow"
         
         if transactionItemsActedUpon.count == 0{
-            chartView.hidden = true
+            chartView.isHidden = true
             return
         }
-        chartView.hidden = false
+        chartView.isHidden = false
         
-        if typeOfView == .HappyFlowType {
+        if typeOfView == .happyFlowType {
             fillUpWithHappyPercentage()
         }
         else {
@@ -38,23 +38,23 @@ class RewardViewController : UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.backgroundColor = lightBlue
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.white
     }
     
-    @IBAction func closePressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+    @IBAction func closePressed(_ sender: AnyObject) {
+        self.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
         })
     }
     
     
-    private func setChart(chart: LineChartView!, dataPoints: [String], values: [Double]) {
+    fileprivate func setChart(_ chart: LineChartView!, dataPoints: [String], values: [Double]) {
         chart.noDataText = "You need to provide data for the chart."
         var dataEntries: [ChartDataEntry] = []
         
@@ -75,21 +75,21 @@ class RewardViewController : UIViewController {
         chart!.backgroundColor = lightBlue
         chart!.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
         chart!.leftAxis.drawGridLinesEnabled = false
-        chart!.leftAxis.labelTextColor = UIColor.whiteColor()
+        chart!.leftAxis.labelTextColor = UIColor.white
         chart!.leftAxis.labelCount = 4
         chart!.leftAxis.axisLineWidth = 10
-        chart!.leftAxis.valueFormatter = NSNumberFormatter()
+        chart!.leftAxis.valueFormatter = NumberFormatter()
         chart!.leftAxis.valueFormatter!.minimumFractionDigits = 0
         chart!.leftAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chart!.leftAxis.axisLineColor = lightBlue
         chart!.pinchZoomEnabled = true
         chart!.rightAxis.enabled = false
         chart!.rightAxis.drawGridLinesEnabled = false
-        chart!.xAxis.labelPosition = .Bottom
+        chart!.xAxis.labelPosition = .bottom
         chart!.xAxis.enabled = true
         chart!.xAxis.drawGridLinesEnabled = false
         chart!.xAxis.axisLineColor = lightBlue
-        chart!.xAxis.labelTextColor = UIColor.whiteColor()
+        chart!.xAxis.labelTextColor = UIColor.white
         chart!.xAxis.labelFont = UIFont (name: "Helvetica Neue", size: 16)!
         chart!.legend.enabled = false
         chart!.descriptionText = ""
@@ -97,37 +97,37 @@ class RewardViewController : UIViewController {
         chart!.maxVisibleValueCount = 3
     }
     
-    func stripCents(currency: String) -> String {
+    func stripCents(_ currency: String) -> String {
         let stringLength = currency.characters.count
         let substringIndex = stringLength - 3
-        return currency.substringToIndex(currency.startIndex.advancedBy(substringIndex))
+        return currency.substring(to: currency.characters.index(currency.startIndex, offsetBy: substringIndex))
     }
 }
 
 
 //Cash Flow Type
 extension RewardViewController {
-    func fillUpWithCashFlow(chart: LineChartView!) -> Int {
+    func fillUpWithCashFlow(_ chart: LineChartView!) -> Int {
         transactionItemsActedUpon = realm.objects(Transaction).filter(actedUponPredicate).sorted("date", ascending: false)
-        let lastTransaction = transactionItemsActedUpon[0].date as NSDate
+        let lastTransaction = transactionItemsActedUpon[0].date as Date
         let transactionCount = transactionItemsActedUpon.count - 1
-        let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
+        let firstTransaction = transactionItemsActedUpon[transactionCount].date as Date
         
         var months = [String()]
         var unitsSold = [Double()]
         
-        let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
+        let transactionsDateDifference = NSCalendar.current.components(Calendar.monthSymbols, from: firstTransaction, to: lastTransaction, options: []).month
         let cashFlow : Double = 0.0
         if transactionsDateDifference >= 1 {
             var i = 2
             while i > -1 {
                 let (cashFlow, beginDate) = getCashFlowMonthly(lastTransaction, monthsFrom: i)
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
-                let dayTimePeriodFormatter = NSDateFormatter()
+                let dayTimePeriodFormatter = DateFormatter()
                 dayTimePeriodFormatter.dateFormat = "MMM"
-                let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
+                let dateString = dayTimePeriodFormatter.string(from: beginDate)
                 unitsSold.append(Double(cashFlow))
                 months.append(dateString)
                 i -= 1
@@ -140,10 +140,10 @@ extension RewardViewController {
             var week = 1
             while i > -1 {
                 let (cashFlow, endDate) = getCashFlow(lastTransaction, weeksFrom: i)
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
-                let endDateFormatted = dateFormatter.stringFromDate(endDate)
+                let endDateFormatted = dateFormatter.string(from: endDate)
                 
                 unitsSold.append(Double(cashFlow))
                 months.append("\(endDateFormatted )")
@@ -155,10 +155,10 @@ extension RewardViewController {
         }
     }
     
-    private func getCashFlowMonthly(date: NSDate, monthsFrom: Int) -> (cashFlow: Double, beginDate: NSDate) {
-        var newDate = NSDate()
-        var startDate = NSDate()
-        var endDate = NSDate()
+    fileprivate func getCashFlowMonthly(_ date: Date, monthsFrom: Int) -> (cashFlow: Double, beginDate: Date) {
+        var newDate = Date()
+        var startDate = Date()
+        var endDate = Date()
         
         if monthsFrom > 0 {
             newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
@@ -171,8 +171,8 @@ extension RewardViewController {
             endDate = endOfMonth(date)!
         }
         
-        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
-        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate as CVarArg, endDate as CVarArg)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate as CVarArg, endDate as CVarArg)
         let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
         let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
         
@@ -186,14 +186,14 @@ extension RewardViewController {
         return (chartCashFlowWeek1Percentage, startDate)
     }
     
-    private func getCashFlow(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, endDate: NSDate) {
-        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
+    fileprivate func getCashFlow(_ date: Date, weeksFrom: Int) -> (happyPerc: Double, endDate: Date) {
+        let startDate = NSCalendar.current.date(byAdding: .firstWeekday, value: -(weeksFrom * 7), to: date, options: [])!
         
-        let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.Day)
+        let components: DateComponents = DateComponents()
+        (components as NSDateComponents).setValue(6, forComponent: Calendar.firstWeekday)
         
-        let first: NSDate = firstDayOfWeek(startDate)
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        let first: Date = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.current.date(byAdding: components, to: first, options: Calendar(identifier: 0))
         
         let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
         let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", first, expirationDate!)
@@ -216,17 +216,17 @@ extension RewardViewController {
 
 //Happy Percentage Type
 extension RewardViewController {
-    private func fillUpWithHappyPercentage() {
+    fileprivate func fillUpWithHappyPercentage() {
         print("Happy Percentage")
-        let happyScoreViewed =  defaults.stringForKey("happyScoreViewed")
-        let lastTransaction = transactionItemsActedUpon[0].date as NSDate
+        let happyScoreViewed =  defaults.string(forKey: "happyScoreViewed")
+        let lastTransaction = transactionItemsActedUpon[0].date as Date
         let transactionCount = transactionItemsActedUpon.count - 1
-        let firstTransaction = transactionItemsActedUpon[transactionCount].date as NSDate
+        let firstTransaction = transactionItemsActedUpon[transactionCount].date as Date
         
         var months = [String()]
         var unitsSold = [Double()]
         
-        let transactionsDateDifference = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: firstTransaction, toDate: lastTransaction, options: []).month
+        let transactionsDateDifference = NSCalendar.current.components(Calendar.monthSymbols, from: firstTransaction, to: lastTransaction, options: []).month
         
         if happyScoreViewed == "0"  {
             defaults.setValue("1", forKey: "happyScoreViewed")
@@ -237,12 +237,12 @@ extension RewardViewController {
             var i = 2
             while i > -1 {
                 let (happyPer, beginDate, _) = getHappyPercentageMonthly(lastTransaction, monthsFrom: i)
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
-                let dayTimePeriodFormatter = NSDateFormatter()
+                let dayTimePeriodFormatter = DateFormatter()
                 dayTimePeriodFormatter.dateFormat = "MMM"
-                let dateString = dayTimePeriodFormatter.stringFromDate(beginDate)
+                let dateString = dayTimePeriodFormatter.string(from: beginDate)
                 
                 if happyPer >= 0 {
                     unitsSold.append(Double(happyPer * 100))
@@ -261,10 +261,10 @@ extension RewardViewController {
             var week = 1
             while i > -1 {
                 let (happyPer, _, endDate) = getHappyPercentage(lastTransaction, weeksFrom: i)
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 //the "M/d/yy, H:mm" is put together from the Symbol Table
                 dateFormatter.dateFormat = "M/d"
-                let endDateFormatted = dateFormatter.stringFromDate(endDate)
+                let endDateFormatted = dateFormatter.string(from: endDate)
                 
                 if happyPer >= 0 {
                     unitsSold.append(Double(happyPer * 100))
@@ -282,10 +282,10 @@ extension RewardViewController {
         }
     }
 
-    private func getHappyPercentageMonthly(date: NSDate, monthsFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
-        var newDate = NSDate()
-        var startDate = NSDate()
-        var endDate = NSDate()
+    fileprivate func getHappyPercentageMonthly(_ date: Date, monthsFrom: Int) -> (happyPerc: Double, beginDate: Date, endDate: Date) {
+        var newDate = Date()
+        var startDate = Date()
+        var endDate = Date()
         
         if monthsFrom > 0 {
             newDate = dateByAddingMonths(monthsFrom * -1, date: date)!
@@ -298,8 +298,8 @@ extension RewardViewController {
             endDate = endOfMonth(date)!
         }
         
-        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate, endDate)
-        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate, endDate)
+        let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", startDate as CVarArg, endDate as CVarArg)
+        let chartSadWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 2 ", startDate as CVarArg, endDate as CVarArg)
         let chartHappyWeek1Items = realm.objects(Transaction).filter(chartHappyWeek1)
         let chartSadWeek1Items = realm.objects(Transaction).filter(chartSadWeek1)
         //let happySum = chartItems.sum("amount") as Int
@@ -311,14 +311,14 @@ extension RewardViewController {
         return (chartHappyWeek1Percentage, startDate, endDate)
     }
     
-    private func getHappyPercentage(date: NSDate, weeksFrom: Int) -> (happyPerc: Double, beginDate: NSDate, endDate: NSDate) {
-        let startDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -(weeksFrom * 7), toDate: date, options: [])!
+    fileprivate func getHappyPercentage(_ date: Date, weeksFrom: Int) -> (happyPerc: Double, beginDate: Date, endDate: Date) {
+        let startDate = NSCalendar.current.date(byAdding: .firstWeekday, value: -(weeksFrom * 7), to: date, options: [])!
         
-        let components: NSDateComponents = NSDateComponents()
-        components.setValue(6, forComponent: NSCalendarUnit.Day)
+        let components: DateComponents = DateComponents()
+        (components as NSDateComponents).setValue(6, forComponent: Calendar.firstWeekday)
         
-        let first: NSDate = firstDayOfWeek(startDate)
-        let expirationDate = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: first, options: NSCalendarOptions(rawValue: 0))
+        let first: Date = firstDayOfWeek(startDate)
+        let expirationDate = NSCalendar.current.date(byAdding: components, to: first, options: Calendar(identifier: 0))
         
         //println("DATES: \(first), \(expirationDate)")
         let chartHappyWeek1 = NSPredicate(format: "date between {%@,%@} AND status = 1 ", first, expirationDate!)
@@ -338,33 +338,33 @@ extension RewardViewController {
 
 // NSDate helpers
 extension RewardViewController {
-    func firstDayOfWeek(date: NSDate) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        let dateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
+    func firstDayOfWeek(_ date: Date) -> Date {
+        let calendar = NSCalendar.current
+        let dateComponents = (calendar as NSCalendar).components([.year, .monthSymbols, .weekOfMonth], from: date)
         dateComponents.weekday = 1
-        return calendar.dateFromComponents(dateComponents)!
+        return calendar.date(from: dateComponents)!
     }
     
-    func startOfMonth(date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components([.Year, .Month, .WeekOfMonth], fromDate: date)
-        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
+    func startOfMonth(_ date: Date) -> Date? {
+        let calendar = NSCalendar.current
+        let currentDateComponents = (calendar as NSCalendar).components([.year, .monthSymbols, .weekOfMonth], from: date)
+        let startOfMonth = calendar.date(from: currentDateComponents)
         return startOfMonth
     }
     
-    func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let months = NSDateComponents()
+    func dateByAddingMonths(_ monthsToAdd: Int, date: Date) -> Date? {
+        let calendar = NSCalendar.current
+        var months = DateComponents()
         months.month = monthsToAdd
-        return calendar.dateByAddingComponents(months, toDate: date, options: [])
+        return (calendar as NSCalendar).date(byAdding: months, to: date, options: [])
     }
     
-    func endOfMonth(date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
+    func endOfMonth(_ date: Date) -> Date? {
+        let calendar = NSCalendar.current
         if let plusOneMonthDate = dateByAddingMonths(1, date: date) {
-            let plusOneMonthDateComponents = calendar.components([.Year, .Month], fromDate: plusOneMonthDate)
+            let plusOneMonthDateComponents = (calendar as NSCalendar).components([.year, .monthSymbols], from: plusOneMonthDate)
             
-            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-86402)
+            let endOfMonth = calendar.date(from: plusOneMonthDateComponents)?.addingTimeInterval(-86402)
             
             return endOfMonth
         }

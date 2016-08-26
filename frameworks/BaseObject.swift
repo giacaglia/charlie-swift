@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class BaseObject {
+open class BaseObject {
     public init() {
         // stuff?
     }

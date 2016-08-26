@@ -18,11 +18,11 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
     let users = realm.objects(User)
     var keyStore = NSUbiquitousKeyValueStore()
     var keyChainStore = KeychainHelper()
-    var timer = NSTimer()
+    var timer = Timer()
     var cHelp = cHelper()
 
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         SwiftLoader.show(true)
     }
@@ -32,7 +32,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                 
         charlieAnalytics.track("Find Bank Button Pressed")
         
-        let req = NSURLRequest(URL: NSURL.fileURLWithPath(filePath!))
+        let req = URLRequest(url: URL(fileURLWithPath: filePath!))
         var webView: WKWebView?
         let contentController = WKUserContentController();
         
@@ -42,9 +42,9 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
             "var head = document.getElementsByTagName('head')[0];" +
         "head.appendChild(meta);";
         
-        let script: WKUserScript = WKUserScript(source: source as String, injectionTime: .AtDocumentEnd, forMainFrameOnly: true)
+        let script: WKUserScript = WKUserScript(source: source as String, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         
-        contentController.addScriptMessageHandler(self, name: "callbackHandler")
+        contentController.add(self, name: "callbackHandler")
         contentController.addUserScript(script)
         
         let config = WKWebViewConfiguration()
@@ -53,18 +53,18 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         webView = WKWebView(frame: self.view.bounds, configuration: config)
         self.webViewView.addSubview(webView!)
         webView?.sizeToFit()
-        webView?.userInteractionEnabled =  true
-        webView!.loadRequest(req)
+        webView?.isUserInteractionEnabled =  true
+        webView!.load(req)
     }
     
-    func userContentController(userContentController: WKUserContentController,
-        didReceiveScriptMessage message: WKScriptMessage) {
+    func userContentController(_ userContentController: WKUserContentController,
+        didReceive message: WKScriptMessage) {
         if message.name == "callbackHandler" {
             //get access_token
             let public_token = message.body as! String
             if public_token == "exit" {
                 print("Exit")
-                dismissViewControllerAnimated(true, completion: nil)
+                dismiss(animated: true, completion: nil)
                 SwiftLoader.hide()
             }
             else if public_token == "loaded" {
@@ -77,12 +77,12 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                     // var uuid = NSUUID().UUIDString
                     let access_token = response["access_token"] as! String
                     let email_address = self.users[0].email
-                    self.keyStore.setString(access_token, forKey: "access_token")
-                    self.keyStore.setString(email_address, forKey: "email_address")
+                    self.keyStore.set(access_token, forKey: "access_token")
+                    self.keyStore.set(email_address, forKey: "email_address")
                     self.keyStore.synchronize()
                     Mixpanel.sharedInstance().people.set(["$email":email_address])
                     
-                    let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                    let uuid = UIDevice.current.identifierForVendor!.uuidString
                     self.keyChainStore.set(uuid, key: "uuid")
                     
                     self.keyChainStore.set(access_token, key: "access_token")
@@ -101,7 +101,7 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                             let type:String = response["type"] as! String
                             category.id = id
                             category.type = type
-                            let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
+                            let categories = (response["hierarchy"] as! Array).joined(separator: ",")
                             category.categories = categories
                             try! realm.write {
                                 realm.add(category, update: true)
@@ -119,10 +119,10 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
                                 }
                             }
                             charlieAnalytics.track("Accounts Added")
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
                             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                             SwiftLoader.hide()
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
                         }
                     }
                 }
@@ -133,8 +133,8 @@ class addAccountViewController: UIViewController, UIWebViewDelegate, WKScriptMes
         }
     }
     
-    @IBAction func closeButtonPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeButtonPressed(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

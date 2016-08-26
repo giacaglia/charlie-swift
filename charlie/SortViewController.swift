@@ -22,99 +22,99 @@ class SortViewController : UIViewController {
     let grayColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
     var delegate:ChangeFilterProtocol? = nil
     var initialFilterType : SortFilterType? = nil
-    var transactionType : TransactionType = .InboxTransaction
+    var transactionType : TransactionType = .inboxTransaction
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if initialFilterType == .FilterByDescendingDate {
-            mostRecentButton.setTitleColor(listBlue, forState: .Normal)
+        if initialFilterType == .filterByDescendingDate {
+            mostRecentButton.setTitleColor(listBlue, for: UIControlState())
         }
 //        else if initialFilterType == .FilterByDate {
 //            leastRecentButton.setTitleColor(listBlue, forState: .Normal)
 //        }
-        else if initialFilterType == .FilterByName {
-            alphabeticalButton.setTitleColor(listBlue, forState: .Normal)
+        else if initialFilterType == .filterByName {
+            alphabeticalButton.setTitleColor(listBlue, for: UIControlState())
         }
-        else if initialFilterType == .FilterByAmount {
-            amountButton.setTitleColor(listBlue, forState: .Normal)
+        else if initialFilterType == .filterByAmount {
+            amountButton.setTitleColor(listBlue, for: UIControlState())
         }
 //        else if initialFilterType == .FilterByMostWorth {
 //            mostWorthButton.setTitleColor(listBlue, forState: .Normal)
 //        }
-        else if initialFilterType == .FilterByLeastWorth {
-            leastWorthButton.setTitleColor(listBlue, forState: .Normal)
+        else if initialFilterType == .filterByLeastWorth {
+            leastWorthButton.setTitleColor(listBlue, for: UIControlState())
         }
         
-        if (transactionType == .InboxTransaction) {
+        if (transactionType == .inboxTransaction) {
             self.howShouldISortLabel.text = "How should I sort your inbox?"
-            self.mostWorthButton.hidden = true
-            self.leastWorthButton.hidden = true
-            self.dividerWorthView.hidden = true
+            self.mostWorthButton.isHidden = true
+            self.leastWorthButton.isHidden = true
+            self.dividerWorthView.isHidden = true
         }
         else {
             self.howShouldISortLabel.text = "How should I sort your archive?"
-            self.mostWorthButton.hidden = false
-            self.leastWorthButton.hidden = false
-            self.dividerWorthView.hidden = false
+            self.mostWorthButton.isHidden = false
+            self.leastWorthButton.isHidden = false
+            self.dividerWorthView.isHidden = false
         }
     }
     
-    @IBAction func mostRecentPressed(sender: AnyObject) {
+    @IBAction func mostRecentPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(0)
-        mostRecentButton.setTitleColor(listBlue, forState: .Normal)
+        mostRecentButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(self.mostRecentButton)
-        self.delegate?.changeFilter(.FilterByDescendingDate)
+        self.delegate?.changeFilter(.filterByDescendingDate)
     }
     
-    @IBAction func leastRecentPressed(sender: AnyObject) {
+    @IBAction func leastRecentPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(1)
-        leastRecentButton.setTitleColor(listBlue, forState: .Normal)
+        leastRecentButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(self.leastRecentButton)
-        self.delegate?.changeFilter(.FilterByDate)
+        self.delegate?.changeFilter(.filterByDate)
     }
     
-    @IBAction func alphabeticalPressed(sender: AnyObject) {
+    @IBAction func alphabeticalPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(2)
-        alphabeticalButton.setTitleColor(listBlue, forState: .Normal)
+        alphabeticalButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(self.alphabeticalButton)
-        self.delegate?.changeFilter(.FilterByName)
+        self.delegate?.changeFilter(.filterByName)
     }
 
-    @IBAction func amountPressed(sender: AnyObject) {
+    @IBAction func amountPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(3)
-        amountButton.setTitleColor(listBlue, forState: .Normal)
+        amountButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(self.amountButton)
-        self.delegate?.changeFilter(.FilterByAmount)
+        self.delegate?.changeFilter(.filterByAmount)
     }
       
-    @IBAction func mostWorthPressed(sender: AnyObject) {
+    @IBAction func mostWorthPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(4)
-        mostWorthButton.setTitleColor(listBlue, forState: .Normal)
+        mostWorthButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(mostWorthButton)
-        self.delegate?.changeFilter(.FilterByMostWorth)
+        self.delegate?.changeFilter(.filterByMostWorth)
     }
     
-    @IBAction func leastWorthPressed(sender: AnyObject) {
+    @IBAction func leastWorthPressed(_ sender: AnyObject) {
         self.allButtonsGrayExcept(5)
-        leastRecentButton.setTitleColor(listBlue, forState: .Normal)
+        leastRecentButton.setTitleColor(listBlue, for: UIControlState())
         self.closePressed(leastWorthButton)
-        self.delegate?.changeFilter(.FilterByLeastWorth)
+        self.delegate?.changeFilter(.filterByLeastWorth)
     }
     
-    private func allButtonsGrayExcept(buttonIndex: Int) {
-        if buttonIndex != 0 {mostRecentButton.setTitleColor(grayColor, forState: .Normal)}
+    fileprivate func allButtonsGrayExcept(_ buttonIndex: Int) {
+        if buttonIndex != 0 {mostRecentButton.setTitleColor(grayColor, for: UIControlState())}
 //        if buttonIndex != 1 {leastRecentButton.setTitleColor(grayColor, forState: .Normal)}
-        if buttonIndex != 2 {alphabeticalButton.setTitleColor(grayColor, forState: .Normal)}
-        if buttonIndex != 3 {amountButton.setTitleColor(grayColor, forState: .Normal)}
-        if buttonIndex != 4 {mostWorthButton.setTitleColor(grayColor, forState: .Normal)}
+        if buttonIndex != 2 {alphabeticalButton.setTitleColor(grayColor, for: UIControlState())}
+        if buttonIndex != 3 {amountButton.setTitleColor(grayColor, for: UIControlState())}
+        if buttonIndex != 4 {mostWorthButton.setTitleColor(grayColor, for: UIControlState())}
     //    if buttonIndex != 5 {leastWorthButton.setTitleColor(grayColor, forState: .Normal)}
     }
     
-    @IBAction func closePressed(sender: AnyObject) {
-        self.willMoveToParentViewController(nil)
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.view.frame = CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)
+    @IBAction func closePressed(_ sender: AnyObject) {
+        self.willMove(toParentViewController: nil)
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.view.frame = CGRect(x: 0, y: -self.view.frame.size.height, width: self.view.frame.size.width, height: self.view.frame.size.height)
             self.delegate?.removeBlackView()
         })
         { (success) -> Void in

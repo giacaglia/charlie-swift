@@ -13,22 +13,22 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class BubbleChartDataSet: BarLineScatterCandleChartDataSet
+open class BubbleChartDataSet: BarLineScatterCandleChartDataSet
 {
     internal var _xMax = Double(0.0)
     internal var _xMin = Double(0.0)
     internal var _maxSize = CGFloat(0.0)
 
-    public var xMin: Double { return _xMin }
-    public var xMax: Double { return _xMax }
-    public var maxSize: CGFloat { return _maxSize }
+    open var xMin: Double { return _xMin }
+    open var xMax: Double { return _xMax }
+    open var maxSize: CGFloat { return _maxSize }
     
-    public func setColor(color: UIColor, alpha: CGFloat)
+    open func setColor(_ color: UIColor, alpha: CGFloat)
     {
-        super.setColor(color.colorWithAlphaComponent(alpha))
+        super.setColor(color.withAlphaComponent(alpha))
     }
     
-    internal override func calcMinMax(start start: Int, end: Int)
+    internal override func calcMinMax(start: Int, end: Int)
     {
         if (yVals.count == 0)
         {
@@ -56,7 +56,7 @@ public class BubbleChartDataSet: BarLineScatterCandleChartDataSet
         _yMin = yMin(entries[start])
         _yMax = yMax(entries[start])
         
-        for (var i = start; i <= endValue; i++)
+        for (var i = start; i <= endValue; i += 1)
         {
             let entry = entries[i]
 
@@ -96,29 +96,29 @@ public class BubbleChartDataSet: BarLineScatterCandleChartDataSet
     }
     
     /// Sets/gets the width of the circle that surrounds the bubble when highlighted
-    public var highlightCircleWidth: CGFloat = 2.5
+    open var highlightCircleWidth: CGFloat = 2.5
     
-    private func yMin(entry: BubbleChartDataEntry) -> Double
+    fileprivate func yMin(_ entry: BubbleChartDataEntry) -> Double
     {
         return entry.value
     }
     
-    private func yMax(entry: BubbleChartDataEntry) -> Double
+    fileprivate func yMax(_ entry: BubbleChartDataEntry) -> Double
     {
         return entry.value
     }
     
-    private func xMin(entry: BubbleChartDataEntry) -> Double
+    fileprivate func xMin(_ entry: BubbleChartDataEntry) -> Double
     {
         return Double(entry.xIndex)
     }
     
-    private func xMax(entry: BubbleChartDataEntry) -> Double
+    fileprivate func xMax(_ entry: BubbleChartDataEntry) -> Double
     {
         return Double(entry.xIndex)
     }
     
-    private func largestSize(entry: BubbleChartDataEntry) -> CGFloat
+    fileprivate func largestSize(_ entry: BubbleChartDataEntry) -> CGFloat
     {
         return entry.size
     }

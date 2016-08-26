@@ -8,34 +8,34 @@
 
 import Foundation
 
-extension NSDate {
-    func startOfMonth() -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components([.Year, .Month], fromDate: self)
-        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
+extension Date {
+    func startOfMonth() -> Date? {
+        let calendar = NSCalendar.current
+        let currentDateComponents = (calendar as NSCalendar).components([.year, .monthSymbols], from: self)
+        let startOfMonth = calendar.date(from: currentDateComponents)
         return startOfMonth
     }
     
-    func dateByAddingMonths(monthsToAdd: Int) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let months = NSDateComponents()
+    func dateByAddingMonths(_ monthsToAdd: Int) -> Date? {
+        let calendar = NSCalendar.current
+        var months = DateComponents()
         months.month = monthsToAdd
-        return calendar.dateByAddingComponents(months, toDate: self, options: [])
+        return (calendar as NSCalendar).date(byAdding: months, to: self, options: [])
     }
     
 
-    func monthsFrom(date:NSDate) -> Int{
-        return NSCalendar.currentCalendar().components(.Month, fromDate: date, toDate: self, options: []).month
+    func monthsFrom(_ date:Date) -> Int{
+        return NSCalendar.current.components(.monthSymbols, from: date, to: self, options: []).month
     }
     
-    func dateByAddingDays(daysToAdd: Int) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let days = NSDateComponents()
+    func dateByAddingDays(_ daysToAdd: Int) -> Date? {
+        let calendar = NSCalendar.current
+        var days = DateComponents()
         days.day = daysToAdd
-        return calendar.dateByAddingComponents(days, toDate: self, options: [])
+        return (calendar as NSCalendar).date(byAdding: days, to: self, options: [])
     }
     
-    func endOfMonth() -> NSDate? {
+    func endOfMonth() -> Date? {
         //let calendar = NSCalendar.currentCalendar()
         if let plusOneMonthDate = dateByAddingMonths(1) {
             
@@ -49,10 +49,10 @@ extension NSDate {
     }
 
     func monthString() -> String {
-        let calendar = NSCalendar.currentCalendar()
-        let currentDateComponents = calendar.components([.Month], fromDate: self)
+        let calendar = NSCalendar.current
+        let currentDateComponents = (calendar as NSCalendar).components([.monthSymbols], from: self)
         let month = currentDateComponents.month
-        return NSDate.abbrMonthArray()[month - 1]
+        return Date.abbrMonthArray()[month - 1]
     }
     
     static func abbrMonthArray() -> [String] {
@@ -64,32 +64,32 @@ extension NSString {
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(self)
+        return emailTest.evaluate(with: self)
     }
 }
 
 extension NSAttributedString {
-    static func createAttributedString(font: UIFont, string1: String, color1: UIColor, string2: String, color2: UIColor) -> NSAttributedString {
+    static func createAttributedString(_ font: UIFont, string1: String, color1: UIColor, string2: String, color2: UIColor) -> NSAttributedString {
         let attrsA = [NSFontAttributeName: font, NSForegroundColorAttributeName: color1]
         let a = NSMutableAttributedString(string:string1, attributes:attrsA)
         let attrsB = [NSFontAttributeName: font, NSForegroundColorAttributeName: color2]
         let b = NSAttributedString(string:string2, attributes:attrsB)
-        a.appendAttributedString(b)
+        a.append(b)
         return a
     }
     
-    static func twoFontsAttributedString(string1: String, font1: UIFont, color1: UIColor, string2: String, font2: UIFont, color2: UIColor) -> NSAttributedString {
+    static func twoFontsAttributedString(_ string1: String, font1: UIFont, color1: UIColor, string2: String, font2: UIFont, color2: UIColor) -> NSAttributedString {
         let attrsA = [NSFontAttributeName: font1, NSForegroundColorAttributeName: color1]
         let a = NSMutableAttributedString(string:string1, attributes:attrsA)
         let attrsB = [NSFontAttributeName: font2, NSForegroundColorAttributeName: color2]
         let b = NSAttributedString(string:string2, attributes:attrsB)
-        a.appendAttributedString(b)
+        a.append(b)
         return a
     }
 }
 
 extension UIColor {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
+    static func rgb(_ red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1.0)
     }
 }

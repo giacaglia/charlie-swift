@@ -18,7 +18,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     var keyStore = NSUbiquitousKeyValueStore()
     var pageImages: [UIImage] = []
     var pageTitles = [String()]
-    var colors:[UIColor] = [UIColor.whiteColor(), listGreen, listRed, listBlue]
+    var colors:[UIColor] = [UIColor.white, listGreen, listRed, listBlue]
     //PRODCHANGE
    // var realm = try! Realm(configuration: Realm.Configuration(encryptionKey: cHelper().getKey()))
     
@@ -44,14 +44,14 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         // USER FOUND IN THE DEVICE
         if users.count > 0  {
-            performSegueWithIdentifier("skipOnboarding", sender: self)
+            performSegue(withIdentifier: "skipOnboarding", sender: self)
         }
         else {
-            self.splashImageView.hidden = true
+            self.splashImageView.isHidden = true
             self.setupWelcomeScreens()
         }
     }
@@ -88,12 +88,12 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         loadAllPages()
     }
     
-    func loginButtonAction(sender:UIButton!) {
+    func loginButtonAction(_ sender:UIButton!) {
         charlieAnalytics.track("Onboarding Tutorial Completed")
-        performSegueWithIdentifier("toRegistration", sender: self)
+        performSegue(withIdentifier: "toRegistration", sender: self)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Load the pages that are now on screen
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
@@ -103,7 +103,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
             pageControl.pageIndicatorTintColor = UIColor(white: 0/255, alpha: 0.4)
         }
         else {
-            pageControl.currentPageIndicatorTintColor = UIColor.whiteColor()
+            pageControl.currentPageIndicatorTintColor = UIColor.white
             pageControl.pageIndicatorTintColor = UIColor(white: 0/255, alpha: 0.4)
         }
     }
@@ -122,59 +122,59 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
             
             if page == 0 {
                 //tutorial title
-                var welcomeFrame = CGRectMake(0, 0, 326, 50)
+                var welcomeFrame = CGRect(x: 0, y: 0, width: 326, height: 50)
                 welcomeFrame.origin.x = (self.view.frame.size.width / 2) - 163
                 welcomeFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
                 let welcome = UILabel(frame: welcomeFrame)
                 welcome.numberOfLines = 0
                 welcome.font = UIFont (name: "AvenirNext-Regular", size: 22)
-                welcome.textColor =  UIColor.blackColor()
-                welcome.textAlignment = .Center
-                welcome.textAlignment = NSTextAlignment.Center
+                welcome.textColor =  UIColor.black
+                welcome.textAlignment = .center
+                welcome.textAlignment = NSTextAlignment.center
                 welcome.text = "Welcome to Charlie"
                 newPageView.addSubview(welcome)
             }
             
-            var titleFrame = CGRectMake(0, 0, 280, 150)
+            var titleFrame = CGRect(x: 0, y: 0, width: 280, height: 150)
             titleFrame.origin.x = (self.view.frame.size.width / 2) - 140
             titleFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.90)
             let title = UILabel(frame: titleFrame)
             title.numberOfLines = 0
             title.font = UIFont (name: "AvenirNext-Regular", size: 22)
             if page == 0 {
-                title.textColor =  UIColor.lightGrayColor()
+                title.textColor =  UIColor.lightGray
             }
             else {
-                title.textColor =  UIColor.whiteColor()
+                title.textColor =  UIColor.white
             }
-            title.textAlignment = .Center
-            title.textAlignment = NSTextAlignment.Center
+            title.textAlignment = .center
+            title.textAlignment = NSTextAlignment.center
             title.text = pageTitles[page]
             newPageView.addSubview(title)
             
             //tutorial image
-            var imageViewFrame = CGRectMake(0, 0, 230, 230)
+            var imageViewFrame = CGRect(x: 0, y: 0, width: 230, height: 230)
             imageViewFrame.origin.x = (self.view.frame.size.width / 2) - 115
             imageViewFrame.origin.y = (self.view.frame.size.height) - (self.view.frame.size.height * 0.60)
             let imageView = UIImageView(frame: imageViewFrame)
             imageView.image =   pageImages[page]
             imageView.layer.cornerRadius = 115
             imageView.clipsToBounds = true
-            imageView.layer.borderColor = UIColor.whiteColor().CGColor
+            imageView.layer.borderColor = UIColor.white.cgColor
             imageView.layer.borderWidth = 10
             newPageView.addSubview(imageView)
             
             //loginbutton
             if page == 3 {
-                var loginButtonFrame = CGRectMake(0, 0, 300, 50)
+                var loginButtonFrame = CGRect(x: 0, y: 0, width: 300, height: 50)
                 loginButtonFrame.origin.x = (self.view.frame.size.width / 2) - 150
                 loginButtonFrame.origin.y = self.view.frame.size.height -  (self.view.frame.size.height * 0.15)
                 let loginButton = UIButton(frame: loginButtonFrame)
-                loginButton.backgroundColor = UIColor.whiteColor()
-                loginButton.setTitle("Let's Get Started", forState: .Normal)
-                loginButton.setTitleColor(listBlue, forState: UIControlState.Normal)
+                loginButton.backgroundColor = UIColor.white
+                loginButton.setTitle("Let's Get Started", for: UIControlState())
+                loginButton.setTitleColor(listBlue, for: UIControlState())
                 loginButton.layer.cornerRadius = 10
-                loginButton.addTarget(self, action: "loginButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+                loginButton.addTarget(self, action: #selector(WelcomeViewController.loginButtonAction(_:)), for: UIControlEvents.touchUpInside)
                 newPageView.addSubview(loginButton)
             }
             scrollView.addSubview(newPageView)

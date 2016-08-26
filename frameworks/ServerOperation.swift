@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class ServerOperation : NSOperation {
+open class ServerOperation : Operation {
     
-    public var request: ServerRequest
-    public var response: ServerResponse
+    open var request: ServerRequest
+    open var response: ServerResponse
     
     public init(request: ServerRequest) {
         self.request = request
@@ -19,18 +19,18 @@ public class ServerOperation : NSOperation {
         super.init()
     }
     
-    override public func main() {
+    override open func main() {
         let urlReq = self.request.urlRequest()
         var err: NSError?
-        var response: NSURLResponse?
-        let data: NSData?
+        var response: URLResponse?
+        let data: Data?
         do {
-            data = try NSURLConnection.sendSynchronousRequest(urlReq, returningResponse: &response)
+            data = try NSURLConnection.sendSynchronousRequest(urlReq as URLRequest, returning: &response)
         } catch let error as NSError {
             err = error
             data = nil
         }
-        self.response = self.request.parsingClosure(data:data, error:err)
-        self.response.rawResponse = response as? NSHTTPURLResponse
+        self.response = self.request.parsingClosure(data as NSData?, err)
+        self.response.rawResponse = response as? HTTPURLResponse
     }
 }

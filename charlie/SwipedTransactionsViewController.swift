@@ -22,27 +22,27 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 //    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     let layout = UICollectionViewFlowLayout()
-    let collectionView = UICollectionView(frame: CGRectMake(0, 300, UIScreen.mainScreen().bounds.size.width, 50), collectionViewLayout: UICollectionViewLayout())
+    let collectionView = UICollectionView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.size.width, height: 50), collectionViewLayout: UICollectionViewLayout())
 
-    static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
-    var filterType : SortFilterType! = .FilterByName
+    static let blackView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+    var filterType : SortFilterType! = .filterByName
     let sortVC = SortViewController()
 
-    var startDate:NSDate = NSDate()
-    var endDate:NSDate = NSDate()
+    var startDate:Date = Date()
+    var endDate:Date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
         
-        let button = UIButton(frame: CGRectMake(0, 0, 27, 24))
-        button.setBackgroundImage(UIImage(named: "btn_filter"), forState: .Normal)
-        button.addTarget(self, action: "didTouchFilter:", forControlEvents: .TouchUpInside)
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 27, height: 24))
+        button.setBackgroundImage(UIImage(named: "btn_filter"), for: UIControlState())
+        button.addTarget(self, action: #selector(SwipedTransactionsViewController.didTouchFilter(_:)), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
         self.title = "Worth It?"
-        let tapGesture = UITapGestureRecognizer(target: self, action: "dismissSort")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SwipedTransactionsViewController.dismissSort))
         SwipedTransactionsViewController.blackView.addGestureRecognizer(tapGesture)
         sortVC.delegate = self
 
@@ -51,13 +51,13 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 //        let stringMonth = monthFormatter.stringFromDate(self.startDate)
         
         tableView.tableFooterView = UIView()
-        tableView.registerClass(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
+        tableView.register(GroupTransactionCell.self, forCellReuseIdentifier: GroupTransactionCell.cellIdentifier())
         self.automaticallyAdjustsScrollViewInsets = false
         
         self.loadData(0)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.loadData(currentRow)
         self.changeFilter(self.filterType)
@@ -69,63 +69,63 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 //    }
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! mySpendingCVCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! mySpendingCVCell
         
-        if indexPath.row == 0
+        if (indexPath as NSIndexPath).row == 0
         {
-            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterName.text = "\(filterNames[(indexPath as NSIndexPath).row])"
             cell.filterAmount.text = "\(totalAll)"
             
             if currentRow == 0
             {
-                cell.filterName.textColor = UIColor.blackColor()
-                cell.filterAmount.textColor = UIColor.blackColor()
+                cell.filterName.textColor = UIColor.black
+                cell.filterAmount.textColor = UIColor.black
             }
             else
             {
-                cell.filterName.textColor = UIColor.lightGrayColor()
-                cell.filterAmount.textColor = UIColor.lightGrayColor()
+                cell.filterName.textColor = UIColor.lightGray
+                cell.filterAmount.textColor = UIColor.lightGray
             }
             
             
         }
-        else if indexPath.row == 1
+        else if (indexPath as NSIndexPath).row == 1
         {
-            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterName.text = "\(filterNames[(indexPath as NSIndexPath).row])"
             cell.filterAmount.text = "\(totalBills)"
             
             
             if currentRow == 1
             {
-                cell.filterName.textColor = UIColor.blackColor()
-                cell.filterAmount.textColor = UIColor.blackColor()
+                cell.filterName.textColor = UIColor.black
+                cell.filterAmount.textColor = UIColor.black
             }
             else
             {
-                cell.filterName.textColor = UIColor.lightGrayColor()
-                cell.filterAmount.textColor = UIColor.lightGrayColor()
+                cell.filterName.textColor = UIColor.lightGray
+                cell.filterAmount.textColor = UIColor.lightGray
                 
             }
         }
-        else if indexPath.row == 2
+        else if (indexPath as NSIndexPath).row == 2
         {
-            cell.filterName.text = "\(filterNames[indexPath.row])"
+            cell.filterName.text = "\(filterNames[(indexPath as NSIndexPath).row])"
             cell.filterAmount.text = "\(totalSpending)"
            
             if currentRow == 2
             {
-                cell.filterName.textColor = UIColor.blackColor()
-                cell.filterAmount.textColor = UIColor.blackColor()
+                cell.filterName.textColor = UIColor.black
+                cell.filterAmount.textColor = UIColor.black
             }
             else
             {
-                cell.filterName.textColor = UIColor.lightGrayColor()
-                cell.filterAmount.textColor = UIColor.lightGrayColor()
+                cell.filterName.textColor = UIColor.lightGray
+                cell.filterAmount.textColor = UIColor.lightGray
                 
             }
             
@@ -134,19 +134,19 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     }
     
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        currentRow = indexPath.row
-        if indexPath.row == 0 {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        currentRow = (indexPath as NSIndexPath).row
+        if (indexPath as NSIndexPath).row == 0 {
             self.loadData(0)
             self.tableView.reloadData()
             self.collectionView.reloadData()
         }
-        else if indexPath.row  == 1 {
+        else if (indexPath as NSIndexPath).row  == 1 {
             self.loadData(1)
             self.tableView.reloadData()
             self.collectionView.reloadData()
         }
-        else if indexPath.row  == 2
+        else if (indexPath as NSIndexPath).row  == 2
         {
          self.loadData(2)
          self.tableView.reloadData()
@@ -158,21 +158,21 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
     }
     
     
-    func didTouchFilter(sender: AnyObject) {
+    func didTouchFilter(_ sender: AnyObject) {
         let topViewController = self.navigationController
         if topViewController == nil {
             return
         }
         self.sortVC.initialFilterType = self.filterType
         let height = self.view.frame.size.height*0.8
-        self.sortVC.view.frame = CGRectMake(0, -height, self.view.frame.size.width, height)
+        self.sortVC.view.frame = CGRect(x: 0, y: -height, width: self.view.frame.size.width, height: height)
         SwipedTransactionsViewController.blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         topViewController!.view.addSubview(SwipedTransactionsViewController.blackView)
         
         topViewController!.addChildViewController(sortVC)
         topViewController!.view.addSubview(sortVC.view)
-        UIView.animateWithDuration(0.5) { () -> Void in
-            self.sortVC.view.frame = CGRectMake(0, 0, self.sortVC.view.frame.width, height)
+        UIView.animate(withDuration: 0.5) { () -> Void in
+            self.sortVC.view.frame = CGRect(x: 0, y: 0, width: self.sortVC.view.frame.width, height: height)
         }
     }
     
@@ -183,7 +183,7 @@ class SwipedTransactionsViewController : UIViewController, UICollectionViewDeleg
 }
 
 extension SwipedTransactionsViewController {
-    private func loadData(spendingType:Int) {
+    fileprivate func loadData(_ spendingType:Int) {
         charlieGroupListFiltered = [charlieGroup]()
         
         var predicate = NSPredicate()
@@ -192,21 +192,21 @@ extension SwipedTransactionsViewController {
 
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: true)]
         
-        count_predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
+        count_predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate as CVarArg, endDate as CVarArg)
         
         
         if spendingType == 0
         {
-            predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate, endDate)
+            predicate = NSPredicate(format: "date >= %@ and date <= %@", startDate as CVarArg, endDate as CVarArg)
         }
         else if spendingType == 2
         {
-            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 2", startDate, endDate)
+            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 2", startDate as CVarArg, endDate as CVarArg)
             
         }
         else if spendingType == 1
         {
-            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 1", startDate, endDate)
+            predicate = NSPredicate(format: "date >= %@ and date <= %@ and ctype = 1", startDate as CVarArg, endDate as CVarArg)
             
         }
 
@@ -322,56 +322,56 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
-    func changeFilter(filterType:SortFilterType){
+    func changeFilter(_ filterType:SortFilterType){
         self.filterType = filterType
         self.filterBy(self.filterType)
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             self.tableView.reloadData()
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
-    func changeTransactionType(type: TransactionType) {
+    func changeTransactionType(_ type: TransactionType) {
         self.filterBy(self.filterType)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             self.tableView.reloadData()
         })
         SwipedTransactionsViewController.blackView.removeFromSuperview()
     }
     
-    private func filterBy(sortFilter: SortFilterType) {
-        if (sortFilter == .FilterByMostWorth) {
-           self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+    fileprivate func filterBy(_ sortFilter: SortFilterType) {
+        if (sortFilter == .filterByMostWorth) {
+           self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return $0.happyPercentage > $1.happyPercentage
             }
         }
-        else if (sortFilter == .FilterByLeastWorth) {
-            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+        else if (sortFilter == .filterByLeastWorth) {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return $0.happyPercentage < $1.happyPercentage
             }
         }
 
-        else if (sortFilter == .FilterByAmount) {
-            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+        else if (sortFilter == .filterByAmount) {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return $0.totalAmount > $1.totalAmount
             }
         }
         
-        else if (sortFilter == .FilterByName) {
-            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+        else if (sortFilter == .filterByName) {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return $0.name < $1.name
             }
         }
             
             
-        else if (sortFilter == .FilterByDescendingDate) {
-            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+        else if (sortFilter == .filterByDescendingDate) {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return String($0.lastDate) > String($1.lastDate)
             }
         }
-        else if (sortFilter == .FilterByDate) {
-            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sort {
+        else if (sortFilter == .filterByDate) {
+            self.charlieGroupListFiltered = self.charlieGroupListFiltered.sorted {
                 return String($0.lastDate) < String($1.lastDate)
             }
         }
@@ -379,9 +379,9 @@ extension SwipedTransactionsViewController : ChangeFilterProtocol {
 }
 
 extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView .dequeueReusableCellWithIdentifier(GroupTransactionCell.cellIdentifier(), forIndexPath: indexPath) as! GroupTransactionCell
-        let charlieGroup = charlieGroupListFiltered[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView .dequeueReusableCell(withIdentifier: GroupTransactionCell.cellIdentifier(), for: indexPath) as! GroupTransactionCell
+        let charlieGroup = charlieGroupListFiltered[(indexPath as NSIndexPath).row]
        
         let attrsA = [NSFontAttributeName: UIFont(name: "Montserrat", size: 15.0)!, NSForegroundColorAttributeName: UIColor(white: 74.0/255.0, alpha: 1.0)]
         let a = NSMutableAttributedString(string:charlieGroup.name, attributes:attrsA)
@@ -391,7 +391,7 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         else {
             let attrsB = [NSFontAttributeName: UIFont(name: "Montserrat", size: 15.0)!, NSForegroundColorAttributeName: UIColor(white: 155.0/255.0, alpha: 1.0)]
             let b = NSAttributedString(string:" (\(charlieGroup.transactions))", attributes:attrsB)
-            a.appendAttributedString(b)
+            a.append(b)
             cell.nameLabel.attributedText = a
         }
         
@@ -409,15 +409,15 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         }
         
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
          dateFormatter.dateFormat = "EE, MMM dd "
         
-        let dateString = dateFormatter.stringFromDate(charlieGroup.lastDate)
-        cell.dateLabel.text = dateString.uppercaseString
+        let dateString = dateFormatter.string(from: charlieGroup.lastDate as Date)
+        cell.dateLabel.text = dateString.uppercased()
 
         //dateFormatter.dateFormat = "MMM dd, YYYY"
        // let tempDate = dateFormatter.dateFromString(charlieGroup.lastDate)
-        cell.dateLabel.text = dateString.uppercaseString
+        cell.dateLabel.text = dateString.uppercased()
         
         if charlieGroup.ctype == 86
         {
@@ -444,15 +444,15 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return charlieGroupListFiltered.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let group = charlieGroupListFiltered[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let group = charlieGroupListFiltered[(indexPath as NSIndexPath).row]
         //if group.transactions > 1 {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let groupDetailVC = storyboard.instantiateViewControllerWithIdentifier("GroupDetailViewController") as? GroupDetailViewController else {
+            guard let groupDetailVC = storyboard.instantiateViewController(withIdentifier: "GroupDetailViewController") as? GroupDetailViewController else {
                 return
             }
             
@@ -485,18 +485,18 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
 //        }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 94
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 350.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = UIView()
-        vw.backgroundColor = .whiteColor()
-        let pieChart = PieChartView(frame: CGRectMake(self.view.frame.size.width/2 - 150, 0, 300, 300))
+        vw.backgroundColor = .white()
+        let pieChart = PieChartView(frame: CGRect(x: self.view.frame.size.width/2 - 150, y: 0, width: 300, height: 300))
         let dataPoints = ["Bills", "Spending"]
         let values = [totalBills, totalSpending]
         var dataEntries: [ChartDataEntry] = []
@@ -515,10 +515,10 @@ extension SwipedTransactionsViewController : UITableViewDelegate, UITableViewDat
         vw.addSubview(collectionView)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSizeMake((self.view.frame.width/3), 50)
+        layout.itemSize = CGSize(width: (self.view.frame.width/3), height: 50)
         collectionView.collectionViewLayout = layout
-        collectionView.backgroundColor = .whiteColor()
-        collectionView.registerNib(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        collectionView.backgroundColor = .white()
+        collectionView.register(UINib(nibName: "mySpendingCVCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.delegate = self
         collectionView.dataSource = self
 
@@ -548,34 +548,34 @@ class GroupTransactionCell : UITableViewCell {
         
     }
     
-    private func setup() {
-        typeImageView.frame = CGRectMake(16, 30, 39, 39)
+    fileprivate func setup() {
+        typeImageView.frame = CGRect(x: 16, y: 30, width: 39, height: 39)
         
         self.contentView.addSubview(typeImageView)
         
-        nameLabel.frame = CGRectMake(66, 26, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5 - 42, 20)
+        nameLabel.frame = CGRect(x: 66, y: 26, width: UIScreen.main.bounds.size.width - 15 -  80 - 14 - 5 - 42, height: 20)
         nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
         nameLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
-        nameLabel.textAlignment = .Left
+        nameLabel.textAlignment = .left
         self.contentView.addSubview(nameLabel)
         
-        dateLabel.frame = CGRectMake(66, 50, UIScreen.mainScreen().bounds.size.width - 15 -  80 - 14 - 5, 20)
+        dateLabel.frame = CGRect(x: 66, y: 50, width: UIScreen.main.bounds.size.width - 15 -  80 - 14 - 5, height: 20)
         dateLabel.font = UIFont(name: "Montserrat", size: 12.0)
         dateLabel.textColor = UIColor(white: 74.0/255.0, alpha: 1.0)
-        dateLabel.textAlignment = .Left
+        dateLabel.textAlignment = .left
         self.contentView.addSubview(dateLabel)
         
         
         
-        dollarLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  90, 26, 90, 18)
+        dollarLabel.frame = CGRect(x: UIScreen.main.bounds.size.width - 15 -  90, y: 26, width: 90, height: 18)
         dollarLabel.font = UIFont(name: "Montserrat-Light", size: 18.0)
         dollarLabel.textColor = UIColor(red: 154/255.0, green: 154/255.0, blue: 154/255.0, alpha: 1.0)
-        dollarLabel.textAlignment = .Right
+        dollarLabel.textAlignment = .right
         self.contentView.addSubview(dollarLabel)
         
-        amountLabel.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - 15 -  60, 50, 60, 18)
+        amountLabel.frame = CGRect(x: UIScreen.main.bounds.size.width - 15 -  60, y: 50, width: 60, height: 18)
         amountLabel.font = UIFont(name: "Montserrat", size: 18.0)
-        amountLabel.textAlignment = .Right
+        amountLabel.textAlignment = .right
         self.contentView.addSubview(amountLabel)
 
     }

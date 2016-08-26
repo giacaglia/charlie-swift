@@ -15,24 +15,24 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class LineChartDataSet: LineRadarChartDataSet
+open class LineChartDataSet: LineRadarChartDataSet
 {
-    public var circleColors = [UIColor]()
-    public var circleHoleColor = UIColor.whiteColor()
-    public var circleRadius = CGFloat(8.0)
+    open var circleColors = [UIColor]()
+    open var circleHoleColor = UIColor.white
+    open var circleRadius = CGFloat(8.0)
     
-    private var _cubicIntensity = CGFloat(0.2)
+    fileprivate var _cubicIntensity = CGFloat(0.2)
     
-    public var lineDashPhase = CGFloat(0.0)
-    public var lineDashLengths: [CGFloat]!
+    open var lineDashPhase = CGFloat(0.0)
+    open var lineDashLengths: [CGFloat]!
     
     /// if true, drawing circles is enabled
-    public var drawCirclesEnabled = true
+    open var drawCirclesEnabled = true
     
     /// if true, cubic lines are drawn instead of linear
-    public var drawCubicEnabled = false
+    open var drawCubicEnabled = false
     
-    public var drawCircleHoleEnabled = true
+    open var drawCircleHoleEnabled = true
     
     public override init()
     {
@@ -49,7 +49,7 @@ public class LineChartDataSet: LineRadarChartDataSet
     /// intensity for cubic lines (min = 0.05, max = 1)
     /// 
     /// **default**: 0.2
-    public var cubicIntensity: CGFloat
+    open var cubicIntensity: CGFloat
     {
         get
         {
@@ -71,8 +71,9 @@ public class LineChartDataSet: LineRadarChartDataSet
     
     /// - returns: the color at the given index of the DataSet's circle-color array.
     /// Performs a IndexOutOfBounds check by modulus.
-    public func getCircleColor(var index: Int) -> UIColor?
+    public func getCircleColor(_ index: Int) -> UIColor?
     {
+        var index = index
         let size = circleColors.count
         index = index % size
         if (index >= size)
@@ -84,27 +85,27 @@ public class LineChartDataSet: LineRadarChartDataSet
     
     /// Sets the one and ONLY color that should be used for this DataSet.
     /// Internally, this recreates the colors array and adds the specified color.
-    public func setCircleColor(color: UIColor)
+    open func setCircleColor(_ color: UIColor)
     {
-        circleColors.removeAll(keepCapacity: false)
+        circleColors.removeAll(keepingCapacity: false)
         circleColors.append(color)
     }
     
     /// resets the circle-colors array and creates a new one
-    public func resetCircleColors(index: Int)
+    open func resetCircleColors(_ index: Int)
     {
-        circleColors.removeAll(keepCapacity: false)
+        circleColors.removeAll(keepingCapacity: false)
     }
     
-    public var isDrawCirclesEnabled: Bool { return drawCirclesEnabled; }
+    open var isDrawCirclesEnabled: Bool { return drawCirclesEnabled; }
     
-    public var isDrawCubicEnabled: Bool { return drawCubicEnabled; }
+    open var isDrawCubicEnabled: Bool { return drawCubicEnabled; }
     
-    public var isDrawCircleHoleEnabled: Bool { return drawCircleHoleEnabled; }
+    open var isDrawCircleHoleEnabled: Bool { return drawCircleHoleEnabled; }
     
     // MARK: NSCopying
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject
+    open override func copyWithZone(_ zone: NSZone?) -> AnyObject
     {
         let copy = super.copyWithZone(zone) as! LineChartDataSet
         copy.circleColors = circleColors

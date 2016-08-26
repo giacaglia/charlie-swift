@@ -14,7 +14,7 @@ class SBGestureTableViewGroupCellSideView: UIView {
     
     init(iconImageView: UIImageView) {
         self.iconImageView = iconImageView
-        super.init(frame: CGRect(origin: CGPointZero, size: iconImageView.frame.size))
+        super.init(frame: CGRect(origin: CGPoint.zero, size: iconImageView.frame.size))
         addSubview(iconImageView)
     }
     

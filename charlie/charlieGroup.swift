@@ -12,7 +12,7 @@ import Foundation
 class charlieGroup {
     var name:            String
     var  ctype:          Int = 0
-    var lastDate:        NSDate
+    var lastDate:        Date
     var worthCount:      Int    = 0
     var notWorthCount:   Int    = 0
     var notSwipedCount:  Int    = 0
@@ -23,7 +23,7 @@ class charlieGroup {
     var totalAmount:     Double = 0
     
 
-    init(name:String, lastDate:NSDate) {
+    init(name:String, lastDate:Date) {
         self.name = name
         self.lastDate = lastDate
     }

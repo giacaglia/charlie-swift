@@ -15,9 +15,9 @@
 import Foundation
 import UIKit
 
-public class ChartColorTemplates: NSObject
+open class ChartColorTemplates: NSObject
 {
-    public class func liberty () -> [UIColor]
+    open class func liberty () -> [UIColor]
     {
         return [
             UIColor(red: 207/255.0, green: 248/255.0, blue: 246/255.0, alpha: 1.0),
@@ -28,7 +28,7 @@ public class ChartColorTemplates: NSObject
         ]
     }
     
-    public class func joyful () -> [UIColor]
+    open class func joyful () -> [UIColor]
     {
         return [
             UIColor(red: 217/255.0, green: 80/255.0, blue: 138/255.0, alpha: 1.0),
@@ -39,7 +39,7 @@ public class ChartColorTemplates: NSObject
         ]
     }
     
-    public class func pastel () -> [UIColor]
+    open class func pastel () -> [UIColor]
     {
         return [
             UIColor(red: 64/255.0, green: 89/255.0, blue: 128/255.0, alpha: 1.0),
@@ -50,7 +50,7 @@ public class ChartColorTemplates: NSObject
         ]
     }
     
-    public class func colorful () -> [UIColor]
+    open class func colorful () -> [UIColor]
     {
         return [
             UIColor(red: 193/255.0, green: 37/255.0, blue: 82/255.0, alpha: 1.0),
@@ -61,7 +61,7 @@ public class ChartColorTemplates: NSObject
         ]
     }
     
-    public class func vordiplom () -> [UIColor]
+    open class func vordiplom () -> [UIColor]
     {
         return [
             UIColor(red: 192/255.0, green: 255/255.0, blue: 140/255.0, alpha: 1.0),

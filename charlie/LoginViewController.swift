@@ -24,24 +24,24 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     var nextButton = UIButton()
     var user_happy_flow : Double = 0
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
 
-        if keyStore.stringForKey("access_token") != nil && keyStore.stringForKey("email_address") != nil {
-            self.access_token = keyStore.stringForKey("access_token")!
-            self.email_address = keyStore.stringForKey("email_address")!
+        if keyStore.string(forKey: "access_token") != nil && keyStore.string(forKey: "email_address") != nil {
+            self.access_token = keyStore.string(forKey: "access_token")!
+            self.email_address = keyStore.string(forKey: "email_address")!
         }
         
         if pinSetValidated == true {
             //already completed pin setup and can go to mainscreen (this should prob never get called...
-            performSegueWithIdentifier("segueFromLoginToMain", sender: self)
+            performSegue(withIdentifier: "segueFromLoginToMain", sender: self)
         }
         else if users.count > 0 {
             //if user was setup but for some reason the passcode has not been set yet
             let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
-            ABPinSetup.view.backgroundColor = listBlue
-            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
-            presentViewController(ABPinSetup, animated: false, completion: nil)
+            ABPinSetup?.view.backgroundColor = listBlue
+            ABPinSetup?.setEnterPasscodeLabelText("Please choose a Charlie passcode")
+            present(ABPinSetup!, animated: false, completion: nil)
         }
         else if access_token != "" && users.count == 0 {
             alertUserRecoverData()
@@ -57,10 +57,10 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         super.viewDidLoad()
         emailAddress.delegate = self
        
-        nextButton = UIButton(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 80))
+        nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 80))
         nextButton.backgroundColor = listBlue
-        nextButton.setTitle("Next", forState: .Normal)
-        nextButton.addTarget(self, action: "didPressNext", forControlEvents: .TouchUpInside)
+        nextButton.setTitle("Next", for: UIControlState())
+        nextButton.addTarget(self, action: #selector(LoginViewController.didPressNext), for: .touchUpInside)
         nextButton.titleLabel?.font = UIFont(name: "Montserrat-ExtraBold", size: 20)
 //        nextButton.hidden = true
         emailAddress.inputAccessoryView = nextButton
@@ -71,36 +71,36 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         // Dispose of any resources that can be recreated.
     }
     
-    func pinSet(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
+    func pinSet(_ pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) {
         
         //defaults.setObject(pin, forKey: "pin")
         keyChainStore.set(pin, key: "pin")
         charlieAnalytics.track("Pin Code Created")
         pinSetValidated = true
-        defaults.setObject("no", forKey: "firstLoad")
+        defaults.set("no", forKey: "firstLoad")
         defaults.synchronize()
-        padLockScreenViewController.dismissViewControllerAnimated(true, completion: nil)
-        performSegueWithIdentifier("segueFromLoginToMain", sender: self)
+        padLockScreenViewController.dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "segueFromLoginToMain", sender: self)
     }
     
-    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
+    func unlockWasCancelled(forPadLockScreenViewController padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
 
     }
     
     func alertUserRecoverData() {
-        guard let access_token = keyStore.stringForKey("access_token") else {
+        guard let access_token = keyStore.string(forKey: "access_token") else {
             return
         }
         
-        guard let email = keyStore.stringForKey("email_address") else {
+        guard let email = keyStore.string(forKey: "email_address") else {
             return
         }
      
-        let refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.Alert)
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) in
+        let refreshAlert = UIAlertController(title: "Hello again!", message: "Continue as \(email)?", preferredStyle: UIAlertControllerStyle.alert)
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
             self.activityIndicator.startAnimating()
-            self.emailAddress.enabled = false
-            self.nextButton.hidden = false
+            self.emailAddress.isEnabled = false
+            self.nextButton.isHidden = false
             charlieAnalytics.track("Account Recovered")
             
             //get categories
@@ -111,7 +111,7 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                     let type:String = response["type"] as! String
                     cat.id = id
                     cat.type = type
-                    let categories = (response["hierarchy"] as! Array).joinWithSeparator(",")
+                    let categories = (response["hierarchy"] as! Array).joined(separator: ",")
                     cat.categories = categories
                     try! realm.write {
                         realm.add(cat, update: true)
@@ -127,25 +127,25 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
                 }
                 
                 
-                let uuid = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                let uuid = UIDevice.current.identifierForVendor!.uuidString
                 self.keyChainStore.set(uuid, key: "uuid")
                 
                 self.keyChainStore.set(access_token, key: "access_token")
                 cService.saveAccessToken(access_token) { (response) in
                 }
                 
-                keyStore.setString(access_token, forKey: "access_token")
-                keyStore.setString(self.email_address, forKey: "email_address")
+                keyStore.set(access_token, forKey: "access_token")
+                keyStore.set(self.email_address, forKey: "email_address")
                 keyStore.synchronize()
                 Mixpanel.sharedInstance().people.set(["$email":self.email_address])
                 
                 cHelp.addUpdateResetAccount(dayLength: 0) { (response) in
                     let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
-                    ABPinSetup.view.backgroundColor = listBlue
+                    ABPinSetup?.view.backgroundColor = listBlue
                     
-                    ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
+                    ABPinSetup?.setEnterPasscodeLabelText("Please choose a Charlie passcode")
                     
-                    self.presentViewController(ABPinSetup, animated: true, completion: nil)
+                    self.present(ABPinSetup!, animated: true, completion: nil)
                     self.createUser(self.email_address)
                 }
                 self.activityIndicator.stopAnimating()
@@ -153,11 +153,11 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
             }
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction) in
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
             //do nothing and allow user to sign up again
         }))
         
-        self.presentViewController(refreshAlert, animated: true, completion: nil)
+        self.present(refreshAlert, animated: true, completion: nil)
     }
     
     
@@ -169,28 +169,28 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
     func validateEmail() {
         if emailAddress.text!.isValidEmail() {
             // Register for notifications
-            let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
-            let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(setting)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
+            let type: UIUserNotificationType = [UIUserNotificationType.badge, UIUserNotificationType.alert, UIUserNotificationType.sound]
+            let setting = UIUserNotificationSettings(types: type, categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(setting)
+            UIApplication.shared.registerForRemoteNotifications()
             
             let ABPinSetup = ABPadLockScreenSetupViewController(delegate: self)
-            ABPinSetup.view.backgroundColor = listBlue
-            ABPinSetup.setEnterPasscodeLabelText("Please choose a Charlie passcode")
-            presentViewController(ABPinSetup, animated: true, completion: nil)
+            ABPinSetup?.view.backgroundColor = listBlue
+            ABPinSetup?.setEnterPasscodeLabelText("Please choose a Charlie passcode")
+            present(ABPinSetup!, animated: true, completion: nil)
             createUser(emailAddress.text!)
             Mixpanel.sharedInstance().people.set(["$email":self.email_address])
             charlieAnalytics.track("Email Added")
         }
         else {
-            let alert = UIAlertController(title: "Whoops", message: "Looks like there is a problem with your email address", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Whoops", message: "Looks like there is a problem with your email address", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
     
-    func createUser(email:String) {
+    func createUser(_ email:String) {
         let user = User()
         user.email = email
         user.password = "password"
@@ -200,22 +200,22 @@ class LoginViewController: UIViewController, ABPadLockScreenSetupViewControllerD
         }
     }
     
-    @IBAction func openLink(sender: UIButton) {
+    @IBAction func openLink(_ sender: UIButton) {
         if sender.tag == 0 {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/terms")!)
+            UIApplication.shared.openURL(URL(string: "http://www.charliestudios.com/terms")!)
         }
         else {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.charliestudios.com/privacy")!)
+            UIApplication.shared.openURL(URL(string: "http://www.charliestudios.com/privacy")!)
         }
     }
 }
 
 extension LoginViewController : UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.validateEmail()
         return true
     }
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
     }
 }

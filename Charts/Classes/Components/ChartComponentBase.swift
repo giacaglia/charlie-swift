@@ -15,15 +15,15 @@ import Foundation
 import UIKit
 
 /// This class encapsulates everything both Axis and Legend have in common.
-public class ChartComponentBase: NSObject
+open class ChartComponentBase: NSObject
 {
     /// flag that indicates if this component is enabled or not
-    public var enabled = true
+    open var enabled = true
     
     public override init()
     {
         super.init()
     }
 
-    public var isEnabled: Bool { return enabled; }
+    open var isEnabled: Bool { return enabled; }
 }

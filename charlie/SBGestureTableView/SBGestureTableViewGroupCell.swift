@@ -66,8 +66,8 @@ class SBGestureTableViewGroupCell: UITableViewCell {
             updateSideViews()
         }
     }
-    private var gestureTableView: SBGestureTableViewGroup!
-    private let panGestureRecognizer = UIPanGestureRecognizer()
+    fileprivate var gestureTableView: SBGestureTableViewGroup!
+    fileprivate let panGestureRecognizer = UIPanGestureRecognizer()
     
     
     
@@ -81,7 +81,7 @@ class SBGestureTableViewGroupCell: UITableViewCell {
     
     
     func setup() {
-        panGestureRecognizer.addTarget(self, action: "slideCell:")
+        panGestureRecognizer.addTarget(self, action: #selector(SBGestureTableViewGroupCell.slideCell(_:)))
         panGestureRecognizer.delegate = self
         addGestureRecognizer(panGestureRecognizer)
     }
@@ -110,22 +110,22 @@ class SBGestureTableViewGroupCell: UITableViewCell {
         return Double((frame.size.width - diff) / frame.size.width);
     }
     
-    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
     
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.isKindOfClass(UIPanGestureRecognizer) {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer.isKind(of: UIPanGestureRecognizer.self) {
             let panGestureRecognizer = gestureRecognizer as! UIPanGestureRecognizer
-            let velocity = panGestureRecognizer.velocityInView(self)
-            let horizontalLocation = panGestureRecognizer.locationInView(self).x
+            let velocity = panGestureRecognizer.velocity(in: self)
+            let horizontalLocation = panGestureRecognizer.location(in: self).x
             if fabs(velocity.x) > fabs(velocity.y)
                 && horizontalLocation > CGFloat(gestureTableView.edgeSlidingMargin)
                 && horizontalLocation < frame.size.width - CGFloat(gestureTableView.edgeSlidingMargin)
                 && gestureTableView.isEnabled {
                     return true;
             }
-        } else if gestureRecognizer.isKindOfClass(UILongPressGestureRecognizer) {
+        } else if gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) {
             if gestureTableView.didMoveCellFromIndexPathToIndexPathBlock == nil {
                 return true;
             }
@@ -192,27 +192,27 @@ class SBGestureTableViewGroupCell: UITableViewCell {
     }
     
     func setupSideViews() {
-        leftSideView.iconImageView.contentMode = actionIconsFollowSliding ? UIViewContentMode.Right : UIViewContentMode.Left
-        rightSideView.iconImageView.contentMode = actionIconsFollowSliding ? UIViewContentMode.Left : UIViewContentMode.Right
-        superview?.insertSubview(leftSideView, atIndex: 0)
-        superview?.insertSubview(rightSideView, atIndex: 0)
+        leftSideView.iconImageView.contentMode = actionIconsFollowSliding ? UIViewContentMode.right : UIViewContentMode.left
+        rightSideView.iconImageView.contentMode = actionIconsFollowSliding ? UIViewContentMode.left : UIViewContentMode.right
+        superview?.insertSubview(leftSideView, at: 0)
+        superview?.insertSubview(rightSideView, at: 0)
     }
     
-    func slideCell(panGestureRecognizer: UIPanGestureRecognizer) {
+    func slideCell(_ panGestureRecognizer: UIPanGestureRecognizer) {
         if !hasAnyLeftAction() || !hasAnyRightAction() {
             return
         }
-        var horizontalTranslation = panGestureRecognizer.translationInView(self).x
-        if panGestureRecognizer.state == UIGestureRecognizerState.Began {
+        var horizontalTranslation = panGestureRecognizer.translation(in: self).x
+        if panGestureRecognizer.state == UIGestureRecognizerState.began {
             setupSideViews()
-        } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
+        } else if panGestureRecognizer.state == UIGestureRecognizerState.changed {
             if (!hasAnyLeftAction() && frame.size.width/2 + horizontalTranslation > frame.size.width/2)
                 || (!hasAnyRightAction() && frame.size.width/2 + horizontalTranslation < frame.size.width/2) {
                     horizontalTranslation = 0
             }
             performChanges()
-            center = CGPointMake(frame.size.width/2 + horizontalTranslation, center.y)
-        } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
+            center = CGPoint(x: frame.size.width/2 + horizontalTranslation, y: center.y)
+        } else if panGestureRecognizer.state == UIGestureRecognizerState.ended {
             if (currentAction == nil && frame.origin.x != 0) || !gestureTableView.isEnabled {
                 gestureTableView.cellReplacingBlock?(gestureTableView, self)
             } else {
@@ -223,13 +223,13 @@ class SBGestureTableViewGroupCell: UITableViewCell {
     }
     
     func updateSideViews() {
-        leftSideView.frame = CGRectMake(0, frame.origin.y, frame.origin.x, frame.size.height)
+        leftSideView.frame = CGRect(x: 0, y: frame.origin.y, width: frame.origin.x, height: frame.size.height)
         if let image = leftSideView.iconImageView.image {
-            leftSideView.iconImageView.frame = CGRectMake(actionIconsMargin, 0, max(image.size.width, leftSideView.frame.size.width - actionIconsMargin*2), leftSideView.frame.size.height)
+            leftSideView.iconImageView.frame = CGRect(x: actionIconsMargin, y: 0, width: max(image.size.width, leftSideView.frame.size.width - actionIconsMargin*2), height: leftSideView.frame.size.height)
         }
-        rightSideView.frame = CGRectMake(frame.origin.x + frame.size.width, frame.origin.y, frame.size.width - (frame.origin.x + frame.size.width), frame.size.height)
+        rightSideView.frame = CGRect(x: frame.origin.x + frame.size.width, y: frame.origin.y, width: frame.size.width - (frame.origin.x + frame.size.width), height: frame.size.height)
         if let image = rightSideView.iconImageView.image {
-            rightSideView.iconImageView.frame = CGRectMake(rightSideView.frame.size.width - actionIconsMargin, 0, min(-image.size.width, actionIconsMargin*2 - rightSideView.frame.size.width), rightSideView.frame.size.height)
+            rightSideView.iconImageView.frame = CGRect(x: rightSideView.frame.size.width - actionIconsMargin, y: 0, width: min(-image.size.width, actionIconsMargin*2 - rightSideView.frame.size.width), height: rightSideView.frame.size.height)
         }
     }
 }

@@ -8,6 +8,17 @@
 
 import UIKit
 import MapKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class showTransactionViewController: UIViewController {
     @IBOutlet weak var accountNumberLabel: UILabel!
@@ -35,7 +46,7 @@ class showTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       datePickerView.hidden =  true
+       datePickerView.isHidden =  true
        
         
         let account = realm.objects(Account).filter("_id = '\(transaction!._account)'")
@@ -44,8 +55,8 @@ class showTransactionViewController: UIViewController {
         if transaction?.amount < 0
         {
             
-            notWorthButton.hidden = true
-            worthButton.hidden =  true
+            notWorthButton.isHidden = true
+            worthButton.isHidden =  true
         }
       
         accountNumberLabel.text = account[0].meta!.number
@@ -62,7 +73,7 @@ class showTransactionViewController: UIViewController {
             if trans.amount < 0
             {
                 let myString = "$\(trans.amount * -1) at \(trans.name)"
-                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 18.0)])
                 //attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
                 
                 descriptionLabel.attributedText = attString
@@ -71,7 +82,7 @@ class showTransactionViewController: UIViewController {
             else
             {
                 let myString = "Was $\(trans.amount) at \(trans.name)\nworth it?"
-                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                let attString = NSMutableAttributedString(string: myString, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 18.0)])
                 attString.addAttribute(NSForegroundColorAttributeName, value: listBlue, range: NSRange(location:4,length:(String(trans.amount).characters.count) + 1))
 
                 descriptionLabel.attributedText = attString
@@ -84,9 +95,9 @@ class showTransactionViewController: UIViewController {
             descriptionLabel.text = "\(trans.name)\nwas not worth it"
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd, YYYY"
-        dateLabel.text = dateFormatter.stringFromDate(trans.date)
+        dateLabel.text = dateFormatter.string(from: trans.date as Date)
 
         categoryLabel.text = String()
         
@@ -127,18 +138,18 @@ class showTransactionViewController: UIViewController {
         }
         
         guard let location = trans.meta?.location else {
-            mapView.hidden = true
+            mapView.isHidden = true
             return
         }
         
         addressLabel.text = "\(location.address) \n  \(location.city) \(location.state) \(location.zip)"
         
         guard let coordinates = trans.meta?.location!.coordinates else {
-            mapView.hidden = true
+            mapView.isHidden = true
             return
         }
         
-        mapView.hidden = false
+        mapView.isHidden = false
         let initialLocation = CLLocation(latitude: coordinates.lat, longitude: coordinates.lon)
         centerMapOnLocation(initialLocation)
         let anotation = MKPointAnnotation()
@@ -147,16 +158,16 @@ class showTransactionViewController: UIViewController {
     }
     
     
-    func centerMapOnLocation(location: CLLocation) {
+    func centerMapOnLocation(_ location: CLLocation) {
         let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
             regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    @IBAction func notWorth(sender: AnyObject) {
+    @IBAction func notWorth(_ sender: AnyObject) {
         if let vc = mainVC {
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
             //no completion for pop -  need better solution later
             vc.swipeCellAtIndex(self.transactionIndex, toLeft: true)
             
@@ -165,20 +176,20 @@ class showTransactionViewController: UIViewController {
             try! realm.write {
                 self.transaction!.status = 2
             }
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
     }
     
    
    
     
-    @IBAction func changeTypeButtonPressed(sender: UIButton) {
+    @IBAction func changeTypeButtonPressed(_ sender: UIButton) {
         
         // 1
-        let optionMenu = UIAlertController(title: nil, message: "Change Type", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Change Type", preferredStyle: .actionSheet)
         
         // 2
-        let billsAction = UIAlertAction(title: "Expenses - Bills", style: .Default, handler: {
+        let billsAction = UIAlertAction(title: "Expenses - Bills", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
@@ -193,7 +204,7 @@ class showTransactionViewController: UIViewController {
        
         
         
-        let spendingAction = UIAlertAction(title: "Expenses - Spending", style: .Default, handler: {
+        let spendingAction = UIAlertAction(title: "Expenses - Spending", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
@@ -203,7 +214,7 @@ class showTransactionViewController: UIViewController {
             
         })
         
-        let incomeAction = UIAlertAction(title: "Income", style: .Default, handler: {
+        let incomeAction = UIAlertAction(title: "Income", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
@@ -214,7 +225,7 @@ class showTransactionViewController: UIViewController {
         })
         
         
-        let savingAction = UIAlertAction(title: "Savings", style: .Default, handler: {
+        let savingAction = UIAlertAction(title: "Savings", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
@@ -225,7 +236,7 @@ class showTransactionViewController: UIViewController {
         })
         
        
-        let dcAction = UIAlertAction(title: "Don't Count", style: .Default, handler: {
+        let dcAction = UIAlertAction(title: "Don't Count", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             try! realm.write {
@@ -237,7 +248,7 @@ class showTransactionViewController: UIViewController {
         
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
            
         })
@@ -251,7 +262,7 @@ class showTransactionViewController: UIViewController {
         optionMenu.addAction(cancelAction)
         
         // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
         
     }
     
@@ -261,10 +272,10 @@ class showTransactionViewController: UIViewController {
 
     
     
-    @IBAction func worth(sender: AnyObject) {
+    @IBAction func worth(_ sender: AnyObject) {
         if let vc = mainVC {
             
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
              //no completion for pop -  need better solution later
             vc.swipeCellAtIndex(self.transactionIndex, toLeft: false)
         }
@@ -272,30 +283,30 @@ class showTransactionViewController: UIViewController {
             try! realm.write {
                 self.transaction!.status = 1
             }
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
     }
     
-    @IBAction func showDatePickerButton(sender: UIButton) {
+    @IBAction func showDatePickerButton(_ sender: UIButton) {
         
-        datePickerView.hidden = false
-        mapView.hidden = true
-        datePickerControl.date = (transaction?.date)!
+        datePickerView.isHidden = false
+        mapView.isHidden = true
+        datePickerControl.date = (transaction?.date)! as Date
         
     }
     
     
     
     
-    @IBAction func saveDateButton(sender: UIButton) {
+    @IBAction func saveDateButton(_ sender: UIButton) {
         
       
-            datePickerView.hidden = true
-            mapView.hidden = false
+            datePickerView.isHidden = true
+            mapView.isHidden = false
             
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMM dd, YYYY"
-            let strDate = dateFormatter.stringFromDate(datePickerControl.date)
+            let strDate = dateFormatter.string(from: datePickerControl.date)
         
             dateLabel.text = strDate
             
@@ -313,8 +324,8 @@ class showTransactionViewController: UIViewController {
         
     }
     
-    @IBAction func closeButtonPress(sender: AnyObject) {
-        self.navigationController?.dismissViewControllerAnimated(true, completion:nil)
+    @IBAction func closeButtonPress(_ sender: AnyObject) {
+        self.navigationController?.dismiss(animated: true, completion:nil)
         //self.presentingViewController?.dismissViewControllerAnimated(true, completion:nil)
     }
 

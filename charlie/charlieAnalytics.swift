@@ -9,7 +9,7 @@
 import Foundation
 
 class charlieAnalytics {
-    class func track(name:String) {
+    class func track(_ name:String) {
         var properties:[String:AnyObject] = [:]
         
         if users.count > 0 {

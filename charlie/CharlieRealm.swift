@@ -60,7 +60,7 @@ class Transaction: Object {
     dynamic var pending = true
     dynamic var categories = Category?()
     dynamic var placeType = ""
-    dynamic var date =  NSDate()
+    dynamic var date =  Date()
     dynamic var name = ""
     dynamic var status = -1
     dynamic var meta = Meta?()

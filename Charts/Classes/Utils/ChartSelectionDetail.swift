@@ -14,11 +14,11 @@
 
 import Foundation
 
-public class ChartSelectionDetail: NSObject
+open class ChartSelectionDetail: NSObject
 {
-    private var _value = Double(0)
-    private var _dataSetIndex = Int(0)
-    private var _dataSet: ChartDataSet!
+    fileprivate var _value = Double(0)
+    fileprivate var _dataSetIndex = Int(0)
+    fileprivate var _dataSet: ChartDataSet!
     
     public override init()
     {
@@ -34,31 +34,31 @@ public class ChartSelectionDetail: NSObject
         _dataSet = dataSet
     }
     
-    public var value: Double
+    open var value: Double
     {
         return _value
     }
     
-    public var dataSetIndex: Int
+    open var dataSetIndex: Int
     {
         return _dataSetIndex
     }
     
-    public var dataSet: ChartDataSet?
+    open var dataSet: ChartDataSet?
     {
         return _dataSet
     }
     
     // MARK: NSObject
     
-    public override func isEqual(object: AnyObject?) -> Bool
+    open override func isEqual(_ object: Any?) -> Bool
     {
-        if (object === nil)
+        if (object == nil)
         {
             return false
         }
         
-        if (!object!.isKindOfClass(self.dynamicType))
+        if (!object!.isKind(of: type(of: self)))
         {
             return false
         }
@@ -89,7 +89,7 @@ public func ==(lhs: ChartSelectionDetail, rhs: ChartSelectionDetail) -> Bool
         return true
     }
     
-    if (!lhs.isKindOfClass(rhs.dynamicType))
+    if (!lhs.isKind(of: type(of: rhs)))
     {
         return false
     }

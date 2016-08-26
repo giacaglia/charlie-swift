@@ -24,17 +24,17 @@ class showTypePickerViewController: UIViewController {
         transactionNameLabel.text = transactionToUpdate[0].name
     }
     
-    @IBAction func cancelButtonPress(sender: UIButton) {
+    @IBAction func cancelButtonPress(_ sender: UIButton) {
         mainVC.transactionsTable.reloadData()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func spendableButtonPress(sender: UIButton) {
+    @IBAction func spendableButtonPress(_ sender: UIButton) {
         // mainVC.transactionsTable.removeCell(transactionCell, duration: 0.3, completion: nil)
         realm.beginWrite()
         transactionToUpdate[0].ctype = Int(sender.tag)
         try! realm.commitWrite()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         for trans in transactionItems {
             if trans.ctype == 0 && trans.name == transactionToUpdate[0].name {
                 print("repeat")

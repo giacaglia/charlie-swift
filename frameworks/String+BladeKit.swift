@@ -14,11 +14,11 @@ public extension String {
     // Ability to pass an integer range in string subscripts
     public subscript(range: Range<Int>) -> String? {
         get {
-            if range.startIndex < 0 || range.startIndex > self.characters.count ||
-                range.endIndex > self.characters.count {
+            if range.lowerBound < 0 || range.lowerBound > self.characters.count ||
+                range.upperBound > self.characters.count {
                     return nil
             }
-            return self.simpleSubstring(range.startIndex, end: range.endIndex)
+            return self.simpleSubstring(range.lowerBound, end: range.upperBound)
         }
     }
     
@@ -29,7 +29,7 @@ public extension String {
             if index < 0 || index > self.characters.count {
                 return nil
             }
-            let idx = self.startIndex.advancedBy(index)
+            let idx = self.characters.index(self.startIndex, offsetBy: index)
             // safety
             if idx == self.endIndex {
                 return nil
@@ -47,8 +47,8 @@ public extension String {
             return nil
         }
         
-        let numberComponents = self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
-        let numbersOnly = numberComponents.joinWithSeparator("")
+        let numberComponents = self.components(separatedBy: CharacterSet.decimalDigits.inverted)
+        let numbersOnly = numberComponents.joined(separator: "")
         
         var formatted : String? = nil
         if numbersOnly.characters.count == 11 && numbersOnly[0] == "1" {
@@ -71,18 +71,18 @@ public extension String {
         return formatted
     }
     
-    public func doesContainSubstring(subsr: String) -> Bool {
-        return (self.lowercaseString.rangeOfString(subsr.lowercaseString) != nil)
+    public func doesContainSubstring(_ subsr: String) -> Bool {
+        return (self.lowercased().range(of: subsr.lowercased()) != nil)
     }
 
     
     // Get substring between start and end, inclusive on for the start, non-inclusive for the end
-    private func simpleSubstring(start:Int, end:Int) -> String? {
-        return self.substringWithRange(Range<String.Index>(self.startIndex.advancedBy(start)..<self.startIndex.advancedBy(end)))
+    fileprivate func simpleSubstring(_ start:Int, end:Int) -> String? {
+        return self.substring(with: Range<String.Index>(self.characters.index(self.startIndex, offsetBy: start)..<self.characters.index(self.startIndex, offsetBy: end)))
     }
     
     // See if a string contains only items in the given character set
-    public func containsOnlyCharactersInSet(set: NSCharacterSet) -> Bool {
+    public func containsOnlyCharactersInSet(_ set: CharacterSet) -> Bool {
         for character in self.characters {
             if !set.containsCharacter(character) {
                 return false
@@ -98,12 +98,12 @@ public extension String {
         return self.rangeOfStringMatchingRegex(urlRegex)
     }
     
-    public func rangeOfStringMatchingRegex(regex: String) -> Range<String.Index>? {
-        return self.rangeOfString(regex, options: ([.RegularExpressionSearch, .CaseInsensitiveSearch]))
+    public func rangeOfStringMatchingRegex(_ regex: String) -> Range<String.Index>? {
+        return self.range(of: regex, options: ([.regularExpression, .caseInsensitive]))
     }
     
     // Replace characters in range using NSRange (useful when using the UITextField delegate)
-    func stringByReplacingCharactersInRange(range: NSRange, withString replacement: String) -> String {
-        return (self as NSString).stringByReplacingCharactersInRange(range, withString: replacement)
+    func stringByReplacingCharactersInRange(_ range: NSRange, withString replacement: String) -> String {
+        return (self as NSString).replacingCharacters(in: range, with: replacement)
     }
 }

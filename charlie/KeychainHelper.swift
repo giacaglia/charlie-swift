@@ -19,16 +19,16 @@ class KeychainHelper {
     }
     
     
-    func set(value:String, key:String) -> Bool {
-        if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+    func set(_ value:String, key:String) -> Bool {
+        if let data = value.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
-                kSecAttrService as String: self.service,
-                kSecAttrAccount as String: key,
-                kSecValueData as String: data]
+                kSecAttrService as String: self.service as AnyObject,
+                kSecAttrAccount as String: key as AnyObject,
+                kSecValueData as String: data as AnyObject]
             
-            SecItemDelete(keychainQuery as CFDictionaryRef)
+            SecItemDelete(keychainQuery as CFDictionary)
             
-            let status: OSStatus = SecItemAdd(keychainQuery as CFDictionaryRef, nil)
+            let status: OSStatus = SecItemAdd(keychainQuery as CFDictionary, nil)
             
             if status != noErr {
                 print("Failed to save data with status code: \(status)")
@@ -40,36 +40,36 @@ class KeychainHelper {
     }
     
     
-    func get(key:String) -> String? {
+    func get(_ key:String) -> String? {
         let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: self.service,
-            kSecAttrAccount as String: key,
+            kSecAttrService as String: self.service as AnyObject,
+            kSecAttrAccount as String: key as AnyObject,
             kSecReturnData as String: kCFBooleanTrue,
             kSecMatchLimit as String: kSecMatchLimitOne]
         var dataTypeRef : AnyObject?
         
-        let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
+        let status: OSStatus = SecItemCopyMatching(keychainQuery as CFDictionary, &dataTypeRef)
         
         var data: String?
         
         if (status == errSecSuccess) {
-            let retrievedData = dataTypeRef as! NSData
+            let retrievedData = dataTypeRef as! Data
             // Convert the data retrieved from the keychain into a string
-            data = NSString(data: retrievedData, encoding: NSUTF8StringEncoding) as? String
+            data = NSString(data: retrievedData, encoding: String.Encoding.utf8.rawValue) as? String
         } else {
             print("Nothing was retrieved from the keychain. Status code \(status)")
         }
         return data
     }
     
-    func delete(value:String, key:String) -> Bool {
-        if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+    func delete(_ value:String, key:String) -> Bool {
+        if let data = value.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             let keychainQuery:[String:AnyObject] = [kSecClass as String: kSecClassGenericPassword,
-                kSecAttrService as String: self.service,
-                kSecAttrAccount as String: key,
-                kSecValueData as String: data]
+                kSecAttrService as String: self.service as AnyObject,
+                kSecAttrAccount as String: key as AnyObject,
+                kSecValueData as String: data as AnyObject]
             
-            let status: OSStatus = SecItemDelete(keychainQuery as CFDictionaryRef)
+            let status: OSStatus = SecItemDelete(keychainQuery as CFDictionary)
             
             if status != noErr {
                 print("Failed to delete data with status code: \(status)")

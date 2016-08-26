@@ -15,42 +15,42 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class CandleChartDataSet: LineScatterCandleChartDataSet
+open class CandleChartDataSet: LineScatterCandleChartDataSet
 {
     /// the width of the candle-shadow-line in pixels. 
     /// 
     /// **default**: 3.0
-    public var shadowWidth = CGFloat(1.5)
+    open var shadowWidth = CGFloat(1.5)
 
     /// the space between the candle entries
     /// 
     /// **default**: 0.1 (10%)
-    private var _bodySpace = CGFloat(0.1)
+    fileprivate var _bodySpace = CGFloat(0.1)
     
     /// the color of the shadow line
-    public var shadowColor: UIColor?
+    open var shadowColor: UIColor?
     
     /// use candle color for the shadow
-    public var shadowColorSameAsCandle = false
+    open var shadowColorSameAsCandle = false
     
     /// color for open <= close
-    public var decreasingColor: UIColor?
+    open var decreasingColor: UIColor?
     
     /// color for open > close
-    public var increasingColor: UIColor?
+    open var increasingColor: UIColor?
     
     /// Are decreasing values drawn as filled?
-    public var decreasingFilled = false
+    open var decreasingFilled = false
     
     /// Are increasing values drawn as filled?
-    public var increasingFilled = true
+    open var increasingFilled = true
     
     public override init(yVals: [ChartDataEntry]?, label: String?)
     {
         super.init(yVals: yVals, label: label)
     }
     
-    internal override func calcMinMax(start start: Int, end: Int)
+    internal override func calcMinMax(start: Int, end: Int)
     {
         if (yVals.count == 0)
         {
@@ -76,7 +76,7 @@ public class CandleChartDataSet: LineScatterCandleChartDataSet
         _yMin = entries[start].low
         _yMax = entries[start].high
         
-        for (var i = start + 1; i <= endValue; i++)
+        for (var i = start + 1; i <= endValue; i += 1)
         {
             let e = entries[i]
             
@@ -94,7 +94,7 @@ public class CandleChartDataSet: LineScatterCandleChartDataSet
 
     /// the space that is left out on the left and right side of each candle,
     /// **default**: 0.1 (10%), max 0.45, min 0.0
-    public var bodySpace: CGFloat
+    open var bodySpace: CGFloat
     {
         set
         {
@@ -118,11 +118,11 @@ public class CandleChartDataSet: LineScatterCandleChartDataSet
     }
     
     /// Is the shadow color same as the candle color?
-    public var isShadowColorSameAsCandle: Bool { return shadowColorSameAsCandle }
+    open var isShadowColorSameAsCandle: Bool { return shadowColorSameAsCandle }
     
     /// Are increasing values drawn as filled?
-    public var isIncreasingFilled: Bool { return increasingFilled; }
+    open var isIncreasingFilled: Bool { return increasingFilled; }
     
     /// Are decreasing values drawn as filled?
-    public var isDecreasingFilled: Bool { return decreasingFilled; }
+    open var isDecreasingFilled: Bool { return decreasingFilled; }
 }

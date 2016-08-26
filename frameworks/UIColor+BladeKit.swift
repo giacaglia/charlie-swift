@@ -10,9 +10,9 @@ import Foundation
 
 public extension UIColor {
     
-    private static let notAllowed = NSCharacterSet.alphanumericCharacterSet().invertedSet
+    fileprivate static let notAllowed = CharacterSet.alphanumerics.inverted
     
-    public static func colorFromInitials(initials: String) -> UIColor {
+    public static func colorFromInitials(_ initials: String) -> UIColor {
         var total = 0.0
         var index = 0.0
         var scalarA: UnicodeScalar {
@@ -22,7 +22,7 @@ public extension UIColor {
             return UnicodeScalar(1) // useless
         }
         // clean
-        let cleanInitials = initials.stringByTrimmingCharactersInSet(notAllowed).uppercaseString
+        let cleanInitials = initials.stringByTrimmingCharactersInSet(notAllowed).uppercased()
         for codeUnit in cleanInitials.unicodeScalars {
             if index >= 2.0 {
                 break

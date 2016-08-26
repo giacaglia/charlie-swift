@@ -13,13 +13,13 @@
 
 import Foundation
 
-public class CombinedChartData: BarLineScatterCandleChartData
+open class CombinedChartData: BarLineScatterCandleChartData
 {
-    private var _lineData: LineChartData!
-    private var _barData: BarChartData!
-    private var _scatterData: ScatterChartData!
-    private var _candleData: CandleChartData!
-    private var _bubbleData: BubbleChartData!
+    fileprivate var _lineData: LineChartData!
+    fileprivate var _barData: BarChartData!
+    fileprivate var _scatterData: ScatterChartData!
+    fileprivate var _candleData: CandleChartData!
+    fileprivate var _bubbleData: BubbleChartData!
     
     public override init()
     {
@@ -36,7 +36,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         super.init(xVals: xVals, dataSets: dataSets)
     }
     
-    public var lineData: LineChartData!
+    open var lineData: LineChartData!
     {
         get
         {
@@ -60,7 +60,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         }
     }
     
-    public var barData: BarChartData!
+    open var barData: BarChartData!
     {
         get
         {
@@ -84,7 +84,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         }
     }
     
-    public var scatterData: ScatterChartData!
+    open var scatterData: ScatterChartData!
     {
         get
         {
@@ -108,7 +108,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         }
     }
     
-    public var candleData: CandleChartData!
+    open var candleData: CandleChartData!
     {
         get
         {
@@ -132,7 +132,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         }
     }
     
-    public var bubbleData: BubbleChartData!
+    open var bubbleData: BubbleChartData!
     {
         get
         {
@@ -156,7 +156,7 @@ public class CombinedChartData: BarLineScatterCandleChartData
         }
     }
     
-    public override func notifyDataChanged()
+    open override func notifyDataChanged()
     {
         if (_lineData !== nil)
         {

@@ -17,7 +17,7 @@ class SBGestureTableViewGroupCellAction: NSObject {
     var didHighlightBlock: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> (Void))?
     var didUnhighlightBlock: ((SBGestureTableViewGroup, SBGestureTableViewGroupCell) -> (Void))?
     
-    init(icon: UIImage, color: UIColor, fraction: CGFloat, didTriggerBlock:(SBGestureTableViewGroup, SBGestureTableViewGroupCell)->()) {
+    init(icon: UIImage, color: UIColor, fraction: CGFloat, didTriggerBlock:@escaping (SBGestureTableViewGroup, SBGestureTableViewGroupCell)->()) {
         self.icon = icon
         self.color = color
         self.fraction = fraction

@@ -12,16 +12,16 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
     
     var pinValidated = false
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if pinValidated == true {
             return
         }
       
         // if the pin wasn't validated
         let ABPin = ABPadLockScreenViewController(delegate: self, complexPin: false)
-        ABPin.view.backgroundColor = listBlue
+        ABPin?.view.backgroundColor = listBlue
         self.view.backgroundColor = listBlue
-        presentViewController(ABPin, animated: true, completion: nil)
+        present(ABPin!, animated: true, completion: nil)
         if users.count > 0 {
             //save access_token on server
             if let access_token = keyChainStore.get("access_token") {
@@ -32,26 +32,26 @@ class passcodeViewController: UIViewController, ABPadLockScreenViewControllerDel
         }
     }
     
-    func padLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
+    func padLockScreenViewController(_ padLockScreenViewController: ABPadLockScreenViewController!, validatePin pin: String!) -> Bool {
         let savedPin =  keyChainStore.get("pin")
         return pin == savedPin
     }
     
-    func unlockWasSuccessfulForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
+    func unlockWasSuccessful(for padLockScreenViewController: ABPadLockScreenViewController!) {
         pinValidated = true
-        padLockScreenViewController.dismissViewControllerAnimated(false, completion: nil)
-        self.dismissViewControllerAnimated(false, completion: nil)
+        padLockScreenViewController.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
-    func unlockWasUnsuccessful(falsePin: String!, afterAttemptNumber attemptNumber: Int, padLockScreenViewController: ABPadLockScreenViewController!) {
+    func unlockWasUnsuccessful(_ falsePin: String!, afterAttemptNumber attemptNumber: Int, padLockScreenViewController: ABPadLockScreenViewController!) {
         
     }
     
-    func unlockWasCancelledForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController!) {
+    func unlockWasCancelled(for padLockScreenViewController: ABPadLockScreenViewController!) {
         
     }
     
-    func attemptsExpiredForPadLockScreenViewController(padLockScreenViewController: ABPadLockScreenViewController) {
+    func attemptsExpired(for padLockScreenViewController: ABPadLockScreenViewController) {
     }
     
 }

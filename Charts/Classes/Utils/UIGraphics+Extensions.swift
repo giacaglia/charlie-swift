@@ -11,7 +11,7 @@
 
 import UIKit
 
-public func UIGraphicsPushContext(context: CGContext?) {
+public func UIGraphicsPushContext(_ context: CGContext?) {
     
     guard let context = context else {
         return

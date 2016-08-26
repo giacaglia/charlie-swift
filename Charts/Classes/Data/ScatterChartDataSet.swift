@@ -14,25 +14,25 @@
 import Foundation
 import CoreGraphics
 
-public class ScatterChartDataSet: LineScatterCandleChartDataSet
+open class ScatterChartDataSet: LineScatterCandleChartDataSet
 {
     @objc
     public enum ScatterShape: Int
     {
-        case Cross
-        case Triangle
-        case Circle
-        case Square
-        case Custom
+        case cross
+        case triangle
+        case circle
+        case square
+        case custom
     }
     
-    public var scatterShapeSize = CGFloat(15.0)
-    public var scatterShape = ScatterShape.Square
-    public var customScatterShape: CGPath?
+    open var scatterShapeSize = CGFloat(15.0)
+    open var scatterShape = ScatterShape.square
+    open var customScatterShape: CGPath?
 
     // MARK: NSCopying
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject
+    open override func copyWithZone(_ zone: NSZone?) -> AnyObject
     {
         let copy = super.copyWithZone(zone) as! ScatterChartDataSet
         copy.scatterShapeSize = scatterShapeSize

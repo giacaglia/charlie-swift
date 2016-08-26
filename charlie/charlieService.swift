@@ -12,12 +12,12 @@ import CloudKit
 var httpStatusCode:Int = 0
 
 //dev
-var srGetToken = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/exchange_token"))
-var srConnect = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect"))
-var srCategory = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/categories"))
-var srConnectGet = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/connect/get"))
-var srInstitutions = ServerRequest(url: NSURL(string:  "https://tartan.plaid.com/institutions"))
-var bladeServerToken = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track"))
+var srGetToken = ServerRequest(url: URL(string:  "https://tartan.plaid.com/exchange_token") as NSURL?)
+var srConnect = ServerRequest(url: URL(string:  "https://tartan.plaid.com/connect") as NSURL?)
+var srCategory = ServerRequest(url: URL(string:  "https://tartan.plaid.com/categories") as NSURL?)
+var srConnectGet = ServerRequest(url: URL(string:  "https://tartan.plaid.com/connect/get") as NSURL?)
+var srInstitutions = ServerRequest(url: URL(string:  "https://tartan.plaid.com/institutions") as NSURL?)
+var bladeServerToken = ServerRequest(url: URL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track") as NSURL?)
 var apiKey = "jj859i3mfp230p34"
 
 ////production
@@ -31,7 +31,7 @@ var apiKey = "jj859i3mfp230p34"
 
 //var srSwipeSave = ServerRequest(url: NSURL(string:  "https://localhost:3000/transactions"))
 
-var srSwipeSave = ServerRequest(url: NSURL(string:  "https://evening-anchorage-6916.herokuapp.com/transactions"))
+var srSwipeSave = ServerRequest(url: URL(string:  "https://evening-anchorage-6916.herokuapp.com/transactions") as NSURL?)
 
 class charlieService {
 
@@ -39,13 +39,13 @@ class charlieService {
     }
 
     
-    func saveAccessToken(token:String, callback: Bool->()) {
+    func saveAccessToken(_ token:String, callback: @escaping (Bool)->()) {
         let parameters = [
             "type": "token",
             "context": token,
         ]
         
-        let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track")) // DEV
+        let sr = ServerRequest(url: URL(string:  "https://blade-analytics.herokuapp.com/charlie/production/track") as NSURL?) // DEV
  //       let sr = ServerRequest(url: NSURL(string:  "https://blade-analytics.herokuapp.com/charlie/dev/track")) // PROD
         sr.httpMethod = .Post
         sr.headerDict["X-Charlie-API-Key"] = apiKey
@@ -62,7 +62,7 @@ class charlieService {
    
     
     
-    func saveSwipe(direction:Int, transactionIndex:Int, callback: Bool->())
+    func saveSwipe(_ direction:Int, transactionIndex:Int, callback: @escaping (Bool)->())
     {
         var lat = 0.0
         var lng = 0.0
@@ -148,7 +148,7 @@ class charlieService {
         
         
         srSwipeSave.httpMethod = .Post
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             ServerClient.performRequest(srSwipeSave, completion: { (response) -> Void in
                 print(JSON(response.results()))
                 if let errorMsg:String = response.error?.description {
@@ -172,7 +172,7 @@ class charlieService {
     
     
     
-    func getAccessToken(public_token:String, callback: NSDictionary->()) {
+    func getAccessToken(_ public_token:String, callback: @escaping (NSDictionary)->()) {
         if let client_id = keyChainStore.get("client_id"),
            let client_secret = keyChainStore.get("client_secret") {
             let parameters = [
@@ -208,7 +208,7 @@ class charlieService {
     }
    
     
-    func updateAccount(access_token:String, dayLength:Int, callback: NSDictionary->()) {
+    func updateAccount(_ access_token:String, dayLength:Int, callback: @escaping (NSDictionary)->()) {
         if let client_id = keyChainStore.get("client_id"),
             let client_secret = keyChainStore.get("client_secret") {
         
@@ -216,7 +216,7 @@ class charlieService {
                 let options = [
                     "pending": false,
                     "gte": "\(dayLength) days ago"
-                ]
+                ] as [String : Any]
            
                 let parameters = [
                     "client_id": client_id,
@@ -243,7 +243,7 @@ class charlieService {
                 srConnectGet.parameters = parameters as? [String : AnyObject]
             }
             srConnectGet.httpMethod = .Post
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
                 //All stuff here
                 ServerClient.performRequest(srConnectGet, completion: { (response) -> Void in
                   //  println(JSON(response.results()))
@@ -267,7 +267,7 @@ class charlieService {
         }
     }
 
-    func getCategories(callback: NSArray->()) {
+    func getCategories(_ callback: @escaping (NSArray)->()) {
         srCategory.httpMethod = .Get
         ServerClient.performRequest(srCategory, completion: { (response) -> Void in
             httpStatusCode = response.rawResponse!.statusCode

@@ -9,11 +9,11 @@
 import UIKit
 
 public extension UIViewController {
-    public func showGenericAlertError(title: String, message: String, dismissTitle: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: dismissTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+    public func showGenericAlertError(_ title: String, message: String, dismissTitle: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: dismissTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
         }))
-        self.presentViewController(alert, animated: true, completion: { () -> Void in
+        self.present(alert, animated: true, completion: { () -> Void in
         })
     }
 }

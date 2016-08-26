@@ -15,91 +15,91 @@
 import Foundation
 import UIKit
 
-public class ChartAxisBase: ChartComponentBase
+open class ChartAxisBase: ChartComponentBase
 {
-    public var labelFont = UIFont.systemFontOfSize(10.0)
-    public var labelTextColor = UIColor.blackColor()
+    open var labelFont = UIFont.systemFont(ofSize: 10.0)
+    open var labelTextColor = UIColor.black
     
-    public var axisLineColor = UIColor.grayColor()
-    public var axisLineWidth = CGFloat(0.5)
-    public var axisLineDashPhase = CGFloat(0.0)
-    public var axisLineDashLengths: [CGFloat]!
+    open var axisLineColor = UIColor.gray
+    open var axisLineWidth = CGFloat(0.5)
+    open var axisLineDashPhase = CGFloat(0.0)
+    open var axisLineDashLengths: [CGFloat]!
     
-    public var gridColor = UIColor.grayColor().colorWithAlphaComponent(0.9)
-    public var gridLineWidth = CGFloat(0.5)
-    public var gridLineDashPhase = CGFloat(0.0)
-    public var gridLineDashLengths: [CGFloat]!
+    open var gridColor = UIColor.gray.withAlphaComponent(0.9)
+    open var gridLineWidth = CGFloat(0.5)
+    open var gridLineDashPhase = CGFloat(0.0)
+    open var gridLineDashLengths: [CGFloat]!
     
-    public var drawGridLinesEnabled = true
-    public var drawAxisLineEnabled = true
+    open var drawGridLinesEnabled = true
+    open var drawAxisLineEnabled = true
     
     /// flag that indicates of the labels of this axis should be drawn or not
-    public var drawLabelsEnabled = true
+    open var drawLabelsEnabled = true
     
     /// Sets the used x-axis offset for the labels on this axis.
     /// **default**: 5.0
-    public var xOffset = CGFloat(5.0)
+    open var xOffset = CGFloat(5.0)
     
     /// Sets the used y-axis offset for the labels on this axis.
     /// **default**: 5.0 (or 0.0 on ChartYAxis)
-    public var yOffset = CGFloat(5.0)
+    open var yOffset = CGFloat(5.0)
     
     /// array of limitlines that can be set for the axis
-    private var _limitLines = [ChartLimitLine]()
+    fileprivate var _limitLines = [ChartLimitLine]()
     
     /// Are the LimitLines drawn behind the data or in front of the data?
     /// 
     /// **default**: false
-    public var drawLimitLinesBehindDataEnabled = false
+    open var drawLimitLinesBehindDataEnabled = false
 
     public override init()
     {
         super.init()
     }
     
-    public func getLongestLabel() -> String
+    open func getLongestLabel() -> String
     {
         fatalError("getLongestLabel() cannot be called on ChartAxisBase")
     }
     
-    public var isDrawGridLinesEnabled: Bool { return drawGridLinesEnabled; }
+    open var isDrawGridLinesEnabled: Bool { return drawGridLinesEnabled; }
     
-    public var isDrawAxisLineEnabled: Bool { return drawAxisLineEnabled; }
+    open var isDrawAxisLineEnabled: Bool { return drawAxisLineEnabled; }
     
-    public var isDrawLabelsEnabled: Bool { return drawLabelsEnabled; }
+    open var isDrawLabelsEnabled: Bool { return drawLabelsEnabled; }
     
     /// Are the LimitLines drawn behind the data or in front of the data?
     /// 
     /// **default**: false
-    public var isDrawLimitLinesBehindDataEnabled: Bool { return drawLimitLinesBehindDataEnabled; }
+    open var isDrawLimitLinesBehindDataEnabled: Bool { return drawLimitLinesBehindDataEnabled; }
     
     /// Adds a new ChartLimitLine to this axis.
-    public func addLimitLine(line: ChartLimitLine)
+    open func addLimitLine(_ line: ChartLimitLine)
     {
         _limitLines.append(line)
     }
     
     /// Removes the specified ChartLimitLine from the axis.
-    public func removeLimitLine(line: ChartLimitLine)
+    open func removeLimitLine(_ line: ChartLimitLine)
     {
-        for (var i = 0; i < _limitLines.count; i++)
+        for (i in 0 ..< _limitLines.count)
         {
             if (_limitLines[i] === line)
             {
-                _limitLines.removeAtIndex(i)
+                _limitLines.remove(at: i)
                 return
             }
         }
     }
     
     /// Removes all LimitLines from the axis.
-    public func removeAllLimitLines()
+    open func removeAllLimitLines()
     {
-        _limitLines.removeAll(keepCapacity: false)
+        _limitLines.removeAll(keepingCapacity: false)
     }
     
     /// - returns: the LimitLines of this axis.
-    public var limitLines : [ChartLimitLine]
+    open var limitLines : [ChartLimitLine]
         {
             return _limitLines
     }

@@ -13,7 +13,7 @@ import WebKit
 import Charts
 
 //number of days we show transaction data for
-let showTransactionDays = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -35, toDate: NSDate(), options: [])!
+let showTransactionDays = NSCalendar.current.date(byAdding: .firstWeekday, value: -35, to: Date(), options: [])!
 let status = 0
 var inboxPredicate = NSPredicate() //items yet to be processed
 var approvedPredicate = NSPredicate() // items marked as worth it
@@ -31,21 +31,21 @@ var allTransactionItems = realm.objects(Transaction).sorted("date", ascending: f
 var selectedCollectioncCellIndex  = 0
 
 enum TransactionType {
-    case ApprovedAndFlaggedTransaction, InboxTransaction
+    case approvedAndFlaggedTransaction, inboxTransaction
 }
 
 enum SortFilterType {
-    case FilterByName, FilterByDate, FilterByDescendingDate, FilterByAmount, FilterByMostWorth, FilterByLeastWorth
+    case filterByName, filterByDate, filterByDescendingDate, filterByAmount, filterByMostWorth, filterByLeastWorth
 }
 
 enum ReportCardType : Int {
-    case HappyFlowType, CashFlowType, LocationType
+    case happyFlowType, cashFlowType, locationType
 }
 
 protocol ChangeFilterProtocol {
     func removeBlackView()
-    func changeFilter( filterType: SortFilterType )
-    func changeTransactionType( type : TransactionType)
+    func changeFilter( _ filterType: SortFilterType )
+    func changeTransactionType( _ type : TransactionType)
 }
 
 protocol MainViewControllerDelegate {
@@ -79,24 +79,24 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     var removeCellBlockLeft: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var removeCellBlockRight: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     let accounts = realm.objects(Account)
-    var timer = NSTimer()
+    var timer = Timer()
     var timerCount:Int = 0
-    var filterType : SortFilterType! = .FilterByName
-    var inboxType : TransactionType! = .ApprovedAndFlaggedTransaction
-    static let blackView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+    var filterType : SortFilterType! = .filterByName
+    var inboxType : TransactionType! = .approvedAndFlaggedTransaction
+    static let blackView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     var areThereMoreItemsToLoad = false
     var numItemsToLoad = 20
-    let inboxLabel = UILabel(frame: CGRectMake(0, 0, 40, 40))
+    let inboxLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 
     var monthDiff:Int = 0
 
-    func willEnterForeground(notification: NSNotification!) {
+    func willEnterForeground(_ notification: Foundation.Notification!) {
         self.loadTransactionTable()
         self.collectionView.reloadData()
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
       
@@ -105,13 +105,13 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             if timerCount == 0 {
                 //first time after adding account so show tutorial
                 print("account but no transactions")
-                timer = NSTimer.scheduledTimerWithTimeInterval(10, target:self, selector: Selector("updateTrans"), userInfo: nil, repeats: true)
-                performSegueWithIdentifier("showTutorial", sender: self)
+                timer = Timer.scheduledTimer(timeInterval: 10, target:self, selector: #selector(mainViewController.updateTrans), userInfo: nil, repeats: true)
+                performSegue(withIdentifier: "showTutorial", sender: self)
                 timerCount = 1
                 SwiftLoader.show(true)
-                toastView.hidden = false
-                accountAddView.hidden = true
-                collectionView.hidden = false
+                toastView.isHidden = false
+                accountAddView.isHidden = true
+                collectionView.isHidden = false
             }
             else {
                 print("Still waiting")
@@ -124,13 +124,13 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     
     func calculateReports() -> Void {
         //bad programming setting a local global... need to fix
-        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(NSDate(), isCurrentMonth: true)
-        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(NSDate(), isCurrentMonth: true)
+        (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(Date(), isCurrentMonth: true)
+        (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(Date(), isCurrentMonth: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mainViewController.willEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
         self.setupNavigationBar()
         
@@ -141,7 +141,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.calculateReports()
        
         self.addAccountButton.layer.cornerRadius = 25
-        self.addAccountButton.layer.borderColor = UIColor.clearColor().CGColor
+        self.addAccountButton.layer.borderColor = UIColor.clear.cgColor
         self.addAccountButton.layer.borderWidth = 1.0
         
         self.loadTransactionTable()
@@ -151,17 +151,17 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     }
     
     func setupNavigationBar() {
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 212/255.0, green: 212/255.0, blue: 212/255.0, alpha:
             1.0)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : lightBlue]
         self.title = "Worth It?"
         var image = UIImage(named: "menu")
-        image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: .Plain, target: self, action: "showAccounts")
+        image = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image!, style: .plain, target: self, action: #selector(mainViewController.showAccounts))
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
         let attributes = [
@@ -177,8 +177,8 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         var monthReturn:Int = 0
         
         if atCount > 0 {
-            let lastTrans = allTransactionItems[0].date as NSDate
-            let firstTrans = allTransactionItems[atCount - 1].date  as NSDate
+            let lastTrans = allTransactionItems[0].date as Date
+            let firstTrans = allTransactionItems[atCount - 1].date  as Date
             
             let months = lastTrans.monthsFrom(firstTrans)
 //            if months > 2 //if we have a bunch of months
@@ -194,17 +194,17 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         return monthReturn
     }
     
-    func formatCurrency(currency: Double) -> String {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
-        formatter.locale = NSLocale(localeIdentifier: "en_US")
+    func formatCurrency(_ currency: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currency
+        formatter.locale = NSLocale(localeIdentifier: "en_US") as Locale!
         let numberFromField = currency
-        return formatter.stringFromNumber(numberFromField)!
+        return formatter.string(from: NSNumber(numberFromField))!
     }
 
     
     func showAccounts() {
-        self.performSegueWithIdentifier("showAccountsCards", sender: nil)
+        self.performSegue(withIdentifier: "showAccountsCards", sender: nil)
     }
    
     
@@ -213,43 +213,43 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         self.automaticallyAdjustsScrollViewInsets = false
         
         // rewardView.hidden = true
-        transactionsTable.hidden = false
-        inboxType = .InboxTransaction
+        transactionsTable.isHidden = false
+        inboxType = .inboxTransaction
         
         var access_token = ""
-        if keyStore.stringForKey("access_token") != nil {
-            access_token = keyStore.stringForKey("access_token")!
+        if keyStore.string(forKey: "access_token") != nil {
+            access_token = keyStore.string(forKey: "access_token")!
             keyChainStore.set(access_token, key: "access_token")
         }
         
         if accounts.count == 0 {
-            setPredicates(false, startMonth: NSDate())
-            accountAddView.hidden = false
-            addAccountButton.hidden = false
-            transactionsTable.hidden = true
-            collectionView.hidden = true
+            setPredicates(false, startMonth: Date())
+            accountAddView.isHidden = false
+            addAccountButton.isHidden = false
+            transactionsTable.isHidden = true
+            collectionView.isHidden = true
             //makeOnlyFirstNElementsVisible()
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             charlieAnalytics.track("Find Bank Screen - Main")
         }
         else {
-            setPredicates(true, startMonth: NSDate())
+            setPredicates(true, startMonth: Date())
             transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
             areThereMoreItemsToLoad = moreTransactionforLoading()
-            addAccountButton.hidden = true
-            accountAddView.hidden = true
-            collectionView.hidden = false
+            addAccountButton.isHidden = true
+            accountAddView.isHidden = true
+            collectionView.isHidden = false
             //refresh accounts
             if allTransactionItems.count > 0 {
                 let transCount = allTransactionItems.count
-                let firstTransaction = allTransactionItems[transCount - 1].date as NSDate
+                let firstTransaction = allTransactionItems[transCount - 1].date as Date
                 
-                let lastTransaction = allTransactionItems[0].date as NSDate
-                let calendar: NSCalendar = NSCalendar.currentCalendar()
-                let flags = NSCalendarUnit.Day
-                let components = calendar.components(flags, fromDate: lastTransaction, toDate: NSDate(), options: [])
+                let lastTransaction = allTransactionItems[0].date as Date
+                let calendar: NSCalendar = NSCalendar.current
+                let flags = Calendar.firstWeekday
+                let components = (calendar as NSCalendar).components(flags, from: lastTransaction, to: Date(), options: [])
                 
-                let transDateRangeComp = calendar.components(flags, fromDate: firstTransaction, toDate: lastTransaction, options: [])
+                let transDateRangeComp = (calendar as NSCalendar).components(flags, from: firstTransaction, to: lastTransaction, options: [])
                 
                 
                 var dateToSychTo = components.day
@@ -270,21 +270,21 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             }
         }
         
-        self.inboxType = .InboxTransaction //set inbox to default
+        self.inboxType = .inboxTransaction //set inbox to default
         
         removeCellBlockLeft = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if self.inboxType == .InboxTransaction {
-                if defaults.stringForKey("firstSwipeRight") == nil {
-                    let refreshAlert = UIAlertController(title: "My Spending", message: "Tap on My Spending (bottom of the list) to view all your transactions for the current month.", preferredStyle: UIAlertControllerStyle.Alert)
-                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+            if self.inboxType == .inboxTransaction {
+                if defaults.string(forKey: "firstSwipeRight") == nil {
+                    let refreshAlert = UIAlertController(title: "My Spending", message: "Tap on My Spending (bottom of the list) to view all your transactions for the current month.", preferredStyle: UIAlertControllerStyle.alert)
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 1)
-                        defaults.setObject("yes", forKey: "firstSwipeRight")
+                        defaults.set("yes", forKey: "firstSwipeRight")
                         defaults.synchronize()
                     }))
-                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
+                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
                         tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
                     }))
-                    self.presentViewController(refreshAlert, animated: true, completion: nil)
+                    self.present(refreshAlert, animated: true, completion: nil)
                 }
                 else {
                     self.finishSwipe(tableView, cell: cell, direction: 1)
@@ -297,19 +297,19 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         }
         
         removeCellBlockRight = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
-            if  self.inboxType == .InboxTransaction {
-                if defaults.stringForKey("firstSwipeLeft") == nil {
-                    let refreshAlert = UIAlertController(title: "Happy Flow", message: "Great job -  keep swiping your transactions to stay on top of purchases that were not worth it.", preferredStyle: UIAlertControllerStyle.Alert)
-                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+            if  self.inboxType == .inboxTransaction {
+                if defaults.string(forKey: "firstSwipeLeft") == nil {
+                    let refreshAlert = UIAlertController(title: "Happy Flow", message: "Great job -  keep swiping your transactions to stay on top of purchases that were not worth it.", preferredStyle: UIAlertControllerStyle.alert)
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
                         self.finishSwipe(tableView, cell: cell, direction: 2)
-                        defaults.setObject("yes", forKey: "firstSwipeLeft")
+                        defaults.set("yes", forKey: "firstSwipeLeft")
                         defaults.synchronize()
                     }))
                     
-                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) in
+                    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
                         tableView.replaceCell(cell, duration: 1.3, bounce: 1.0, completion: nil)
                     }))
-                    self.presentViewController(refreshAlert, animated: true, completion: nil)
+                    self.present(refreshAlert, animated: true, completion: nil)
                 }
                 else {
                     self.finishSwipe(tableView, cell: cell, direction: 2)
@@ -321,9 +321,9 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
           
         }
         
-        transactionsTable.backgroundColor = UIColor.clearColor()
-        transactionsTable.registerClass(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
-        transactionsTable.registerClass(ReportCardCell.self, forCellReuseIdentifier:ReportCardCell.cellIdentifier())
+        transactionsTable.backgroundColor = UIColor.clear
+        transactionsTable.register(AddMoreCell.self, forCellReuseIdentifier: AddMoreCell.cellIdentifier())
+        transactionsTable.register(ReportCardCell.self, forCellReuseIdentifier:ReportCardCell.cellIdentifier())
         transactionsTable.tableFooterView = UIView()
     }
     
@@ -348,7 +348,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
         }
     }
     
-    func setPredicates(hasAccounts:Bool, startMonth: NSDate) {
+    func setPredicates(_ hasAccounts:Bool, startMonth: Date) {
         let startDate = startMonth.startOfMonth()!
         let endDate = startMonth.endOfMonth()!
         
@@ -361,7 +361,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     }
     
     func hideCardsAndShowTransactions() {
-        self.presentViewController(SwipedTransactionsViewController(), animated: true) { () -> Void in}
+        self.present(SwipedTransactionsViewController(), animated: true) { () -> Void in}
     }
     
     func updateTrans() -> Void {
@@ -372,7 +372,7 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
             print(response)
             if response > 0 {
                 self.timer.invalidate()
-                self.setPredicates(true, startMonth: NSDate())
+                self.setPredicates(true, startMonth: Date())
                 self.makeOnlyFirstNElementsVisible()
                 transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
                 allTransactionItems = realm.objects(Transaction).sorted("date", ascending: false)
@@ -382,49 +382,49 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
                 
                 self.calculateReports()
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.transactionsTable.reloadData()
                     self.collectionView.reloadData()
                 }
                 
                 SwiftLoader.hide()
-                self.toastView.hidden = true
+                self.toastView.isHidden = true
             }
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "segueFromMainToDetailView") {
-            let viewController = segue.destinationViewController as! showTransactionViewController
+            let viewController = segue.destination as! showTransactionViewController
             viewController.mainVC = self
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            viewController.transaction = transactionItems[indexPath!.row]
-            viewController.transactionIndex = indexPath!.row
+            viewController.transaction = transactionItems[(indexPath! as NSIndexPath).row]
+            viewController.transactionIndex = (indexPath! as NSIndexPath).row
             viewController.sourceVC = "main"
         }
         else if (segue.identifier == "showTypePicker") {
-            let viewController = segue.destinationViewController as! showTypePickerViewController
+            let viewController = segue.destination as! showTypePickerViewController
             viewController.transactionID = currentTransactionSwipeID
             viewController.transactionCell = currentTransactionCell
             viewController.mainVC = self
         }
         else if (segue.identifier == "showReveal") {
-            let userSelectedHappyScore =  defaults.stringForKey("userSelectedHappyScore")!
-            let viewController = segue.destinationViewController as! revealViewController
+            let userSelectedHappyScore =  defaults.string(forKey: "userSelectedHappyScore")!
+            let viewController = segue.destination as! revealViewController
             viewController.revealPercentage = "\(userSelectedHappyScore)"
         }
         else if (segue.identifier == "groupDetail") {
             let indexPath = self.transactionsTable.indexPathForSelectedRow
-            let viewController = segue.destinationViewController as! GroupDetailViewController
-            viewController.transactionName =  charlieGroupListFiltered[indexPath!.row].name
+            let viewController = segue.destination as! GroupDetailViewController
+            viewController.transactionName =  charlieGroupListFiltered[(indexPath! as NSIndexPath).row].name
         }
     }
     
-    @IBAction func showTutorial(sender: UIButton) {
+    @IBAction func showTutorial(_ sender: UIButton) {
         //remove icloud
-        keyStore.setString("", forKey: "access_token")
-        keyStore.setString("", forKey: "email")
-        keyStore.setString("", forKey: "password")
+        keyStore.set("", forKey: "access_token")
+        keyStore.set("", forKey: "email")
+        keyStore.set("", forKey: "password")
         keyStore.synchronize()
     }
     
@@ -457,12 +457,12 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
     func showPastTransactions() {
         transactionItems = realm.objects(Transaction).filter(flaggedPredicate).sorted("date", ascending: false)
         //titleLabel.text = "My Results"
-        inboxType = .ApprovedAndFlaggedTransaction
+        inboxType = .approvedAndFlaggedTransaction
         charlieGroupListFiltered = groupBy(inboxType, sortFilter: filterType) as! [(charlieGroup)]
         transactionsTable.reloadData()
     }
     
-    func groupBy(type: TransactionType, sortFilter: SortFilterType) -> NSArray {
+    func groupBy(_ type: TransactionType, sortFilter: SortFilterType) -> NSArray {
         charlieGroupList = []
         var current_name = ""
         let sortProperties : Array<SortDescriptor>!
@@ -526,18 +526,18 @@ class mainViewController: UIViewController, MainViewControllerDelegate {
 }
 
 extension mainViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return monthDiff
         //TODO: REplace this back to monthDiff
         return 11
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterCell
-        let date = NSDate().dateByAddingMonths(-indexPath.row)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
+        let date = Date().dateByAddingMonths(-(indexPath as NSIndexPath).row)
         cell.monthLabel.text = date!.monthString()
         
-        if selectedCollectioncCellIndex == indexPath.row {
+        if selectedCollectioncCellIndex == (indexPath as NSIndexPath).row {
             cell.monthLabel.font = UIFont(name: "Montserrat-Bold", size: 18)!
         }
         else {
@@ -547,9 +547,9 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedCollectioncCellIndex = indexPath.row
-        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedCollectioncCellIndex = (indexPath as NSIndexPath).row
+        let startMonth = Date().dateByAddingMonths(-selectedCollectioncCellIndex)!
         setPredicates(true, startMonth: startMonth)
         transactionItems = realm.objects(Transaction).filter(inboxPredicate).sorted("date", ascending: false)
         moreItems = realm.objects(Transaction).filter(waitingToProcessPredicate)
@@ -561,14 +561,14 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
             (totalCashFlow, changeCashFlow, totalSpending, changeSpending, totalIncome, changeIncome) = cHelp.getCashFlow(startMonth, isCurrentMonth: false)
             (currentMonthHappyPercentage, happyFlowChange) =  cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: false)
         }
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             collectionView.reloadData()
             self.transactionsTable.reloadData()
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(100, 50)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 50)
     }
     
 }
@@ -577,9 +577,9 @@ extension mainViewController : UICollectionViewDataSource, UICollectionViewDeleg
 
 // Swipe part of the main view controller
 extension mainViewController : UITableViewDataSource, UITableViewDelegate {
-    func finishSwipe(tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
-        let indexPath = tableView.indexPathForCell(cell)
-        let trans = transactionItems[indexPath!.row]
+    func finishSwipe(_ tableView: SBGestureTableView, cell: SBGestureTableViewCell, direction: Int) {
+        let indexPath = tableView.indexPath(for: cell)
+        let trans = transactionItems[(indexPath! as NSIndexPath).row]
         
         if trans.ctype == 0
         {
@@ -589,7 +589,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             navigationVC!.addChildViewController(categoryVC)
             self.view.alpha = 0.0
             categoryVC.view.frame = self.view.frame
-            UIView.animateWithDuration(0.3) { () -> Void in
+            UIView.animate(withDuration: 0.3) { () -> Void in
                 self.navigationController!.view.addSubview(categoryVC.view)
                 self.view.alpha = 1.0
             }
@@ -600,24 +600,24 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    private func saveSwipeToServer(indexPath indexPath: NSIndexPath, direction: Int) {
+    fileprivate func saveSwipeToServer(indexPath: IndexPath, direction: Int) {
         print("Saved Swipe: \(direction)")
-        cService.saveSwipe(direction, transactionIndex: indexPath.row)
+        cService.saveSwipe(direction, transactionIndex: (indexPath as NSIndexPath).row)
             { (callback) in
             print("callback complete1")
         }
     }
     
     
-    private func updateTableAt(indexPath indexPath: NSIndexPath, direction: Int) {
-        currentTransactionSwipeID = transactionItems[indexPath.row]._id
-        let cell = transactionsTable.cellForRowAtIndexPath(indexPath) as! SBGestureTableViewCell
+    fileprivate func updateTableAt(indexPath: IndexPath, direction: Int) {
+        currentTransactionSwipeID = transactionItems[(indexPath as NSIndexPath).row]._id
+        let cell = transactionsTable.cellForRow(at: indexPath) as! SBGestureTableViewCell
         currentTransactionCell = cell
         
         realm.beginWrite()
-        transactionItems[indexPath.row].status = direction
+        transactionItems[(indexPath as NSIndexPath).row].status = direction
         
-        let startMonth = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!
+        let startMonth = Date().dateByAddingMonths(-selectedCollectioncCellIndex)!
         transactionsTable.removeCell(cell, duration: 0.3) { () -> Void in
            var currentMonth = false
             
@@ -628,7 +628,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             
             
             (self.currentMonthHappyPercentage, self.happyFlowChange) =  self.cHelp.getHappyPercentageCompare(startMonth, isCurrentMonth: currentMonth)
-            self.transactionsTable.reloadRowsAtIndexPaths([NSIndexPath(forRow: transactionItems.count + 1, inSection: 0)], withRowAnimation: .None)
+            self.transactionsTable.reloadRows(at: [IndexPath(row: transactionItems.count + 1, section: 0)], with: .none)
         }
         try! realm.commitWrite()
         
@@ -640,30 +640,30 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if transactionItems.count > 0 {
-            transactionsTable.hidden = false
-            addAccountButton.hidden = true
-            accountAddView.hidden = true
-            collectionView.hidden = false
+            transactionsTable.isHidden = false
+            addAccountButton.isHidden = true
+            accountAddView.isHidden = true
+            collectionView.isHidden = false
         }
         return transactionItems.count + 5//Int(areThereMoreItemsToLoad)
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var startDate:NSDate = NSDate()
-        var endDate:NSDate = NSDate()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var startDate:Date = Date()
+        var endDate:Date = Date()
         //change
-        if indexPath.row < transactionItems.count {
-            performSegueWithIdentifier("segueFromMainToDetailView", sender: self)
+        if (indexPath as NSIndexPath).row < transactionItems.count {
+            performSegue(withIdentifier: "segueFromMainToDetailView", sender: self)
         }
-        else if indexPath.row == transactionItems.count {
-            if indexPath.row == transactionItems.count {
+        else if (indexPath as NSIndexPath).row == transactionItems.count {
+            if (indexPath as NSIndexPath).row == transactionItems.count {
                 numItemsToLoad = 20
                 
                 //get current selected filter date
-                let predicateDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)
+                let predicateDate = Date().dateByAddingMonths(-selectedCollectioncCellIndex)
                 
                 setPredicates(true, startMonth: predicateDate!)
                 makeOnlyFirstNElementsVisible()
@@ -672,19 +672,19 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 transactionsTable.reloadData()
             }
         }
-        else if indexPath.row == transactionItems.count + 1 {
+        else if (indexPath as NSIndexPath).row == transactionItems.count + 1 {
             return
         }
        
-        else if indexPath.row == transactionItems.count + 2 {
+        else if (indexPath as NSIndexPath).row == transactionItems.count + 2 {
             print("Show Income")
             if selectedCollectioncCellIndex == 0 {
-                startDate = NSDate().startOfMonth()!
-                endDate = NSDate()
+                startDate = Date().startOfMonth()!
+                endDate = Date()
             }
             else
             {
-                startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+                startDate = Date().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
                 endDate = startDate.endOfMonth()!
             }
             
@@ -693,14 +693,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
             ITC.endDate = endDate
             self.navigationController?.pushViewController(ITC, animated: true)
         }
-        else if indexPath.row == transactionItems.count + 3 {
+        else if (indexPath as NSIndexPath).row == transactionItems.count + 3 {
             print("SHOW SPENDING")
             if selectedCollectioncCellIndex == 0 {
-                startDate = NSDate().startOfMonth()!
-                endDate = NSDate()
+                startDate = Date().startOfMonth()!
+                endDate = Date()
             }
             else {
-                startDate = NSDate().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
+                startDate = Date().dateByAddingMonths(-selectedCollectioncCellIndex)!.startOfMonth()!
                 endDate = startDate.endOfMonth()!
             }
         
@@ -712,16 +712,16 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row >= transactionItems.count {
-            let rewardIndex =  indexPath.row - transactionItems.count
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row >= transactionItems.count {
+            let rewardIndex =  (indexPath as NSIndexPath).row - transactionItems.count
             var  rewardNames = ["Show More Transactions To Complete ", "Happy Flow", "My Income", "My Expenses", "My CashFlow"]
             var cellHappy:happyTableViewCell
             var cellReward:rewardTableViewCell
             
             if rewardIndex == 0
             {
-                cellHappy = tableView.dequeueReusableCellWithIdentifier("cellHappy", forIndexPath: indexPath) as! happyTableViewCell
+                cellHappy = tableView.dequeueReusableCell(withIdentifier: "cellHappy", for: indexPath) as! happyTableViewCell
                 if self.moreItems.count > 0 {
                     cellHappy.rewardName.text = "\(self.moreItems.count) left to swipe. Tap to load them and complete your happy flow!"
                 }
@@ -732,9 +732,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 return cellHappy
             }
             else {
-                cellReward = tableView.dequeueReusableCellWithIdentifier("cellReward", forIndexPath: indexPath) as! rewardTableViewCell
-                cellReward.rewardName.text = rewardNames[rewardIndex].uppercaseString
-                cellReward.lineImageView.hidden = false
+                cellReward = tableView.dequeueReusableCell(withIdentifier: "cellReward", for: indexPath) as! rewardTableViewCell
+                cellReward.rewardName.text = rewardNames[rewardIndex].uppercased()
+                cellReward.lineImageView.isHidden = false
 
                 if rewardIndex == 1 {
                     if (currentMonthHappyPercentage.isNaN || currentMonthHappyPercentage.isInfinite) {
@@ -742,11 +742,11 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.rewardName.text = ""
                         cellReward.prevAmount.text = ""
                         cellReward.currentAmount.text = ""
-                        cellReward.lineImageView.hidden = true
-                        cellReward.whiteArrow.hidden = true
-                        let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                        let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
-                        imageView.contentMode = .ScaleAspectFit
+                        cellReward.lineImageView.isHidden = true
+                        cellReward.whiteArrow.isHidden = true
+                        let aroundImageView = UIView(frame: CGRect(x: 10, y: 10, width: cellReward.frame.width - 20, height: cellReward.frame.height - 20))
+                        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: aroundImageView.frame.width, height: aroundImageView.frame.height - 10))
+                        imageView.contentMode = .scaleAspectFit
                         imageView.image = UIImage(named: "not_sure_happy_flow")
                         aroundImageView.addSubview(imageView)
                         cellReward.backgroundView = UIView()
@@ -764,9 +764,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         cellReward.prevAmount.text = "\(Int(happyFlowChange))% from prev month"
                     }
                     
-                    cellReward.whiteArrow.hidden = true
-                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))             
+                    cellReward.whiteArrow.isHidden = true
+                    let aroundImageView = UIView(frame: CGRect(x: 10, y: 10, width: cellReward.frame.width - 20, height: cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: aroundImageView.frame.width, height: aroundImageView.frame.height - 10))             
                     
                     if happyFlowChange < 0 {
                         imageView.image = UIImage(named: "negative_2")
@@ -782,7 +782,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     cellReward.backgroundView!.addSubview(aroundImageView)
                 }
                 if rewardIndex == 2 {
-                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalIncome.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFont(ofSize: 22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalIncome.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeIncome.isNaN || changeIncome.isInfinite) {
                         cellReward.prevAmount.text = ""
                     }
@@ -795,9 +795,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                     
-                    cellReward.whiteArrow.hidden = false
-                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
+                    cellReward.whiteArrow.isHidden = false
+                    let aroundImageView = UIView(frame: CGRect(x: 10, y: 10, width: cellReward.frame.width - 20, height: cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: aroundImageView.frame.width, height: aroundImageView.frame.height - 10))
                     if changeIncome >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
@@ -812,7 +812,7 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 if rewardIndex == 3 {
-                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalSpending.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                    cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$ ", font1: UIFont.systemFont(ofSize: 22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalSpending.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     if (changeSpending.isNaN || changeSpending.isInfinite) {
                         cellReward.prevAmount.text = ""
                     }
@@ -825,9 +825,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         }
                     }
 
-                    cellReward.whiteArrow.hidden = false
-                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
+                    cellReward.whiteArrow.isHidden = false
+                    let aroundImageView = UIView(frame: CGRect(x: 10, y: 10, width: cellReward.frame.width - 20, height: cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: aroundImageView.frame.width, height: aroundImageView.frame.height - 10))
                     if changeSpending < 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
@@ -842,10 +842,10 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                 }
                 if rewardIndex == 4 {
                     if (totalCashFlow < 0) {
-                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("$", font1: UIFont.systemFont(ofSize: 22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     else {
-                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("+ ", font1: UIFont.systemFontOfSize(22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
+                        cellReward.currentAmount.attributedText = NSAttributedString.twoFontsAttributedString("+ ", font1: UIFont.systemFont(ofSize: 22.0), color1: UIColor(white: 1.0, alpha: 0.6), string2: totalCashFlow.commaFormatted(), font2: UIFont(name: "Montserrat-Bold", size: 42)!, color2: UIColor(white: 1.0, alpha: 1.0))
                     }
                     if (changeCashFlow.isNaN || changeCashFlow.isInfinite) {
                          cellReward.prevAmount.text = ""
@@ -859,9 +859,9 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                     
-                    cellReward.whiteArrow.hidden = true
-                    let aroundImageView = UIView(frame: CGRectMake(10, 10, cellReward.frame.width - 20, cellReward.frame.height - 20))
-                    let imageView = UIImageView(frame: CGRectMake(0, 10, aroundImageView.frame.width, aroundImageView.frame.height - 10))
+                    cellReward.whiteArrow.isHidden = true
+                    let aroundImageView = UIView(frame: CGRect(x: 10, y: 10, width: cellReward.frame.width - 20, height: cellReward.frame.height - 20))
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: aroundImageView.frame.width, height: aroundImageView.frame.height - 10))
                     if changeCashFlow >= 0 {
                         imageView.image = UIImage(named: "positiveIncome")
                         aroundImageView.backgroundColor = lightGreen
@@ -874,13 +874,13 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
                     aroundImageView.addSubview(imageView)
                     cellReward.backgroundView!.addSubview(aroundImageView)
                 }
-                cellReward.selectionStyle = UITableViewCellSelectionStyle.None
+                cellReward.selectionStyle = UITableViewCellSelectionStyle.none
                 return cellReward
            }
         }
     
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewCell
-        let trans = transactionItems[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SBGestureTableViewCell
+        let trans = transactionItems[(indexPath as NSIndexPath).row]
         cell.nameCellLabel.text = trans.name
         
         
@@ -912,17 +912,17 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
         cell.amountCellLabel.attributedText = NSAttributedString.createAttributedString(UIFont(name: "Montserrat", size: 22.0)!, string1: "-", color1: UIColor(white: 209/255.0, alpha: 1.0), string2: trans.amount.format(".2"), color2: listBlue)
 
 
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EE, MMM dd " //format style. Browse online to get a format that fits your needs.
-        let dateString = dateFormatter.stringFromDate(trans.date)
-        cell.dateCellLabel.text = dateString.uppercaseString
-        cell.smallAmountCellLabel.hidden = true
+        let dateString = dateFormatter.string(from: trans.date)
+        cell.dateCellLabel.text = dateString.uppercased()
+        cell.smallAmountCellLabel.isHidden = true
         
         return cell
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let rewardIndex =  indexPath.row - transactionItems.count
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let rewardIndex =  (indexPath as NSIndexPath).row - transactionItems.count
         if rewardIndex > 0 {
             return 160
         }
@@ -932,14 +932,14 @@ extension mainViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    func swipeCellAtIndex(transactionIndex: Int, toLeft: Bool) {
-        let indexPath = NSIndexPath(forRow: transactionIndex, inSection: 0)
+    func swipeCellAtIndex(_ transactionIndex: Int, toLeft: Bool) {
+        let indexPath = IndexPath(row: transactionIndex, section: 0)
         if toLeft {
             self.updateTableAt(indexPath: indexPath, direction: 2)
         }
         else {
-            let cell = self.transactionsTable.cellForRowAtIndexPath(indexPath)
-            cell!.center = CGPointMake(cell!.center.x + 10, cell!.center.y)
+            let cell = self.transactionsTable.cellForRow(at: indexPath)
+            cell!.center = CGPoint(x: cell!.center.x + 10, y: cell!.center.y)
             self.updateTableAt(indexPath: indexPath, direction: 1)
         }
     }
@@ -961,8 +961,8 @@ class HeaderCell : UIView {
         self.setup()
     }
     
-    private func setup() {
-        self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+    fileprivate func setup() {
+        self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 70)
     }
 }
 
@@ -981,10 +981,10 @@ class AddMoreCell : UITableViewCell {
         self.setup()
     }
     
-    private func setup() {
-        self.contentView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
-        let centralLabel = UILabel(frame: CGRectMake(0, 0, 200, 30))
-        centralLabel.textAlignment = .Center
+    fileprivate func setup() {
+        self.contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 70)
+        let centralLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        centralLabel.textAlignment = .center
         centralLabel.center = self.contentView.center
         centralLabel.text = "show more transactions"
         self.contentView.addSubview(centralLabel)
@@ -993,22 +993,22 @@ class AddMoreCell : UITableViewCell {
 
 extension mainViewController : UIViewControllerPreviewingDelegate {
     /// Called when the user has pressed a source view in a previewing view controller (Peek).
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
         // Get indexPath for location (CGPoint) + cell (for sourceRect)
-        guard let indexPath = transactionsTable.indexPathForRowAtPoint(location) else { return nil }
+        guard let indexPath = transactionsTable.indexPathForRow(at: location) else { return nil }
         
-        guard let showTransactionViewController = storyboard?.instantiateViewControllerWithIdentifier("showTransactionViewController") as? showTransactionViewController else { return nil }
-        showTransactionViewController.transaction = transactionItems[indexPath.row]
-        showTransactionViewController.transactionIndex = indexPath.row
+        guard let showTransactionViewController = storyboard?.instantiateViewController(withIdentifier: "showTransactionViewController") as? showTransactionViewController else { return nil }
+        showTransactionViewController.transaction = transactionItems[(indexPath as NSIndexPath).row]
+        showTransactionViewController.transactionIndex = (indexPath as NSIndexPath).row
         showTransactionViewController.mainVC = self
         showTransactionViewController.sourceVC = "main"
         return showTransactionViewController
     }
     
     /// Called to let you prepare the presentation of a commit (Pop).
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         // Presents viewControllerToCommit in a primary context
-        showViewController(viewControllerToCommit, sender: self)
+        show(viewControllerToCommit, sender: self)
     }
 }

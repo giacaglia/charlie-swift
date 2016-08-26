@@ -8,12 +8,12 @@
 
 import Foundation
 
-public extension NSDate {
+public extension Date {
     
-    private static var standardDateDisplay: NSDateFormatter = {
-        let df = NSDateFormatter()
-        df.timeStyle = .ShortStyle
-        df.dateStyle = .ShortStyle
+    fileprivate static var standardDateDisplay: DateFormatter = {
+        let df = DateFormatter()
+        df.timeStyle = .short
+        df.dateStyle = .short
         return df
     }()
     
@@ -24,7 +24,7 @@ public extension NSDate {
     */
     public func relativeTimeDisplay() -> String {
         let time = self.timeIntervalSince1970
-        let now = NSDate().timeIntervalSince1970
+        let now = Date().timeIntervalSince1970
         
         let seconds = now - time
         let minutes = round(seconds/60)
@@ -69,10 +69,10 @@ public extension NSDate {
             }
         }
         
-        return NSDate.standardDateDisplay.stringFromDate(self)
+        return Date.standardDateDisplay.string(from: self)
     }
     
     public func genericDateDisplay() -> String {
-        return NSDate.standardDateDisplay.stringFromDate(self)
+        return Date.standardDateDisplay.string(from: self)
     }
 }

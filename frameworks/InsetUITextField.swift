@@ -9,19 +9,19 @@
 import UIKit
 
 
-@IBDesignable public class InsetUITextField: UITextField {
+@IBDesignable open class InsetUITextField: UITextField {
 
     @IBInspectable var inset: CGFloat = 10
     
-    override public func textRectForBounds(bounds: CGRect) -> CGRect {
-        return CGRectInset(bounds,inset,inset)
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.insetBy(dx: inset,dy: inset)
     }
     
-    override public func editingRectForBounds(bounds: CGRect) -> CGRect {
-        return CGRectInset(bounds,inset ,inset)
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.insetBy(dx: inset ,dy: inset)
     }
     
-    override public func placeholderRectForBounds(bounds: CGRect) -> CGRect {
-        return CGRectInset(bounds,inset,inset)
+    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.insetBy(dx: inset,dy: inset)
     }
 }

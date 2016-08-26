@@ -22,7 +22,7 @@ class revealViewController: UIViewController {
         revealTitle.text = "You guessed \(revealPercentage)"
     }
     
-    @IBAction func dismissButtonPressed(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismissButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -12,10 +12,10 @@
 import Foundation
 import CoreGraphics
 
-public class BubbleChartDataEntry: ChartDataEntry
+open class BubbleChartDataEntry: ChartDataEntry
 {
     /// The size of the bubble.
-    public var size = CGFloat(0.0)
+    open var size = CGFloat(0.0)
     
     /// - parameter xIndex: The index on the x-axis.
     /// - parameter val: The value on the y-axis.
@@ -40,7 +40,7 @@ public class BubbleChartDataEntry: ChartDataEntry
     
     // MARK: NSCopying
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject
+    open override func copyWithZone(_ zone: NSZone?) -> AnyObject
     {
         let copy = super.copyWithZone(zone) as! BubbleChartDataEntry
         copy.size = size

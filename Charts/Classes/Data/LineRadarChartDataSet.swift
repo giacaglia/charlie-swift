@@ -15,17 +15,17 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class LineRadarChartDataSet: LineScatterCandleChartDataSet
+open class LineRadarChartDataSet: LineScatterCandleChartDataSet
 {
-    public var fillColor = UIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-    public var fillAlpha = CGFloat(0.33)
-    private var _lineWidth = CGFloat(1.0)
-    public var drawFilledEnabled = false
+    open var fillColor = UIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+    open var fillAlpha = CGFloat(0.33)
+    fileprivate var _lineWidth = CGFloat(1.0)
+    open var drawFilledEnabled = false
     
     /// line width of the chart (min = 0.2, max = 10)
     /// 
     /// **default**: 1
-    public var lineWidth: CGFloat
+    open var lineWidth: CGFloat
     {
         get
         {
@@ -48,14 +48,14 @@ public class LineRadarChartDataSet: LineScatterCandleChartDataSet
         }
     }
     
-    public var isDrawFilledEnabled: Bool
+    open var isDrawFilledEnabled: Bool
     {
         return drawFilledEnabled
     }
     
     // MARK: NSCopying
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject
+    open override func copyWithZone(_ zone: NSZone?) -> AnyObject
     {
         let copy = super.copyWithZone(zone) as! LineRadarChartDataSet
         copy.fillColor = fillColor

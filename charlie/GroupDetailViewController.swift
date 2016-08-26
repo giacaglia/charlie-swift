@@ -23,8 +23,8 @@ class GroupDetailViewController: UIViewController {
     var happyAmount = 0.0
     var sadAmount = 0.0
     
-    var startDate:NSDate = NSDate()
-    var endDate:NSDate = NSDate()
+    var startDate:Date = Date()
+    var endDate:Date = Date()
     
     var currentTransactionSwipeID = ""
     var currentTransactionCell:SBGestureTableViewGroupCell!
@@ -36,13 +36,13 @@ class GroupDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
 
         groupTableView.tableFooterView = UIView();
 
         
         let sortProperties = [SortDescriptor(property: "name", ascending: true), SortDescriptor(property: "date", ascending: false)]
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate, self.endDate, transactionName)
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@ and name = %@", self.startDate as CVarArg, self.endDate as CVarArg, transactionName)
         transactionGroupItems = realm.objects(Transaction).filter(predicate).sorted(sortProperties)
         
         
@@ -66,7 +66,7 @@ class GroupDetailViewController: UIViewController {
         happyAmount = happyItems.sum("amount")
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let happyPercentage = self.calculateHappy()
@@ -80,21 +80,21 @@ class GroupDetailViewController: UIViewController {
 
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
       
         self.groupTableView.reloadData()
     }
     
     
-    func finishSwipe(tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int) {
-        let indexPath = tableView.indexPathForCell(cell)
+    func finishSwipe(_ tableView: SBGestureTableViewGroup, cell: SBGestureTableViewGroupCell, direction: Int) {
+        let indexPath = tableView.indexPath(for: cell)
         currentTransactionCell = cell
         print("Direction \(direction)")
         
-        currentTransactionSwipeID = transactionGroupItems[indexPath!.row]._id
+        currentTransactionSwipeID = transactionGroupItems[(indexPath! as NSIndexPath).row]._id
         realm.beginWrite()
-        transactionGroupItems[indexPath!.row].status = direction
+        transactionGroupItems[(indexPath! as NSIndexPath).row].status = direction
         tableView.removeCell(cell, duration: 0.3, completion: nil)
         try! realm.commitWrite()
         
@@ -103,17 +103,17 @@ class GroupDetailViewController: UIViewController {
         self.happyPercentage.text = "\(self.calculateHappy())%"
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "groupToDetail") {
-            let viewController = segue.destinationViewController as! showTransactionViewController
+            let viewController = segue.destination as! showTransactionViewController
             let indexPath = groupTableView.indexPathForSelectedRow
-            viewController.transaction = transactionGroupItems[indexPath!.row]
-            viewController.transactionIndex = indexPath!.row
+            viewController.transaction = transactionGroupItems[(indexPath! as NSIndexPath).row]
+            viewController.transactionIndex = (indexPath! as NSIndexPath).row
             viewController.sourceVC = "happy"
         }
     }
-    @IBAction func closeButtonPressed(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeButtonPressed(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -138,13 +138,13 @@ extension GroupDetailViewController {
 
 // TableView Methods
 extension GroupDetailViewController : UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return transactionGroupItems.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! SBGestureTableViewGroupCell
-        let trans = transactionGroupItems[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SBGestureTableViewGroupCell
+        let trans = transactionGroupItems[(indexPath as NSIndexPath).row]
         let dateString = cHelp.convertDateGroup(trans.date)
         let currencyString = cHelp.formatCurrency(trans.amount)
         cell.transactionDate.text = dateString
@@ -155,8 +155,8 @@ extension GroupDetailViewController : UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("groupToDetail", sender: self)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        performSegue(withIdentifier: "groupToDetail", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

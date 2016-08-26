@@ -17,31 +17,31 @@ import UIKit
 
 /// Implementation of the RadarChart, a "spidernet"-like chart. It works best
 /// when displaying 5-10 entries per DataSet.
-public class RadarChartView: PieRadarChartViewBase
+open class RadarChartView: PieRadarChartViewBase
 {
     /// width of the web lines that come from the center.
-    public var webLineWidth = CGFloat(1.5)
+    open var webLineWidth = CGFloat(1.5)
     
     /// width of the web lines that are in between the lines coming from the center
-    public var innerWebLineWidth = CGFloat(0.75)
+    open var innerWebLineWidth = CGFloat(0.75)
     
     /// color for the web lines that come from the center
-    public var webColor = UIColor(red: 122/255.0, green: 122/255.0, blue: 122.0/255.0, alpha: 1.0)
+    open var webColor = UIColor(red: 122/255.0, green: 122/255.0, blue: 122.0/255.0, alpha: 1.0)
     
     /// color for the web lines in between the lines that come from the center.
-    public var innerWebColor = UIColor(red: 122/255.0, green: 122/255.0, blue: 122.0/255.0, alpha: 1.0)
+    open var innerWebColor = UIColor(red: 122/255.0, green: 122/255.0, blue: 122.0/255.0, alpha: 1.0)
     
     /// transparency the grid is drawn with (0.0 - 1.0)
-    public var webAlpha: CGFloat = 150.0 / 255.0
+    open var webAlpha: CGFloat = 150.0 / 255.0
     
     /// flag indicating if the web lines should be drawn or not
-    public var drawWeb = true
+    open var drawWeb = true
     
     /// the object reprsenting the y-axis labels
-    private var _yAxis: ChartYAxis!
+    fileprivate var _yAxis: ChartYAxis!
     
     /// the object representing the x-axis labels
-    private var _xAxis: ChartXAxis!
+    fileprivate var _xAxis: ChartXAxis!
     
     internal var _yAxisRenderer: ChartYAxisRendererRadarChart!
     internal var _xAxisRenderer: ChartXAxisRendererRadarChart!
@@ -60,7 +60,7 @@ public class RadarChartView: PieRadarChartViewBase
     {
         super.initialize()
         
-        _yAxis = ChartYAxis(position: .Left)
+        _yAxis = ChartYAxis(position: .left)
         _xAxis = ChartXAxis()
         _xAxis.spaceBetweenLabels = 0
         
@@ -74,8 +74,8 @@ public class RadarChartView: PieRadarChartViewBase
     {
         super.calcMinMax()
         
-        let minLeft = _data.getYMin(.Left)
-        let maxLeft = _data.getYMax(.Left)
+        let minLeft = _data.getYMin(.left)
+        let maxLeft = _data.getYMax(.left)
         
         _chartXMax = Double(_data.xVals.count) - 1.0
         _deltaX = CGFloat(abs(_chartXMax - _chartXMin))
@@ -121,7 +121,7 @@ public class RadarChartView: PieRadarChartViewBase
         _yAxis.axisRange = abs(_yAxis.axisMaximum - _yAxis.axisMinimum)
     }
 
-    public override func getMarkerPosition(entry entry: ChartDataEntry, highlight: ChartHighlight) -> CGPoint
+    open override func getMarkerPosition(entry: ChartDataEntry, highlight: ChartHighlight) -> CGPoint
     {
         let angle = self.sliceAngle * CGFloat(entry.xIndex) + self.rotationAngle
         let val = CGFloat(entry.value) * self.factor
@@ -133,7 +133,7 @@ public class RadarChartView: PieRadarChartViewBase
         return p
     }
     
-    public override func notifyDataSetChanged()
+    open override func notifyDataSetChanged()
     {
         if (_dataNotSet)
         {
@@ -157,9 +157,9 @@ public class RadarChartView: PieRadarChartViewBase
         setNeedsDisplay()
     }
     
-    public override func drawRect(rect: CGRect)
+    open override func draw(_ rect: CGRect)
     {
-        super.drawRect(rect)
+        super.draw(rect)
 
         if (_dataNotSet)
         {
@@ -196,7 +196,7 @@ public class RadarChartView: PieRadarChartViewBase
     }
 
     /// - returns: the factor that is needed to transform values into pixels.
-    public var factor: CGFloat
+    open var factor: CGFloat
     {
         let content = _viewPortHandler.contentRect
         return min(content.width / 2.0, content.height / 2.0)
@@ -204,19 +204,19 @@ public class RadarChartView: PieRadarChartViewBase
     }
 
     /// - returns: the angle that each slice in the radar chart occupies.
-    public var sliceAngle: CGFloat
+    open var sliceAngle: CGFloat
     {
         return 360.0 / CGFloat(_data.xValCount)
     }
 
-    public override func indexForAngle(angle: CGFloat) -> Int
+    open override func indexForAngle(_ angle: CGFloat) -> Int
     {
         // take the current angle of the chart into consideration
         let a = ChartUtils.normalizedAngleFromAngle(angle - self.rotationAngle)
         
         let sliceAngle = self.sliceAngle
         
-        for (var i = 0; i < _data.xValCount; i++)
+        for (i in 0 ..< _data.xValCount)
         {
             if (sliceAngle * CGFloat(i + 1) - sliceAngle / 2.0 > a)
             {
@@ -228,13 +228,13 @@ public class RadarChartView: PieRadarChartViewBase
     }
 
     /// - returns: the object that represents all y-labels of the RadarChart.
-    public var yAxis: ChartYAxis
+    open var yAxis: ChartYAxis
     {
         return _yAxis
     }
 
     /// - returns: the object that represents all x-labels that are placed around the RadarChart.
-    public var xAxis: ChartXAxis
+    open var xAxis: ChartXAxis
     {
         return _xAxis
     }
@@ -249,18 +249,18 @@ public class RadarChartView: PieRadarChartViewBase
         return _xAxis.isEnabled && _xAxis.isDrawLabelsEnabled ? _xAxis.labelWidth : 10.0
     }
 
-    public override var radius: CGFloat
+    open override var radius: CGFloat
     {
         let content = _viewPortHandler.contentRect
         return min(content.width / 2.0, content.height / 2.0)
     }
 
     /// - returns: the maximum value this chart can display on it's y-axis.
-    public override var chartYMax: Double { return _yAxis.axisMaximum; }
+    open override var chartYMax: Double { return _yAxis.axisMaximum; }
     
     /// - returns: the minimum value this chart can display on it's y-axis.
-    public override var chartYMin: Double { return _yAxis.axisMinimum; }
+    open override var chartYMin: Double { return _yAxis.axisMinimum; }
     
     /// - returns: the range of y-values this chart can display.
-    public var yRange: Double { return _yAxis.axisRange}
+    open var yRange: Double { return _yAxis.axisRange}
 }

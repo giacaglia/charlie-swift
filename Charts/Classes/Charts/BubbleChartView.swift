@@ -12,16 +12,16 @@
 import Foundation
 import CoreGraphics
 
-public class BubbleChartView: BarLineChartViewBase, BubbleChartRendererDelegate
+open class BubbleChartView: BarLineChartViewBase, BubbleChartRendererDelegate
 {
-    public override func initialize()
+    open override func initialize()
     {
         super.initialize()
         
         renderer = BubbleChartRenderer(delegate: self, animator: _animator, viewPortHandler: _viewPortHandler)
     }
     
-    public override func calcMinMax()
+    open override func calcMinMax()
     {
         super.calcMinMax()
         
@@ -58,47 +58,47 @@ public class BubbleChartView: BarLineChartViewBase, BubbleChartRendererDelegate
 
     // MARK: - BubbleChartRendererDelegate
     
-    public func bubbleChartRendererData(renderer: BubbleChartRenderer) -> BubbleChartData!
+    open func bubbleChartRendererData(_ renderer: BubbleChartRenderer) -> BubbleChartData!
     {
         return _data as! BubbleChartData!
     }
     
-    public func bubbleChartRenderer(renderer: BubbleChartRenderer, transformerForAxis which: ChartYAxis.AxisDependency) -> ChartTransformer!
+    open func bubbleChartRenderer(_ renderer: BubbleChartRenderer, transformerForAxis which: ChartYAxis.AxisDependency) -> ChartTransformer!
     {
         return getTransformer(which)
     }
     
-    public func bubbleChartDefaultRendererValueFormatter(renderer: BubbleChartRenderer) -> NSNumberFormatter!
+    open func bubbleChartDefaultRendererValueFormatter(_ renderer: BubbleChartRenderer) -> NumberFormatter!
     {
         return self._defaultValueFormatter
     }
     
-    public func bubbleChartRendererChartYMax(renderer: BubbleChartRenderer) -> Double
+    open func bubbleChartRendererChartYMax(_ renderer: BubbleChartRenderer) -> Double
     {
         return self.chartYMax
     }
     
-    public func bubbleChartRendererChartYMin(renderer: BubbleChartRenderer) -> Double
+    open func bubbleChartRendererChartYMin(_ renderer: BubbleChartRenderer) -> Double
     {
         return self.chartYMin
     }
     
-    public func bubbleChartRendererChartXMax(renderer: BubbleChartRenderer) -> Double
+    open func bubbleChartRendererChartXMax(_ renderer: BubbleChartRenderer) -> Double
     {
         return self.chartXMax
     }
     
-    public func bubbleChartRendererChartXMin(renderer: BubbleChartRenderer) -> Double
+    open func bubbleChartRendererChartXMin(_ renderer: BubbleChartRenderer) -> Double
     {
         return self.chartXMin
     }
     
-    public func bubbleChartRendererMaxVisibleValueCount(renderer: BubbleChartRenderer) -> Int
+    open func bubbleChartRendererMaxVisibleValueCount(_ renderer: BubbleChartRenderer) -> Int
     {
         return self.maxVisibleValueCount
     }
     
-    public func bubbleChartRendererXValCount(renderer: BubbleChartRenderer) -> Int
+    open func bubbleChartRendererXValCount(_ renderer: BubbleChartRenderer) -> Int
     {
         return _data.xValCount
     }

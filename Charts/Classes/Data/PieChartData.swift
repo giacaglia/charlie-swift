@@ -13,7 +13,7 @@
 
 import Foundation
 
-public class PieChartData: ChartData
+open class PieChartData: ChartData
 {
     public override init()
     {
@@ -49,7 +49,7 @@ public class PieChartData: ChartData
         }
     }
     
-    public override func getDataSetByIndex(index: Int) -> ChartDataSet?
+    open override func getDataSetByIndex(_ index: Int) -> ChartDataSet?
     {
         if (index != 0)
         {
@@ -58,7 +58,7 @@ public class PieChartData: ChartData
         return super.getDataSetByIndex(index)
     }
     
-    public override func getDataSetByLabel(label: String, ignorecase: Bool) -> ChartDataSet?
+    open override func getDataSetByLabel(_ label: String, ignorecase: Bool) -> ChartDataSet?
     {
         if (dataSets.count == 0 || dataSets[0].label == nil)
         {
@@ -67,7 +67,7 @@ public class PieChartData: ChartData
         
         if (ignorecase)
         {
-            if (label.caseInsensitiveCompare(dataSets[0].label!) == NSComparisonResult.OrderedSame)
+            if (label.caseInsensitiveCompare(dataSets[0].label!) == ComparisonResult.orderedSame)
             {
                 return dataSets[0]
             }

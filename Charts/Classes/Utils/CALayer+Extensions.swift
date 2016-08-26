@@ -13,12 +13,12 @@ import QuartzCore
 
 extension CALayer {
     
-    public func renderInOptionalContext(ctx: CGContext?) {
+    public func renderInOptionalContext(_ ctx: CGContext?) {
         
         guard let ctx = ctx else {
             return
         }
         
-        renderInContext(ctx)
+        render(in: ctx)
     }
 }

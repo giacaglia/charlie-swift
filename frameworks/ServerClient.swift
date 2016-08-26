@@ -10,17 +10,17 @@ import Foundation
 
 public final class ServerClient {
     
-    public static var urlTimeout: NSTimeInterval = 30
+    public static var urlTimeout: TimeInterval = 30
     
     // MARK: Internal OperationQueue
-    private let operationQueue : NSOperationQueue = {
-        let opQueue = NSOperationQueue()
+    fileprivate let operationQueue : OperationQueue = {
+        let opQueue = OperationQueue()
         opQueue.maxConcurrentOperationCount = 5
         return opQueue
     }()
     
     // MARK: - Singleton
-    private static let sharedInstance = ServerClient()
+    fileprivate static let sharedInstance = ServerClient()
     
     // MARK: - Making Requests
     /**
@@ -32,11 +32,11 @@ public final class ServerClient {
 
     - returns: NSOperation
     */
-    public class func performRequest(request: ServerRequest, delayedStart: Bool = false, completion:(response: ServerResponse) -> Void) -> NSOperation {
+    public class func performRequest(_ request: ServerRequest, delayedStart: Bool = false, completion:@escaping (_ response: ServerResponse) -> Void) -> Operation {
         let op = ServerOperation(request: request)
         op.completionBlock = { [unowned op] in
-            if op.cancelled == false {
-                dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+            if op.isCancelled == false {
+                DispatchQueue.main.sync(execute: { () -> Void in
                     completion(response: op.response)
                 })
             }
@@ -56,9 +56,9 @@ public final class ServerClient {
     
     - returns: NSTimer
     */
-    public class func performRepeatingRequest(request: ServerRequest, timeInterval:NSTimeInterval, completion:(response: ServerResponse) -> Void) -> NSTimer {
-        let timer = NSTimer.schedule(repeatInterval: timeInterval, handler:{ nTimer in
-            if nTimer.valid {
+    public class func performRepeatingRequest(_ request: ServerRequest, timeInterval:TimeInterval, completion:@escaping (_ response: ServerResponse) -> Void) -> Timer {
+        let timer = Timer.schedule(repeatInterval: timeInterval, handler:{ nTimer in
+            if nTimer.isValid {
                 ServerClient.performRequest(request, completion:completion)
             }
         })
@@ -70,14 +70,14 @@ public final class ServerClient {
     
     - parameter operations: The operations to begin executing.
     */
-    public class func beginOperations(operations: [NSOperation]) {
+    public class func beginOperations(_ operations: [Operation]) {
         for op in operations {
             ServerClient.enQueueOperation(op)
         }
     }
     
     // MARK: NSOperationQueue convenience
-    private class func enQueueOperation(operation: NSOperation) {
+    fileprivate class func enQueueOperation(_ operation: Operation) {
         self.sharedInstance.operationQueue.addOperation(operation)
     }
 }

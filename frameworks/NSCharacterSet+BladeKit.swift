@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension NSCharacterSet {
+extension CharacterSet {
     
     // Determine if a given Character is contained in this set
-    public func containsCharacter(character: Character) -> Bool {
+    public func containsCharacter(_ character: Character) -> Bool {
         let string = String(character)
         let start = string.startIndex
         let end = string.endIndex
-        let result = string.rangeOfCharacterFromSet(self, options: [], range: start..<end)
+        let result = string.rangeOfCharacter(from: self, options: [], range: start..<end)
         return result != nil
     }
 }

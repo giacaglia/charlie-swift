@@ -15,85 +15,85 @@
 import Foundation
 import UIKit
 
-public class ChartLegend: ChartComponentBase
+open class ChartLegend: ChartComponentBase
 {
     @objc
     public enum ChartLegendPosition: Int
     {
-        case RightOfChart
-        case RightOfChartCenter
-        case RightOfChartInside
-        case LeftOfChart
-        case LeftOfChartCenter
-        case LeftOfChartInside
-        case BelowChartLeft
-        case BelowChartRight
-        case BelowChartCenter
-        case PiechartCenter
+        case rightOfChart
+        case rightOfChartCenter
+        case rightOfChartInside
+        case leftOfChart
+        case leftOfChartCenter
+        case leftOfChartInside
+        case belowChartLeft
+        case belowChartRight
+        case belowChartCenter
+        case piechartCenter
     }
     
     @objc
     public enum ChartLegendForm: Int
     {
-        case Square
-        case Circle
-        case Line
+        case square
+        case circle
+        case line
     }
     
     @objc
     public enum ChartLegendDirection: Int
     {
-        case LeftToRight
-        case RightToLeft
+        case leftToRight
+        case rightToLeft
     }
 
     /// the legend colors array, each color is for the form drawn at the same index
-    public var colors = [UIColor?]()
+    open var colors = [UIColor?]()
     
     // the legend text array. a nil label will start a group.
-    public var labels = [String?]()
+    open var labels = [String?]()
     
     internal var _extraColors = [UIColor?]()
     internal var _extraLabels = [String?]()
     
     /// colors that will be appended to the end of the colors array after calculating the legend.
-    public var extraColors: [UIColor?] { return _extraColors; }
+    open var extraColors: [UIColor?] { return _extraColors; }
     
     /// labels that will be appended to the end of the labels array after calculating the legend. a nil label will start a group.
-    public var extraLabels: [String?] { return _extraLabels; }
+    open var extraLabels: [String?] { return _extraLabels; }
     
     /// Are the legend labels/colors a custom value or auto calculated? If false, then it's auto, if true, then custom.
     /// 
     /// **default**: false (automatic legend)
-    private var _isLegendCustom = false
+    fileprivate var _isLegendCustom = false
 
-    public var position = ChartLegendPosition.BelowChartLeft
-    public var direction = ChartLegendDirection.LeftToRight
+    open var position = ChartLegendPosition.belowChartLeft
+    open var direction = ChartLegendDirection.leftToRight
 
-    public var font: UIFont = UIFont.systemFontOfSize(10.0)
-    public var textColor = UIColor.blackColor()
+    open var font: UIFont = UIFont.systemFont(ofSize: 10.0)
+    open var textColor = UIColor.black
 
-    public var form = ChartLegendForm.Square
-    public var formSize = CGFloat(8.0)
-    public var formLineWidth = CGFloat(1.5)
+    open var form = ChartLegendForm.square
+    open var formSize = CGFloat(8.0)
+    open var formLineWidth = CGFloat(1.5)
     
-    public var xEntrySpace = CGFloat(6.0)
-    public var yEntrySpace = CGFloat(0.0)
-    public var formToTextSpace = CGFloat(5.0)
-    public var stackSpace = CGFloat(3.0)
+    open var xEntrySpace = CGFloat(6.0)
+    open var yEntrySpace = CGFloat(0.0)
+    open var formToTextSpace = CGFloat(5.0)
+    open var stackSpace = CGFloat(3.0)
     
     /// Sets the x offset fo the legend.
     /// Higher offset means the legend as a whole will be placed further away from the left/right.
     /// Positive value will move the legend to the right when LTR, and to the left when RTL.
-    public var xOffset = CGFloat(5.0)
+    open var xOffset = CGFloat(5.0)
     
     /// Sets the y offset fo the legend.
     /// Higher offset means the legend as a whole will be placed further away from the top.
-    public var yOffset = CGFloat(7.0)
+    open var yOffset = CGFloat(7.0)
     
-    public var calculatedLabelSizes = [CGSize]()
-    public var calculatedLabelBreakPoints = [Bool]()
-    public var calculatedLineSizes = [CGSize]()
+    open var calculatedLabelSizes = [CGSize]()
+    open var calculatedLabelBreakPoints = [Bool]()
+    open var calculatedLineSizes = [CGSize]()
     
     public override init()
     {
@@ -116,20 +116,20 @@ public class ChartLegend: ChartComponentBase
         self.labelsObjc = labels
     }
     
-    public func getMaximumEntrySize(font: UIFont) -> CGSize
+    open func getMaximumEntrySize(_ font: UIFont) -> CGSize
     {
         var maxW = CGFloat(0.0)
         var maxH = CGFloat(0.0)
         
         var labels = self.labels
-        for (var i = 0; i < labels.count; i++)
+        for (i in 0 ..< labels.count)
         {
             if (labels[i] == nil)
             {
                 continue
             }
             
-            let size = (labels[i] as NSString!).sizeWithAttributes([NSFontAttributeName: font])
+            let size = (labels[i] as NSString!).size(attributes: [NSFontAttributeName: font])
             
             if (size.width > maxW)
             {
@@ -147,18 +147,18 @@ public class ChartLegend: ChartComponentBase
         )
     }
     
-    public func getLabel(index: Int) -> String?
+    open func getLabel(_ index: Int) -> String?
     {
         return labels[index]
     }
     
-    public func getFullSize(labelFont: UIFont) -> CGSize
+    open func getFullSize(_ labelFont: UIFont) -> CGSize
     {
         var width = CGFloat(0.0)
         var height = CGFloat(0.0)
         
         var labels = self.labels
-        for (var i = 0, count = labels.count; i < count; i++)
+        for (var i = 0, count = labels.count; i < count; i += 1)
         {
             if (labels[i] != nil)
             {
@@ -168,7 +168,7 @@ public class ChartLegend: ChartComponentBase
                     width += formSize + formToTextSpace
                 }
                 
-                let size = (labels[i] as NSString!).sizeWithAttributes([NSFontAttributeName: labelFont])
+                let size = (labels[i] as NSString!).size(attributes: [NSFontAttributeName: labelFont])
                 
                 width += size.width
                 height += size.height
@@ -193,10 +193,10 @@ public class ChartLegend: ChartComponentBase
         return CGSize(width: width, height: height)
     }
 
-    public var neededWidth = CGFloat(0.0)
-    public var neededHeight = CGFloat(0.0)
-    public var textWidthMax = CGFloat(0.0)
-    public var textHeightMax = CGFloat(0.0)
+    open var neededWidth = CGFloat(0.0)
+    open var neededHeight = CGFloat(0.0)
+    open var textWidthMax = CGFloat(0.0)
+    open var textHeightMax = CGFloat(0.0)
     
     /// flag that indicates if word wrapping is enabled
     /// this is currently supported only for: `BelowChartLeft`, `BelowChartRight`, `BelowChartCenter`.
@@ -204,10 +204,10 @@ public class ChartLegend: ChartComponentBase
     /// you may want to set maxSizePercent when word wrapping, to set the point where the text wraps.
     /// 
     /// **default**: false
-    public var wordWrapEnabled = false
+    open var wordWrapEnabled = false
     
     /// if this is set, then word wrapping the legend is enabled.
-    public var isWordWrapEnabled: Bool { return wordWrapEnabled }
+    open var isWordWrapEnabled: Bool { return wordWrapEnabled }
 
     /// The maximum relative size out of the whole chart view in percent.
     /// If the legend is to the right/left of the chart, then this affects the width of the legend.
@@ -215,15 +215,15 @@ public class ChartLegend: ChartComponentBase
     /// If the legend is the center of the piechart, then this defines the size of the rectangular bounds out of the size of the "hole".
     /// 
     /// **default**: 0.95 (95%)
-    public var maxSizePercent: CGFloat = 0.95
+    open var maxSizePercent: CGFloat = 0.95
     
-    public func calculateDimensions(labelFont labelFont: UIFont, viewPortHandler: ChartViewPortHandler)
+    open func calculateDimensions(labelFont: UIFont, viewPortHandler: ChartViewPortHandler)
     {
-        if (position == .RightOfChart
-            || position == .RightOfChartCenter
-            || position == .LeftOfChart
-            || position == .LeftOfChartCenter
-            || position == .PiechartCenter)
+        if (position == .rightOfChart
+            || position == .rightOfChartCenter
+            || position == .leftOfChart
+            || position == .leftOfChartCenter
+            || position == .piechartCenter)
         {
             let maxEntrySize = getMaximumEntrySize(labelFont)
             let fullSize = getFullSize(labelFont)
@@ -233,9 +233,9 @@ public class ChartLegend: ChartComponentBase
             textWidthMax = maxEntrySize.width
             textHeightMax = maxEntrySize.height
         }
-        else if (position == .BelowChartLeft
-            || position == .BelowChartRight
-            || position == .BelowChartCenter)
+        else if (position == .belowChartLeft
+            || position == .belowChartRight
+            || position == .belowChartCenter)
         {
             var labels = self.labels
             var colors = self.colors
@@ -253,15 +253,15 @@ public class ChartLegend: ChartComponentBase
             // Prepare arrays for calculated layout
             if (calculatedLabelSizes.count != labelCount)
             {
-                calculatedLabelSizes = [CGSize](count: labelCount, repeatedValue: CGSize())
+                calculatedLabelSizes = [CGSize](repeating: CGSize(), count: labelCount)
             }
             
             if (calculatedLabelBreakPoints.count != labelCount)
             {
-                calculatedLabelBreakPoints = [Bool](count: labelCount, repeatedValue: false)
+                calculatedLabelBreakPoints = [Bool](repeating: false, count: labelCount)
             }
             
-            calculatedLineSizes.removeAll(keepCapacity: true)
+            calculatedLineSizes.removeAll(keepingCapacity: true)
             
             // Start calculating layout
             
@@ -271,7 +271,7 @@ public class ChartLegend: ChartComponentBase
             var requiredWidth: CGFloat = 0.0
             var stackedStartIndex: Int = -1
             
-            for (var i = 0; i < labelCount; i++)
+            for (i in 0 ..< labelCount)
             {
                 let drawingForm = colors[i] != nil
                 
@@ -291,7 +291,7 @@ public class ChartLegend: ChartComponentBase
                 // grouped forms have null labels
                 if (labels[i] != nil)
                 {
-                    calculatedLabelSizes[i] = (labels[i] as NSString!).sizeWithAttributes(labelAttrs)
+                    calculatedLabelSizes[i] = (labels[i] as NSString!).size(attributes: labelAttrs)
                     requiredWidth += drawingForm ? formToTextSpace + formSize : 0.0
                     requiredWidth += calculatedLabelSizes[i].width
                 }
@@ -365,7 +365,7 @@ public class ChartLegend: ChartComponentBase
     
     /// colors and labels that will be appended to the end of the auto calculated colors and labels after calculating the legend.
     /// (if the legend has already been calculated, you will need to call notifyDataSetChanged() to let the changes take effect)
-    public func setExtra(colors colors: [UIColor?], labels: [String?])
+    open func setExtra(colors: [UIColor?], labels: [String?])
     {
         self._extraLabels = labels
         self._extraColors = colors
@@ -378,7 +378,7 @@ public class ChartLegend: ChartComponentBase
     /// * A nil color will avoid drawing a form, and a clearColor will leave a space for the form.
     /// This will disable the feature that automatically calculates the legend labels and colors from the datasets.
     /// Call `resetCustom(...)` to re-enable automatic calculation (and then `notifyDataSetChanged()` is needed).
-    public func setCustom(colors colors: [UIColor?], labels: [String?])
+    open func setCustom(colors: [UIColor?], labels: [String?])
     {
         self.labels = labels
         self.colors = colors
@@ -386,14 +386,14 @@ public class ChartLegend: ChartComponentBase
     }
     
     /// Calling this will disable the custom legend labels (set by `setLegend(...)`). Instead, the labels will again be calculated automatically (after `notifyDataSetChanged()` is called).
-    public func resetCustom()
+    open func resetCustom()
     {
         _isLegendCustom = false
     }
     
     /// **default**: false (automatic legend)
     /// - returns: true if a custom legend labels and colors has been set
-    public var isLegendCustom: Bool
+    open var isLegendCustom: Bool
     {
         return _isLegendCustom
     }
@@ -401,14 +401,14 @@ public class ChartLegend: ChartComponentBase
     /// MARK: - ObjC compatibility
     
     /// colors that will be appended to the end of the colors array after calculating the legend.
-    public var extraColorsObjc: [NSObject] { return ChartUtils.bridgedObjCGetUIColorArray(swift: _extraColors); }
+    open var extraColorsObjc: [NSObject] { return ChartUtils.bridgedObjCGetUIColorArray(swift: _extraColors); }
     
     /// labels that will be appended to the end of the labels array after calculating the legend. a nil label will start a group.
-    public var extraLabelsObjc: [NSObject] { return ChartUtils.bridgedObjCGetStringArray(swift: _extraLabels); }
+    open var extraLabelsObjc: [NSObject] { return ChartUtils.bridgedObjCGetStringArray(swift: _extraLabels); }
     
     /// the legend colors array, each color is for the form drawn at the same index
     /// (ObjC bridging functions, as Swift 1.2 does not bridge optionals in array to `NSNull`s)
-    public var colorsObjc: [NSObject]
+    open var colorsObjc: [NSObject]
     {
         get { return ChartUtils.bridgedObjCGetUIColorArray(swift: colors); }
         set { self.colors = ChartUtils.bridgedObjCGetUIColorArray(objc: newValue); }
@@ -416,7 +416,7 @@ public class ChartLegend: ChartComponentBase
     
     // the legend text array. a nil label will start a group.
     /// (ObjC bridging functions, as Swift 1.2 does not bridge optionals in array to `NSNull`s)
-    public var labelsObjc: [NSObject]
+    open var labelsObjc: [NSObject]
     {
         get { return ChartUtils.bridgedObjCGetStringArray(swift: labels); }
         set { self.labels = ChartUtils.bridgedObjCGetStringArray(objc: newValue); }
@@ -424,7 +424,7 @@ public class ChartLegend: ChartComponentBase
     
     /// colors and labels that will be appended to the end of the auto calculated colors and labels after calculating the legend.
     /// (if the legend has already been calculated, you will need to call `notifyDataSetChanged()` to let the changes take effect)
-    public func setExtra(colors colors: [NSObject], labels: [NSObject])
+    open func setExtra(colors: [NSObject], labels: [NSObject])
     {
         if (colors.count != labels.count)
         {
@@ -442,7 +442,7 @@ public class ChartLegend: ChartComponentBase
     /// * A nil color will avoid drawing a form, and a clearColor will leave a space for the form.
     /// This will disable the feature that automatically calculates the legend labels and colors from the datasets.
     /// Call `resetLegendToAuto(...)` to re-enable automatic calculation, and then if needed - call `notifyDataSetChanged()` on the chart to make it refresh the data.
-    public func setCustom(colors colors: [NSObject], labels: [NSObject])
+    open func setCustom(colors: [NSObject], labels: [NSObject])
     {
         if (colors.count != labels.count)
         {

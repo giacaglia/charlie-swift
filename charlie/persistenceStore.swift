@@ -20,7 +20,7 @@ class persistenceStore {
     }
     
     func isActive() -> Bool {
-        if var _:NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil) {
+        if var _:URL = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
             print("True")
             return true
         }

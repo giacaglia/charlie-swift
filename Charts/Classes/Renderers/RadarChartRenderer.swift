@@ -15,7 +15,7 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
+open class RadarChartRenderer: LineScatterCandleRadarChartRenderer
 {
     internal weak var _chart: RadarChartView!
 
@@ -26,7 +26,7 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         _chart = chart
     }
     
-    public override func drawData(context context: CGContext?)
+    open override func drawData(context: CGContext?)
     {
         if (_chart !== nil)
         {
@@ -45,9 +45,9 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         }
     }
     
-    internal func drawDataSet(context context: CGContext?, dataSet: RadarChartDataSet)
+    internal func drawDataSet(context: CGContext?, dataSet: RadarChartDataSet)
     {
-        CGContextSaveGState(context)
+        context?.saveGState()
         
         let sliceangle = _chart.sliceAngle
         
@@ -56,10 +56,10 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         
         let center = _chart.centerOffsets
         var entries = dataSet.yVals
-        let path = CGPathCreateMutable()
+        let path = CGMutablePath()
         var hasMovedToPoint = false
         
-        for (var j = 0; j < entries.count; j++)
+        for (j in 0 ..< entries.count)
         {
             let e = entries[j]
             
@@ -81,35 +81,35 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
             }
         }
         
-        CGPathCloseSubpath(path)
+        path.closeSubpath()
         
         // draw filled
         if (dataSet.isDrawFilledEnabled)
         {
-            CGContextSetFillColorWithColor(context, dataSet.colorAt(0).CGColor)
-            CGContextSetAlpha(context, dataSet.fillAlpha)
+            context.setFillColor(dataSet.colorAt(0).cgColor)
+            context?.setAlpha(dataSet.fillAlpha)
             
-            CGContextBeginPath(context)
-            CGContextAddPath(context, path)
-            CGContextFillPath(context)
+            context?.beginPath()
+            context?.addPath(path)
+            context?.fillPath()
         }
         
         // draw the line (only if filled is disabled or alpha is below 255)
         if (!dataSet.isDrawFilledEnabled || dataSet.fillAlpha < 1.0)
         {
-            CGContextSetStrokeColorWithColor(context, dataSet.colorAt(0).CGColor)
-            CGContextSetLineWidth(context, dataSet.lineWidth)
-            CGContextSetAlpha(context, 1.0)
+            context.setStrokeColor(dataSet.colorAt(0).cgColor)
+            context?.setLineWidth(dataSet.lineWidth)
+            context?.setAlpha(1.0)
             
-            CGContextBeginPath(context)
-            CGContextAddPath(context, path)
-            CGContextStrokePath(context)
+            context?.beginPath()
+            context?.addPath(path)
+            context?.strokePath()
         }
         
-        CGContextRestoreGState(context)
+        context?.restoreGState()
     }
     
-    public override func drawValues(context context: CGContext?)
+    open override func drawValues(context: CGContext?)
     {
         if (_chart.data === nil)
         {
@@ -129,7 +129,7 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         
         let yoffset = CGFloat(5.0)
         
-        for (var i = 0, count = data.dataSetCount; i < count; i++)
+        for (var i = 0, count = data.dataSetCount; i < count; i += 1)
         {
             let dataSet = data.getDataSetByIndex(i) as! RadarChartDataSet
             
@@ -140,7 +140,7 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
             
             var entries = dataSet.yVals
             
-            for (var j = 0; j < entries.count; j++)
+            for (var j = 0; j < entries.count; j += 1)
             {
                 let e = entries[j]
                 
@@ -155,23 +155,23 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
                     formatter = defaultValueFormatter
                 }
                 
-                ChartUtils.drawText(context: context, text: formatter!.stringFromNumber(e.value)!, point: CGPoint(x: p.x, y: p.y - yoffset - valueFont.lineHeight), align: .Center, attributes: [NSFontAttributeName: valueFont, NSForegroundColorAttributeName: valueTextColor])
+                ChartUtils.drawText(context: context, text: formatter!.string(from: e.value)!, point: CGPoint(x: p.x, y: p.y - yoffset - valueFont.lineHeight), align: .center, attributes: [NSFontAttributeName: valueFont, NSForegroundColorAttributeName: valueTextColor])
             }
         }
     }
     
-    public override func drawExtras(context context: CGContext?)
+    open override func drawExtras(context: CGContext?)
     {
         drawWeb(context: context)
     }
     
-    private var _webLineSegmentsBuffer = [CGPoint](count: 2, repeatedValue: CGPoint())
+    fileprivate var _webLineSegmentsBuffer = [CGPoint](repeating: CGPoint(), count: 2)
     
-    internal func drawWeb(context context: CGContext?)
+    internal func drawWeb(context: CGContext?)
     {
         let sliceangle = _chart.sliceAngle
         
-        CGContextSaveGState(context)
+        context?.saveGState()
         
         // calculate the factor that is needed for transforming the value to
         // pixels
@@ -181,11 +181,11 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         let center = _chart.centerOffsets
         
         // draw the web lines that come from the center
-        CGContextSetLineWidth(context, _chart.webLineWidth)
-        CGContextSetStrokeColorWithColor(context, _chart.webColor.CGColor)
-        CGContextSetAlpha(context, _chart.webAlpha)
+        context?.setLineWidth(_chart.webLineWidth)
+        context?.setStrokeColor(_chart.webColor.cgColor)
+        context?.setAlpha(_chart.webAlpha)
         
-        for (var i = 0, xValCount = _chart.data!.xValCount; i < xValCount; i++)
+        for (var i = 0, xValCount = _chart.data!.xValCount; i < xValCount; i += 1)
         {
             let p = ChartUtils.getPosition(center: center, dist: CGFloat(_chart.yRange) * factor, angle: sliceangle * CGFloat(i) + rotationangle)
             
@@ -198,15 +198,15 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         }
         
         // draw the inner-web
-        CGContextSetLineWidth(context, _chart.innerWebLineWidth)
-        CGContextSetStrokeColorWithColor(context, _chart.innerWebColor.CGColor)
-        CGContextSetAlpha(context, _chart.webAlpha)
+        context?.setLineWidth(_chart.innerWebLineWidth)
+        context?.setStrokeColor(_chart.innerWebColor.cgColor)
+        context?.setAlpha(_chart.webAlpha)
         
         let labelCount = _chart.yAxis.entryCount
         
-        for (var j = 0; j < labelCount; j++)
+        for (j in 0 ..< labelCount)
         {
-            for (var i = 0, xValCount = _chart.data!.xValCount; i < xValCount; i++)
+            for (var i = 0, xValCount = _chart.data!.xValCount; i < xValCount; i += 1)
             {
                 let r = CGFloat(_chart.yAxis.entries[j] - _chart.chartYMin) * factor
 
@@ -222,12 +222,12 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
             }
         }
         
-        CGContextRestoreGState(context)
+        context?.restoreGState()
     }
     
-    private var _highlightPtsBuffer = [CGPoint](count: 4, repeatedValue: CGPoint())
+    fileprivate var _highlightPtsBuffer = [CGPoint](repeating: CGPoint(), count: 4)
 
-    public override func drawHighlighted(context context: CGContext?, indices: [ChartHighlight])
+    open override func drawHighlighted(context: CGContext?, indices: [ChartHighlight])
     {
         if (_chart.data === nil)
         {
@@ -236,8 +236,8 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         
         let data = _chart.data as! RadarChartData
         
-        CGContextSaveGState(context)
-        CGContextSetLineWidth(context, data.highlightLineWidth)
+        context?.saveGState()
+        context?.setLineWidth(data.highlightLineWidth)
         if (data.highlightLineDashLengths != nil)
         {
             CGContextSetLineDash(context, data.highlightLineDashPhase, data.highlightLineDashLengths!, data.highlightLineDashLengths!.count)
@@ -252,7 +252,7 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
         
         let center = _chart.centerOffsets
         
-        for (var i = 0; i < indices.count; i++)
+        for (i in 0 ..< indices.count)
         {
             let set = _chart.data?.getDataSetByIndex(indices[i].dataSetIndex) as! RadarChartDataSet!
             
@@ -261,7 +261,7 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
                 continue
             }
             
-            CGContextSetStrokeColorWithColor(context, set.highlightColor.CGColor)
+            context.setStrokeColor(set.highlightColor.cgColor)
             
             // get the index to highlight
             let xIndex = indices[i].xIndex
@@ -293,6 +293,6 @@ public class RadarChartRenderer: LineScatterCandleRadarChartRenderer
                 horizontal: set.isHorizontalHighlightIndicatorEnabled, vertical: set.isVerticalHighlightIndicatorEnabled)
         }
         
-        CGContextRestoreGState(context)
+        context?.restoreGState()
     }
 }

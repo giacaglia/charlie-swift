@@ -14,6 +14,17 @@
 
 import Foundation
 import CoreGraphics
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 internal class ChartHighlighter
 {
@@ -29,7 +40,7 @@ internal class ChartHighlighter
     /// - parameter x:
     /// - parameter y:
     /// - returns:
-    internal func getHighlight(x x: Double, y: Double) -> ChartHighlight?
+    internal func getHighlight(x: Double, y: Double) -> ChartHighlight?
     {
         let xIndex = getXIndex(x)
         if (xIndex == -Int.max)
@@ -49,13 +60,13 @@ internal class ChartHighlighter
     /// Returns the corresponding x-index for a given touch-position in pixels.
     /// - parameter x:
     /// - returns:
-    internal func getXIndex(x: Double) -> Int
+    internal func getXIndex(_ x: Double) -> Int
     {
         // create an array of the touch-point
         var pt = CGPoint(x: x, y: 0.0)
         
         // take any transformer to determine the x-axis value
-        _chart?.getTransformer(ChartYAxis.AxisDependency.Left).pixelToValue(&pt)
+        _chart?.getTransformer(ChartYAxis.AxisDependency.left).pixelToValue(&pt)
         
         return Int(round(pt.x))
     }
@@ -65,14 +76,14 @@ internal class ChartHighlighter
     /// - parameter x:
     /// - parameter y:
     /// - returns:
-    internal func getDataSetIndex(xIndex xIndex: Int, x: Double, y: Double) -> Int
+    internal func getDataSetIndex(xIndex: Int, x: Double, y: Double) -> Int
     {
         let valsAtIndex = getSelectionDetailsAtIndex(xIndex)
         
-        let leftdist = ChartUtils.getMinimumDistance(valsAtIndex, val: y, axis: ChartYAxis.AxisDependency.Left)
-        let rightdist = ChartUtils.getMinimumDistance(valsAtIndex, val: y, axis: ChartYAxis.AxisDependency.Right)
+        let leftdist = ChartUtils.getMinimumDistance(valsAtIndex, val: y, axis: ChartYAxis.AxisDependency.left)
+        let rightdist = ChartUtils.getMinimumDistance(valsAtIndex, val: y, axis: ChartYAxis.AxisDependency.right)
         
-        let axis = leftdist < rightdist ? ChartYAxis.AxisDependency.Left : ChartYAxis.AxisDependency.Right
+        let axis = leftdist < rightdist ? ChartYAxis.AxisDependency.left : ChartYAxis.AxisDependency.right
         
         let dataSetIndex = ChartUtils.closestDataSetIndex(valsAtIndex, value: y, axis: axis)
         
@@ -82,12 +93,12 @@ internal class ChartHighlighter
     /// Returns a list of SelectionDetail object corresponding to the given xIndex.
     /// - parameter xIndex:
     /// - returns:
-    internal func getSelectionDetailsAtIndex(xIndex: Int) -> [ChartSelectionDetail]
+    internal func getSelectionDetailsAtIndex(_ xIndex: Int) -> [ChartSelectionDetail]
     {
         var vals = [ChartSelectionDetail]()
         var pt = CGPoint()
         
-        for (var i = 0, dataSetCount = _chart?.data?.dataSetCount; i < dataSetCount; i++)
+        for (var i = 0, dataSetCount = _chart?.data?.dataSetCount; i < dataSetCount; i += 1)
         {
             let dataSet = _chart!.data!.getDataSetByIndex(i)
             

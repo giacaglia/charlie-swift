@@ -14,10 +14,30 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class ChartDataSet: NSObject
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class ChartDataSet: NSObject
 {
-    public var colors = [UIColor]()
+    open var colors = [UIColor]()
     internal var _yVals: [ChartDataEntry]!
     internal var _yMax = Double(0.0)
     internal var _yMin = Double(0.0)
@@ -29,32 +49,32 @@ public class ChartDataSet: NSObject
     /// the last end value used for calcMinMax
     internal var _lastEnd: Int = 0
     
-    public var label: String? = "DataSet"
-    public var visible = true
-    public var drawValuesEnabled = true
+    open var label: String? = "DataSet"
+    open var visible = true
+    open var drawValuesEnabled = true
     
     /// the color used for the value-text
-    public var valueTextColor: UIColor = UIColor.blackColor()
+    open var valueTextColor: UIColor = UIColor.black
     
     /// the font for the value-text labels
-    public var valueFont: UIFont = UIFont.systemFontOfSize(7.0)
+    open var valueFont: UIFont = UIFont.systemFont(ofSize: 7.0)
     
     /// the formatter used to customly format the values
-    public var valueFormatter: NSNumberFormatter?
+    open var valueFormatter: NumberFormatter?
     
     /// the axis this DataSet should be plotted against.
-    public var axisDependency = ChartYAxis.AxisDependency.Left
+    open var axisDependency = ChartYAxis.AxisDependency.left
 
-    public var yVals: [ChartDataEntry] { return _yVals }
-    public var yValueSum: Double { return _yValueSum }
-    public var yMin: Double { return _yMin }
-    public var yMax: Double { return _yMax }
+    open var yVals: [ChartDataEntry] { return _yVals }
+    open var yValueSum: Double { return _yValueSum }
+    open var yMin: Double { return _yMin }
+    open var yMax: Double { return _yMax }
     
     /// if true, value highlighting is enabled
-    public var highlightEnabled = true
+    open var highlightEnabled = true
     
     /// - returns: true if value highlighting is enabled for this dataset
-    public var isHighlightEnabled: Bool { return highlightEnabled }
+    open var isHighlightEnabled: Bool { return highlightEnabled }
     
     public override init()
     {
@@ -81,13 +101,13 @@ public class ChartDataSet: NSObject
     }
     
     /// Use this method to tell the data set that the underlying data has changed
-    public func notifyDataSetChanged()
+    open func notifyDataSetChanged()
     {
         calcMinMax(start: _lastStart, end: _lastEnd)
         calcYValueSum()
     }
     
-    internal func calcMinMax(start start : Int, end: Int)
+    internal func calcMinMax(start : Int, end: Int)
     {
         let yValCount = _yVals.count
         
@@ -113,7 +133,7 @@ public class ChartDataSet: NSObject
         _yMin = DBL_MAX
         _yMax = -DBL_MAX
         
-        for (var i = start; i <= endValue; i++)
+        for (var i = start; i <= endValue; i += 1)
         {
             let e = _yVals[i]
             
@@ -137,30 +157,30 @@ public class ChartDataSet: NSObject
         }
     }
     
-    private func calcYValueSum()
+    fileprivate func calcYValueSum()
     {
         _yValueSum = 0
         
-        for var i = 0; i < _yVals.count; i++
+        for i in 0 ..< _yVals.count
         {
             _yValueSum += fabs(_yVals[i].value)
         }
     }
     
-    public var entryCount: Int { return _yVals!.count; }
+    open var entryCount: Int { return _yVals!.count; }
     
-    public func yValForXIndex(x: Int) -> Double
+    open func yValForXIndex(_ x: Int) -> Double
     {
         let e = self.entryForXIndex(x)
         
         if (e !== nil && e!.xIndex == x) { return e!.value }
-        else { return Double.NaN }
+        else { return Double.nan }
     }
     
     /// - returns: the first Entry object found at the given xIndex with binary search.
     /// If the no Entry at the specifed x-index is found, this method returns the Entry at the closest x-index. 
     /// nil if no Entry object at that index.
-    public func entryForXIndex(x: Int) -> ChartDataEntry?
+    open func entryForXIndex(_ x: Int) -> ChartDataEntry?
     {
         let index = self.entryIndex(xIndex: x)
         if (index > -1)
@@ -170,7 +190,7 @@ public class ChartDataSet: NSObject
         return nil
     }
     
-    public func entriesForXIndex(x: Int) -> [ChartDataEntry]
+    open func entriesForXIndex(_ x: Int) -> [ChartDataEntry]
     {
         var entries = [ChartDataEntry]()
         
@@ -186,11 +206,11 @@ public class ChartDataSet: NSObject
             {
                 while (m > 0 && _yVals[m - 1].xIndex == x)
                 {
-                    m--
+                    m -= 1
                 }
                 
                 high = _yVals.count
-                for (; m < high; m++)
+                for (; m < high; m += 1)
                 {
                     entry = _yVals[m]
                     if (entry.xIndex == x)
@@ -217,7 +237,7 @@ public class ChartDataSet: NSObject
         return entries
     }
     
-    public func entryIndex(xIndex x: Int) -> Int
+    open func entryIndex(xIndex x: Int) -> Int
     {
         var low = 0
         var high = _yVals.count - 1
@@ -232,7 +252,7 @@ public class ChartDataSet: NSObject
             {
                 while (m > 0 && _yVals[m - 1].xIndex == x)
                 {
-                    m--
+                    m -= 1
                 }
                 
                 return m
@@ -253,11 +273,11 @@ public class ChartDataSet: NSObject
         return closest
     }
     
-    public func entryIndex(entry e: ChartDataEntry, isEqual: Bool) -> Int
+    open func entryIndex(entry e: ChartDataEntry, isEqual: Bool) -> Int
     {
         if (isEqual)
         {
-            for (var i = 0; i < _yVals.count; i++)
+            for (i in 0 ..< _yVals.count)
             {
                 if (_yVals[i].isEqual(e))
                 {
@@ -267,7 +287,7 @@ public class ChartDataSet: NSObject
         }
         else
         {
-            for (var i = 0; i < _yVals.count; i++)
+            for (i in 0 ..< _yVals.count)
             {
                 if (_yVals[i] === e)
                 {
@@ -280,13 +300,13 @@ public class ChartDataSet: NSObject
     }
     
     /// - returns: the number of entries this DataSet holds.
-    public var valueCount: Int { return _yVals.count; }
+    open var valueCount: Int { return _yVals.count; }
     
     /// Adds an Entry to the DataSet dynamically.
     /// Entries are added to the end of the list.
     /// This will also recalculate the current minimum and maximum values of the DataSet and the value-sum.
     /// - parameter e: the entry to add
-    public func addEntry(e: ChartDataEntry)
+    open func addEntry(_ e: ChartDataEntry)
     {
         let val = e.value
         
@@ -321,7 +341,7 @@ public class ChartDataSet: NSObject
     /// Entries are added to their appropriate index respective to it's x-index.
     /// This will also recalculate the current minimum and maximum values of the DataSet and the value-sum.
     /// - parameter e: the entry to add
-    public func addEntryOrdered(e: ChartDataEntry)
+    open func addEntryOrdered(_ e: ChartDataEntry)
     {
         let val = e.value
         
@@ -354,24 +374,24 @@ public class ChartDataSet: NSObject
             var closestIndex = entryIndex(xIndex: e.xIndex)
             if _yVals[closestIndex].xIndex < e.xIndex
             {
-                closestIndex++
+                closestIndex += 1
             }
-            _yVals.insert(e, atIndex: closestIndex)
+            _yVals.insert(e, at: closestIndex)
             return;
         }
         
         _yVals.append(e)
     }
     
-    public func removeEntry(entry: ChartDataEntry) -> Bool
+    open func removeEntry(_ entry: ChartDataEntry) -> Bool
     {
         var removed = false
         
-        for (var i = 0; i < _yVals.count; i++)
+        for (i in 0 ..< _yVals.count)
         {
             if (_yVals[i] === entry)
             {
-                _yVals.removeAtIndex(i)
+                _yVals.remove(at: i)
                 removed = true
                 break
             }
@@ -386,12 +406,12 @@ public class ChartDataSet: NSObject
         return removed
     }
     
-    public func removeEntry(xIndex xIndex: Int) -> Bool
+    open func removeEntry(xIndex: Int) -> Bool
     {
         let index = self.entryIndex(xIndex: xIndex)
         if (index > -1)
         {
-            let e = _yVals.removeAtIndex(index)
+            let e = _yVals.remove(at: index)
             
             _yValueSum -= e.value
             calcMinMax(start: _lastStart, end: _lastEnd)
@@ -402,24 +422,25 @@ public class ChartDataSet: NSObject
         return false
     }
     
-    public func resetColors()
+    open func resetColors()
     {
-        colors.removeAll(keepCapacity: false)
+        colors.removeAll(keepingCapacity: false)
     }
     
-    public func addColor(color: UIColor)
+    open func addColor(_ color: UIColor)
     {
         colors.append(color)
     }
     
-    public func setColor(color: UIColor)
+    open func setColor(_ color: UIColor)
     {
-        colors.removeAll(keepCapacity: false)
+        colors.removeAll(keepingCapacity: false)
         colors.append(color)
     }
     
-    public func colorAt(var index: Int) -> UIColor
+    public func colorAt(_ index: Int) -> UIColor
     {
+        var index = index
         if (index < 0)
         {
             index = 0
@@ -427,19 +448,19 @@ public class ChartDataSet: NSObject
         return colors[index % colors.count]
     }
     
-    public var isVisible: Bool
+    open var isVisible: Bool
     {
         return visible
     }
     
-    public var isDrawValuesEnabled: Bool
+    open var isDrawValuesEnabled: Bool
     {
         return drawValuesEnabled
     }
     
     /// Checks if this DataSet contains the specified Entry.
     /// - returns: true if contains the entry, false if not.
-    public func contains(e: ChartDataEntry) -> Bool
+    open func contains(_ e: ChartDataEntry) -> Bool
     {
         for entry in _yVals
         {
@@ -453,9 +474,9 @@ public class ChartDataSet: NSObject
     }
     
     /// Removes all values from this DataSet and recalculates min and max value.
-    public func clear()
+    open func clear()
     {
-        _yVals.removeAll(keepCapacity: true)
+        _yVals.removeAll(keepingCapacity: true)
         _lastStart = 0
         _lastEnd = 0
         notifyDataSetChanged()
@@ -463,16 +484,16 @@ public class ChartDataSet: NSObject
 
     // MARK: NSObject
     
-    public override var description: String
+    open override var description: String
     {
         return String(format: "ChartDataSet, label: %@, %i entries", arguments: [self.label ?? "", _yVals.count])
     }
     
-    public override var debugDescription: String
+    open override var debugDescription: String
     {
         var desc = description + ":"
         
-        for (var i = 0; i < _yVals.count; i++)
+        for (i in 0 ..< _yVals.count)
         {
             desc += "\n" + _yVals[i].description
         }
@@ -482,7 +503,7 @@ public class ChartDataSet: NSObject
     
     // MARK: NSCopying
     
-    public func copyWithZone(zone: NSZone) -> AnyObject
+    open func copyWithZone(_ zone: NSZone?) -> AnyObject
     {
         let copy = ChartDataSet()
         copy.colors = colors

@@ -9,17 +9,55 @@
 import Foundation
 import RealmSwift
 import CloudKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class cHelper {
-    func dateByAddingMonths(monthsToAdd: Int, date: NSDate) -> NSDate? {
-        let calendar = NSCalendar.currentCalendar()
-        let months = NSDateComponents()
+    func dateByAddingMonths(_ monthsToAdd: Int, date: Date) -> Date? {
+        let calendar = NSCalendar.current
+        var months = DateComponents()
         months.month = monthsToAdd
-        return calendar.dateByAddingComponents(months, toDate: date, options: [])
+        return (calendar as NSCalendar).date(byAdding: months, to: date, options: [])
     }
     
-    func getIncome(startDate startDate: NSDate, endDate: NSDate) -> Double {
-        let incomePredicate = NSPredicate(format: "status = 86 and date >= %@ and date <= %@", startDate, endDate)
+    func getIncome(startDate: Date, endDate: Date) -> Double {
+        let incomePredicate = NSPredicate(format: "status = 86 and date >= %@ and date <= %@", startDate as CVarArg, endDate as CVarArg)
 
         let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
         var totalAmount = 0.0
@@ -30,8 +68,8 @@ class cHelper {
         return totalAmount * -1
     }
     
-    func getSpending(startDate startDate: NSDate, endDate: NSDate) -> Double {
-        let incomePredicate = NSPredicate(format: "status < 5 and date >= %@ and date <= %@", startDate, endDate)
+    func getSpending(startDate: Date, endDate: Date) -> Double {
+        let incomePredicate = NSPredicate(format: "status < 5 and date >= %@ and date <= %@", startDate as CVarArg, endDate as CVarArg)
         let incomeTransactions = realm.objects(Transaction).filter(incomePredicate)
         
         var totalAmount = 0.0
@@ -42,10 +80,10 @@ class cHelper {
     }
     
     
-    func getHappyPercentageCompare(startMonth: NSDate, isCurrentMonth:Bool) -> (happyPerc: Double, happyComperePerc: Double) {
-        var today = NSDate()
-        var compareEndLastMonth = NSDate()
-        var compareEndLastMonthTemp = NSDate()
+    func getHappyPercentageCompare(_ startMonth: Date, isCurrentMonth:Bool) -> (happyPerc: Double, happyComperePerc: Double) {
+        var today = Date()
+        var compareEndLastMonth = Date()
+        var compareEndLastMonthTemp = Date()
 
         
         if isCurrentMonth {
@@ -60,7 +98,7 @@ class cHelper {
         }
         
         let beginingThisMonth = today.startOfMonth()
-        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as Date
        
         let currentHappyMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 1", beginingThisMonth!, today)
         let currentSadMonthPrediate = NSPredicate(format: "date between {%@,%@} AND status = 2 ", beginingThisMonth!, today)
@@ -101,7 +139,7 @@ class cHelper {
         return happyFlow * 100
     }
     
-    func getCashFlow(startMonth: NSDate, isCurrentMonth:Bool) -> (cashFlowTotal: Double, Double, Double, Double, Double, changeIncome: Double) {
+    func getCashFlow(_ startMonth: Date, isCurrentMonth:Bool) -> (cashFlowTotal: Double, Double, Double, Double, Double, changeIncome: Double) {
         var cashFlowTotal: Double = 0
         let cashFlows = realm.objects(Transaction).sorted("date", ascending: true)
         var cashFlows1Predicate: NSPredicate = NSPredicate()
@@ -113,9 +151,9 @@ class cHelper {
            return (0, 0, 0, 0, 0, 0)
         }
         let oldestDate = cashFlows[0].date
-        var today:NSDate = NSDate()
-        var compareEndLastMonth:NSDate = NSDate()
-        var compareEndLastMonthTemp:NSDate = NSDate()
+        var today:Date = Date()
+        var compareEndLastMonth:Date = Date()
+        var compareEndLastMonthTemp:Date = Date()
         
         var moneySpent1:Double = 0
         var moneySpent2:Double = 0
@@ -136,7 +174,7 @@ class cHelper {
         }
         
         let beginingThisMonth = today.startOfMonth()
-        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as NSDate
+        let beginingLastMonth = dateByAddingMonths(-1, date: beginingThisMonth!)! as Date
         
     
         
@@ -146,7 +184,7 @@ class cHelper {
         
         cashFlows1 = realm.objects(Transaction).filter(cashFlows1Predicate)
         
-        if beginingLastMonth.compare(oldestDate) == .OrderedDescending
+        if beginingLastMonth.compare(oldestDate) == .orderedDescending
         {
             cashFlows2Predicate = NSPredicate(format: "date >= %@ and date <= %@", beginingLastMonth, compareEndLastMonth)
             cashFlows2 = realm.objects(Transaction).filter(cashFlows2Predicate)
@@ -247,7 +285,7 @@ class cHelper {
         return (cashFlowTotal, cashFlowChange, moneySpent1, moneySpentChange, income1 * -1, incomeChange)
     }
     
-    private func getMapLocationToTransactions() -> [String: [Transaction]] {
+    fileprivate func getMapLocationToTransactions() -> [String: [Transaction]] {
 //        let today = NSDate()
 //        let beginingThisMonth = startOfMonth(today)
 //        let cityMostSpentPredicate:NSPredicate = NSPredicate(format: "status > 0 and status < 5 and date >= %@", beginingThisMonth!)
@@ -299,7 +337,7 @@ class cHelper {
         return mostHappy!
     }
     
-    private func getHappyFlowForTransactions(transactions : [Transaction]) -> Double {
+    fileprivate func getHappyFlowForTransactions(_ transactions : [Transaction]) -> Double {
         let happyTrans = transactions.filter { (trans) -> Bool in
             return trans.status == 1
         }
@@ -402,16 +440,12 @@ class cHelper {
         return (digitalHappyFlow, digitalSpentPercentage, specialHappyFlow, specialSpentPercentage, placeHappyFlow, placeSpentPercentage)
     }
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
-    func addUpdateResetAccount(dayLength dayLength:Int, callback: Int->()) {
+    func addUpdateResetAccount(dayLength:Int, callback: @escaping (Int)->()) {
         var dictDate = ""
         var fake_institution = false
         var institution = ""
@@ -423,9 +457,9 @@ class cHelper {
                 try! realm.write {
                     // Save one Venue object (and dependents) for each element of the array
                     for account in accounts {
-                        print ("ACCOUNT \(account.valueForKey("institution_type"))")
+                        print ("ACCOUNT \(account.value(forKey: "institution_type"))")
                         
-                        if let institution_type = account.valueForKey("institution_type") {
+                        if let institution_type = account.value(forKey: "institution_type") {
                             institution = institution_type as! String
                             if String(institution_type) == "fake_institution" {
                                 fake_institution = true
@@ -444,29 +478,29 @@ class cHelper {
                 for transaction in transactions {
                     try! realm.write {
                         //get placeType
-                        let placeTypeO = transaction.valueForKey("type")
-                        let placeType = placeTypeO!.valueForKey("primary")
+                        let placeTypeO = transaction.value(forKey: "type")
+                        let placeType = placeTypeO!.value(forKey: "primary")
                         
                         transaction.setValue(placeType, forKeyPath: "placeType")
                         //clean up name
-                        let id = transaction.valueForKey("_id") as? String
-                        let dictName = transaction.valueForKey("name") as? String
+                        let id = transaction.value(forKey: "_id") as? String
+                        let dictName = transaction.value(forKey: "name") as? String
                         transaction.setValue(self.cleanName(dictName!), forKey: "name")
                         //convert string to date before insert
                         if fake_institution == true {
-                            let formatter = NSDateFormatter()
-                            print("DATE \(NSDate())")
+                            let formatter = DateFormatter()
+                            print("DATE \(Date())")
                             formatter.dateFormat = "yyyy-MM-dd"
-                            dictDate = formatter.stringFromDate(NSDate())
+                            dictDate = formatter.string(from: Date())
                             transaction.setValue(self.convertDate(dictDate), forKey: "date")
                         }
                         else {
-                            dictDate = (transaction.valueForKey("date") as? String)!
+                            dictDate = (transaction.value(forKey: "date") as? String)!
                             transaction.setValue(self.convertDate(dictDate), forKey: "date")
                         }
                         
                         //check for deposits and remove
-                        let dictAmount = transaction.valueForKey("amount") as? Double
+                        let dictAmount = transaction.value(forKey: "amount") as? Double
                         //add category
                         
                         
@@ -479,7 +513,7 @@ class cHelper {
                         let newTrans =  try! realm.create(Transaction.self, value: transaction, update: true)
                         
                         //add category
-                        if let category_id = transaction.valueForKey("category_id") as? String {
+                        if let category_id = transaction.value(forKey: "category_id") as? String {
                             let predicate = NSPredicate(format: "id = %@", category_id)
                             let categoryToAdd = realm.objects(Category).filter(predicate)
                             newTrans.categories = categoryToAdd[0]
@@ -539,8 +573,8 @@ class cHelper {
         
     }
     
-    func getSettings(callback: Bool->()) {
-        let container = CKContainer.defaultContainer()
+    func getSettings(_ callback: (Bool)->()) {
+        let container = CKContainer.default()
         let publicData = container.publicCloudDatabase
         let query = CKQuery(recordType: "Settings", predicate: NSPredicate(format: "TRUEPREDICATE", argumentArray: nil))
         let client_id = "test_id"
@@ -567,46 +601,46 @@ class cHelper {
 //        }
     }
     
-    func formatCurrency(currency: Double) -> String {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
-        formatter.locale = NSLocale(localeIdentifier: "en_US")
+    func formatCurrency(_ currency: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currency
+        formatter.locale = NSLocale(localeIdentifier: "en_US") as Locale!
         let numberFromField = currency
-        return formatter.stringFromNumber(numberFromField)!
+        return formatter.string(from: NSNumber(numberFromField))!
     }
     
-    func convertDate(date:String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
+    func convertDate(_ date:String) -> Date {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.dateFromString(date)!
+        return dateFormatter.date(from: date)!
     }
     
-    func convertDateGroup(date:NSDate) -> String {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        return formatter.stringFromDate(date)
+    func convertDateGroup(_ date:Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        return formatter.string(from: date)
     }
     
-    func cleanName(name:String) -> String{
+    func cleanName(_ name:String) -> String{
         let stringlength = name.characters.count
         // var ierror: NSError?
-        let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpressionOptions.CaseInsensitive)
-        let regex3:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpressionOptions.CaseInsensitive)
-        let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "P.*TERMINAL ", options: NSRegularExpressionOptions.CaseInsensitive)
+        let regex:NSRegularExpression = try! NSRegularExpression(pattern: ".*\\*", options: NSRegularExpression.Options.caseInsensitive)
+        let regex3:NSRegularExpression = try! NSRegularExpression(pattern: "^[0-9]*", options: NSRegularExpression.Options.caseInsensitive)
+        let regex2:NSRegularExpression = try! NSRegularExpression(pattern: "P.*TERMINAL ", options: NSRegularExpression.Options.caseInsensitive)
         
-        let modString = regex.stringByReplacingMatchesInString(name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
+        let modString = regex.stringByReplacingMatches(in: name, options: [], range: NSMakeRange(0, stringlength), withTemplate: "")
         let stringlength2 = modString.characters.count
         
         
-        let modString2 = regex2.stringByReplacingMatchesInString(modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
+        let modString2 = regex2.stringByReplacingMatches(in: modString, options: [], range: NSMakeRange(0, stringlength2), withTemplate: "")
         let stringlength3 = modString2.characters.count
         
         
         
-        let modString3 = regex3.stringByReplacingMatchesInString(modString2, options: [], range: NSMakeRange(0, stringlength3), withTemplate: "")
+        let modString3 = regex3.stringByReplacingMatches(in: modString2, options: [], range: NSMakeRange(0, stringlength3), withTemplate: "")
         
         
-        var trimmedStr = modString3.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var trimmedStr = modString3.trimmingCharacters(in: CharacterSet.whitespaces)
         
         if trimmedStr.characters.count == 0 {
             trimmedStr = "Missing Name"
@@ -615,7 +649,7 @@ class cHelper {
     }
     
     func isiCloudAvalaible() -> Bool {
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         let cloudURL = fileManager.ubiquityIdentityToken
         if (cloudURL != nil) {
             return true
@@ -625,7 +659,7 @@ class cHelper {
         }
     }
     
-    func removeSpashImageView(view:UIView) {
+    func removeSpashImageView(_ view:UIView) {
         for subview in view.subviews {
             if subview.tag == 86 {
                 subview.removeFromSuperview()
@@ -633,7 +667,7 @@ class cHelper {
         }
     }
     
-    func splashImageView(view:UIView) {
+    func splashImageView(_ view:UIView) {
 //        let imageView = UIImageView(frame: view.frame)
 //        let image = UIImage(named: "iTunesArtwork")
 //        imageView.backgroundColor = UIColor.whiteColor()
@@ -644,25 +678,25 @@ class cHelper {
 //        view.addSubview(imageView)
     }
     
-    func getKey() -> NSData {
+    func getKey() -> Data {
         // Identifier for our keychain entry - should be unique for your application
         let keychainIdentifier = "io.Realm.EncryptionExampleKey"
-        let keychainIdentifierData = keychainIdentifier.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        let keychainIdentifierData = keychainIdentifier.data(using: String.Encoding.utf8, allowLossyConversion: false)!
         
         // First check in the keychain for an existing key
         var query: [NSString: AnyObject] = [
             kSecClass: kSecClassKey,
-            kSecAttrApplicationTag: keychainIdentifierData,
-            kSecAttrKeySizeInBits: 512,
-            kSecReturnData: true
+            kSecAttrApplicationTag: keychainIdentifierData as AnyObject,
+            kSecAttrKeySizeInBits: 512 as AnyObject,
+            kSecReturnData: true as AnyObject
         ]
 
         // To avoid Swift optimization bug, should use withUnsafeMutablePointer() function to retrieve the keychain item
         // See also: http://stackoverflow.com/questions/24145838/querying-ios-keychain-using-swift/27721328#27721328
         var dataTypeRef: AnyObject?
-        var status = withUnsafeMutablePointer(&dataTypeRef) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+        var status = withUnsafeMutablePointer(to: &dataTypeRef) { SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0)) }
         if status == errSecSuccess {
-            return dataTypeRef as! NSData
+            return dataTypeRef as! Data
         }
         
         // No pre-existing key from this application, so generate a new one
@@ -673,25 +707,25 @@ class cHelper {
         // Store the key in the keychain
         query = [
             kSecClass: kSecClassKey,
-            kSecAttrApplicationTag: keychainIdentifierData,
-            kSecAttrKeySizeInBits: 512,
+            kSecAttrApplicationTag: keychainIdentifierData as AnyObject,
+            kSecAttrKeySizeInBits: 512 as AnyObject,
             kSecValueData: keyData
         ]
         
-        status = SecItemAdd(query, nil)
+        status = SecItemAdd(query as CFDictionary, nil)
         assert(status == errSecSuccess, "Failed to insert the new key in the keychain")
         
-        return keyData
+        return keyData as Data
     }
     
-    func getFirstSwipedTransaction() -> NSDate {
+    func getFirstSwipedTransaction() -> Date {
         let transactions = realm.objects(Transaction).filter(NSPredicate(format: "status > 0 and status < 5"))
         if (transactions.count == 0) {
-            return NSDate()
+            return Date()
         }
         var firstSwipedTrans = transactions.first
         for trans in transactions {
-            if trans.date.compare((firstSwipedTrans?.date)!) == .OrderedAscending {
+            if trans.date.compare((firstSwipedTrans?.date)!) == .orderedAscending {
                 firstSwipedTrans = trans
             }
         }
